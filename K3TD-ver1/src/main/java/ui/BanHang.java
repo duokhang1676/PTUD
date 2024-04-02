@@ -32,7 +32,7 @@ public class BanHang extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        content.setBackground(new java.awt.Color(255, 51, 204));
+        content.setBackground(new java.awt.Color(255, 255, 255));
         content.setPreferredSize(new java.awt.Dimension(1920, 840));
 
         javax.swing.GroupLayout contentLayout = new javax.swing.GroupLayout(content);
