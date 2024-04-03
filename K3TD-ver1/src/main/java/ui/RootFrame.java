@@ -28,6 +28,7 @@ public class RootFrame extends javax.swing.JFrame {
     public RootFrame() {
     	setTitle("Phầm mềm quản lý quầy thuốc tây K3TD");
         initComponents();
+        
         resizeFrameToScreenScale();
         setFontAll(new Font(lblUser.getName(), Font.PLAIN, 14));
     }
@@ -84,6 +85,7 @@ public class RootFrame extends javax.swing.JFrame {
         btnCaLamViec = new javax.swing.JButton();
         Drop7 = new javax.swing.JPanel();
         pnlContent = new javax.swing.JPanel();
+        
         pnlFooter = new javax.swing.JPanel();
         lblFooter = new javax.swing.JLabel();
 
@@ -529,6 +531,7 @@ public class RootFrame extends javax.swing.JFrame {
 
         pnlContent.setBackground(new java.awt.Color(153, 255, 153));
         pnlContent.setLayout(new java.awt.BorderLayout());
+        pnlContent.add(trangChu, BorderLayout.CENTER);
 
         javax.swing.GroupLayout pnlBodyLayout = new javax.swing.GroupLayout(pnlBody);
         pnlBody.setLayout(pnlBodyLayout);
@@ -595,9 +598,8 @@ public class RootFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTrangChuActionPerformed(java.awt.event.ActionEvent evt) {
-    	TrangChu trangChu = new TrangChu();
     	pnlContent.removeAll();
-    	pnlContent.add(trangChu.content());
+    	pnlContent.add(trangChu);
     	pnlContent.revalidate();
         pnlContent.repaint();
     }                                           
@@ -933,5 +935,6 @@ public class RootFrame extends javax.swing.JFrame {
     private javax.swing.JPanel pnlHeaderMenu;
     private javax.swing.JPanel pnlHeaderTop;
     private javax.swing.JPanel pnlMain;
+    private ui.TrangChu trangChu = new ui.TrangChu();
     // End of variables declaration//GEN-END:variables
 }
