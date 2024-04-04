@@ -35,6 +35,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Program Files/NetBeans-21/netbeans/java/modules/ext/AbsoluteLayout.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/NetBeans-20/netbeans/java/modules/ext/AbsoluteLayout.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
