@@ -20,6 +20,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.text.DefaultFormatter;
 
@@ -198,7 +199,12 @@ public class BanHang extends javax.swing.JFrame {
         tbChiTietHoaDon.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
         tbChiTietHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
                 "Tên sản phẩm", "Đơn vị tính", "Số lượng", "Giá bán", "Thành tiền", "Tuỳ chỉnh"
@@ -208,7 +214,7 @@ public class BanHang extends javax.swing.JFrame {
                 java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -219,7 +225,35 @@ public class BanHang extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tbChiTietHoaDon.setRequestFocusEnabled(false);
+        tbChiTietHoaDon.setRowHeight(40);
+        //Button
+       
+        
+        TableActionEvent event = new TableActionEvent() {
+			
+			@Override
+			public void onView(int row) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void onEdit(int row) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void onDelete(int row) {
+				// TODO Auto-generated method stub
+				DefaultTableModel model = (DefaultTableModel) tbChiTietHoaDon.getModel();
+				model.removeRow(row);
+			}
+		};
+        
+		tbChiTietHoaDon.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
+	    tbChiTietHoaDon.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(event));
         jScrollPane1.setViewportView(tbChiTietHoaDon);
+        
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));

@@ -4,6 +4,9 @@
  */
 package ui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author thuthao
@@ -16,6 +19,33 @@ public class PanelColumnTuyChinh extends javax.swing.JPanel {
     public PanelColumnTuyChinh() {
         initComponents();
     }
+    
+    public void initEvent(final TableActionEvent event, final int row) {
+		btnEdit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				event.onEdit(row);
+			}
+		});
+		
+		btnDelete.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				event.onDelete(row);
+			}
+		});
+		
+		btnView.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				event.onView(row);
+			}
+		});
+		
+	}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,64 +56,58 @@ public class PanelColumnTuyChinh extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonColumnTuyChinh1 = new ui.ButtonColumnTuyChinh();
-        buttonColumnTuyChinh2 = new ui.ButtonColumnTuyChinh();
-        buttonColumnTuyChinh3 = new ui.ButtonColumnTuyChinh();
+        btnDelete = new ui.ButtonColumnTuyChinh();
+        btnEdit = new ui.ButtonColumnTuyChinh();
+        btnView = new ui.ButtonColumnTuyChinh();
 
-        buttonColumnTuyChinh1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Xoa.png"))); // NOI18N
-        buttonColumnTuyChinh1.addActionListener(new java.awt.event.ActionListener() {
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-trash-can-24.png"))); // NOI18N
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonColumnTuyChinh1ActionPerformed(evt);
+                btnDeleteActionPerformed(evt);
             }
         });
 
-        buttonColumnTuyChinh2.setText("buttonColumnTuyChinh2");
-        buttonColumnTuyChinh2.addActionListener(new java.awt.event.ActionListener() {
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-edit-24.png"))); // NOI18N
+
+        btnView.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-eye-24.png"))); // NOI18N
+        btnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonColumnTuyChinh2ActionPerformed(evt);
+                btnViewActionPerformed(evt);
             }
         });
-
-        buttonColumnTuyChinh3.setText("buttonColumnTuyChinh3");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(buttonColumnTuyChinh1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(buttonColumnTuyChinh2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addComponent(buttonColumnTuyChinh3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(buttonColumnTuyChinh2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(buttonColumnTuyChinh3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(buttonColumnTuyChinh1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(9, Short.MAX_VALUE))
+            .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(btnView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonColumnTuyChinh1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonColumnTuyChinh1ActionPerformed
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_buttonColumnTuyChinh1ActionPerformed
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
-    private void buttonColumnTuyChinh2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonColumnTuyChinh2ActionPerformed
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_buttonColumnTuyChinh2ActionPerformed
+    }//GEN-LAST:event_btnViewActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private ui.ButtonColumnTuyChinh buttonColumnTuyChinh1;
-    private ui.ButtonColumnTuyChinh buttonColumnTuyChinh2;
-    private ui.ButtonColumnTuyChinh buttonColumnTuyChinh3;
+    private ui.ButtonColumnTuyChinh btnDelete;
+    private ui.ButtonColumnTuyChinh btnEdit;
+    private ui.ButtonColumnTuyChinh btnView;
     // End of variables declaration//GEN-END:variables
 }
