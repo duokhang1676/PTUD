@@ -26,19 +26,64 @@ public class PanelColumnTuyChinh extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonColumnTuyChinh1 = new ui.ButtonColumnTuyChinh();
+        buttonColumnTuyChinh2 = new ui.ButtonColumnTuyChinh();
+        buttonColumnTuyChinh3 = new ui.ButtonColumnTuyChinh();
+
+        buttonColumnTuyChinh1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Xoa.png"))); // NOI18N
+        buttonColumnTuyChinh1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonColumnTuyChinh1ActionPerformed(evt);
+            }
+        });
+
+        buttonColumnTuyChinh2.setText("buttonColumnTuyChinh2");
+        buttonColumnTuyChinh2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonColumnTuyChinh2ActionPerformed(evt);
+            }
+        });
+
+        buttonColumnTuyChinh3.setText("buttonColumnTuyChinh3");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(buttonColumnTuyChinh1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(buttonColumnTuyChinh2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(buttonColumnTuyChinh3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(buttonColumnTuyChinh2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonColumnTuyChinh3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(buttonColumnTuyChinh1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void buttonColumnTuyChinh1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonColumnTuyChinh1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonColumnTuyChinh1ActionPerformed
+
+    private void buttonColumnTuyChinh2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonColumnTuyChinh2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonColumnTuyChinh2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private ui.ButtonColumnTuyChinh buttonColumnTuyChinh1;
+    private ui.ButtonColumnTuyChinh buttonColumnTuyChinh2;
+    private ui.ButtonColumnTuyChinh buttonColumnTuyChinh3;
     // End of variables declaration//GEN-END:variables
 }

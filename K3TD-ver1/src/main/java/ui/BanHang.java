@@ -9,7 +9,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,7 +18,6 @@ import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -203,15 +201,22 @@ public class BanHang extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Tên sản phẩm", "Đơn vị tính", "Số lượng", "Giá bán", "Thành tiền"
+                "Tên sản phẩm", "Đơn vị tính", "Số lượng", "Giá bán", "Thành tiền", "Tuỳ chỉnh"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(tbChiTietHoaDon);
@@ -656,7 +661,6 @@ public class BanHang extends javax.swing.JFrame {
 		
 		
 	}
-    
     
     
     private void btnThemHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemHoaDonActionPerformed
