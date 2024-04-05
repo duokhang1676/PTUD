@@ -46,10 +46,10 @@ public class ButtonColumnTuyChinh extends JButton{
 		int x = (width - size) / 2;
 		int y = (height - size) / 2;
 		if (mousePress) {
-			g2.setColor(new Color(255, 255, 255));
+			g2.setColor(new Color(211,211,211));
 		}
 		else {
-			g2.setColor(new Color(82, 156, 245));
+			g2.setColor(new Color(255,255,224));
 		}
 		g2.fill(new Ellipse2D.Double(x, y, size, size) );
 		g2.dispose();
