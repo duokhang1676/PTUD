@@ -11,6 +11,7 @@ import java.awt.RenderingHints;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 
 public class TimMaSP extends JTextField{
@@ -38,9 +39,6 @@ public class TimMaSP extends JTextField{
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
-        paintIcon(g);
-        
         //Paint border
         if (isFocusOwner()) {
             g.setColor(new Color(43, 124, 220));
@@ -50,6 +48,16 @@ public class TimMaSP extends JTextField{
             g.setColor(new Color(105, 122, 143));
             g.drawRect(0, 0, getWidth()-1, getHeight()-1);
         }
+//      
+//    	int width = getWidth();
+//        int height = getHeight();
+//        Graphics2D g2 = (Graphics2D) g;
+//        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+//        //g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+//        g2.setBackground(new Color(43, 124, 220));
+//        g2.fillRoundRect(0, 0, width, height, height, height);
+        super.paintComponent(g); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        paintIcon(g);
     }
     
     @Override
