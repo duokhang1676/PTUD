@@ -5,6 +5,8 @@
 package ui;
 
 import components.ColorSample;
+import components.ResizeContent;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -85,7 +87,6 @@ public class RootFrame extends javax.swing.JFrame {
         btnCaLamViec = new javax.swing.JButton();
         Drop7 = new javax.swing.JPanel();
         pnlContent = new javax.swing.JPanel();
-        
         pnlFooter = new javax.swing.JPanel();
         lblFooter = new javax.swing.JLabel();
 
@@ -531,7 +532,10 @@ public class RootFrame extends javax.swing.JFrame {
 
         pnlContent.setBackground(new java.awt.Color(153, 255, 153));
         pnlContent.setLayout(new java.awt.BorderLayout());
-        pnlContent.add(trangChu, BorderLayout.CENTER);
+        pnlContent.add(trangChu);        
+        //resize panel
+        new ResizeContent().resizeContent(pnlContent);
+        
 
         javax.swing.GroupLayout pnlBodyLayout = new javax.swing.GroupLayout(pnlBody);
         pnlBody.setLayout(pnlBodyLayout);
@@ -550,7 +554,7 @@ public class RootFrame extends javax.swing.JFrame {
         pnlBodyLayout.setVerticalGroup(
             pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBodyLayout.createSequentialGroup()
-                .addComponent(pnlContent, javax.swing.GroupLayout.PREFERRED_SIZE, 1814, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Drop6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(206, 206, 206)
@@ -719,9 +723,8 @@ public class RootFrame extends javax.swing.JFrame {
 
     private void btnNhapHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhapHangActionPerformed
         // TODO add your handling code here:
-        NhapHang nhapHang = new NhapHang();
         pnlContent.removeAll();
-    	pnlContent.add(nhapHang.content());
+    	pnlContent.add(new NhapHang());
     	pnlContent.revalidate();
         pnlContent.repaint();
     }//GEN-LAST:event_btnNhapHangActionPerformed
