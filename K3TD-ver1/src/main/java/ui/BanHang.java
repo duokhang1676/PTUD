@@ -168,11 +168,11 @@ public class BanHang extends javax.swing.JFrame {
         tbChiTietHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"Panadol xanh", "Chọn đơn vị tính", 1, 10, 10, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {"Panadol xanh", "Chọn đơn vị tính", 1, 10, 10, null},
+                {"Panadol xanh", "Chọn đơn vị tính", 1, 10, 10, null},
+                {"Panadol xanh", "Chọn đơn vị tính", 1, 10, 10, null},
+                {"Panadol xanh", "Chọn đơn vị tính", 1, 10, 10, null},
+                {"Panadol xanh", "Chọn đơn vị tính", 1, 10, 10, null}
             },
             new String [] {
                 "Tên sản phẩm", "Đơn vị tính", "Số lượng", "Giá bán", "Thành tiền", "Tuỳ chỉnh"
