@@ -259,6 +259,7 @@ public class HoaDon extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.setRowHeight(40);
         jScrollPane1.setViewportView(jTable1);
         TableActionEvent_HoaDon event = new TableActionEvent_HoaDon() {
 			
@@ -270,6 +271,7 @@ public class HoaDon extends javax.swing.JFrame {
 		};
 		jTable1.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditor_HoaDon(event));
 		jTable1.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRender());
+
 
         jLabel8.setText("Tổng số hoá đơn:");
 
@@ -315,7 +317,7 @@ public class HoaDon extends javax.swing.JFrame {
         );
         pnlCenterLayout.setVerticalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
         );
 
         content.add(pnlCenter, java.awt.BorderLayout.CENTER);
