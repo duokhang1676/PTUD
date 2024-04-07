@@ -1,3 +1,8 @@
 /components/
 /entities/
+<<<<<<< HEAD
 /ui/
+=======
+/connectDB/
+/db/
+>>>>>>> b483361f7bad0dd0db9bbfa910a44d157e02a07d

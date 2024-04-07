@@ -60,17 +60,12 @@ public class NhapHang extends javax.swing.JPanel {
         jL_tongChietKhau = new javax.swing.JLabel();
         txt_tongThanhTien = new javax.swing.JTextField();
         jL_tongThanhTien = new javax.swing.JLabel();
+        btn_taoPhieuNhap1 = new javax.swing.JButton();
+        btn_thoat1 = new javax.swing.JButton();
         jP_tableContent = new javax.swing.JPanel();
         jL_chiTietPhieuGhi = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_content = new javax.swing.JTable();
-        jP_bodyFooter = new javax.swing.JPanel();
-        jP_footerRight = new javax.swing.JPanel();
-        btn_taoPhieuNhap = new javax.swing.JButton();
-        btn_xoaHangHoa = new javax.swing.JButton();
-        btn_xoaTatCa = new javax.swing.JButton();
-        btn_luuTam = new javax.swing.JButton();
-        btn_thoat = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1860, 700));
@@ -209,15 +204,35 @@ public class NhapHang extends javax.swing.JPanel {
 
         txt_tongThanhTien.setEditable(false);
         txt_tongThanhTien.setBackground(new java.awt.Color(255, 255, 255));
-        txt_tongThanhTien.setToolTipText("");
         txt_tongThanhTien.setPreferredSize(new java.awt.Dimension(150, 35));
-        jP_bodyHeader.add(txt_tongThanhTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 30, 450, 70));
+        txt_tongThanhTien.setToolTipText("");
+        jP_bodyHeader.add(txt_tongThanhTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 30, 170, 70));
 
         jL_tongThanhTien.setBackground(new java.awt.Color(255, 255, 255));
         jL_tongThanhTien.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jL_tongThanhTien.setForeground(new java.awt.Color(255, 102, 102));
         jL_tongThanhTien.setText("Tổng thành tiền: ");
         jP_bodyHeader.add(jL_tongThanhTien, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 0, 380, -1));
+
+        btn_taoPhieuNhap1.setBackground(new java.awt.Color(193, 219, 208));
+        btn_taoPhieuNhap1.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        btn_taoPhieuNhap1.setForeground(new java.awt.Color(218, 80, 90));
+        btn_taoPhieuNhap1.setText("Tạo phiếu nhập");
+        btn_taoPhieuNhap1.setBorderPainted(false);
+        btn_taoPhieuNhap1.setPreferredSize(new java.awt.Dimension(150, 45));
+        btn_taoPhieuNhap1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_taoPhieuNhap1ActionPerformed(evt);
+            }
+        });
+        jP_bodyHeader.add(btn_taoPhieuNhap1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1610, 10, 240, -1));
+
+        btn_thoat1.setBackground(new java.awt.Color(193, 219, 208));
+        btn_thoat1.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        btn_thoat1.setForeground(new java.awt.Color(218, 80, 90));
+        btn_thoat1.setText("Thoát");
+        btn_thoat1.setPreferredSize(new java.awt.Dimension(100, 45));
+        jP_bodyHeader.add(btn_thoat1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1610, 60, 240, -1));
 
         jP_body.add(jP_bodyHeader, java.awt.BorderLayout.PAGE_START);
 
@@ -285,50 +300,6 @@ public class NhapHang extends javax.swing.JPanel {
         jP_body.add(jP_tableContent, java.awt.BorderLayout.CENTER);
 
         add(jP_body, java.awt.BorderLayout.CENTER);
-
-        jP_bodyFooter.setBackground(new java.awt.Color(255, 255, 255));
-
-        jP_footerRight.setBackground(new java.awt.Color(255, 255, 255));
-        jP_footerRight.setPreferredSize(new java.awt.Dimension(700, 50));
-
-        btn_taoPhieuNhap.setText("Tạo phiếu nhập");
-        btn_taoPhieuNhap.setBackground(new java.awt.Color(193, 219, 208));
-        btn_taoPhieuNhap.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        btn_taoPhieuNhap.setPreferredSize(new java.awt.Dimension(150, 35));
-        btn_taoPhieuNhap.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_taoPhieuNhapActionPerformed(evt);
-            }
-        });
-        jP_footerRight.add(btn_taoPhieuNhap);
-
-        btn_xoaHangHoa.setText("Xóa hàng hóa");
-        btn_xoaHangHoa.setBackground(new java.awt.Color(255, 174, 165));
-        btn_xoaHangHoa.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        btn_xoaHangHoa.setPreferredSize(new java.awt.Dimension(150, 35));
-        jP_footerRight.add(btn_xoaHangHoa);
-
-        btn_xoaTatCa.setText("Xóa tất cả hàng hóa");
-        btn_xoaTatCa.setBackground(new java.awt.Color(255, 174, 165));
-        btn_xoaTatCa.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        btn_xoaTatCa.setPreferredSize(new java.awt.Dimension(160, 35));
-        jP_footerRight.add(btn_xoaTatCa);
-
-        btn_luuTam.setText("Lưu tạm");
-        btn_luuTam.setBackground(new java.awt.Color(193, 219, 208));
-        btn_luuTam.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        btn_luuTam.setPreferredSize(new java.awt.Dimension(100, 35));
-        jP_footerRight.add(btn_luuTam);
-
-        btn_thoat.setText("Thoát");
-        btn_thoat.setBackground(new java.awt.Color(193, 219, 208));
-        btn_thoat.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        btn_thoat.setPreferredSize(new java.awt.Dimension(100, 35));
-        jP_footerRight.add(btn_thoat);
-
-        jP_bodyFooter.add(jP_footerRight);
-
-        add(jP_bodyFooter, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txt_maPhieuNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_maPhieuNhapActionPerformed
@@ -338,10 +309,6 @@ public class NhapHang extends javax.swing.JPanel {
     private void txt_maHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_maHoaDonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_maHoaDonActionPerformed
-
-    private void btn_taoPhieuNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_taoPhieuNhapActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_taoPhieuNhapActionPerformed
 
     private void txt_timHangHoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_timHangHoaActionPerformed
         // TODO add your handling code here:
@@ -355,13 +322,14 @@ public class NhapHang extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_tongTienNhapActionPerformed
 
+    private void btn_taoPhieuNhap1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_taoPhieuNhap1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_taoPhieuNhap1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_luuTam;
-    private javax.swing.JButton btn_taoPhieuNhap;
-    private javax.swing.JButton btn_thoat;
-    private javax.swing.JButton btn_xoaHangHoa;
-    private javax.swing.JButton btn_xoaTatCa;
+    private javax.swing.JButton btn_taoPhieuNhap1;
+    private javax.swing.JButton btn_thoat1;
     private javax.swing.JComboBox<String> cb_maPhieuNhapMau;
     private com.github.lgooddatepicker.components.DateTimePicker dTP_phieuNhap;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -380,9 +348,7 @@ public class NhapHang extends javax.swing.JPanel {
     private javax.swing.JLabel jL_tongThanhTien;
     private javax.swing.JLabel jL_tongTienNhap;
     private javax.swing.JPanel jP_body;
-    private javax.swing.JPanel jP_bodyFooter;
     private javax.swing.JPanel jP_bodyHeader;
-    private javax.swing.JPanel jP_footerRight;
     private javax.swing.JPanel jP_header;
     private javax.swing.JPanel jP_tableContent;
     private javax.swing.JScrollPane jScrollPane1;

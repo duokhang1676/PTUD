@@ -839,9 +839,8 @@ public class RootFrame extends javax.swing.JFrame {
 
     private void btnXuatTraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatTraActionPerformed
         // TODO add your handling code here:
-        XuatTra xuatTra = new XuatTra();
         pnlContent.removeAll();
-    	pnlContent.add(xuatTra.content());
+    	pnlContent.add(new XuatTra());
     	pnlContent.revalidate();
         pnlContent.repaint();
         
