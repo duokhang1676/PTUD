@@ -50,11 +50,11 @@ public class DefaultPaginationItemRender implements PaginationItemRender {
 
     @Override
     public Object createPreviousIcon() {
-        return "Previous";
+        return "Trang trước";
     }
 
     @Override
     public Object createNextIcon() {
-        return "Next";
+        return "Trang sau";
     }
 }

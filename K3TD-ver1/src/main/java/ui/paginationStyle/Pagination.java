@@ -67,7 +67,7 @@ public class Pagination extends JPanel {
         page = paginate(current, totalPage);
         removeAll();
         refresh();
-        JButton cmdPrev = paginationItemRender.createPaginationItem("Previous", true, false, page.isPrevious());
+        JButton cmdPrev = paginationItemRender.createPaginationItem("Trang trước", true, false, page.isPrevious());
         cmdPrev.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -101,7 +101,7 @@ public class Pagination extends JPanel {
             });
             add(cmd);
         }
-        JButton cmdNext = paginationItemRender.createPaginationItem("Next", false, true, page.isNext());
+        JButton cmdNext = paginationItemRender.createPaginationItem("Trang sau", false, true, page.isNext());
         cmdNext.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

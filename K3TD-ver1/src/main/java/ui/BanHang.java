@@ -167,12 +167,12 @@ public class BanHang extends javax.swing.JFrame {
         tbChiTietHoaDon.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
         tbChiTietHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Panadol xanh", "Chọn đơn vị tính", 1, 10, 10, null},
-                {"Panadol xanh", "Chọn đơn vị tính", 1, 10, 10, null},
-                {"Panadol xanh", "Chọn đơn vị tính", 1, 10, 10, null},
-                {"Panadol xanh", "Chọn đơn vị tính", 1, 10, 10, null},
-                {"Panadol xanh", "Chọn đơn vị tính", 1, 10, 10, null},
-                {"Panadol xanh", "Chọn đơn vị tính", 1, 10, 10, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
                 "Tên sản phẩm", "Đơn vị tính", "Số lượng", "Giá bán", "Thành tiền", "Tuỳ chỉnh"
@@ -196,47 +196,7 @@ public class BanHang extends javax.swing.JFrame {
         tbChiTietHoaDon.setRequestFocusEnabled(false);
         tbChiTietHoaDon.setRowHeight(40);
         jScrollPane1.setViewportView(tbChiTietHoaDon);
-        
-        //ComboBox
-        tbChiTietHoaDon.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(new donViTinh()));
-        
-        //JSpinner
-        tbChiTietHoaDon.getColumnModel().getColumn(2).setCellEditor(new soLuongJSpinner());
-        tbChiTietHoaDon.getColumnModel().getColumn(2).setCellRenderer(new DefaultTableCellRenderer() {
-        	@Override
-        	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-        			boolean hasFocus, int row, int column) {
-        		super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        		setHorizontalAlignment(SwingConstants.CENTER);
-        		return this;
-        	}
-        });
 
-        //Button 
-        TableActionEvent event = new TableActionEvent() {
-			
-			@Override
-			public void onView(int row) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onEdit(int row) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onDelete(int row) {
-				DefaultTableModel model = (DefaultTableModel) tbChiTietHoaDon.getModel();
-				model.removeRow(row);
-			}
-		};
-        
-        tbChiTietHoaDon.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
-        tbChiTietHoaDon.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(event));
-        
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -301,7 +261,7 @@ public class BanHang extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 654, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblPhimTat, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -579,7 +539,7 @@ public class BanHang extends javax.swing.JFrame {
                 .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLuuTam, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlBodyLayout = new javax.swing.GroupLayout(pnlBody);
@@ -599,12 +559,12 @@ public class BanHang extends javax.swing.JFrame {
             pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBodyLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(pnlHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, 763, Short.MAX_VALUE)
                     .addGroup(pnlBodyLayout.createSequentialGroup()
                         .addComponent(pnlKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pnlThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 763, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(pnlThanhToan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
