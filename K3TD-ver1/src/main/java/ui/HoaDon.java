@@ -4,9 +4,20 @@
  */
 package ui;
 
+import java.awt.Component;
+import java.util.EventObject;
+
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.event.CellEditorListener;
+import javax.swing.table.TableCellEditor;
+
+import ui.tuyChonBanHang.TableActionEvent;
+import ui.tuyChonHoaDon.TableActionCellEditor_HoaDon;
+import ui.tuyChonHoaDon.TableActionCellRender;
+import ui.tuyChonHoaDon.TableActionEvent_HoaDon;
 
 /**
  *
@@ -226,17 +237,18 @@ public class HoaDon extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "STT", "Mã hoá đơn", "Khách hàng", "Nhân viên bán hàng", "Thời gian bán hàng", "Tổng tiền", "Trạng thái", "Ghi chú"
+                "STT", "Mã hoá đơn", "Khách hàng", "Nhân viên bán hàng", "Thời gian bán hàng", "Tổng tiền", "Trạng thái", "Ghi chú", ""
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Object.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, false, false, false, false
+                false, false, false, true, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -248,9 +260,16 @@ public class HoaDon extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
-        
-        //JComboBox
-        jTable1.getColumnModel().getColumn(8).setCellEditor(new DefaultCellEditor(new tuyChon()));
+        TableActionEvent_HoaDon event = new TableActionEvent_HoaDon() {
+			
+			@Override
+			public void onView(int row) {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+		jTable1.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditor_HoaDon(event));
+		jTable1.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRender());
 
         jLabel8.setText("Tổng số hoá đơn:");
 
@@ -305,17 +324,7 @@ public class HoaDon extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    //JComboBox
-    //Ham tao cac item cho combo box
-    public static class tuyChon extends JComboBox{
-		public tuyChon() {
-			// TODO Auto-generated constructor stub
-			addItem("Chi tiết hoá đơn");
-			addItem("In phiếu");
-			addItem("Tạo phiếu khách trả");
-		}
-	}
+
 
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
         // TODO add your handling code here:
