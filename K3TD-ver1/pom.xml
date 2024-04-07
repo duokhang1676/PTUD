@@ -3,4 +3,11 @@
   <groupId>K3TD-ver1</groupId>
   <artifactId>K3TD-ver1</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>com.github.lgooddatepicker</groupId>
+            <artifactId>LGoodDatePicker</artifactId>
+            <version>11.2.1</version>
+        </dependency>
+    </dependencies>
 </project>
