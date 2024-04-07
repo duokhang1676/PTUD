@@ -179,7 +179,7 @@ public class BanHang extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Tên sản phẩm", "Đơn vị tính", "Số lượng", "Giá bán", "Thành tiền", ""
+                "Tên sản phẩm", "Đơn vị tính", "Số lượng", "Giá bán", "Thành tiền", "Tuỳ chỉnh"
             }
         ) {
             Class[] types = new Class [] {
@@ -200,17 +200,8 @@ public class BanHang extends javax.swing.JFrame {
         tbChiTietHoaDon.setRequestFocusEnabled(false);
         tbChiTietHoaDon.setRowHeight(40);
         jScrollPane1.setViewportView(tbChiTietHoaDon);
-        TableActionEvent event = new TableActionEvent() {
-			@Override
-			public void onDelete(int row) {
-				// TODO Auto-generated method stub
-				
-			}
-		};      
-		tbChiTietHoaDon.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(event));
-		tbChiTietHoaDon.getColumnModel().getColumn(5).setCellRenderer(new TableActionCellRender());
-        
-		jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         lblHoaDon.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
