@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.event.CellEditorListener;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 
 import ui.tuyChonBanHang.TableActionEvent;
 import ui.tuyChonHoaDon.TableActionCellEditor_HoaDon;
@@ -61,8 +62,6 @@ public class HoaDon extends javax.swing.JFrame {
         cbLoaiThoiGian = new javax.swing.JComboBox<>();
         cbTrangThai = new javax.swing.JComboBox<>();
         cbHoaDon = new javax.swing.JComboBox<>();
-        pnlFooter = new javax.swing.JPanel();
-        paginationHoaDon = new ui.paginationStyle.Pagination();
         pnlCenter = new javax.swing.JPanel();
         pnlContain = new javax.swing.JPanel();
         spTableHoaDon = new javax.swing.JScrollPane();
@@ -71,6 +70,8 @@ public class HoaDon extends javax.swing.JFrame {
         lblChonSoHDHienThi = new javax.swing.JLabel();
         cbChonHoaDonHienThi = new javax.swing.JComboBox<>();
         txtTongSoHoaDon = new javax.swing.JTextField();
+        pnlPage = new javax.swing.JPanel();
+        paginationHoaDon = new ui.paginationStyle.Pagination();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -208,37 +209,16 @@ public class HoaDon extends javax.swing.JFrame {
 
         content.add(pnlHeader, java.awt.BorderLayout.PAGE_START);
 
-        pnlFooter.setBackground(new java.awt.Color(193, 219, 208));
-        pnlFooter.setPreferredSize(new java.awt.Dimension(1920, 60));
-
-        javax.swing.GroupLayout pnlFooterLayout = new javax.swing.GroupLayout(pnlFooter);
-        pnlFooter.setLayout(pnlFooterLayout);
-        pnlFooterLayout.setHorizontalGroup(
-            pnlFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlFooterLayout.createSequentialGroup()
-                .addContainerGap(855, Short.MAX_VALUE)
-                .addComponent(paginationHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(856, Short.MAX_VALUE))
-        );
-        pnlFooterLayout.setVerticalGroup(
-            pnlFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlFooterLayout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
-                .addComponent(paginationHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
-
-        content.add(pnlFooter, java.awt.BorderLayout.PAGE_END);
-
-        pnlCenter.setBackground(new java.awt.Color(0, 204, 51));
+        pnlCenter.setBackground(new java.awt.Color(255, 255, 255));
 
         pnlContain.setBackground(new java.awt.Color(255, 255, 255));
         pnlContain.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách hoá đơn  ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 1, 14))); // NOI18N
+        pnlContain.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         pnlContain.setPreferredSize(new java.awt.Dimension(1920, 651));
 
         tbHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
+                {1, "HD07042400001", null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null},
@@ -267,35 +247,77 @@ public class HoaDon extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tbHoaDon.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         tbHoaDon.setRowHeight(40);
         spTableHoaDon.setViewportView(tbHoaDon);
+        
+        //Tuy chon
+        TableActionEvent_HoaDon event = new TableActionEvent_HoaDon() {
+			
+			@Override
+			public void onView(int row) {
+				// TODO Auto-generated method stub
+				
+			}
+		};
+		tbHoaDon.getColumnModel().getColumn(8).setCellEditor(new TableActionCellEditor_HoaDon(event));
+		tbHoaDon.getColumnModel().getColumn(8).setCellRenderer(new TableActionCellRender());
+		
 
         lblTongHoaDon.setText("Tổng số hoá đơn:");
+        lblTongHoaDon.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         lblChonSoHDHienThi.setText("Chọn số hoá đơn hiển thị:");
+        lblChonSoHDHienThi.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         cbChonHoaDonHienThi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "5", "10", "20", "50", "100" }));
+        cbChonHoaDonHienThi.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         txtTongSoHoaDon.setEnabled(false);
+        txtTongSoHoaDon.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+
+        pnlPage.setBackground(new java.awt.Color(193, 219, 208));
+        pnlPage.setPreferredSize(new java.awt.Dimension(1920, 60));
+
+        javax.swing.GroupLayout pnlPageLayout = new javax.swing.GroupLayout(pnlPage);
+        pnlPage.setLayout(pnlPageLayout);
+        pnlPageLayout.setHorizontalGroup(
+            pnlPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPageLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(paginationHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnlPageLayout.setVerticalGroup(
+            pnlPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPageLayout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addComponent(paginationHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout pnlContainLayout = new javax.swing.GroupLayout(pnlContain);
         pnlContain.setLayout(pnlContainLayout);
         pnlContainLayout.setHorizontalGroup(
             pnlContainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlContainLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(5, 5, 5)
                 .addGroup(pnlContainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(spTableHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, 1898, Short.MAX_VALUE)
+                    .addComponent(spTableHoaDon)
                     .addGroup(pnlContainLayout.createSequentialGroup()
                         .addComponent(lblTongHoaDon)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtTongSoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(25, 25, 25)
+                        .addComponent(txtTongSoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
                         .addComponent(lblChonSoHDHienThi)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbChonHoaDonHienThi, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 1441, Short.MAX_VALUE)))
+                .addGap(5, 5, 5))
+            .addGroup(pnlContainLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlPage, javax.swing.GroupLayout.DEFAULT_SIZE, 1898, Short.MAX_VALUE)
+                .addContainerGap())
         );
         pnlContainLayout.setVerticalGroup(
             pnlContainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,9 +328,10 @@ public class HoaDon extends javax.swing.JFrame {
                     .addComponent(lblChonSoHDHienThi)
                     .addComponent(cbChonHoaDonHienThi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtTongSoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(spTableHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(spTableHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlPage, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout pnlCenterLayout = new javax.swing.GroupLayout(pnlCenter);
@@ -319,7 +342,9 @@ public class HoaDon extends javax.swing.JFrame {
         );
         pnlCenterLayout.setVerticalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlContain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlCenterLayout.createSequentialGroup()
+                .addComponent(pnlContain, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         content.add(pnlCenter, java.awt.BorderLayout.CENTER);
@@ -395,8 +420,8 @@ public class HoaDon extends javax.swing.JFrame {
     private ui.paginationStyle.Pagination paginationHoaDon;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlContain;
-    private javax.swing.JPanel pnlFooter;
     private javax.swing.JPanel pnlHeader;
+    private javax.swing.JPanel pnlPage;
     private javax.swing.JScrollPane spTableHoaDon;
     private javax.swing.JTable tbHoaDon;
     private ui.TimTheoHangHoa txtTimTheoHangHoa;

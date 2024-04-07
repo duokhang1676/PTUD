@@ -69,6 +69,7 @@ public class ChiTietHoaDon extends javax.swing.JPanel {
         pnlHeader.setPreferredSize(new java.awt.Dimension(1000, 30));
 
         lblMa.setText("Mã hoá đơn - Mã chi tiết hoá đơn");
+        lblMa.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
         javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
         pnlHeader.setLayout(pnlHeaderLayout);
@@ -77,7 +78,7 @@ public class ChiTietHoaDon extends javax.swing.JPanel {
             .addGroup(pnlHeaderLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblMa)
-                .addContainerGap(794, Short.MAX_VALUE))
+                .addContainerGap(785, Short.MAX_VALUE))
         );
         pnlHeaderLayout.setVerticalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,34 +95,56 @@ public class ChiTietHoaDon extends javax.swing.JPanel {
         pnlRight.setPreferredSize(new java.awt.Dimension(300, 475));
 
         lblMaHoaDon.setText("Mã hoá đơn:");
+        lblMaHoaDon.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         lblNhanVien.setText("Nhân viên bán hàng:");
+        lblNhanVien.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         lblNgayBan.setText("Ngày bán");
+        lblNgayBan.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         lblKhachHang.setText("Khách hàng");
+        lblKhachHang.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+
+        txtKhachHang.setEnabled(false);
+        txtKhachHang.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         ckbBanTheoDon.setText("Bán theo đơn");
+        ckbBanTheoDon.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         lblTrangThai.setText("Trạng thái:");
+        lblTrangThai.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+
+        txtTrangThai.setEnabled(false);
+        txtTrangThai.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         lblGhiChu.setText("Ghi chú:");
+        lblGhiChu.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         txtGhiChu.setColumns(20);
         txtGhiChu.setRows(5);
+        txtGhiChu.setEnabled(false);
+        txtGhiChu.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         spGhiChu.setViewportView(txtGhiChu);
 
         lblTongTien.setText("Tổng tiền:");
+        lblTongTien.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         lblTongGiam.setText("Tổng giảm giá:");
+        lblTongGiam.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         lblTongVAT.setText("Tổng VAT:");
+        lblTongVAT.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         lblThanhTien.setText("Thành tiền:");
+        lblThanhTien.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         lblKhachTra.setText("Khách trả:");
+        lblKhachTra.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         btnLuu.setText("Lưu");
+        btnLuu.setBackground(new java.awt.Color(102, 255, 102));
+        btnLuu.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         btnLuu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLuuActionPerformed(evt);
@@ -129,24 +152,44 @@ public class ChiTietHoaDon extends javax.swing.JPanel {
         });
 
         btnDong.setText("Đóng");
+        btnDong.setBackground(new java.awt.Color(255, 51, 0));
+        btnDong.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
+        txtMaHoaDon.setEnabled(false);
+        txtMaHoaDon.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+
+        txtNhanVien.setEnabled(false);
+        txtNhanVien.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         txtNhanVien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNhanVienActionPerformed(evt);
             }
         });
 
+        txtTongTien.setEnabled(false);
+        txtTongTien.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+
+        txtTongGiam.setEnabled(false);
+        txtTongGiam.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+
+        txtTongVAT.setEnabled(false);
+        txtTongVAT.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         txtTongVAT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTongVATActionPerformed(evt);
             }
         });
 
+        txtThanhTien.setEnabled(false);
+        txtThanhTien.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         txtThanhTien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtThanhTienActionPerformed(evt);
             }
         });
+
+        txtKhachTra.setEnabled(false);
+        txtKhachTra.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout pnlRightLayout = new javax.swing.GroupLayout(pnlRight);
         pnlRight.setLayout(pnlRightLayout);
@@ -296,10 +339,12 @@ public class ChiTietHoaDon extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tbChiTietHoaDon.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         tbChiTietHoaDon.setPreferredSize(new java.awt.Dimension(525, 70));
         spTableChiTietHoaDon.setViewportView(tbChiTietHoaDon);
 
         lblChiTietHoaDon.setText("Chi tiết hoá đơn");
+        lblChiTietHoaDon.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout pnlLeftLayout = new javax.swing.GroupLayout(pnlLeft);
         pnlLeft.setLayout(pnlLeftLayout);
