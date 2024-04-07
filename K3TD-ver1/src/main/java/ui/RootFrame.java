@@ -4,6 +4,7 @@
  */
 package ui;
 
+import components.AddContent;
 import components.ColorSample;
 import components.ResizeContent;
 
@@ -30,7 +31,8 @@ public class RootFrame extends javax.swing.JFrame {
     public RootFrame() {
     	setTitle("Phầm mềm quản lý quầy thuốc tây K3TD");
         initComponents();
-        
+        pnlContent.add(trangChu);
+        AddContent.setContent(pnlContent);
         resizeFrameToScreenScale();
         setFontAll(new Font(lblUser.getName(), Font.PLAIN, 14));
     }
@@ -122,6 +124,9 @@ public class RootFrame extends javax.swing.JFrame {
         lblUser.setText("Username");
         lblUser.setPreferredSize(new java.awt.Dimension(100, 60));
         lblUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblUserMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblUserMouseEntered(evt);
             }
@@ -532,10 +537,6 @@ public class RootFrame extends javax.swing.JFrame {
 
         pnlContent.setBackground(new java.awt.Color(153, 255, 153));
         pnlContent.setLayout(new java.awt.BorderLayout());
-        pnlContent.add(trangChu);        
-        //resize panel
-        new ResizeContent().resizeContent(pnlContent);
-        
 
         javax.swing.GroupLayout pnlBodyLayout = new javax.swing.GroupLayout(pnlBody);
         pnlBody.setLayout(pnlBodyLayout);
@@ -843,7 +844,18 @@ public class RootFrame extends javax.swing.JFrame {
     	pnlContent.add(xuatTra.content());
     	pnlContent.revalidate();
         pnlContent.repaint();
+        
+        
+
     }//GEN-LAST:event_btnXuatTraActionPerformed
+
+    private void lblUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblUserMouseClicked
+        // TODO add your handling code here:
+        pnlContent.removeAll();
+        pnlContent.add(new TaiKhoan());
+        pnlContent.revalidate();
+        pnlContent.repaint();
+    }//GEN-LAST:event_lblUserMouseClicked
     
     private void setFontAll(Font font){
         lblTienIch.setFont(font);
@@ -897,9 +909,9 @@ public class RootFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-            	RootFrame trangChu = new RootFrame();
-            	trangChu.setExtendedState(JFrame.MAXIMIZED_BOTH); // Hiển thị cửa sổ trong chế độ toàn màn hình
-                trangChu.setVisible(true);
+            	RootFrame rootFrame = new RootFrame();
+            	rootFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Hiển thị cửa sổ trong chế độ toàn màn hình
+                rootFrame.setVisible(true);
             }
         });
     }

@@ -107,6 +107,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ui;
+import components.LoginInfo;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.awt.*;
@@ -297,10 +298,11 @@ public class Login_Page extends javax.swing.JFrame {
         // TODO add your handling code here:
         setVisible(false);
         RootFrame rf =  new RootFrame();
+        LoginInfo.addRootframe(rf);
         rf.setExtendedState(JFrame.MAXIMIZED_BOTH);
         rf.setVisible(true);
     }//GEN-LAST:event_btn_dangNhapActionPerformed
-
+    
     /**
      * @param args the command line arguments
      */
