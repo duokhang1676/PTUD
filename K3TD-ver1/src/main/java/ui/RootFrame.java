@@ -725,7 +725,7 @@ public class RootFrame extends javax.swing.JFrame {
     private void btnNhapHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhapHangActionPerformed
         // TODO add your handling code here:
         pnlContent.removeAll();
-    	pnlContent.add(new NhapHang());
+    	pnlContent.add(new TaoPhieuNhapHang());
     	pnlContent.revalidate();
         pnlContent.repaint();
     }//GEN-LAST:event_btnNhapHangActionPerformed
@@ -840,7 +840,7 @@ public class RootFrame extends javax.swing.JFrame {
     private void btnXuatTraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatTraActionPerformed
         // TODO add your handling code here:
         pnlContent.removeAll();
-    	pnlContent.add(new XuatTra());
+    	pnlContent.add(new TaoPhieuXuatTra());
     	pnlContent.revalidate();
         pnlContent.repaint();
         

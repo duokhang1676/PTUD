@@ -13,12 +13,12 @@ import javax.swing.JPanel;
  *
  * @author ACER
  */
-public class XuatTra extends javax.swing.JPanel {
+public class TaoPhieuXuatTra extends javax.swing.JPanel {
 
     /**
      * Creates new form NhapHang
      */
-    public XuatTra() {
+    public TaoPhieuXuatTra() {
         initComponents();
         new ResizeContent().resizeContent(this);
         
