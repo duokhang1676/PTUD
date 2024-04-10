@@ -22,7 +22,9 @@ D:\Nam3\HK2\K3TD_app\PTUD\K3TD-ver1\src\main\java\entities\DonThuocMau.java
 D:\Nam3\HK2\K3TD_app\PTUD\K3TD-ver1\src\main\java\ui\TraHang.java
 D:\Nam3\HK2\K3TD_app\PTUD\K3TD-ver1\src\main\java\entities\ChiTietPhieuXuatTraNCC.java
 D:\Nam3\HK2\K3TD_app\PTUD\K3TD-ver1\src\main\java\ui\NhanVien.java
+D:\Nam3\HK2\K3TD_app\PTUD\K3TD-ver1\src\main\java\db\ConnectDB.java
 D:\Nam3\HK2\K3TD_app\PTUD\K3TD-ver1\src\main\java\ui\CaLamViec.java
+D:\Nam3\HK2\K3TD_app\PTUD\K3TD-ver1\src\main\java\db\DBConfiguation.java
 D:\Nam3\HK2\K3TD_app\PTUD\K3TD-ver1\src\main\java\ui\BanHang.java
 D:\Nam3\HK2\K3TD_app\PTUD\K3TD-ver1\src\main\java\ui\KhachHang.java
 D:\Nam3\HK2\K3TD_app\PTUD\K3TD-ver1\src\main\java\ui\HoaDon.java
