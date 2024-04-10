@@ -2,26 +2,30 @@ package entities;
 
 import java.time.LocalDateTime;
 
-public class PhieuXuatTraNCC {
+public class PhieuXuatTra {
 	private String maPhieuXuatTra;
 	private LocalDateTime thoiGianTao;
 	private String ghiChu;
 	private String maHoaDonNCC;
 	private NhaCungCap nhaCungCap;
-	public PhieuXuatTraNCC(String maPhieuXuatTra, LocalDateTime thoiGianTao, String ghiChu, String maHoaDonNCC,
-			NhaCungCap nhaCungCap) {
+	private double tongTienGiam;
+	private TrangThaiPhieuXuatTra trangThai;
+	public PhieuXuatTra(String maPhieuXuatTra, LocalDateTime thoiGianTao, String ghiChu, String maHoaDonNCC,
+			NhaCungCap nhaCungCap, double tongTienGiam, TrangThaiPhieuXuatTra trangThai) {
 		super();
 		this.maPhieuXuatTra = maPhieuXuatTra;
 		this.thoiGianTao = thoiGianTao;
 		this.ghiChu = ghiChu;
 		this.maHoaDonNCC = maHoaDonNCC;
 		this.nhaCungCap = nhaCungCap;
+		this.tongTienGiam = tongTienGiam;
+		this.trangThai = trangThai;
 	}
-	public PhieuXuatTraNCC(String maPhieuXuatTra) {
+	public PhieuXuatTra(String maPhieuXuatTra) {
 		super();
 		this.maPhieuXuatTra = maPhieuXuatTra;
 	}
-	public PhieuXuatTraNCC() {
+	public PhieuXuatTra() {
 		super();
 	}
 	public String getMaPhieuXuatTra() {
@@ -54,11 +58,25 @@ public class PhieuXuatTraNCC {
 	public void setNhaCungCap(NhaCungCap nhaCungCap) {
 		this.nhaCungCap = nhaCungCap;
 	}
+	public double getTongTienGiam() {
+		return tongTienGiam;
+	}
+	public void setTongTienGiam(double tongTienGiam) {
+		this.tongTienGiam = tongTienGiam;
+	}
+	public TrangThaiPhieuXuatTra getTrangThai() {
+		return trangThai;
+	}
+	public void setTrangThai(TrangThaiPhieuXuatTra trangThai) {
+		this.trangThai = trangThai;
+	}
 	@Override
 	public String toString() {
-		return "PhieuXuatTraNCC [maPhieuXuatTra=" + maPhieuXuatTra + ", thoiGianTao=" + thoiGianTao + ", ghiChu="
-				+ ghiChu + ", maHoaDonNCC=" + maHoaDonNCC + ", nhaCungCap=" + nhaCungCap + "]";
+		return "PhieuXuatTra [maPhieuXuatTra=" + maPhieuXuatTra + ", thoiGianTao=" + thoiGianTao + ", ghiChu=" + ghiChu
+				+ ", maHoaDonNCC=" + maHoaDonNCC + ", nhaCungCap=" + nhaCungCap + ", tongTienGiam=" + tongTienGiam
+				+ ", trangThai=" + trangThai + "]";
 	}
+
 	
 	
 }

@@ -108,6 +108,8 @@
  */
 package ui;
 import components.LoginInfo;
+import db.ConnectDB;
+
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.awt.*;
@@ -117,12 +119,12 @@ import javax.swing.JFrame;
  *
  * @author ACER
  */
-public class Login_Page extends javax.swing.JFrame {
+public class DangNhap extends javax.swing.JFrame {
 
     /**
      * Creates new form Login_Page
      */
-    public Login_Page() {
+    public DangNhap() {
         initComponents();
         setLocationRelativeTo(null);
 //        myModifyCode();
@@ -295,15 +297,30 @@ public class Login_Page extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_thoatActionPerformed
 
     private void btn_dangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dangNhapActionPerformed
-        // TODO add your handling code here:
-        setVisible(false);
+        // TODO add your handling code here
+    	if(!KiemTraDangNhap())
+    		return;
+    	try {
+			ConnectDB.getInstance().connect();
+			System.out.println("Kết nối csld thành công!");
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			System.out.println("Kết nối csld thất bại!");
+		}
+        this.setVisible(false);
         RootFrame rf =  new RootFrame();
         LoginInfo.addRootframe(rf);
         rf.setExtendedState(JFrame.MAXIMIZED_BOTH);
         rf.setVisible(true);
     }//GEN-LAST:event_btn_dangNhapActionPerformed
     
-    /**
+    private boolean KiemTraDangNhap() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	/**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -320,13 +337,13 @@ public class Login_Page extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login_Page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DangNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login_Page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DangNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login_Page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DangNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login_Page.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DangNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -334,7 +351,8 @@ public class Login_Page extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login_Page().setVisible(true);
+                DangNhap dangNhap = new DangNhap();
+                dangNhap.setVisible(true);
             }
         });
     }

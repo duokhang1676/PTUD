@@ -10,9 +10,11 @@ public class KhachHang {
 	private String soDienThoai;
 	private int diemThuong;
 	private LocalDate ngayTao;
+	private String ghiChu;
 	private TrangThaiKhachHang trangThaiKhachHang;
+	
 	public KhachHang(String maKhachHang, String tenKhachHang, LocalDate ngaySinh, boolean gioiTinh, String soDienThoai,
-			int diemThuong, LocalDate ngayTao, TrangThaiKhachHang trangThaiKhachHang) {
+			int diemThuong, LocalDate ngayTao, String ghiChu, TrangThaiKhachHang trangThaiKhachHang) {
 		super();
 		this.maKhachHang = maKhachHang;
 		this.tenKhachHang = tenKhachHang;
@@ -21,6 +23,7 @@ public class KhachHang {
 		this.soDienThoai = soDienThoai;
 		this.diemThuong = diemThuong;
 		this.ngayTao = ngayTao;
+		this.ghiChu = ghiChu;
 		this.trangThaiKhachHang = trangThaiKhachHang;
 	}
 	public KhachHang(String maKhachHang) {
@@ -72,6 +75,12 @@ public class KhachHang {
 	public void setNgayTao(LocalDate ngayTao) {
 		this.ngayTao = ngayTao;
 	}
+	public String getGhiChu() {
+		return ghiChu;
+	}
+	public void setGhiChu(String ghiChu) {
+		this.ghiChu = ghiChu;
+	}
 	public TrangThaiKhachHang getTrangThaiKhachHang() {
 		return trangThaiKhachHang;
 	}
@@ -82,8 +91,9 @@ public class KhachHang {
 	public String toString() {
 		return "KhachHang [maKhachHang=" + maKhachHang + ", tenKhachHang=" + tenKhachHang + ", ngaySinh=" + ngaySinh
 				+ ", gioiTinh=" + gioiTinh + ", soDienThoai=" + soDienThoai + ", diemThuong=" + diemThuong
-				+ ", ngayTao=" + ngayTao + ", trangThaiKhachHang=" + trangThaiKhachHang + "]";
+				+ ", ngayTao=" + ngayTao + ", ghiChu=" + ghiChu + ", trangThaiKhachHang=" + trangThaiKhachHang + "]";
 	}
+	
 	
 	
 }

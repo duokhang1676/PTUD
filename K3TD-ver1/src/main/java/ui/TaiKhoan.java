@@ -4,7 +4,7 @@
  */
 package ui;
 
-import com.sun.java.swing.plaf.windows.WindowsDesktopManager;
+import components.AddContent;
 import components.LoginInfo;
 import components.ResizeContent;
 
@@ -39,28 +39,35 @@ public class TaiKhoan extends javax.swing.JPanel {
         pnlChucVu = new javax.swing.JPanel();
         lblChucVu = new javax.swing.JLabel();
         txtChucVu = new javax.swing.JTextField();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        lblGioiTinh = new javax.swing.JLabel();
+        jRadioButton2 = new javax.swing.JRadioButton();
         pnlNgaySinh = new javax.swing.JPanel();
         lblNgaySinh = new javax.swing.JLabel();
-        txtNgaySinh = new javax.swing.JTextField();
+        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
+        lblNgaySinh1 = new javax.swing.JLabel();
+        datePicker2 = new com.github.lgooddatepicker.components.DatePicker();
         pnlGioiTinh = new javax.swing.JPanel();
-        lblGioiTinh = new javax.swing.JLabel();
-        txtGioiTinh = new javax.swing.JTextField();
         pnlSdt = new javax.swing.JPanel();
         lblSdt = new javax.swing.JLabel();
         txtSdt = new javax.swing.JTextField();
         pnlButton = new javax.swing.JPanel();
         btnDangXuat = new javax.swing.JButton();
-        btnKetCa = new javax.swing.JButton();
         bntDoiMK = new javax.swing.JButton();
+        btnKetCa1 = new javax.swing.JButton();
+        btnKetCa = new javax.swing.JButton();
+        pnlHoTen1 = new javax.swing.JPanel();
+        lblHoTen1 = new javax.swing.JLabel();
+        txtHoTen1 = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
         content.setBackground(new java.awt.Color(193, 219, 208));
         content.setPreferredSize(new java.awt.Dimension(600, 840));
 
-        pnlAvatar.setBackground(new java.awt.Color(193, 219, 208));
         pnlAvatar.setAlignmentX(0.0F);
         pnlAvatar.setAlignmentY(0.0F);
+        pnlAvatar.setBackground(new java.awt.Color(193, 219, 208));
 
         javax.swing.GroupLayout pnlAvatarLayout = new javax.swing.GroupLayout(pnlAvatar);
         pnlAvatar.setLayout(pnlAvatarLayout);
@@ -70,14 +77,14 @@ public class TaiKhoan extends javax.swing.JPanel {
         );
         pnlAvatarLayout.setVerticalGroup(
             pnlAvatarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 138, Short.MAX_VALUE)
+            .addGap(0, 125, Short.MAX_VALUE)
         );
 
         pnlHoTen.setBackground(new java.awt.Color(193, 219, 208));
         pnlHoTen.setPreferredSize(new java.awt.Dimension(500, 100));
 
+        lblHoTen.setText("Họ và tên");
         lblHoTen.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblHoTen.setText("Họ và Tên");
 
         txtHoTen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,12 +116,32 @@ public class TaiKhoan extends javax.swing.JPanel {
         pnlChucVu.setBackground(new java.awt.Color(193, 219, 208));
         pnlChucVu.setPreferredSize(new java.awt.Dimension(500, 100));
 
-        lblChucVu.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblChucVu.setText("Chức vụ");
+        lblChucVu.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
+        txtChucVu.setEditable(false);
         txtChucVu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtChucVuActionPerformed(evt);
+            }
+        });
+
+        jRadioButton1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jRadioButton1.setText("Nữ");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
+
+        lblGioiTinh.setText("Giới tính");
+        lblGioiTinh.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+
+        jRadioButton2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jRadioButton2.setText("Nam");
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
             }
         });
 
@@ -125,31 +152,46 @@ public class TaiKhoan extends javax.swing.JPanel {
             .addGroup(pnlChucVuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlChucVuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblChucVu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtChucVu, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(lblChucVu, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+                    .addGroup(pnlChucVuLayout.createSequentialGroup()
+                        .addComponent(txtChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlChucVuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblGioiTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlChucVuLayout.createSequentialGroup()
+                        .addComponent(jRadioButton2)
+                        .addGap(33, 33, 33)
+                        .addComponent(jRadioButton1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlChucVuLayout.setVerticalGroup(
             pnlChucVuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlChucVuLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblChucVu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4))
+                .addGroup(pnlChucVuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlChucVuLayout.createSequentialGroup()
+                        .addComponent(lblGioiTinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(8, 8, 8)
+                        .addGroup(pnlChucVuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButton2)
+                            .addComponent(jRadioButton1))
+                        .addContainerGap())
+                    .addGroup(pnlChucVuLayout.createSequentialGroup()
+                        .addComponent(lblChucVu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4))))
         );
 
         pnlNgaySinh.setBackground(new java.awt.Color(193, 219, 208));
         pnlNgaySinh.setPreferredSize(new java.awt.Dimension(500, 100));
 
-        lblNgaySinh.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblNgaySinh.setText("Ngày sinh");
+        lblNgaySinh.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
-        txtNgaySinh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNgaySinhActionPerformed(evt);
-            }
-        });
+        lblNgaySinh1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblNgaySinh1.setText("Ngày tạo tài khoản");
 
         javax.swing.GroupLayout pnlNgaySinhLayout = new javax.swing.GroupLayout(pnlNgaySinh);
         pnlNgaySinh.setLayout(pnlNgaySinhLayout);
@@ -157,59 +199,49 @@ public class TaiKhoan extends javax.swing.JPanel {
             pnlNgaySinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNgaySinhLayout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(pnlNgaySinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblNgaySinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(datePicker1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addGroup(pnlNgaySinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNgaySinh, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
-                    .addComponent(txtNgaySinh))
+                    .addComponent(datePicker2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNgaySinh1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         pnlNgaySinhLayout.setVerticalGroup(
             pnlNgaySinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNgaySinhLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblNgaySinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4))
+                .addGroup(pnlNgaySinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlNgaySinhLayout.createSequentialGroup()
+                        .addComponent(lblNgaySinh, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                        .addGap(5, 5, 5)
+                        .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlNgaySinhLayout.createSequentialGroup()
+                        .addComponent(lblNgaySinh1, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                        .addGap(5, 5, 5)
+                        .addComponent(datePicker2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         pnlGioiTinh.setBackground(new java.awt.Color(193, 219, 208));
         pnlGioiTinh.setPreferredSize(new java.awt.Dimension(500, 100));
 
-        lblGioiTinh.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblGioiTinh.setText("Giới tính");
-
-        txtGioiTinh.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtGioiTinhActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnlGioiTinhLayout = new javax.swing.GroupLayout(pnlGioiTinh);
         pnlGioiTinh.setLayout(pnlGioiTinhLayout);
         pnlGioiTinhLayout.setHorizontalGroup(
             pnlGioiTinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlGioiTinhLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlGioiTinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblGioiTinh, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
-                    .addComponent(txtGioiTinh))
-                .addContainerGap())
+            .addGap(0, 590, Short.MAX_VALUE)
         );
         pnlGioiTinhLayout.setVerticalGroup(
             pnlGioiTinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlGioiTinhLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblGioiTinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtGioiTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4))
+            .addGap(0, 67, Short.MAX_VALUE)
         );
 
         pnlSdt.setBackground(new java.awt.Color(193, 219, 208));
         pnlSdt.setPreferredSize(new java.awt.Dimension(500, 100));
 
-        lblSdt.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblSdt.setText("Số điện thoại");
+        lblSdt.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
         txtSdt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -241,28 +273,36 @@ public class TaiKhoan extends javax.swing.JPanel {
         pnlButton.setBackground(new java.awt.Color(193, 219, 208));
         pnlButton.setPreferredSize(new java.awt.Dimension(500, 100));
 
-        btnDangXuat.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnDangXuat.setText("Đăng xuất");
+        btnDangXuat.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnDangXuat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDangXuatActionPerformed(evt);
             }
         });
 
-        btnKetCa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnKetCa.setText("Kết ca");
-        btnKetCa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKetCaActionPerformed(evt);
-            }
-        });
-
-        bntDoiMK.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         bntDoiMK.setText("Đổi mật khẩu");
+        bntDoiMK.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         bntDoiMK.setPreferredSize(new java.awt.Dimension(125, 23));
         bntDoiMK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bntDoiMKActionPerformed(evt);
+            }
+        });
+
+        btnKetCa1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnKetCa1.setText("Lưu");
+        btnKetCa1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKetCa1ActionPerformed(evt);
+            }
+        });
+
+        btnKetCa.setText("Kết ca");
+        btnKetCa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btnKetCa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKetCaActionPerformed(evt);
             }
         });
 
@@ -275,9 +315,11 @@ public class TaiKhoan extends javax.swing.JPanel {
                 .addGroup(pnlButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnDangXuat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlButtonLayout.createSequentialGroup()
-                        .addComponent(bntDoiMK, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
-                        .addComponent(btnKetCa, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(bntDoiMK, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)
+                        .addComponent(btnKetCa, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                        .addComponent(btnKetCa1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         pnlButtonLayout.setVerticalGroup(
@@ -286,9 +328,44 @@ public class TaiKhoan extends javax.swing.JPanel {
                 .addContainerGap(12, Short.MAX_VALUE)
                 .addGroup(pnlButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bntDoiMK, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnKetCa1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnKetCa, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        pnlHoTen1.setBackground(new java.awt.Color(193, 219, 208));
+        pnlHoTen1.setPreferredSize(new java.awt.Dimension(500, 100));
+
+        lblHoTen1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        lblHoTen1.setText("Mã nhân viên");
+
+        txtHoTen1.setEditable(false);
+        txtHoTen1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHoTen1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlHoTen1Layout = new javax.swing.GroupLayout(pnlHoTen1);
+        pnlHoTen1.setLayout(pnlHoTen1Layout);
+        pnlHoTen1Layout.setHorizontalGroup(
+            pnlHoTen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlHoTen1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlHoTen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblHoTen1, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
+                    .addComponent(txtHoTen1))
+                .addContainerGap())
+        );
+        pnlHoTen1Layout.setVerticalGroup(
+            pnlHoTen1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlHoTen1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblHoTen1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtHoTen1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4))
         );
 
         javax.swing.GroupLayout contentLayout = new javax.swing.GroupLayout(content);
@@ -300,11 +377,15 @@ public class TaiKhoan extends javax.swing.JPanel {
                 .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnlSdt, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlButton, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlGioiTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(contentLayout.createSequentialGroup()
+                        .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnlNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pnlHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pnlChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnlGioiTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlHoTen1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlButton, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         contentLayout.setVerticalGroup(
@@ -312,17 +393,20 @@ public class TaiKhoan extends javax.swing.JPanel {
             .addGroup(contentLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addComponent(pnlAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlHoTen1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlGioiTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pnlGioiTinh, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(contentLayout.createSequentialGroup()
+                        .addComponent(pnlHoTen, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnlChucVu, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnlNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlSdt, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(pnlButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -338,14 +422,6 @@ public class TaiKhoan extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtChucVuActionPerformed
 
-    private void txtNgaySinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNgaySinhActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNgaySinhActionPerformed
-
-    private void txtGioiTinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtGioiTinhActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtGioiTinhActionPerformed
-
     private void txtSdtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSdtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSdtActionPerformed
@@ -353,56 +429,64 @@ public class TaiKhoan extends javax.swing.JPanel {
     private void btnDangXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangXuatActionPerformed
         // TODO add your handling code here:
         LoginInfo.disposeRootframe();
-        new Login_Page().setVisible(true);
+        new DangNhap().setVisible(true);
     }//GEN-LAST:event_btnDangXuatActionPerformed
 
     private void bntDoiMKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntDoiMKActionPerformed
         // TODO add your handling code here:
-        this.removeAll();
-        this.add(new DoiMatKhau());
-        this.revalidate();
-        this.repaint();
+    	AddContent.addContent(new DoiMatKhau());
     }//GEN-LAST:event_bntDoiMKActionPerformed
 
     private void btnKetCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKetCaActionPerformed
         // TODO add your handling code here:
-        this.removeAll();
-        this.add(new KetCa());
-        this.revalidate();
-        this.repaint();
+    	AddContent.addContent(new KetCa());
     }//GEN-LAST:event_btnKetCaActionPerformed
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void txtHoTen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHoTen1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHoTen1ActionPerformed
+
+    private void btnKetCa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKetCa1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnKetCa1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntDoiMK;
     private javax.swing.JButton btnDangXuat;
     private javax.swing.JButton btnKetCa;
+    private javax.swing.JButton btnKetCa1;
     private javax.swing.JPanel content;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel9;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private com.github.lgooddatepicker.components.DatePicker datePicker1;
+    private com.github.lgooddatepicker.components.DatePicker datePicker2;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JLabel lblChucVu;
     private javax.swing.JLabel lblGioiTinh;
     private javax.swing.JLabel lblHoTen;
+    private javax.swing.JLabel lblHoTen1;
     private javax.swing.JLabel lblNgaySinh;
+    private javax.swing.JLabel lblNgaySinh1;
     private javax.swing.JLabel lblSdt;
     private javax.swing.JPanel pnlAvatar;
     private javax.swing.JPanel pnlButton;
     private javax.swing.JPanel pnlChucVu;
     private javax.swing.JPanel pnlGioiTinh;
     private javax.swing.JPanel pnlHoTen;
+    private javax.swing.JPanel pnlHoTen1;
     private javax.swing.JPanel pnlNgaySinh;
     private javax.swing.JPanel pnlSdt;
     private javax.swing.JTextField txtChucVu;
-    private javax.swing.JTextField txtGioiTinh;
     private javax.swing.JTextField txtHoTen;
-    private javax.swing.JTextField txtNgaySinh;
+    private javax.swing.JTextField txtHoTen1;
     private javax.swing.JTextField txtSdt;
     // End of variables declaration//GEN-END:variables
 }

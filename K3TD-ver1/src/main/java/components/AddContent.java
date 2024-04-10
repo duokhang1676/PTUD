@@ -15,4 +15,11 @@ public class AddContent {
     public static void setContent(JPanel content){
         pnlContent = content;
     }
+    public static void addContent(JPanel content) {
+    	StatusMenu.setFalseAll();
+    	pnlContent.removeAll();
+    	pnlContent.add(content);
+    	pnlContent.revalidate();
+    	pnlContent.repaint();
+    }
 }

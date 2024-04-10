@@ -10,10 +10,13 @@ public class NhanVien {
 	private String soDienThoai;
 	private String matKhau;
 	private LocalDate ngayTao;
+	private String ghiChu;
 	private ChucVuNhanVien chucVu;
 	private TrangThaiNhanVien trangThaiNhanVien;
+	
 	public NhanVien(String maNhanVien, String tenNhanVien, LocalDate ngaySinh, boolean gioiTinh, String soDienThoai,
-			String matKhau, LocalDate ngayTao, ChucVuNhanVien chucVu, TrangThaiNhanVien trangThaiNhanVien) {
+			String matKhau, LocalDate ngayTao, String ghiChu, ChucVuNhanVien chucVu,
+			TrangThaiNhanVien trangThaiNhanVien) {
 		super();
 		this.maNhanVien = maNhanVien;
 		this.tenNhanVien = tenNhanVien;
@@ -22,6 +25,7 @@ public class NhanVien {
 		this.soDienThoai = soDienThoai;
 		this.matKhau = matKhau;
 		this.ngayTao = ngayTao;
+		this.ghiChu = ghiChu;
 		this.chucVu = chucVu;
 		this.trangThaiNhanVien = trangThaiNhanVien;
 	}
@@ -74,6 +78,12 @@ public class NhanVien {
 	public void setNgayTao(LocalDate ngayTao) {
 		this.ngayTao = ngayTao;
 	}
+	public String getGhiChu() {
+		return ghiChu;
+	}
+	public void setGhiChu(String ghiChu) {
+		this.ghiChu = ghiChu;
+	}
 	public ChucVuNhanVien getChucVu() {
 		return chucVu;
 	}
@@ -90,8 +100,10 @@ public class NhanVien {
 	public String toString() {
 		return "NhanVien [maNhanVien=" + maNhanVien + ", tenNhanVien=" + tenNhanVien + ", ngaySinh=" + ngaySinh
 				+ ", gioiTinh=" + gioiTinh + ", soDienThoai=" + soDienThoai + ", matKhau=" + matKhau + ", ngayTao="
-				+ ngayTao + ", chucVu=" + chucVu + ", trangThaiNhanVien=" + trangThaiNhanVien + "]";
+				+ ngayTao + ", ghiChu=" + ghiChu + ", chucVu=" + chucVu + ", trangThaiNhanVien=" + trangThaiNhanVien
+				+ "]";
 	}
+	
 	
 	
 }

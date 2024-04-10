@@ -1,5 +1,5 @@
 package entities;
 
 public enum TrangThaiDonThuocMau {
-	HOAT_DONG, TAM_DUNG;
+	DANG_BAN, TAM_DUNG;
 }

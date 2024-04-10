@@ -10,11 +10,12 @@ public class Ca {
 	private LocalDateTime thoiGianKetCa;
 	private double tongTien;
 	private double tongTienThucTe;
+	private String ghiChu;
 	public Ca() {
 		super();
 	}
 	public Ca(String maCa, String tenCa, NhanVien nhanVien, LocalDateTime thoiGianVaoCa, LocalDateTime thoiGianKetCa,
-			double tongTien, double tongTienThucTe) {
+			double tongTien, double tongTienThucTe, String ghiChu) {
 		super();
 		this.maCa = maCa;
 		this.tenCa = tenCa;
@@ -23,6 +24,7 @@ public class Ca {
 		this.thoiGianKetCa = thoiGianKetCa;
 		this.tongTien = tongTien;
 		this.tongTienThucTe = tongTienThucTe;
+		this.ghiChu = ghiChu;
 	}
 	public Ca(String maCa) {
 		super();
@@ -70,12 +72,19 @@ public class Ca {
 	public void setTongTienThucTe(double tongTienThucTe) {
 		this.tongTienThucTe = tongTienThucTe;
 	}
+	public String getGhiChu() {
+		return ghiChu;
+	}
+	public void setGhiChu(String ghiChu) {
+		this.ghiChu = ghiChu;
+	}
 	@Override
 	public String toString() {
 		return "Ca [maCa=" + maCa + ", tenCa=" + tenCa + ", nhanVien=" + nhanVien + ", thoiGianVaoCa=" + thoiGianVaoCa
 				+ ", thoiGianKetCa=" + thoiGianKetCa + ", tongTien=" + tongTien + ", tongTienThucTe=" + tongTienThucTe
-				+ "]";
+				+ ", ghiChu=" + ghiChu + "]";
 	}
+	
 	
 	
 }

@@ -3,6 +3,7 @@ package entities;
 public class HangHoa {
 	private String maHangHoa;
 	private String tenHangHoa;
+	private LoaiHang loaiHang;
 	private String soDangKy;
 	private NhomHang nhomHang;
 	private String nuocSanXuat;
@@ -16,7 +17,6 @@ public class HangHoa {
 	private int soLuongDinhMuc;
 	private int soLuongCanhBao;
 	private TrangThaiHangHoa trangThaiHangHoa;
-	private LoaiHang loaiHang;
 	public HangHoa(String maHangHoa, String tenHangHoa, String soDangKy, NhomHang nhomHang, String nuocSanXuat,
 			String hangSanXuat, String hoatChatChinh, String hamLuong, String quyCachDongGoi, String moTa, double thue,
 			String maVach, int soLuongDinhMuc, int soLuongCanhBao, TrangThaiHangHoa trangThaiHangHoa,

@@ -256,10 +256,7 @@ public class DoiMatKhau extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        AddContent.pnlContent.removeAll();
-        AddContent.pnlContent.add(new TaiKhoan());
-        AddContent.pnlContent.revalidate();
-        AddContent.pnlContent.repaint();
+    	AddContent.addContent(new TaiKhoan());
         
     }//GEN-LAST:event_jButton3ActionPerformed
 

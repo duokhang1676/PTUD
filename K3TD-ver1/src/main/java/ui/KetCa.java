@@ -37,7 +37,7 @@ public class KetCa extends javax.swing.JPanel {
         jTextField1 = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel12 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jTextField11 = new javax.swing.JTextField();
@@ -56,9 +56,9 @@ public class KetCa extends javax.swing.JPanel {
         content.setBackground(new java.awt.Color(193, 219, 208));
         content.setPreferredSize(new java.awt.Dimension(600, 840));
 
-        jPanel2.setBackground(new java.awt.Color(193, 219, 208));
         jPanel2.setAlignmentX(0.0F);
         jPanel2.setAlignmentY(0.0F);
+        jPanel2.setBackground(new java.awt.Color(193, 219, 208));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -74,9 +74,10 @@ public class KetCa extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(193, 219, 208));
         jPanel1.setPreferredSize(new java.awt.Dimension(500, 100));
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel1.setText("Nhân viên kết ca");
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
+        jTextField1.setEditable(false);
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -107,14 +108,11 @@ public class KetCa extends javax.swing.JPanel {
         jPanel8.setBackground(new java.awt.Color(193, 219, 208));
         jPanel8.setPreferredSize(new java.awt.Dimension(500, 100));
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel3.setText("Tên ca");
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
-            }
-        });
+        jComboBox1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ca sáng", "Ca chiều" }));
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -123,8 +121,8 @@ public class KetCa extends javax.swing.JPanel {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
+                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -133,16 +131,17 @@ public class KetCa extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4))
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel12.setBackground(new java.awt.Color(193, 219, 208));
         jPanel12.setPreferredSize(new java.awt.Dimension(500, 100));
 
-        jLabel11.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel11.setText("Tổng tiền");
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
+        jTextField11.setEditable(false);
         jTextField11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField11ActionPerformed(evt);
@@ -173,8 +172,8 @@ public class KetCa extends javax.swing.JPanel {
         jPanel13.setBackground(new java.awt.Color(193, 219, 208));
         jPanel13.setPreferredSize(new java.awt.Dimension(500, 100));
 
-        jLabel12.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel12.setText("Tiền thực tế");
+        jLabel12.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
         jTextField12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -206,9 +205,10 @@ public class KetCa extends javax.swing.JPanel {
         jPanel14.setBackground(new java.awt.Color(193, 219, 208));
         jPanel14.setPreferredSize(new java.awt.Dimension(500, 100));
 
-        jLabel13.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel13.setText("Lệch");
+        jLabel13.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
+        jTextField13.setEditable(false);
         jTextField13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField13ActionPerformed(evt);
@@ -239,16 +239,16 @@ public class KetCa extends javax.swing.JPanel {
         jPanel15.setBackground(new java.awt.Color(193, 219, 208));
         jPanel15.setPreferredSize(new java.awt.Dimension(500, 100));
 
-        jButton3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jButton3.setText("Trở về");
+        jButton3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jButton1.setText("Xác nhận");
+        jButton1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jButton1.setPreferredSize(new java.awt.Dimension(125, 23));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -320,10 +320,6 @@ public class KetCa extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
-
     private void jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField11ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField11ActionPerformed
@@ -342,10 +338,7 @@ public class KetCa extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        AddContent.pnlContent.removeAll();
-        AddContent.pnlContent.add(new TaiKhoan());
-        AddContent.pnlContent.revalidate();
-        AddContent.pnlContent.repaint();
+    	AddContent.addContent(new TaiKhoan());
     }//GEN-LAST:event_jButton3ActionPerformed
 
 
@@ -353,6 +346,7 @@ public class KetCa extends javax.swing.JPanel {
     private javax.swing.JPanel content;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -369,6 +363,5 @@ public class KetCa extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField7;
     // End of variables declaration//GEN-END:variables
 }

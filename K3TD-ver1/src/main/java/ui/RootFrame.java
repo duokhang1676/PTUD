@@ -7,6 +7,7 @@ package ui;
 import components.AddContent;
 import components.ColorSample;
 import components.ResizeContent;
+import components.StatusMenu;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -31,7 +32,7 @@ public class RootFrame extends javax.swing.JFrame {
     public RootFrame() {
     	setTitle("Phầm mềm quản lý quầy thuốc tây K3TD");
         initComponents();
-        pnlContent.add(trangChu);
+        pnlContent.add(new TrangChu());
         AddContent.setContent(pnlContent);
         resizeFrameToScreenScale();
         setFontAll(new Font(lblUser.getName(), Font.PLAIN, 14));
@@ -73,6 +74,8 @@ public class RootFrame extends javax.swing.JFrame {
         btnNhanSu = new javax.swing.JButton();
         btnThongKe = new javax.swing.JButton();
         pnlBody = new javax.swing.JPanel();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
+        pnlContent = new javax.swing.JPanel();
         Drop3 = new javax.swing.JPanel();
         btnHoaDon = new javax.swing.JButton();
         btnTraHang = new javax.swing.JButton();
@@ -88,7 +91,6 @@ public class RootFrame extends javax.swing.JFrame {
         btnNhanVien = new javax.swing.JButton();
         btnCaLamViec = new javax.swing.JButton();
         Drop7 = new javax.swing.JPanel();
-        pnlContent = new javax.swing.JPanel();
         pnlFooter = new javax.swing.JPanel();
         lblFooter = new javax.swing.JLabel();
 
@@ -98,9 +100,19 @@ public class RootFrame extends javax.swing.JFrame {
         pnlMain.setAlignmentX(0.0F);
         pnlMain.setAlignmentY(0.0F);
         pnlMain.setPreferredSize(new java.awt.Dimension(1920, 1080));
+        pnlMain.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlMainMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pnlMainMouseEntered(evt);
+            }
+        });
         pnlMain.setLayout(new java.awt.BorderLayout());
 
         pnlHeader.setBackground(new java.awt.Color(193, 219, 208));
+        pnlHeader.setAlignmentX(0.0F);
+        pnlHeader.setAlignmentY(0.0F);
         pnlHeader.setPreferredSize(new java.awt.Dimension(1920, 130));
 
         pnlHeaderTop.setBackground(new java.awt.Color(255, 255, 255));
@@ -162,6 +174,8 @@ public class RootFrame extends javax.swing.JFrame {
         );
 
         pnlHeaderMenu.setBackground(new java.awt.Color(193, 219, 208));
+        pnlHeaderMenu.setAlignmentX(0.0F);
+        pnlHeaderMenu.setAlignmentY(0.0F);
         pnlHeaderMenu.setPreferredSize(new java.awt.Dimension(1920, 60));
 
         btnTrangChu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-overview-32.png"))); // NOI18N
@@ -333,8 +347,24 @@ public class RootFrame extends javax.swing.JFrame {
         pnlBody.setAlignmentX(0.0F);
         pnlBody.setAlignmentY(0.0F);
         pnlBody.setPreferredSize(new java.awt.Dimension(1920, 140));
+        pnlBody.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlBodyMouseClicked(evt);
+            }
+        });
+        pnlBody.setLayout(new java.awt.BorderLayout());
+
+        jLayeredPane1.setAlignmentX(0.0F);
+        jLayeredPane1.setAlignmentY(0.0F);
+
+        pnlContent.setBackground(new java.awt.Color(255, 255, 255));
+        pnlContent.setAlignmentX(0.0F);
+        pnlContent.setAlignmentY(0.0F);
+        pnlContent.setLayout(new java.awt.BorderLayout());
 
         Drop3.setBackground(new java.awt.Color(193, 219, 208));
+        Drop3.setAlignmentX(0.0F);
+        Drop3.setAlignmentY(0.0F);
         Drop3.setMinimumSize(new java.awt.Dimension(100, 90));
         Drop3.setPreferredSize(new java.awt.Dimension(200, 200));
 
@@ -501,6 +531,11 @@ public class RootFrame extends javax.swing.JFrame {
         btnCaLamViec.setText("Ca làm việc");
         btnCaLamViec.setBorderPainted(false);
         btnCaLamViec.setPreferredSize(new java.awt.Dimension(150, 40));
+        btnCaLamViec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCaLamViecActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout Drop6Layout = new javax.swing.GroupLayout(Drop6);
         Drop6.setLayout(Drop6Layout);
@@ -535,38 +570,75 @@ public class RootFrame extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        pnlContent.setBackground(new java.awt.Color(153, 255, 153));
-        pnlContent.setLayout(new java.awt.BorderLayout());
+        jLayeredPane1.setLayer(pnlContent, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(Drop3, javax.swing.JLayeredPane.MODAL_LAYER);
+        jLayeredPane1.setLayer(Drop4, javax.swing.JLayeredPane.POPUP_LAYER);
+        jLayeredPane1.setLayer(Drop5, javax.swing.JLayeredPane.DRAG_LAYER);
+        jLayeredPane1.setLayer(Drop6, javax.swing.JLayeredPane.PALETTE_LAYER);
+        jLayeredPane1.setLayer(Drop7, javax.swing.JLayeredPane.PALETTE_LAYER);
 
-        javax.swing.GroupLayout pnlBodyLayout = new javax.swing.GroupLayout(pnlBody);
-        pnlBody.setLayout(pnlBodyLayout);
-        pnlBodyLayout.setHorizontalGroup(
-            pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBodyLayout.createSequentialGroup()
-                .addContainerGap(1720, Short.MAX_VALUE)
-                .addGroup(pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Drop7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Drop6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Drop4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Drop5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Drop3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addComponent(pnlContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlContent, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1920, Short.MAX_VALUE)
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(Drop3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(1714, Short.MAX_VALUE)))
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(Drop4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(1714, Short.MAX_VALUE)))
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addGap(31, 31, 31)
+                    .addComponent(Drop5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(1739, Short.MAX_VALUE)))
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addGap(31, 31, 31)
+                    .addComponent(Drop6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(1739, Short.MAX_VALUE)))
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addGap(31, 31, 31)
+                    .addComponent(Drop7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(1739, Short.MAX_VALUE)))
         );
-        pnlBodyLayout.setVerticalGroup(
-            pnlBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBodyLayout.createSequentialGroup()
-                .addComponent(pnlContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Drop6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(206, 206, 206)
-                .addComponent(Drop4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(206, 206, 206)
-                .addComponent(Drop5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(206, 206, 206)
-                .addComponent(Drop3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(176, 176, 176)
-                .addComponent(Drop7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlContent, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 920, Short.MAX_VALUE)
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addGap(50, 50, 50)
+                    .addComponent(Drop3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(870, Short.MAX_VALUE)))
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addGap(50, 50, 50)
+                    .addComponent(Drop4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(870, Short.MAX_VALUE)))
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addGap(50, 50, 50)
+                    .addComponent(Drop5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(870, Short.MAX_VALUE)))
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addGap(50, 50, 50)
+                    .addComponent(Drop6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(870, Short.MAX_VALUE)))
+            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                    .addGap(50, 50, 50)
+                    .addComponent(Drop7, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(870, Short.MAX_VALUE)))
         );
+
+        pnlBody.add(jLayeredPane1, java.awt.BorderLayout.CENTER);
 
         pnlMain.add(pnlBody, java.awt.BorderLayout.CENTER);
 
@@ -601,32 +673,33 @@ public class RootFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnTrangChuActionPerformed(java.awt.event.ActionEvent evt) {
-    	pnlContent.removeAll();
-    	pnlContent.add(trangChu);
+    private void pnlMainMouseClicked(java.awt.event.MouseEvent evt) {                                       
+        // TODO add your handling code here:
+    	
+    }  
+    private void btnCaLamViecActionPerformed(java.awt.event.ActionEvent evt) {
+    	hideAllDropMenu();
+        pnlContent.removeAll();
+    	
     	pnlContent.revalidate();
         pnlContent.repaint();
+    }     
+    
+    private void btnTrangChuActionPerformed(java.awt.event.ActionEvent evt) {
+    	
+    	AddContent.addContent(new TrangChu());
     }                                           
 
     private void btnBanHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBanHangActionPerformed
-    	BanHang banHang = new BanHang();
-        pnlContent.removeAll();
-    	pnlContent.add(banHang.content());
-    	pnlContent.revalidate();
-        pnlContent.repaint();
+    	AddContent.addContent(banHang);
     }//GEN-LAST:event_btnBanHangActionPerformed
-    private boolean temp3 = false;
-    private boolean temp4 = false; 
-    private boolean temp5 = false; 
-    private boolean temp6 = false; 
-    private boolean temp7 = false; 
+   
     private void hideAllDropMenu(){
-        temp3 = false;
-        temp4 = false; 
-        temp5 = false; 
-        temp6 = false; 
-        temp7 = false; 
+        StatusMenu.temp3 = false;
+        StatusMenu.temp4 = false; 
+        StatusMenu.temp5 = false; 
+        StatusMenu.temp6 = false; 
+        StatusMenu.temp7 = false; 
         Drop3.setSize(0, 0);
         Drop4.setSize(0, 0);
         Drop5.setSize(0, 0);
@@ -635,99 +708,92 @@ public class RootFrame extends javax.swing.JFrame {
     }
     private void btnQLDonHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLDonHangActionPerformed
 
-        if(!temp3){
+        if(!StatusMenu.temp3){
             hideAllDropMenu();
             Drop3.setLocation(btnQLDonHang.getLocation());
             Drop3.setSize(200, 90);
-            temp3=!temp3;
+            StatusMenu.temp3=!StatusMenu.temp3;
         }else{
             hideAllDropMenu();
         }
     }//GEN-LAST:event_btnQLDonHangActionPerformed
 
     private void btnQLHangHoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLHangHoaActionPerformed
-        if(!temp4){
+        
+        if(!StatusMenu.temp4){
             hideAllDropMenu();
             Drop4.setLocation(btnQLHangHoa.getLocation());
             Drop4.setSize(200, 180);
-            temp4=!temp4;
+            StatusMenu.temp4=!StatusMenu.temp4;
         }else{
            hideAllDropMenu();
         }
     }//GEN-LAST:event_btnQLHangHoaActionPerformed
 
     private void btnDoiTacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiTacActionPerformed
-        if(!temp5){
+        
+        if(!StatusMenu.temp5){
             hideAllDropMenu();
             Drop5.setLocation(btnDoiTac.getLocation());
             Drop5.setSize(150, 90);
-            temp5=!temp5;
+            StatusMenu.temp5=!StatusMenu.temp5;
         }else{
             hideAllDropMenu();
         }
     }//GEN-LAST:event_btnDoiTacActionPerformed
 
     private void btnNhanSuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhanSuActionPerformed
-        if(!temp6){
+        
+        if(!StatusMenu.temp6){
             hideAllDropMenu();
             Drop6.setLocation(btnNhanSu.getLocation());
             Drop6.setSize(150, 90);
-            temp6=!temp6;
+            StatusMenu.temp6=!StatusMenu.temp6;
         }else{
             hideAllDropMenu();
         }
     }//GEN-LAST:event_btnNhanSuActionPerformed
 
     private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeActionPerformed
-        if(!temp7){
+        
+        if(!StatusMenu.temp7){
             hideAllDropMenu();
             Drop7.setLocation(btnThongKe.getLocation());
             Drop7.setSize(150, 90);
-            temp7=!temp7;
+            StatusMenu.temp7=!StatusMenu.temp7;
         }else{
             hideAllDropMenu();
         }
     }//GEN-LAST:event_btnThongKeActionPerformed
 
     private void btnHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonActionPerformed
-        HoaDon hoaDon  = new HoaDon();
-        pnlContent.removeAll();
-    	pnlContent.add(hoaDon.content());
-    	pnlContent.revalidate();
-        pnlContent.repaint();
+    	AddContent.addContent(new HoaDon());
     }//GEN-LAST:event_btnHoaDonActionPerformed
 
     private void btnTraHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraHangActionPerformed
         // TODO add your handling code here:
-        TraHang traHang = new TraHang();
+        hideAllDropMenu();
         pnlContent.removeAll();
-    	pnlContent.add(traHang.content());
+
     	pnlContent.revalidate();
         pnlContent.repaint();
     }//GEN-LAST:event_btnTraHangActionPerformed
 
     private void btnHangHoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHangHoaActionPerformed
-        HangHoa hangHoa = new HangHoa();
-        pnlContent.removeAll();
-    	pnlContent.add(hangHoa.content());
-    	pnlContent.revalidate();
-        pnlContent.repaint();
+    	AddContent.addContent(new HangHoa());
     }//GEN-LAST:event_btnHangHoaActionPerformed
 
     private void btnDonThuocMauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDonThuocMauActionPerformed
-        DonThuocMau donThuocMau = new DonThuocMau();
+        hideAllDropMenu();
         pnlContent.removeAll();
-    	pnlContent.add(donThuocMau.content());
+    	
     	pnlContent.revalidate();
         pnlContent.repaint();
     }//GEN-LAST:event_btnDonThuocMauActionPerformed
 
     private void btnNhapHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhapHangActionPerformed
         // TODO add your handling code here:
-        pnlContent.removeAll();
-    	pnlContent.add(new TaoPhieuNhapHang());
-    	pnlContent.revalidate();
-        pnlContent.repaint();
+    	AddContent.addContent(new NhapHang());
     }//GEN-LAST:event_btnNhapHangActionPerformed
 
     private void lblTienIchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTienIchMouseEntered
@@ -809,40 +875,27 @@ public class RootFrame extends javax.swing.JFrame {
     private void btnBanHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBanHangMouseClicked
          hideAllDropMenu();
     }//GEN-LAST:event_btnBanHangMouseClicked
-
+    private void pnlMainMouseEntered(java.awt.event.MouseEvent evt) {
+                
+            }
     private void btnKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhachHangActionPerformed
         // TODO add your handling code here:
-        KhachHang  khachHang = new KhachHang();
-        pnlContent.removeAll();
-    	pnlContent.add(khachHang.content());
-    	pnlContent.revalidate();
-        pnlContent.repaint();
+        AddContent.addContent(new KhachHang());
     }//GEN-LAST:event_btnKhachHangActionPerformed
 
     private void btnNhaCungCapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhaCungCapActionPerformed
         // TODO add your handling code here:
-        NhaCungCap nhaCungCap = new NhaCungCap();
-        pnlContent.removeAll();
-    	pnlContent.add(nhaCungCap.content());
-    	pnlContent.revalidate();
-        pnlContent.repaint();
+    	AddContent.addContent(new NhaCungCap());
     }//GEN-LAST:event_btnNhaCungCapActionPerformed
 
     private void btnNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhanVienActionPerformed
         // TODO add your handling code here:
-        NhanVien nhanVien = new NhanVien();
-        pnlContent.removeAll();
-    	pnlContent.add(nhanVien.content());
-    	pnlContent.revalidate();
-        pnlContent.repaint();
+    	AddContent.addContent(new NhanVien());
     }//GEN-LAST:event_btnNhanVienActionPerformed
 
     private void btnXuatTraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatTraActionPerformed
         // TODO add your handling code here:
-        pnlContent.removeAll();
-    	pnlContent.add(new TaoPhieuXuatTra());
-    	pnlContent.revalidate();
-        pnlContent.repaint();
+    	AddContent.addContent(new XuatTra());
         
         
 
@@ -850,11 +903,12 @@ public class RootFrame extends javax.swing.JFrame {
 
     private void lblUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblUserMouseClicked
         // TODO add your handling code here:
-        pnlContent.removeAll();
-        pnlContent.add(new TaiKhoan());
-        pnlContent.revalidate();
-        pnlContent.repaint();
+    	AddContent.addContent(new TaiKhoan());
     }//GEN-LAST:event_lblUserMouseClicked
+
+    private void pnlBodyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlBodyMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pnlBodyMouseClicked
     
     private void setFontAll(Font font){
         lblTienIch.setFont(font);
@@ -938,6 +992,7 @@ public class RootFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnTraHang;
     private javax.swing.JButton btnTrangChu;
     private javax.swing.JButton btnXuatTra;
+    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JLabel lblFooter;
     private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblTienIch;
@@ -949,6 +1004,6 @@ public class RootFrame extends javax.swing.JFrame {
     private javax.swing.JPanel pnlHeaderMenu;
     private javax.swing.JPanel pnlHeaderTop;
     private javax.swing.JPanel pnlMain;
-    private ui.TrangChu trangChu = new ui.TrangChu();
+    private BanHang banHang = new BanHang();
     // End of variables declaration//GEN-END:variables
 }
