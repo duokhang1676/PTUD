@@ -12,8 +12,10 @@ public class HoaDon {
 	private String ghiChu;
 	private Ca ca;
 	private TrangThaiHoaDon trangThaiHoaDon;
+	
 	public HoaDon(String maHoaDon, LocalDateTime thoiGianLapHoaDon, NhanVien nhanVien, KhachHang khachHang,
-			double tienKhachTra, int diemQuyDoi, String ghiChu, Ca ca, TrangThaiHoaDon trangThaiHoaDon) {
+			double tienKhachTra, int diemQuyDoi, String ghiChu, Ca ca,
+			TrangThaiHoaDon trangThaiHoaDon) {
 		super();
 		this.maHoaDon = maHoaDon;
 		this.thoiGianLapHoaDon = thoiGianLapHoaDon;
@@ -90,8 +92,10 @@ public class HoaDon {
 	public String toString() {
 		return "HoaDon [maHoaDon=" + maHoaDon + ", thoiGianLapHoaDon=" + thoiGianLapHoaDon + ", nhanVien=" + nhanVien
 				+ ", khachHang=" + khachHang + ", tienKhachTra=" + tienKhachTra + ", diemQuyDoi=" + diemQuyDoi
-				+ ", ghiChu=" + ghiChu + ", ca=" + ca + ", trangThaiHoaDon=" + trangThaiHoaDon + "]";
+				+ ", ghiChu=" + ghiChu + ", ca=" + ca
+				+ ", trangThaiHoaDon=" + trangThaiHoaDon + "]";
 	}
+	
 	
 	
 }
