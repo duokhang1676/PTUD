@@ -111,6 +111,13 @@ import components.LoginInfo;
 import db.ConnectDB;
 
 import java.awt.Image;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 import javax.swing.ImageIcon;
 import java.awt.*;
 import javax.swing.JFrame;
@@ -300,14 +307,7 @@ public class DangNhap extends javax.swing.JFrame {
         // TODO add your handling code here
     	if(!KiemTraDangNhap())
     		return;
-    	try {
-			ConnectDB.getInstance().connect();
-			System.out.println("Kết nối csld thành công!");
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			System.out.println("Kết nối csld thất bại!");
-		}
+    	ConnectionDB(true);//parameter true dung clound db false dung local db
         this.setVisible(false);
         RootFrame rf =  new RootFrame();
         LoginInfo.addRootframe(rf);
@@ -315,7 +315,48 @@ public class DangNhap extends javax.swing.JFrame {
         rf.setVisible(true);
     }//GEN-LAST:event_btn_dangNhapActionPerformed
     
-    private boolean KiemTraDangNhap() {
+    private void ConnectionDB(boolean useSocialv2) {
+    	if(!useSocialv2) {
+    		try {
+        		ConnectDB.getInstance().connect();
+                System.out.println("Kết nối csld local thành công!");
+			} catch (Exception e2) {
+				// TODO: handle exception
+				System.out.println("Kết nối csld local thất bại!");
+			}
+    		return;
+    	}
+    	int TIMEOUT_SECONDS = 3;
+    	boolean isConnected = false;
+    	ExecutorService executor = Executors.newSingleThreadExecutor();
+        Future<Void> future = executor.submit(() -> {
+                ConnectDB.getInstance().connect2();
+                System.out.println("Kết nối csld trong server social-v2 thành công!");
+            return null;
+        });
+
+        try {
+            // Giới hạn thời gian chờ đợi
+            future.get(TIMEOUT_SECONDS, TimeUnit.SECONDS);
+        } catch (TimeoutException e) {
+            System.err.println("Connection timed out after " + TIMEOUT_SECONDS + " seconds");
+            future.cancel(true); // Hủy bỏ nếu vượt quá thời gian timeout
+            try {
+        		ConnectDB.getInstance().connect();
+                System.out.println("Kết nối csld local thành công!");
+			} catch (Exception e2) {
+				// TODO: handle exception
+				System.out.println("Kết nối csld local thất bại!");
+			}
+        } catch (InterruptedException | ExecutionException e) {
+            // 
+            e.printStackTrace();
+        } finally {
+            executor.shutdown(); // Đảm bảo executor sẽ được dừng sau khi sử dụng
+        }
+	}
+
+	private boolean KiemTraDangNhap() {
 		// TODO Auto-generated method stub
 		return true;
 	}
