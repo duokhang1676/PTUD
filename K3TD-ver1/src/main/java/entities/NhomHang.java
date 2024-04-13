@@ -1,24 +1,29 @@
 package entities;
 
 public class NhomHang {
-	private String maNhomHang;
+	private int maNhomHang;
 	private String tenNhomHang;
-	public NhomHang(String maNhomHang, String tenNhomHang) {
+	public NhomHang(int maNhomHang, String tenNhomHang) {
 		super();
 		this.maNhomHang = maNhomHang;
 		this.tenNhomHang = tenNhomHang;
 	}
-	public NhomHang(String maNhomHang) {
+	public NhomHang(int maNhomHang) {
 		super();
 		this.maNhomHang = maNhomHang;
+	}
+	
+	public NhomHang(String tenNhomHang) {
+		super();
+		this.tenNhomHang = tenNhomHang;
 	}
 	public NhomHang() {
 		super();
 	}
-	public String getMaNhomHang() {
+	public int getMaNhomHang() {
 		return maNhomHang;
 	}
-	public void setMaNhomHang(String maNhomHang) {
+	public void setMaNhomHang(int maNhomHang) {
 		this.maNhomHang = maNhomHang;
 	}
 	public String getTenNhomHang() {
