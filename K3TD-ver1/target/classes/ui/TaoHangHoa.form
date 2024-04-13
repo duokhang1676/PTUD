@@ -115,17 +115,6 @@
                                           <Component id="jLabel60" min="-2" max="-2" attributes="0"/>
                                           <Component id="txt_soLuongDinhMuc1" min="-2" pref="184" max="-2" attributes="0"/>
                                           <Component id="txt_quyCach" alignment="0" min="-2" pref="387" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="txt_vat" alignment="0" min="-2" pref="184" max="-2" attributes="0"/>
-                                                  <Component id="jLabel61" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txt_thue" min="-2" pref="175" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
                                           <Group type="103" alignment="0" groupAlignment="0" attributes="0">
                                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                               <Component id="txt_maVach" alignment="0" min="-2" pref="387" max="-2" attributes="0"/>
@@ -134,6 +123,8 @@
                                                   <Component id="txt_soLuongCanhBao" min="-2" pref="175" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
+                                          <Component id="txt_thue" min="-2" pref="175" max="-2" attributes="0"/>
+                                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
@@ -175,7 +166,7 @@
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="txt_soLuongCanhBao" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
@@ -192,16 +183,6 @@
                           <Component id="jLabel60" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txt_quyCach" min="-2" pref="40" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel61" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txt_thue" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                              <Component id="txt_vat" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                          </Group>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -214,7 +195,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                       <Group type="102" attributes="0">
                                           <Component id="txt_soDangKy" min="-2" pref="40" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
@@ -238,15 +219,17 @@
                                       <Component id="jLabel59" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel56" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel55" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="txt_nuocSX" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                                       <Component id="txt_hangSanXuat" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                                       <Component id="txt_moTa" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                                      <Component id="txt_thue" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanel1" min="-2" pref="50" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -338,14 +321,6 @@
             <Property name="text" type="java.lang.String" value="Quy c&#xe1;ch &#x111;&#xf3;ng g&#xf3;i"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel61">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Times New Roman" size="16" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Vat(%)"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JTextField" name="txt_maHangHoa">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -418,6 +393,9 @@
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_thue">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_thueActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="12"/>
           </AuxValues>
@@ -466,11 +444,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="S&#x1ed1; l&#x1b0;&#x1ee3;ng &#x111;&#x1ecb;nh m&#x1ee9;c"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txt_vat">
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="12"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -548,15 +521,20 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="cb_nhomHangHoa" min="-2" pref="257" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" pref="50" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="9" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jButton1" alignment="1" pref="40" max="32767" attributes="0"/>
-                  <Component id="cb_nhomHangHoa" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jButton1" alignment="0" pref="44" max="32767" attributes="0"/>
+                          <Component id="cb_nhomHangHoa" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -618,18 +596,23 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable1">
+        <Component class="javax.swing.JTable" name="tbl_donViTinh">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="5" rowCount="4">
                 <Column editable="true" title="T&#xea;n &#x111;&#x1a1;n v&#x1ecb;" type="java.lang.Object"/>
                 <Column editable="true" title="Quy &#x111;&#x1ed5;i" type="java.lang.Object"/>
                 <Column editable="true" title="Gi&#xe1; b&#xe1;n" type="java.lang.Object"/>
-                <Column editable="true" title="B&#xe1;n h&#xe0;ng" type="java.lang.Boolean"/>
+                <Column editable="true" title="B&#xe1;n h&#xe0;ng" type="java.lang.Boolean">
+                  <Data value="false"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                  <Data value="null"/>
+                </Column>
                 <Column editable="true" title="" type="java.lang.Object"/>
               </Table>
             </Property>
-            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" preCode="TableColumn column = jTable1.getColumnModel().getColumn(4); // 1 l&#xe0; ch&#x1ec9; s&#x1ed1; c&#x1ed9;t, b&#x1eaf;t &#x111;&#x1ea7;u t&#x1eeb; 0&#xa;        column.setPreferredWidth(50);" postCode="ButtonColumnUtil.addButtonColumn(jTable1, jTable1.getColumnCount() - 1, new ActionListener() {&#xa;    @Override&#xa;    public void actionPerformed(ActionEvent e) {&#xa;        &#xa;        //jTable1.remove(jTable1.getSelectedRow());&#xa;    }&#xa;});">
+            <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" preCode="TableColumn column = tbl_donViTinh.getColumnModel().getColumn(4); // 1 l&#xe0; ch&#x1ec9; s&#x1ed1; c&#x1ed9;t, b&#x1eaf;t &#x111;&#x1ea7;u t&#x1eeb; 0&#xa;        column.setPreferredWidth(50);" postCode="ButtonColumnUtil.addButtonColumn(tbl_donViTinh, tbl_donViTinh.getColumnCount() - 1, new ActionListener() {&#xa;    @Override&#xa;    public void actionPerformed(ActionEvent e) {&#xa;        &#xa;        //jTable1.remove(tbl_donViTinh.getSelectedRow());&#xa;    }&#xa;});">
               <TableColumnModel selectionModel="0">
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>

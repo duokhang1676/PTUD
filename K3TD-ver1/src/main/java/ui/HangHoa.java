@@ -51,9 +51,7 @@ public class HangHoa extends javax.swing.JPanel implements MouseListener{
     private void loadDataTable() {
 		// TODO Auto-generated method stub
     	int count = 0;
-//		while (model_hangHoa.getRowCount() >= 0) {
-//			model_hangHoa.removeRow(0);
-//		}
+    	model_hangHoa.setNumRows(0);
 		hangHoa_dao = new HangHoaDao();
 		List<entities.HangHoa> dsHangHoa = hangHoa_dao.getAllDataHangHoa();
 		for (entities.HangHoa hh : dsHangHoa) {
@@ -259,19 +257,34 @@ public class HangHoa extends javax.swing.JPanel implements MouseListener{
 
     private void btn_timKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timKiemActionPerformed
         // TODO add your handling code here:
-    	String ma = txt_timKiem.getText().trim();
-    	if (ma.isEmpty()) {
+    	String maTen = txt_timKiem.getText().trim();
+    	String trangThaiHH = cb_trangThai.getSelectedItem().toString().trim();
+    	String loaiHang = cb_loaiHang.getSelectedItem().toString().trim();
+    	String nhomHang = cb_nhomHang.getSelectedItem().toString().trim();
+    	System.out.println(maTen + " " + trangThaiHH + " " + loaiHang + " " + nhomHang);
+    	if (maTen.isEmpty()) {
 			showMessage("Nhập thông tin cần tìm!");
 			loadDataTable();
 		}else {
-			entities.HangHoa hh = hangHoa_dao.timHangHoaTheoMa(ma);
+//			List<entities.HangHoa> dsHangHoas = hangHoa_dao.timHangHoa(maTen, loaiHang, nhomHang, trangThaiHH);
+//			for (entities.HangHoa hh : dsHangHoas) {
+//				model_hangHoa.setNumRows(0);
+//				model_hangHoa.addRow(new Object[] {hh.getMaHangHoa(), hh.getTenHangHoa()});
+//			}
+//			if (dsHangHoas.isEmpty()) {
+//				showMessage("K thay");
+//			}
+			entities.HangHoa hh = hangHoa_dao.timHangHoa(maTen, loaiHang, nhomHang, trangThaiHH);
 			if (hh == null) {
+				showMessage("Khong tim thay");
+				txt_timKiem.requestFocus();
+		    	txt_timKiem.selectAll();
+		    	loadDataTable();
 				return;
 			}
-			while (tbl_hangHoa.getRowCount() > 0) {
-				model_hangHoa.removeRow(0);
-			}
-			model_hangHoa.addRow(new Object[] {hh.getMaHangHoa(), hh.getTenHangHoa()});
+			model_hangHoa.setNumRows(0);
+			model_hangHoa.addRow(new Object[] {hh.getMaHangHoa(), hh.getTenHangHoa(), hh.getLoaiHang(), hh.getNuocSanXuat(),
+					hh.getHoatChatChinh(), hh.getQuyCachDongGoi()});
 		}
     	txt_timKiem.requestFocus();
     	txt_timKiem.selectAll();
@@ -380,7 +393,7 @@ public class HangHoa extends javax.swing.JPanel implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-AddContent.addContent(new TaoHangHoa());
+		AddContent.addContent(new TaoHangHoa());
     	
     	int row = tbl_hangHoa.getSelectedRow();
     	String maHH = tbl_hangHoa.getValueAt(row, 0).toString();
