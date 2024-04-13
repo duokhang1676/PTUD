@@ -57,25 +57,25 @@
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="txt_HangSanXuat" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
+                                                  <Component id="txt_nuocSX" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
                                                   <Component id="jLabel56" alignment="0" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="jLabel55" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txt_NuocSanXuat" alignment="0" min="-2" pref="314" max="-2" attributes="0"/>
+                                                  <Component id="txt_hangSanXuat" alignment="0" min="-2" pref="314" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="jLabel59" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txt_NuocSanXuat1" max="32767" attributes="0"/>
+                                                  <Component id="txt_moTa" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                              <Component id="txt_SoLuongCanhBao3" min="-2" pref="430" max="-2" attributes="0"/>
+                                              <Component id="txt_hamLuong" min="-2" pref="430" max="-2" attributes="0"/>
                                               <Group type="102" alignment="1" attributes="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="txt_maVach" alignment="0" min="-2" pref="560" max="-2" attributes="0"/>
+                                                      <Component id="txt_tenHangHoa1" alignment="0" min="-2" pref="560" max="-2" attributes="0"/>
                                                       <Component id="jLabel57" alignment="0" min="-2" max="-2" attributes="0"/>
                                                       <Group type="102" alignment="0" attributes="0">
                                                           <Group type="103" groupAlignment="0" attributes="0">
@@ -114,21 +114,21 @@
                                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel60" min="-2" max="-2" attributes="0"/>
                                           <Component id="txt_soLuongDinhMuc1" min="-2" pref="184" max="-2" attributes="0"/>
-                                          <Component id="txt_HamLuong" alignment="0" min="-2" pref="387" max="-2" attributes="0"/>
+                                          <Component id="txt_quyCach" alignment="0" min="-2" pref="387" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="txt_soLuongDinhMuc" alignment="0" min="-2" pref="184" max="-2" attributes="0"/>
+                                                  <Component id="txt_vat" alignment="0" min="-2" pref="184" max="-2" attributes="0"/>
                                                   <Component id="jLabel61" alignment="0" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txt_Vat" min="-2" pref="175" max="-2" attributes="0"/>
+                                                  <Component id="txt_thue" min="-2" pref="175" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <Group type="103" alignment="0" groupAlignment="0" attributes="0">
                                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                              <Component id="txt_tenHangHoa" alignment="0" min="-2" pref="387" max="-2" attributes="0"/>
+                                              <Component id="txt_maVach" alignment="0" min="-2" pref="387" max="-2" attributes="0"/>
                                               <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                                   <Component id="txt_soLuongCanhBao" min="-2" pref="175" max="-2" attributes="0"/>
@@ -168,10 +168,10 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txt_tenHangHoa" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="txt_maVach" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="txt_maHangHoa" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                          <Component id="txt_maVach" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="txt_tenHangHoa1" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -191,7 +191,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel60" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txt_HamLuong" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="txt_quyCach" min="-2" pref="40" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -199,8 +199,8 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txt_Vat" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                              <Component id="txt_soLuongDinhMuc" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="txt_thue" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="txt_vat" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" attributes="0">
@@ -214,8 +214,16 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="txt_soDangKy" min="-2" pref="40" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="txt_soDangKy" min="-2" pref="40" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <Component id="cb_loaiHangHoa" max="32767" attributes="0"/>
+                                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel58" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jLabel54" min="-2" max="-2" attributes="0"/>
@@ -223,7 +231,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="txt_HoatChat" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                                      <Component id="txt_SoLuongCanhBao3" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                                      <Component id="txt_hamLuong" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
@@ -233,15 +241,12 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="txt_HangSanXuat" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                                      <Component id="txt_NuocSanXuat" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                                      <Component id="txt_NuocSanXuat1" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                                      <Component id="txt_nuocSX" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                                      <Component id="txt_hangSanXuat" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                                      <Component id="txt_moTa" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="cb_loaiHangHoa" min="-2" pref="40" max="-2" attributes="0"/>
-                                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -351,6 +356,9 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="12"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JComboBox" name="cb_loaiHangHoa">
           <Events>
@@ -358,39 +366,61 @@
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="12"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_HangSanXuat">
+        <Component class="javax.swing.JTextField" name="txt_nuocSX">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField3ActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="12"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_HoatChat">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField4ActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="12"/>
+          </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_NuocSanXuat">
+        <Component class="javax.swing.JTextField" name="txt_hangSanXuat">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField5ActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="12"/>
+          </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_tenHangHoa">
+        <Component class="javax.swing.JTextField" name="txt_maVach">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField6ActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="12"/>
+          </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_HamLuong">
+        <Component class="javax.swing.JTextField" name="txt_quyCach">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField7ActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="12"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_soDangKy">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField8ActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="12"/>
+          </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_Vat">
+        <Component class="javax.swing.JTextField" name="txt_thue">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="12"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel62">
           <Properties>
@@ -400,7 +430,10 @@
             <Property name="text" type="java.lang.String" value="Nh&#xf3;m h&#xe0;ng ho&#xe1;"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_SoLuongCanhBao3">
+        <Component class="javax.swing.JTextField" name="txt_hamLuong">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="12"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="lb_danhsach">
           <Properties>
@@ -418,10 +451,13 @@
             <Property name="text" type="java.lang.String" value="M&#xe3; v&#x1ea1;ch"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_maVach">
+        <Component class="javax.swing.JTextField" name="txt_tenHangHoa1">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_maVachActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_tenHangHoa1ActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="12"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
@@ -431,7 +467,10 @@
             <Property name="text" type="java.lang.String" value="S&#x1ed1; l&#x1b0;&#x1ee3;ng &#x111;&#x1ecb;nh m&#x1ee9;c"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_soLuongDinhMuc">
+        <Component class="javax.swing.JTextField" name="txt_vat">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="12"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -445,6 +484,9 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_soLuongCanhBaoActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="12"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
@@ -525,6 +567,7 @@
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="12"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JButton" name="jButton1">
@@ -543,12 +586,18 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JTextField" name="txt_NuocSanXuat1">
+        <Component class="javax.swing.JTextField" name="txt_moTa">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_NuocSanXuat1jTextField5ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_moTajTextField5ActionPerformed"/>
           </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="12"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_soLuongDinhMuc1">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="12"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

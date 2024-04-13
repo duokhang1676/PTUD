@@ -8,9 +8,9 @@ public class NhomHang {
 		this.maNhomHang = maNhomHang;
 		this.tenNhomHang = tenNhomHang;
 	}
-	public NhomHang(int maNhomHang) {
+	public NhomHang(int i) {
 		super();
-		this.maNhomHang = maNhomHang;
+		this.maNhomHang = i;
 	}
 	
 	public NhomHang(String tenNhomHang) {
