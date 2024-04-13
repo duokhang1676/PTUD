@@ -403,7 +403,7 @@ AddContent.addContent(new TaoHangHoa());
     	TaoHangHoa.txt_nuocSX.setText(hangHoa.getNuocSanXuat());
     	TaoHangHoa.txt_hangSanXuat.setText(hangHoa.getHangSanXuat());
     	TaoHangHoa.txt_moTa.setText(hangHoa.getMoTa());
-    	TaoHangHoa.txt_thue.setText(String.valueOf(hangHoa.getThue()));
+    	
 	}
 
 	@Override

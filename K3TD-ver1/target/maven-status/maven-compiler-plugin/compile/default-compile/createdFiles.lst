@@ -23,15 +23,12 @@ ui\BanHang$6.class
 ui\HoaDon$3.class
 ui\NhanVien$8.class
 ui\TaiKhoan$10.class
-ui\TrangChu$5.class
-<<<<<<< HEAD
 components\ResizeContent.class
 ui\NhapHang$3.class
-=======
->>>>>>> 0c7b3d4fba082215c795419841b40a9dd665167e
 ui\TaoHangHoa$18.class
 ui\XuatTra$4.class
 ui\BanHang$5.class
+ui\TaoHangHoa$19.class
 ui\TaoPhieuXuatTra$8.class
 components\ColorSample.class
 ui\NhanVien$9.class
