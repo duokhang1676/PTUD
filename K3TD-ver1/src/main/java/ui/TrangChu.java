@@ -8,6 +8,18 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.List;
+
+import javax.swing.table.DefaultTableModel;
+
+import components.Formater;
+import dao.HoaDonDao;
+import dao.LoHangDao;
+import dao.PhieuTraHangDao;
+import entities.LoHang;
+import entities.PhieuTraHang;
 
 /**
  *
@@ -19,7 +31,11 @@ public class TrangChu extends javax.swing.JPanel {
      * Creates new form TrangChuTest
      */
     public TrangChu() {
+    	hoaDonDao = new HoaDonDao();
+    	phieuTraHangDao = new PhieuTraHangDao();
+    	loHangDao = new LoHangDao();
         initComponents();
+        loadData();
     }
 
     /**
@@ -315,44 +331,23 @@ public class TrangChu extends javax.swing.JPanel {
         jP_table.setBackground(new java.awt.Color(255, 255, 255));
         jP_table.setLayout(new java.awt.BorderLayout());
 
-        tb_hangHoa.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Mã hàng hóa", "Tên hàng hóa", "Số lượng"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
+        
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
+            String[] columnNames = {"STT", "Mã hàng hóa", "Tên hàng hóa", "Số lô", "Số lượng", "Hạn sử dụng"};
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+            // Set data to table model
+            loHangModel = new DefaultTableModel(null, columnNames);
+            
+            tb_hangHoa.setModel(loHangModel);
         tb_hangHoa.setRowHeight(50);
         jScrollPane2.setViewportView(tb_hangHoa);
         if (tb_hangHoa.getColumnModel().getColumnCount() > 0) {
             tb_hangHoa.getColumnModel().getColumn(0).setResizable(false);
             tb_hangHoa.getColumnModel().getColumn(1).setResizable(false);
             tb_hangHoa.getColumnModel().getColumn(2).setResizable(false);
+            tb_hangHoa.getColumnModel().getColumn(3).setResizable(false);
+            tb_hangHoa.getColumnModel().getColumn(4).setResizable(false);
+            tb_hangHoa.getColumnModel().getColumn(5).setResizable(false);
         }
 
         jP_table.add(jScrollPane2, java.awt.BorderLayout.CENTER);
@@ -414,8 +409,47 @@ public class TrangChu extends javax.swing.JPanel {
         btn_hangDaHetHan.setFont(unSelected_font);
         btn_hangDaHetHan.setForeground(Color.BLACK);
     }//GEN-LAST:event_btn_hangSapHetMouseClicked
-
-
+    
+    private void loadData() {
+    	 // Lấy ngày hiện tại
+        LocalDate today = LocalDate.now();
+        // Lấy ngày đầu tháng
+        LocalDate firstDayOfMonth = today.with(TemporalAdjusters.firstDayOfMonth());
+        System.out.println(firstDayOfMonth);
+        // Lấy ngày bắt đầu của tháng trước
+        LocalDate firstDayOfLastMonth = today.minusMonths(1).with(TemporalAdjusters.firstDayOfMonth());
+        // Lấy ngày kết thúc của tháng trước
+        LocalDate lastDayOfLastMonth = today.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
+ 
+    	jL_doanhThuThangTruoc.setText(Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoang(firstDayOfLastMonth, lastDayOfLastMonth)-
+    			phieuTraHangDao.getTongTienHoaDonTraTrongKhoang(firstDayOfLastMonth, lastDayOfLastMonth)));
+    	jL_doanhThuThangNay.setText(Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoang(firstDayOfMonth, today)-
+    			phieuTraHangDao.getTongTienHoaDonTraTrongKhoang(firstDayOfMonth, today)));
+    	jL_hoaDonThangTruoc.setText(hoaDonDao.getSoLuongHoaDonTrongKhoang(firstDayOfLastMonth, lastDayOfLastMonth)+"");
+    	jL_hoaDonThangNay.setText(hoaDonDao.getSoLuongHoaDonTrongKhoang(firstDayOfMonth, today)+"");
+    	jL_doanhThuThuDuoc.setText(Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoang(today, today)-
+    			phieuTraHangDao.getTongTienHoaDonTraTrongKhoang(today, today)));
+    	jL_soHoaDonNgay.setText(hoaDonDao.getSoLuongHoaDonTrongKhoang(today, today)+"");
+    	
+    	addDsHangHetHan();
+    	
+    }
+    private void addDsHangHetHan() {
+    	List<LoHang> dsLoHangHetHan = loHangDao.getDSLoHetHSD();
+        int stt = 1;
+        loHangModel.setNumRows(0);
+        for (LoHang loHang : dsLoHangHetHan) {
+			loHangModel.addRow(new Object[] {
+					stt++,loHang.getHangHoa().getMaHangHoa(),
+					loHang.getHangHoa().getTenHangHoa(),
+					loHang.getSoLo(), loHang.getSoLuong(), loHang.getHanSuDung()
+			});
+			
+		}
+        tb_hangHoa.setModel(loHangModel);
+        
+    }
+    private DefaultTableModel loHangModel;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_hangDaHetHan;
     private javax.swing.JButton btn_hangSapHet;
@@ -450,6 +484,9 @@ public class TrangChu extends javax.swing.JPanel {
     private javax.swing.JPanel jP_hoaDonContent;
     private javax.swing.JPanel jP_hoaDonTieuDe;
     private javax.swing.JPanel jP_main;
+    private HoaDonDao hoaDonDao;
+    private PhieuTraHangDao phieuTraHangDao;
+    private LoHangDao loHangDao;
     private javax.swing.JPanel jP_menuCanhBao;
     private javax.swing.JPanel jP_table;
     private javax.swing.JPanel jP_thongKe;

@@ -16,6 +16,10 @@ public class ConnectDB {
 	public void connect() throws SQLException {
 		con = DriverManager.getConnection(DBConfiguation.databaseURL, DBConfiguation.user, DBConfiguation.password);
 	}
+	
+	public void connect2() throws SQLException {
+		con = DriverManager.getConnection(DBConfiguation.databaseURL2, DBConfiguation.user2, DBConfiguation.password2);
+	}
 
 	public void disconnect() {
 		if (con == null) {

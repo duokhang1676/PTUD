@@ -29,3 +29,4 @@ public class ResizeContent {
     	return toolkit.getScreenResolution() / 96.0;
     }
 }
+
