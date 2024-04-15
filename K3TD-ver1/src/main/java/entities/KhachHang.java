@@ -30,6 +30,12 @@ public class KhachHang {
 		super();
 		this.maKhachHang = maKhachHang;
 	}
+	
+	public KhachHang(String maKhachHang, String tenKhachHang) {
+		super();
+		this.maKhachHang = maKhachHang;
+		this.tenKhachHang = tenKhachHang;
+	}
 	public KhachHang() {
 		super();
 	}

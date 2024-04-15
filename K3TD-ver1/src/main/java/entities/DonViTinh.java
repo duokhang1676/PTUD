@@ -17,6 +17,17 @@ public class DonViTinh {
 		this.giaBan = giaBan;
 		this.trangThaiDonViTinh = trangThaiDonViTinh;
 	}
+	
+	public DonViTinh(String tenDonViTinh, HangHoa hangHoa, int quyDoi, double giaBan,
+			TrangThaiDonViTinh trangThaiDonViTinh) {
+		super();
+		this.tenDonViTinh = tenDonViTinh;
+		this.hangHoa = hangHoa;
+		this.quyDoi = quyDoi;
+		this.giaBan = giaBan;
+		this.trangThaiDonViTinh = trangThaiDonViTinh;
+	}
+
 	public DonViTinh(int maDonViTinh) {
 		super();
 		this.maDonViTinh = maDonViTinh;

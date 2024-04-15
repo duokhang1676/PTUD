@@ -39,6 +39,28 @@ public class HangHoa {
 		this.trangThaiHangHoa = trangThaiHangHoa;
 		this.loaiHang = loaiHang;
 	}
+	
+	public HangHoa(String tenHangHoa, LoaiHang loaiHang, String soDangKy, NhomHang nhomHang, String nuocSanXuat,
+			String hangSanXuat, String hoatChatChinh, String hamLuong, String quyCachDongGoi, String moTa, double thue,
+			String maVach, int soLuongDinhMuc, int soLuongCanhBao, TrangThaiHangHoa trangThaiHangHoa) {
+		super();
+		this.tenHangHoa = tenHangHoa;
+		this.loaiHang = loaiHang;
+		this.soDangKy = soDangKy;
+		this.nhomHang = nhomHang;
+		this.nuocSanXuat = nuocSanXuat;
+		this.hangSanXuat = hangSanXuat;
+		this.hoatChatChinh = hoatChatChinh;
+		this.hamLuong = hamLuong;
+		this.quyCachDongGoi = quyCachDongGoi;
+		this.moTa = moTa;
+		this.thue = thue;
+		this.maVach = maVach;
+		this.soLuongDinhMuc = soLuongDinhMuc;
+		this.soLuongCanhBao = soLuongCanhBao;
+		this.trangThaiHangHoa = trangThaiHangHoa;
+	}
+
 	public HangHoa(String maHangHoa) {
 		super();
 		this.maHangHoa = maHangHoa;

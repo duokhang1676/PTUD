@@ -4,15 +4,19 @@
  */
 package ui;
 
+import java.util.EventObject;
 import java.util.List;
 
+import javax.swing.DefaultCellEditor;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import components.AddContent;
 import components.StatusMenu;
+import dao.DonViTinhDao;
 import dao.HangHoaDao;
 import dao.NhomHangDao;
+import entities.DonViTinh;
 import entities.LoaiHang;
 import entities.NhomHang;
 import entities.TrangThaiHangHoa;
@@ -23,8 +27,11 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -51,32 +58,52 @@ public class HangHoa extends javax.swing.JPanel implements MouseListener{
     private void loadDataTable() {
 		// TODO Auto-generated method stub
     	int count = 0;
+    	int stt = 1;
+    	String loaiHang = null;
     	model_hangHoa.setNumRows(0);
 		hangHoa_dao = new HangHoaDao();
 		List<entities.HangHoa> dsHangHoa = hangHoa_dao.getAllDataHangHoa();
 		for (entities.HangHoa hh : dsHangHoa) {
-			model_hangHoa.addRow(new Object[] {hh.getMaHangHoa(), hh.getTenHangHoa(), hh.getLoaiHang(), hh.getNuocSanXuat(),
-					hh.getHoatChatChinh(), hh.getQuyCachDongGoi()});
-			
-			if (hh.getTrangThaiHangHoa().equals("NGUNG_BAN")) {
-				model_hangHoa.removeRow(count);
+			if (hh.getLoaiHang().equals(LoaiHang.DUOC_PHAM)) {
+				loaiHang = "Dược phẩm";
+			}else if (hh.getLoaiHang().equals(LoaiHang.VAT_TU_YTE)) {
+				loaiHang = "Vật tư y tế";
+			}else {
+				loaiHang = "Khác";
 			}
+			model_hangHoa.addRow(new Object[] {stt, hh.getMaHangHoa(), hh.getTenHangHoa(),
+					loaiHang, hh.getQuyCachDongGoi()});
+			
+//			if (hh.getTrangThaiHangHoa().equals("NGUNG_BAN")) {
+//				model_hangHoa.removeRow(count);
+//			}
+			
+			stt++;
 			count++;
 		}
+		jL_soLuongHH.setText("("+String.valueOf(count)+")");
 		
 	}
 
 	private void loadDataLoaiHang() {
 		// TODO Auto-generated method stub
+		String loaiHang = null;
 		for(LoaiHang lh : LoaiHang.values()) {
-			cb_loaiHang.addItem(lh.toString());
+			if (lh.equals(LoaiHang.DUOC_PHAM)) {
+				loaiHang = "Dược phẩm";
+			}else if (lh.equals(LoaiHang.VAT_TU_YTE)) {
+				loaiHang = "Vật tư y tế";
+			}else {
+				loaiHang = "Khác";
+			}
+			cb_loaiHang.addItem(loaiHang);
 		}
 	}
 
 	private void loatDataTrangThai() {
 		// TODO Auto-generated method stub
 		for(TrangThaiHangHoa tt : TrangThaiHangHoa.values()) {
-			cb_trangThai.addItem(tt.toString());
+			cb_trangThai.addItem(tt.equals(TrangThaiHangHoa.DANG_BAN)?"Đang bán":"Ngừng bán");
 		}
 	}
 
@@ -112,6 +139,7 @@ public class HangHoa extends javax.swing.JPanel implements MouseListener{
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         btn_themHH = new javax.swing.JButton();
+        jL_soLuongHH = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -219,7 +247,7 @@ public class HangHoa extends javax.swing.JPanel implements MouseListener{
         jPanel3.setPreferredSize(new java.awt.Dimension(1991, 50));
 
         jLabel5.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
-        jLabel5.setText("Danh sách hàng hóa (130)");
+        jLabel5.setText("Danh sách hàng hóa");
 
         btn_themHH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-add-16.png"))); // NOI18N
         btn_themHH.setText("Thêm hàng hóa mới");
@@ -229,6 +257,8 @@ public class HangHoa extends javax.swing.JPanel implements MouseListener{
             }
         });
 
+        jL_soLuongHH.setFont(new java.awt.Font("Segoe UI", 2, 12)); // NOI18N
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -236,7 +266,9 @@ public class HangHoa extends javax.swing.JPanel implements MouseListener{
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1196, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jL_soLuongHH)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1225, Short.MAX_VALUE)
                 .addComponent(btn_themHH)
                 .addGap(480, 480, 480))
         );
@@ -246,7 +278,8 @@ public class HangHoa extends javax.swing.JPanel implements MouseListener{
                 .addGap(13, 13, 13)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(btn_themHH))
+                    .addComponent(btn_themHH)
+                    .addComponent(jL_soLuongHH))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -349,6 +382,7 @@ public class HangHoa extends javax.swing.JPanel implements MouseListener{
     private javax.swing.JComboBox<String> cb_loaiHang;
     private javax.swing.JComboBox<String> cb_nhomHang;
     private javax.swing.JComboBox<String> cb_trangThai;
+    private javax.swing.JLabel jL_soLuongHH;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -358,10 +392,11 @@ public class HangHoa extends javax.swing.JPanel implements MouseListener{
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField txt_timKiem;
+	private DonViTinhDao donViTinh_dao;
     // End of variables declaration//GEN-END:variables
 
     private void addTableHangHoa() {
-        String[] colNames = {"Mã hàng hóa", "Tên hàng hóa", "Loại hàng", "Nước sản xuất", "Hoạt chất chính", "Quy cách đóng gói", "Thuế", "Thành tiền"};
+        String[] colNames = {"STT","Mã hàng hóa", "Tên hàng hóa", "Loại hàng",  "Quy cách đóng gói","Số lượng","Thành tiền", "Trạng thái"};
         
         model_hangHoa = new DefaultTableModel(colNames, 0);
         tbl_hangHoa = new JTable(model_hangHoa);
@@ -374,16 +409,31 @@ public class HangHoa extends javax.swing.JPanel implements MouseListener{
             tbl_hangHoa.getColumnModel().getColumn(3).setResizable(false);
             tbl_hangHoa.getColumnModel().getColumn(4).setResizable(false);
             tbl_hangHoa.getColumnModel().getColumn(5).setResizable(false);
+            tbl_hangHoa.getColumnModel().getColumn(6).setResizable(false);
+            tbl_hangHoa.getColumnModel().getColumn(7).setResizable(false);
         }
-        
         
         JTableHeader headerTable =  tbl_hangHoa.getTableHeader();
 		headerTable.setPreferredSize(new Dimension(headerTable.getPreferredSize().width, 40));
 		tbl_hangHoa.setRowHeight(40);
+		TableColumnModel tb_col = tbl_hangHoa.getColumnModel();
+		tb_col.getColumn(0).setPreferredWidth(50);
+		setCellEditable();
         jPanel1.add(js_tableHangHoa, BorderLayout.CENTER);
         
         tbl_hangHoa.addMouseListener(this);
     }
+    public void setCellEditable() {
+		for (int i = 0; i < tbl_hangHoa.getColumnCount(); i++) {
+			tbl_hangHoa.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(new JTextField()) {
+					@Override
+					public boolean isCellEditable(EventObject e) {
+						// Trả về false để ngăn chặn chỉnh sửa trực tiếp
+						return false;
+					}
+				});
+			}
+	}
     
     private void showMessage(String string) {
 		// TODO Auto-generated method stub
@@ -393,30 +443,48 @@ public class HangHoa extends javax.swing.JPanel implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		AddContent.addContent(new TaoHangHoa());
-    	
-    	int row = tbl_hangHoa.getSelectedRow();
-    	String maHH = tbl_hangHoa.getValueAt(row, 0).toString();
-    	
-    	entities.HangHoa hangHoa = hangHoa_dao.timHangHoaTheoMa(maHH);
-    	
-    	TaoHangHoa.txt_maHangHoa.setText(hangHoa.getMaHangHoa());
-    	TaoHangHoa.txt_tenHangHoa1.setText(hangHoa.getTenHangHoa());
-    	TaoHangHoa.txt_maVach.setText(hangHoa.getMaVach());
-    	TaoHangHoa.cb_loaiHangHoa.setSelectedItem(hangHoa.getLoaiHang());
-    	
-    	TaoHangHoa.cb_nhomHangHoa.setSelectedItem(hangHoa.getNhomHang().getTenNhomHang());
-    	
-    	TaoHangHoa.txt_soDangKy.setText(hangHoa.getSoDangKy());
-    	TaoHangHoa.txt_soLuongDinhMuc1.setText(String.valueOf(hangHoa.getSoLuongDinhMuc()));
-    	TaoHangHoa.txt_soLuongCanhBao.setText(String.valueOf(hangHoa.getSoLuongCanhBao()));
-    	TaoHangHoa.txt_HoatChat.setText(hangHoa.getHoatChatChinh());
-    	TaoHangHoa.txt_hamLuong.setText(hangHoa.getHamLuong());
-    	TaoHangHoa.txt_quyCach.setText(hangHoa.getQuyCachDongGoi());
-    	TaoHangHoa.txt_nuocSX.setText(hangHoa.getNuocSanXuat());
-    	TaoHangHoa.txt_hangSanXuat.setText(hangHoa.getHangSanXuat());
-    	TaoHangHoa.txt_moTa.setText(hangHoa.getMoTa());
-    	
+		if (e.getClickCount() == 2) {
+			AddContent.addContent(new TaoHangHoa());
+	    	
+			donViTinh_dao = new DonViTinhDao();
+	    	int row = tbl_hangHoa.getSelectedRow();
+	    	String maHH = tbl_hangHoa.getValueAt(row, 1).toString();
+	    	
+	    	entities.HangHoa hangHoa = hangHoa_dao.timHangHoaTheoMa(maHH);
+	    	List<DonViTinh> dsDVT = donViTinh_dao.timDVTTheoMaHH(maHH);
+	    	
+	    	TaoHangHoa.txt_maHangHoa.setText(hangHoa.getMaHangHoa());
+	    	TaoHangHoa.txt_tenHangHoa1.setText(hangHoa.getTenHangHoa());
+	    	TaoHangHoa.txt_maVach.setText(hangHoa.getMaVach());
+	    	TaoHangHoa.cb_loaiHangHoa.setSelectedItem(hangHoa.getLoaiHang());
+	    	
+	    	TaoHangHoa.cb_nhomHangHoa.setSelectedItem(hangHoa.getNhomHang().getTenNhomHang());
+	    	
+	    	TaoHangHoa.txt_soDangKy.setText(hangHoa.getSoDangKy());
+	    	TaoHangHoa.txt_soLuongDinhMuc1.setText(String.valueOf(hangHoa.getSoLuongDinhMuc()));
+	    	TaoHangHoa.txt_soLuongCanhBao.setText(String.valueOf(hangHoa.getSoLuongCanhBao()));
+	    	TaoHangHoa.txt_HoatChat.setText(hangHoa.getHoatChatChinh());
+	    	TaoHangHoa.txt_hamLuong.setText(hangHoa.getHamLuong());
+	    	TaoHangHoa.txt_quyCach.setText(hangHoa.getQuyCachDongGoi());
+	    	TaoHangHoa.txt_nuocSX.setText(hangHoa.getNuocSanXuat());
+	    	TaoHangHoa.txt_hangSanXuat.setText(hangHoa.getHangSanXuat());
+	    	TaoHangHoa.txt_moTa.setText(hangHoa.getMoTa());
+	    	TaoHangHoa.txt_vat.setText(String.valueOf(hangHoa.getThue()));
+	    	TaoHangHoa.cb_trangThai.setSelectedItem(hangHoa.getTrangThaiHangHoa().equals(TrangThaiHangHoa.DANG_BAN)?"Đang bán":"Ngừng bán");
+	    	
+//	    	for (DonViTinh dvt : dsDVT) {
+//	    		int i = 0;
+//	    		TaoHangHoa.model_DVT.setValueAt(i+1, i, 0);
+//				TaoHangHoa.model_DVT.setValueAt(dvt.getTenDonViTinh(), i, 1);
+//				TaoHangHoa.model_DVT.setValueAt(dvt.getQuyDoi(), i, 2);
+//				TaoHangHoa.model_DVT.setValueAt(dvt.getGiaBan(), i, 3);
+//				
+//				
+//				i++;
+//			}
+	    	
+		}
+		
 	}
 
 	@Override

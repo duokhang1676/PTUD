@@ -21,9 +21,10 @@ public class NhomHangDao {
 			ResultSet rs = stmt.executeQuery(sql);
 			
 			while (rs.next()) {
+				int maNH = rs.getInt("MaNhomHang");
 				String tenNH = rs.getString("TenNhomHang");
 				
-				NhomHang nhomHang = new NhomHang(tenNH);
+				NhomHang nhomHang = new NhomHang(maNH,tenNH);
 				
 				dsNhomHang.add(nhomHang);
 			}

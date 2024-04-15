@@ -219,12 +219,14 @@ public class HangHoaDao {
 	
 	public boolean themHangHoa(HangHoa hh) {
 		ConnectDB.getInstance();
-		Connection con = ConnectDB.getConnection();
+		Connection con = ConnectDB.getConnection(); 
 		PreparedStatement stmt = null;
-		int affectedRows = 0;
-		String sql = "Insert ino HangHoa values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "Insert into HangHoa "
+				+ "(TenHangHoa, LoaiHang, SoDangKy, MaNhomHang, NuocSanXuat,"
+				+ "HangSanXuat, HoatChatChinh, HamLuong, QuyCachDongGoi, MoTa, Thue, MaVach, SoLuongDinhMuc, SoLuongCanhBao, TrangThai) "
+				+ "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		try {
-			stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt = con.prepareStatement(sql);
 			
 			stmt.setString(1, hh.getTenHangHoa());
 			stmt.setString(2, hh.getLoaiHang().toString());
@@ -242,12 +244,13 @@ public class HangHoaDao {
 			stmt.setInt(14, hh.getSoLuongCanhBao());
 			stmt.setString(15, hh.getTrangThaiHangHoa().toString());
 			
-			affectedRows = stmt.executeUpdate();
+			stmt.executeUpdate();
 			stmt.close();
+			return true;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return affectedRows > 0;
+		return false;
 	}
 }

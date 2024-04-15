@@ -23,6 +23,12 @@ public class NhaCungCap {
 		super();
 		this.maNhaCungCap = maNhaCungCap;
 	}
+	
+	public NhaCungCap(String maNhaCungCap, String tenNhaCungCap) {
+		super();
+		this.maNhaCungCap = maNhaCungCap;
+		this.tenNhaCungCap = tenNhaCungCap;
+	}
 	public NhaCungCap() {
 		super();
 	}

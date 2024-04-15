@@ -4,7 +4,20 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+import db.ConnectDB;
+import entities.NhaCungCap;
+import entities.PhieuNhapHang;
+import entities.PhieuTraHang;
+import entities.PhieuXuatTra;
+import entities.TrangThaiPhieuNhapHang;
+import entities.TrangThaiPhieuXuatTra;
 
 public class PhieuTraHangDao {
 	public PhieuTraHangDao() {
@@ -56,4 +69,6 @@ public class PhieuTraHangDao {
 		}
 		return soLuong;
 	}
+	
+	
 }
