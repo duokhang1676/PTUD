@@ -1,6 +1,3 @@
 /dao/
-/ui/
-/components/
-/entities/
 /db/
-/sampleUi/
+/entities/

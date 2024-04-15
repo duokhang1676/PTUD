@@ -33,6 +33,12 @@ public class NhanVien {
 		super();
 		this.maNhanVien = maNhanVien;
 	}
+	
+	public NhanVien(String maNhanVien, String tenNhanVien) {
+		super();
+		this.maNhanVien = maNhanVien;
+		this.tenNhanVien = tenNhanVien;
+	}
 	public NhanVien() {
 		super();
 	}

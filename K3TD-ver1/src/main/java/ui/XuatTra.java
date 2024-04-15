@@ -5,7 +5,27 @@
 package ui;
 
 import components.AddContent;
+import components.ResizeContent;
+import dao.PhieuNhapHangDao;
+import dao.PhieuXuatTraDao;
+import entities.PhieuNhapHang;
+import entities.PhieuXuatTra;
+import entities.TrangThaiPhieuNhapHang;
+import entities.TrangThaiPhieuXuatTra;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.util.EventObject;
+import java.util.List;
+
+import javax.swing.DefaultCellEditor;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -13,13 +33,71 @@ import javax.swing.JPanel;
  */
 public class XuatTra extends javax.swing.JPanel {
 
-    /**
+    private DefaultTableModel model_phieuNhap;
+	private JTable tbl_phieuNhap;
+	private PhieuXuatTraDao phieuXT_dao;
+	/**
      * Creates new form XuatTra
      */
     public XuatTra() {
         initComponents();
+        ResizeContent.resizeContent(this);
+        addTablePhieuNH();
+        loadDataXT();
+        
     }
-
+    private void loadDataXT() {
+		// TODO Auto-generated method stub
+    	int stt = 1;
+		phieuXT_dao = new PhieuXuatTraDao();
+		model_phieuNhap.setRowCount(0);
+		List<PhieuXuatTra> dsPXT = phieuXT_dao.getAllDataPXT();
+		for (PhieuXuatTra p : dsPXT) {
+			model_phieuNhap.addRow(new Object[] {stt, p.getMaPhieuXuatTra(), p.getThoiGianTao(), p.getNhaCungCap().getTenNhaCungCap(),
+					10000, p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuXuatTra.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
+			
+			stt++;
+		}
+	}
+	private void addTablePhieuNH() {
+		// TODO Auto-generated method stub
+    	String[] colNames = {"STT","Mã phiếu xuất trả", "Ngày nhập", "Nhà cung cấp", "Tổng tiền", "Ghi chú", "Trạng thái" };
+        model_phieuNhap = new DefaultTableModel(colNames, 0);
+        tbl_phieuNhap = new JTable(model_phieuNhap);
+        JScrollPane js_tableHangHoa = new JScrollPane(tbl_phieuNhap);
+        
+        if (tbl_phieuNhap.getColumnModel().getColumnCount() > 0) {
+            tbl_phieuNhap.getColumnModel().getColumn(0).setResizable(false);
+            tbl_phieuNhap.getColumnModel().getColumn(1).setResizable(false);
+            tbl_phieuNhap.getColumnModel().getColumn(2).setResizable(false);
+            tbl_phieuNhap.getColumnModel().getColumn(3).setResizable(false);
+            tbl_phieuNhap.getColumnModel().getColumn(4).setResizable(false);
+            tbl_phieuNhap.getColumnModel().getColumn(5).setResizable(false);
+            tbl_phieuNhap.getColumnModel().getColumn(6).setResizable(false);
+            
+        }
+        
+        JTableHeader headerTable =  tbl_phieuNhap.getTableHeader();
+		headerTable.setPreferredSize(new Dimension(headerTable.getPreferredSize().width, 40));
+		tbl_phieuNhap.setRowHeight(40);
+		TableColumnModel tb_col = tbl_phieuNhap.getColumnModel();
+		tb_col.getColumn(0).setPreferredWidth(50);
+		setCellEditable();
+        jPanel1.add(js_tableHangHoa, BorderLayout.CENTER);
+        
+        
+	}
+    public void setCellEditable() {
+		for (int i = 0; i < tbl_phieuNhap.getColumnCount(); i++) {
+			tbl_phieuNhap.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(new JTextField()) {
+					@Override
+					public boolean isCellEditable(EventObject e) {
+						// Trả về false để ngăn chặn chỉnh sửa trực tiếp
+						return false;
+					}
+				});
+			}
+	}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,21 +114,20 @@ public class XuatTra extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
         datePicker2 = new com.github.lgooddatepicker.components.DatePicker();
         jTextField3 = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setPreferredSize(new java.awt.Dimension(2013, 1000));
+        jPanel2.setPreferredSize(new java.awt.Dimension(2013, 130));
 
         jTextField2.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jTextField2.setText("Tìm kiếm theo nhà cung cấp");
@@ -83,81 +160,6 @@ public class XuatTra extends javax.swing.JPanel {
         jLabel6.setText("Tìm kiếm theo nhà cung cấp");
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
 
-        jPanel1.setBackground(new java.awt.Color(193, 219, 208));
-
-        jLabel5.setText("Danh sách hàng hóa");
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "STT", "Mã Phiếu Nhập Hàng", "Ngày Nhập", "Ngày Xuất Trả", "Nhà Cung Cấp", "Tổng Tiền", "Ghi Chú", "Trạng Thái"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jTable1.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jTable1.setPreferredSize(new java.awt.Dimension(1465, 200));
-        jScrollPane2.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(45);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(50);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(55);
-            jTable1.getColumnModel().getColumn(1).setMinWidth(140);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(1).setMaxWidth(160);
-            jTable1.getColumnModel().getColumn(2).setMinWidth(140);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(2).setMaxWidth(160);
-            jTable1.getColumnModel().getColumn(3).setMinWidth(140);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(3).setMaxWidth(160);
-            jTable1.getColumnModel().getColumn(4).setMinWidth(290);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(300);
-            jTable1.getColumnModel().getColumn(4).setMaxWidth(310);
-            jTable1.getColumnModel().getColumn(5).setMinWidth(175);
-            jTable1.getColumnModel().getColumn(5).setPreferredWidth(200);
-            jTable1.getColumnModel().getColumn(5).setMaxWidth(210);
-            jTable1.getColumnModel().getColumn(6).setMinWidth(165);
-            jTable1.getColumnModel().getColumn(6).setPreferredWidth(200);
-            jTable1.getColumnModel().getColumn(6).setMaxWidth(210);
-        }
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(514, 1684, Short.MAX_VALUE))
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(7, Short.MAX_VALUE)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
         datePicker1.setMinimumSize(new java.awt.Dimension(200, 21));
 
         datePicker2.setMinimumSize(new java.awt.Dimension(200, 21));
@@ -183,8 +185,8 @@ public class XuatTra extends javax.swing.JPanel {
             }
         });
 
-        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel7.setText("Xuất trả nhà cung cấp");
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -211,7 +213,6 @@ public class XuatTra extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,12 +253,24 @@ public class XuatTra extends javax.swing.JPanel {
                     .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(322, 322, 322))
+                .addGap(1325, 1325, 1325))
         );
 
-        add(jPanel2, java.awt.BorderLayout.CENTER);
+        add(jPanel2, java.awt.BorderLayout.NORTH);
+
+        jPanel1.setBackground(new java.awt.Color(193, 219, 208));
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jPanel4.setBackground(new java.awt.Color(193, 219, 208));
+        jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        jLabel5.setText("Danh sách phiếu xuất trả");
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        jPanel4.add(jLabel5);
+
+        jPanel1.add(jPanel4, java.awt.BorderLayout.NORTH);
+
+        add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -326,8 +339,7 @@ public class XuatTra extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables

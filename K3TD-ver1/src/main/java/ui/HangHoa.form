@@ -221,7 +221,9 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="1196" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jL_soLuongHH" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="1225" max="32767" attributes="0"/>
                       <Component id="btn_themHH" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="480" max="-2" attributes="0"/>
                   </Group>
@@ -234,6 +236,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btn_themHH" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jL_soLuongHH" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="14" max="32767" attributes="0"/>
                   </Group>
@@ -246,7 +249,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="14" style="2"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Danh s&#xe1;ch h&#xe0;ng h&#xf3;a (130)"/>
+                <Property name="text" type="java.lang.String" value="Danh s&#xe1;ch h&#xe0;ng h&#xf3;a"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btn_themHH">
@@ -259,6 +262,13 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_themHHActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jL_soLuongHH">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="12" style="2"/>
+                </Property>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

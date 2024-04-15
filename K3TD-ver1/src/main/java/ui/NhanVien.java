@@ -4,7 +4,19 @@
  */
 package ui;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.util.List;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
 import components.ResizeContent;
+import dao.NhanVien_DAO;
+import entities.ChucVuNhanVien;
+import entities.TrangThaiNhanVien;
 
 /**
  *
@@ -12,14 +24,65 @@ import components.ResizeContent;
  */
 public class NhanVien extends javax.swing.JPanel {
 
-    /**
+    private NhanVien_DAO NV_dao;
+	private DefaultTableModel model_NV;
+	private JTable tbl_NV;
+	/**
      * Creates new form NhanVien_httk
      */
     public NhanVien() {
         initComponents();
         ResizeContent.resizeContent(this);
         pnl_left.setVisible(false);
+        addTableNV();
+        loadDataNV();
     }
+    private void loadDataNV() {
+		// TODO Auto-generated method stub
+    	int stt = 1;
+		model_NV.setNumRows(0);
+		
+		NV_dao = new NhanVien_DAO();
+		List<entities.NhanVien> dsNV = NV_dao.docTuBang();
+		for (entities.NhanVien nv : dsNV) {
+			model_NV.addRow(new Object[] {stt, nv.getMaNhanVien(), nv.getTenNhanVien(), nv.getChucVu().equals(ChucVuNhanVien.NHAN_VIEN) ? "Nhân Viên" : "Quản Lý", nv.getSoDienThoai(),
+					nv.getGhiChu(), nv.getTrangThaiNhanVien().equals(TrangThaiNhanVien.DANG_HOAT_DONG)?"Đang hoạt động":"Ngưng hoạt động"});
+			
+			stt++;
+		}
+	}
+
+	private void addTableNV() {
+		// TODO Auto-generated method stub
+    	String[] colNames = {"STT","Mã Nhân Viên", "Họ và Tên", "Chức Vụ",  "Số điện thoại","Ghi chú","Trạng thái"};
+        
+        model_NV = new DefaultTableModel(colNames, 0);
+        tbl_NV = new JTable(model_NV);
+        JScrollPane js_tableNhanVien = new JScrollPane(tbl_NV);
+        
+        if (tbl_NV.getColumnModel().getColumnCount() > 0) {
+        	tbl_NV.getColumnModel().getColumn(0).setResizable(false);
+        	tbl_NV.getColumnModel().getColumn(1).setResizable(false);
+        	tbl_NV.getColumnModel().getColumn(2).setResizable(false);
+        	tbl_NV.getColumnModel().getColumn(3).setResizable(false);
+        	tbl_NV.getColumnModel().getColumn(4).setResizable(false);
+        	tbl_NV.getColumnModel().getColumn(5).setResizable(false);
+        	tbl_NV.getColumnModel().getColumn(6).setResizable(false);
+            
+        }
+        
+        JTableHeader headerTable =  tbl_NV.getTableHeader();
+		headerTable.setPreferredSize(new Dimension(headerTable.getPreferredSize().width, 40));
+		tbl_NV.setRowHeight(40);
+//		setCellEditable();
+        pnlCenter.add(js_tableNhanVien, BorderLayout.CENTER);
+        
+//        tbl_hangHoa.addMouseListener(this);
+	}
+    
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -11,6 +11,7 @@ ui\NhapHang$4.class
 ui\NhanVien$1.class
 ui\NhanVien.class
 ui\XuatTra$3.class
+dao\NhaCungCap_DAO.class
 ui\BanHang$7.class
 ui\NhapHang$2.class
 ui\BanHang$8.class
@@ -19,6 +20,7 @@ ui\BanHang$9.class
 ui\XuatTra$6.class
 ui\NhapHang$1.class
 ui\BanHang$11.class
+dao\NhanVien_DAO.class
 ui\NhanVien$10.class
 ui\BanHang$6.class
 ui\HoaDon$3.class
@@ -37,6 +39,7 @@ ui\NhanVien$9.class
 ui\TrangChu$6.class
 ui\HangHoa.class
 ui\NhanVien$7.class
+dao\KhachHang_DAO.class
 ui\BanHang$4.class
 ui\BanHang$10.class
 ui\NhanVien$6.class

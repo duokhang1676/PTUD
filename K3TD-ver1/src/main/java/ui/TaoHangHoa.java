@@ -5,18 +5,31 @@
 package ui;
 
 import components.AddContent;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 import components.ButtonColumnUtil;
 import components.ResizeContent;
+import dao.DonViTinhDao;
+import dao.HangHoaDao;
 import dao.NhomHangDao;
+import entities.DonViTinh;
 import entities.LoaiHang;
 import entities.NhomHang;
+import entities.TrangThaiDonViTinh;
+import entities.TrangThaiHangHoa;
 
 /**
  *
@@ -25,6 +38,12 @@ import entities.NhomHang;
 public class TaoHangHoa extends javax.swing.JPanel {
 
     private NhomHangDao nhomHang_dao;
+    private HangHoaDao hangHoa_dao;
+	protected  DefaultTableModel model_DVT;
+	protected  JTable tbl_DVT;
+	private List<NhomHang> dsNhomHang;
+	private int stt = 2;
+	private DonViTinhDao donViTinh_dao;
 	/**
      * Creates new form TaoHangHoa2
      */
@@ -33,23 +52,65 @@ public class TaoHangHoa extends javax.swing.JPanel {
         ResizeContent.resizeContent(this);
         loadDataLoaiHang();
         loadDataNhomHang();
-        
+        addTableDVT();
         
     }
 
-    private void loadDataNhomHang() {
+    private void addTableDVT() {
+		// TODO Auto-generated method stub
+    	String[] colNames = {"STT", "Tên đơn vị tính", "Quy đổi", "Giá bán",  "Bán hàng"};
+        
+        model_DVT = new DefaultTableModel(colNames, 0);
+        tbl_DVT = new JTable(model_DVT);
+        JScrollPane js_tableHangHoa = new JScrollPane(tbl_DVT);
+        
+        if (tbl_DVT.getColumnModel().getColumnCount() > 0) {
+        	tbl_DVT.getColumnModel().getColumn(0).setResizable(false);
+        	tbl_DVT.getColumnModel().getColumn(1).setResizable(false);
+        	tbl_DVT.getColumnModel().getColumn(2).setResizable(false);
+        	tbl_DVT.getColumnModel().getColumn(3).setResizable(false);
+        	tbl_DVT.getColumnModel().getColumn(4).setResizable(false);
+        }
+        
+        tbl_DVT.getColumnModel().getColumn(0).setPreferredWidth(50);
+        Object[] emptyRow = {1, null, null, 0, "Đang bán"};
+        model_DVT.addRow(emptyRow);
+        JTableHeader headerTable =  tbl_DVT.getTableHeader();
+		headerTable.setPreferredSize(new Dimension(headerTable.getPreferredSize().width, 40));
+		headerTable.setBackground(Color.white);
+		tbl_DVT.setRowHeight(40);
+		
+//		setCellEditable();
+        this.add(js_tableHangHoa, BorderLayout.CENTER);
+        
+//        tbl_DVT.addMouseListener(this);
+	}
+
+	private void loadDataNhomHang() {
 		// TODO Auto-generated method stub
     	nhomHang_dao = new NhomHangDao();
     	
-    	List<NhomHang> dsNhomHang = nhomHang_dao.getAllDataNhomHang();
+    	dsNhomHang = nhomHang_dao.getAllDataNhomHang();
     	dsNhomHang.forEach(nh -> cb_nhomHangHoa.addItem(nh.getTenNhomHang()));
 	}
 
 	private void loadDataLoaiHang() {
 		// TODO Auto-generated method stub
+		String loaiHang = null;
 		for(LoaiHang lh : LoaiHang.values()) {
-			cb_loaiHangHoa.addItem(lh.toString());
+			if (lh.equals(LoaiHang.DUOC_PHAM)) {
+				loaiHang = "Dược phẩm";
+			}else if (lh.equals(LoaiHang.VAT_TU_YTE)) {
+				loaiHang = "Vật tư y tế";
+			}else {
+				loaiHang = "Khác";
+			}
+			cb_loaiHangHoa.addItem(loaiHang);
 		}
+	}
+	
+	public void showMessage(String s) {
+		JOptionPane.showMessageDialog(this, s);
 	}
 
 	/**
@@ -99,15 +160,15 @@ public class TaoHangHoa extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         txt_moTa = new javax.swing.JTextField();
         txt_soLuongDinhMuc1 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cb_trangThai = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         pnlFooter = new javax.swing.JPanel();
         btn_Luu = new javax.swing.JButton();
         btn_Dong = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btn_xoaDVT = new javax.swing.JButton();
+        btn_themDVT = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1940, 770));
         setLayout(new java.awt.BorderLayout());
 
@@ -147,7 +208,7 @@ public class TaoHangHoa extends javax.swing.JPanel {
         jLabel61.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jLabel61.setText("Vat(%)");
 
-        txt_maHangHoa.setForeground(new java.awt.Color(217, 217, 217));
+        txt_maHangHoa.setEditable(false);
         txt_maHangHoa.setText("Mã tự động\n");
         txt_maHangHoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -281,8 +342,8 @@ public class TaoHangHoa extends javax.swing.JPanel {
             }
         });
 
-        jComboBox1.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đang bán", "Ngừng bán" }));
+        cb_trangThai.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        cb_trangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đang bán", "Ngừng bán" }));
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jLabel4.setText("Trạng thái");
@@ -354,7 +415,7 @@ public class TaoHangHoa extends javax.swing.JPanel {
                                                 .addComponent(jLabel61))
                                             .addGap(28, 28, 28)
                                             .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(cb_trangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel1)
@@ -412,7 +473,7 @@ public class TaoHangHoa extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txt_vat, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                            .addComponent(jComboBox1)))
+                            .addComponent(cb_trangThai)))
                     .addGroup(pnlHeaderLayout.createSequentialGroup()
                         .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel52)
@@ -457,43 +518,6 @@ public class TaoHangHoa extends javax.swing.JPanel {
 
         add(pnlHeader, java.awt.BorderLayout.PAGE_START);
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(452, 50));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Tên đơn vị", "Quy đổi", "Giá bán", "Bán hàng", ""
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jTable1.setMinimumSize(new java.awt.Dimension(75, 40));
-        jTable1.setPreferredSize(new java.awt.Dimension(375, 50));
-        jScrollPane1.setViewportView(jTable1);
-        TableColumn column = jTable1.getColumnModel().getColumn(4); // 1 là chỉ số cột, bắt đầu từ 0
-        column.setPreferredWidth(50);
-        ButtonColumnUtil.addButtonColumn(jTable1, jTable1.getColumnCount() - 1, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                //jTable1.remove(jTable1.getSelectedRow());
-            }
-        });
-
-        add(jScrollPane1, java.awt.BorderLayout.CENTER);
-
         pnlFooter.setBackground(new java.awt.Color(193, 219, 208));
         pnlFooter.setMinimumSize(new java.awt.Dimension(0, 50));
         pnlFooter.setPreferredSize(new java.awt.Dimension(1940, 60));
@@ -516,11 +540,19 @@ public class TaoHangHoa extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setText("+ Thêm đơn vị tính");
-        jButton2.setPreferredSize(new java.awt.Dimension(131, 30));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_xoaDVT.setText("- Xóa đơn vị tính");
+        btn_xoaDVT.setPreferredSize(new java.awt.Dimension(131, 40));
+        btn_xoaDVT.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btn_xoaDVTActionPerformed(evt);
+            }
+        });
+
+        btn_themDVT.setText("+ Thêm đơn vị tính");
+        btn_themDVT.setPreferredSize(new java.awt.Dimension(131, 40));
+        btn_themDVT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_themDVTActionPerformed(evt);
             }
         });
 
@@ -529,9 +561,11 @@ public class TaoHangHoa extends javax.swing.JPanel {
         pnlFooterLayout.setHorizontalGroup(
             pnlFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFooterLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1402, Short.MAX_VALUE)
+                .addGap(14, 14, 14)
+                .addComponent(btn_themDVT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_xoaDVT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1257, Short.MAX_VALUE)
                 .addComponent(btn_Luu, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(72, 72, 72)
                 .addComponent(btn_Dong, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -541,15 +575,12 @@ public class TaoHangHoa extends javax.swing.JPanel {
             pnlFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFooterLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlFooterLayout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlFooterLayout.createSequentialGroup()
-                        .addGroup(pnlFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_Dong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_Luu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGroup(pnlFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_Dong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_Luu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_xoaDVT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_themDVT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         add(pnlFooter, java.awt.BorderLayout.PAGE_END);
@@ -622,7 +653,7 @@ public class TaoHangHoa extends javax.swing.JPanel {
                                                 .addComponent(jLabel61))
                                             .addGap(28, 28, 28)
                                             .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(cb_trangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel1)
@@ -680,7 +711,7 @@ public class TaoHangHoa extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txt_vat, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                            .addComponent(jComboBox1)))
+                            .addComponent(cb_trangThai)))
                     .addGroup(pnlHeaderLayout.createSequentialGroup()
                         .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel52)
@@ -722,6 +753,73 @@ public class TaoHangHoa extends javax.swing.JPanel {
     }
     private void btn_LuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LuuActionPerformed
         // TODO add your handling code here:
+    	
+    	hangHoa_dao = new HangHoaDao();
+    	donViTinh_dao = new DonViTinhDao();
+    	String tenHH = txt_tenHangHoa1.getText();
+    	String soDK = txt_soDangKy.getText();
+    	
+    	List<NhomHang> dsNhom = nhomHang_dao.getAllDataNhomHang();
+    	NhomHang nhomHang = dsNhom.get(cb_nhomHangHoa.getSelectedIndex());
+    	System.out.println(nhomHang.toString());
+    	
+    	String nuocSX = txt_nuocSX.getText();
+    	String hangSX = txt_hangSanXuat.getText();
+    	String hoatChat = txt_HoatChat.getText();
+    	String hamLuong = txt_hamLuong.getText();
+    	String quyCachDG = txt_quyCach.getText();
+    	String moTa = txt_moTa.getText();
+    	Double thue = Double.parseDouble(txt_vat.getText());
+    	String maVach = txt_maVach.getText();
+    	int soLuongDM = Integer.parseInt(txt_soLuongDinhMuc1.getText());
+    	int soLuongCB = Integer.parseInt(txt_soLuongCanhBao.getText());
+    	
+    	LoaiHang lh = null;
+    	String selectedLoaiHang = cb_loaiHangHoa.getSelectedItem().toString();
+    	if (selectedLoaiHang.equals("Dược phẩm")) {
+    		lh = LoaiHang.DUOC_PHAM;
+		}else if (selectedLoaiHang.equals("Vật tư y tế")) {
+			lh = LoaiHang.VAT_TU_YTE;
+		}else {
+			lh = LoaiHang.KHAC;
+		}
+    	
+    	TrangThaiHangHoa trangThai = null;
+    	String selectedTrangThai = cb_trangThai.getSelectedItem().toString();
+    	if (selectedTrangThai.equals("Đang bán")) {
+    		trangThai = TrangThaiHangHoa.DANG_BAN;
+		}else {
+			trangThai = TrangThaiHangHoa.NGUNG_BAN;
+		}
+    	
+    	
+    	entities.HangHoa hh = new entities.HangHoa(tenHH, lh, soDK, nhomHang, nuocSX, hangSX, hoatChat, hamLuong, quyCachDG, moTa, thue, maVach, soLuongDM, soLuongCB, trangThai);
+    	System.out.println(hh.toString());
+    	if (hangHoa_dao.themHangHoa(hh)) {
+			showMessage("Thêm thành công!");
+		}else {
+			showMessage("Thêm không thành công!");
+		}
+//    	for (int i = 0; i < tbl_DVT.getRowCount(); i++) {
+//			String tenDVT = (String) model_DVT.getValueAt(i, 1);
+//			System.out.println(tenDVT);
+//			int quyDoi = (int) model_DVT.getValueAt(i, 2);
+//			System.out.println(quyDoi);
+//			double giaBan = Double.valueOf((String) model_DVT.getValueAt(i, 3));
+//			TrangThaiDonViTinh trangThaiDVT = TrangThaiDonViTinh.DANG_BAN;
+//			
+//			DonViTinh dvt = new DonViTinh(tenDVT, hh, 10, 20000, trangThaiDVT);
+//			
+//			if (donViTinh_dao.themDVT(dvt)) {
+//				showMessage("Thêm thành công!");
+//			}else {
+//				showMessage("Thêm không thành công!");
+//			}
+//			
+//    		System.out.println(model_DVT.getValueAt(i, 1));
+//		}
+    	
+    	
     }//GEN-LAST:event_btn_LuuActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
@@ -776,9 +874,15 @@ public class TaoHangHoa extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_moTajTextField5ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btn_xoaDVTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_xoaDVTActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    	int selectedRow = tbl_DVT.getSelectedRow();
+    	if (selectedRow == -1) {
+			showMessage("Chọn dòng để xóa!");
+		}else {
+			model_DVT.removeRow(selectedRow);
+		}
+    }//GEN-LAST:event_btn_xoaDVTActionPerformed
 
     private void btn_DongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DongActionPerformed
         // TODO add your handling code here:
@@ -788,16 +892,25 @@ public class TaoHangHoa extends javax.swing.JPanel {
     private void txt_vatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_vatActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_vatActionPerformed
+
+    private void btn_themDVTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themDVTActionPerformed
+        // TODO add your handling code here:
+    	
+    	Object[] emptyRow = {stt ++, null, null, 0, "Đang bán"};
+        model_DVT.addRow(emptyRow);
+    	
+    }//GEN-LAST:event_btn_themDVTActionPerformed
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Dong;
     private javax.swing.JButton btn_Luu;
+    private javax.swing.JButton btn_themDVT;
+    private javax.swing.JButton btn_xoaDVT;
     protected static javax.swing.JComboBox<String> cb_loaiHangHoa;
     protected static javax.swing.JComboBox<String> cb_nhomHangHoa;
+    protected static javax.swing.JComboBox<String> cb_trangThai;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -818,8 +931,6 @@ public class TaoHangHoa extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel62;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JLabel lb_danhsach;
     private javax.swing.JPanel pnlFooter;
