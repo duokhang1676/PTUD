@@ -4,7 +4,21 @@
  */
 package ui;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.util.List;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+
 import components.ResizeContent;
+import dao.KhachHang_DAO;
+import dao.NhanVien_DAO;
+import entities.ChucVuNhanVien;
+import entities.TrangThaiKhachHang;
+import entities.TrangThaiNhanVien;
 
 /**
  *
@@ -12,14 +26,61 @@ import components.ResizeContent;
  */
 public class KhachHang extends javax.swing.JPanel {
 
-    /**
+    private KhachHang_DAO KH_dao;
+	private DefaultTableModel model_KH;
+	private JTable tbl_KH;
+	/**
      * Creates new form NhanVien_httk
      */
     public KhachHang() {
         initComponents();
         ResizeContent.resizeContent(this);
         pnl_left.setVisible(false);
+        addTableNV();
+        loadDataNV();
     }
+    private void loadDataNV() {
+		// TODO Auto-generated method stub
+    	int stt = 1;
+		model_KH.setNumRows(0);
+		
+		KH_dao = new KhachHang_DAO();
+		List<entities.KhachHang> dsKH = KH_dao.docTuBang();
+		for (entities.KhachHang kh : dsKH) {
+			model_KH.addRow(new Object[] {stt, kh.getMaKhachHang(), kh.getTenKhachHang(),"100", kh.getSoDienThoai(),
+					kh.getGhiChu(), kh.getTrangThaiKhachHang().equals(TrangThaiKhachHang.DANG_HOAT_DONG)?"Đang hoạt động":"Ngưng hoạt động"});
+			
+			stt++;
+		}
+	}
+
+	private void addTableNV() {
+		// TODO Auto-generated method stub
+    	String[] colNames = {"STT","Mã Nhân Viên", "Họ và Tên", "Tổng Tiền Bán",  "Số điện thoại","Ghi chú","Trạng thái"};
+        
+        model_KH = new DefaultTableModel(colNames, 0);
+        tbl_KH = new JTable(model_KH);
+        JScrollPane js_tableNV = new JScrollPane(tbl_KH);
+        
+        if (tbl_KH.getColumnModel().getColumnCount() > 0) {
+        	tbl_KH.getColumnModel().getColumn(0).setResizable(false);
+        	tbl_KH.getColumnModel().getColumn(1).setResizable(false);
+        	tbl_KH.getColumnModel().getColumn(2).setResizable(false);
+        	tbl_KH.getColumnModel().getColumn(3).setResizable(false);
+        	tbl_KH.getColumnModel().getColumn(4).setResizable(false);
+        	tbl_KH.getColumnModel().getColumn(5).setResizable(false);
+        	tbl_KH.getColumnModel().getColumn(6).setResizable(false);
+            
+        }
+        
+        JTableHeader headerTable =  tbl_KH.getTableHeader();
+		headerTable.setPreferredSize(new Dimension(headerTable.getPreferredSize().width, 40));
+		tbl_KH.setRowHeight(40);
+//		setCellEditable();
+        pnlCenter.add(js_tableNV, BorderLayout.CENTER);
+        
+//        tbl_hangHoa.addMouseListener(this);
+	}
 
     /**
      * This method is called from within the constructor to initialize the form.
