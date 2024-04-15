@@ -357,7 +357,7 @@ public class DangNhap extends javax.swing.JFrame {
 	}
 
 	private boolean KiemTraDangNhap() {
-		// TODO Auto-generated method stub
+		
 		return true;
 	}
 

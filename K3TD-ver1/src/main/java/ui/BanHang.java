@@ -5,16 +5,29 @@
 package ui;
 
 import components.AddContent;
+import components.FormatJtable;
+import components.LoginInfo;
 import components.ResizeContent;
+import dao.HangHoaDao;
+
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.text.DefaultFormatter;
 
 /**
@@ -27,8 +40,11 @@ public class BanHang extends javax.swing.JPanel {
      * Creates new form BanHang2
      */
     public BanHang() {
+    	hangHoaDao = new HangHoaDao();
         initComponents();
         ResizeContent.resizeContent(this);
+        tbChiTietHoaDon.setModel(tableModel);
+        FormatJtable.setCellEditable(tbChiTietHoaDon);
         
     }
 
@@ -113,6 +129,11 @@ public class BanHang extends javax.swing.JPanel {
 
         timMaSP1.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
         timMaSP1.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-find-24.png"))); // NOI18N
+        timMaSP1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                timMaSP1ActionPerformed(evt);
+            }
+        });
 
         jCheckBox1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jCheckBox1.setText("Bán theo đơn");
@@ -167,7 +188,7 @@ public class BanHang extends javax.swing.JPanel {
         lblPhimTat.setText("Nhấn F4 để quét mã vạch");
         pnlLeft.add(lblPhimTat, java.awt.BorderLayout.SOUTH);
 
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(100, 100));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(100, 500));
 
         tbChiTietHoaDon.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         tbChiTietHoaDon.setModel(new javax.swing.table.DefaultTableModel(
@@ -202,7 +223,24 @@ public class BanHang extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tbChiTietHoaDon.setPreferredSize(new java.awt.Dimension(100, 100));
+        
+     // Tạo một Action và gán chức năng khi nhấn phím esc
+        Action action = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+          	  tableModel.removeRow(tbChiTietHoaDon.getSelectedRow());
+            }
+        };
+     // Gắn hành động với phím tắt F4
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F9, 0), "performF4Action");
+        this.getActionMap().put("performF4Action", action);
+
+     
+
+	
+
+        
+        tbChiTietHoaDon.setPreferredSize(new java.awt.Dimension(100, 500));
         tbChiTietHoaDon.setRequestFocusEnabled(false);
         tbChiTietHoaDon.setRowHeight(40);
         jScrollPane1.setViewportView(tbChiTietHoaDon);
@@ -617,6 +655,8 @@ public class BanHang extends javax.swing.JPanel {
 
     private void txtTienDuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTienDuaActionPerformed
         // TODO add your handling code here:
+    	double tienThua = Double.parseDouble(txtTienDua.getText())-reload();
+    	txtTienThua.setText(tienThua+"");
     }//GEN-LAST:event_txtTienDuaActionPerformed
 
     private void txtGhiChuAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_txtGhiChuAncestorAdded
@@ -627,7 +667,52 @@ public class BanHang extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTongTienActionPerformed
 
-
+    private void timMaSP1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timMaSP1ActionPerformed
+        // TODO add your handling code here:
+    	//Khang
+    	entities.HangHoa hangHoa = null;
+    	try {
+    		hangHoa = hangHoaDao.timHangHoaTheoMa(timMaSP1.getText());
+		} catch (Exception e) {
+			// TODO: handle exception
+			return;
+		}
+    	
+    	int soLuong = 1;
+    	double giaBan = hangHoa.getThue()*10;
+    	for(int i=0;i<tableModel.getRowCount();i++) {
+    		if(tableModel.getValueAt(i, 0).toString().equalsIgnoreCase(hangHoa.getTenHangHoa())) {
+    			soLuong = ((int)tableModel.getValueAt(i, 2))+1;
+    			tableModel.setValueAt(soLuong, i, 2);
+    			tableModel.setValueAt(soLuong*giaBan, i, 4);
+    			reload();
+    			return;
+    		}
+    	}
+    	double thanhTien = soLuong*giaBan;
+    	tableModel.addRow(new Object[] {hangHoa.getTenHangHoa(),"Viên", soLuong,giaBan,thanhTien});
+    	reload();
+    	
+    	
+    }//GEN-LAST:event_timMaSP1ActionPerformed
+    
+    public double reload() {
+    	double tongTien = 0;
+    	for(int i=0;i<tableModel.getRowCount();i++) {
+    		tongTien+=(double)tableModel.getValueAt(i, 4);
+    	}
+    	txtTongTien.setText(tongTien+"");
+    	txtTienTra.setText(tongTien+"");
+    	if(txtTienDua.getText().isEmpty())return tongTien;
+    	double tienThua = Double.parseDouble(txtTienDua.getText())-tongTien;
+    	txtTienThua.setText(tienThua+"");
+    	return tongTien;
+    }
+    
+    String headerString[] = "Tên sản phẩm;Đơn vị tính;Số lượng;Giá bán;Thành tiền".split(";");
+    private DefaultTableModel tableModel = new DefaultTableModel(headerString,0);
+    private HangHoaDao hangHoaDao;
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLuuTam;
     private javax.swing.JButton btnThanhToan;
