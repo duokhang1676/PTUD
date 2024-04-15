@@ -5,6 +5,7 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
@@ -12,12 +13,21 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
+import components.ColorSample;
+import components.FormatJtable;
 import components.Formater;
+import dao.HangHoaDao;
 import dao.HoaDonDao;
 import dao.LoHangDao;
 import dao.PhieuTraHangDao;
+import entities.HangHoa;
 import entities.LoHang;
 import entities.PhieuTraHang;
 
@@ -34,8 +44,10 @@ public class TrangChu extends javax.swing.JPanel {
     	hoaDonDao = new HoaDonDao();
     	phieuTraHangDao = new PhieuTraHangDao();
     	loHangDao = new LoHangDao();
+    	hangHoaDao = new HangHoaDao();
         initComponents();
         loadData();
+        
     }
 
     /**
@@ -79,9 +91,9 @@ public class TrangChu extends javax.swing.JPanel {
         jL_canhBaoHangHoa = new javax.swing.JLabel();
         jP_canhBaoContent = new javax.swing.JPanel();
         jP_menuCanhBao = new javax.swing.JPanel();
-        btn_hangDaHetHan = new javax.swing.JButton();
-        btn_hangSapHetHan = new javax.swing.JButton();
         btn_hangSapHet = new javax.swing.JButton();
+        btn_hangSapHetHan = new javax.swing.JButton();
+        btn_hangDaHetHan = new javax.swing.JButton();
         jP_table = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tb_hangHoa = new javax.swing.JTable();
@@ -126,19 +138,20 @@ public class TrangChu extends javax.swing.JPanel {
 
         jP_doanhSoContent.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jL_thangTruoc.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jL_thangTruoc.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jL_thangTruoc.setText("Tháng trước: ");
         jP_doanhSoContent.add(jL_thangTruoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
 
-        jL_doanhThuThangTruoc.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jL_doanhThuThangTruoc.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jL_doanhThuThangTruoc.setText("0.0");
-        jP_doanhSoContent.add(jL_doanhThuThangTruoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, -1, -1));
+        jL_doanhThuThangTruoc.setPreferredSize(new java.awt.Dimension(150, 20));
+        jP_doanhSoContent.add(jL_doanhThuThangTruoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 60, -1));
 
-        jL_thangNay.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jL_thangNay.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jL_thangNay.setText("Tháng này: ");
         jP_doanhSoContent.add(jL_thangNay, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
 
-        jL_doanhThuThangNay.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jL_doanhThuThangNay.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jL_doanhThuThangNay.setText("0.0");
         jP_doanhSoContent.add(jL_doanhThuThangNay, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, -1, -1));
 
@@ -180,19 +193,19 @@ public class TrangChu extends javax.swing.JPanel {
 
         jP_doanhSoContent1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jL_thangTruoc1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jL_thangTruoc1.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jL_thangTruoc1.setText("Tháng trước: ");
         jP_doanhSoContent1.add(jL_thangTruoc1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
 
-        jL_hoaDonThangTruoc.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jL_hoaDonThangTruoc.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jL_hoaDonThangTruoc.setText("0.0");
         jP_doanhSoContent1.add(jL_hoaDonThangTruoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, -1, -1));
 
-        jL_thangNay1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jL_thangNay1.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jL_thangNay1.setText("Tháng này: ");
         jP_doanhSoContent1.add(jL_thangNay1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
 
-        jL_hoaDonThangNay.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jL_hoaDonThangNay.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jL_hoaDonThangNay.setText("0.0");
         jP_doanhSoContent1.add(jL_hoaDonThangNay, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, -1, -1));
 
@@ -236,19 +249,19 @@ public class TrangChu extends javax.swing.JPanel {
 
         jP_doanhSoContent2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jL_doanhThuNgay.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jL_doanhThuNgay.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jL_doanhThuNgay.setText("Doanh thu: ");
         jP_doanhSoContent2.add(jL_doanhThuNgay, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
 
-        jL_doanhThuThuDuoc.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jL_doanhThuThuDuoc.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jL_doanhThuThuDuoc.setText("0.0");
         jP_doanhSoContent2.add(jL_doanhThuThuDuoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, -1, -1));
 
-        jL_soHoaDon.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jL_soHoaDon.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jL_soHoaDon.setText("Số hóa đơn: ");
         jP_doanhSoContent2.add(jL_soHoaDon, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
 
-        jL_soHoaDonNgay.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jL_soHoaDonNgay.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jL_soHoaDonNgay.setText("0.0");
         jP_doanhSoContent2.add(jL_soHoaDonNgay, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, -1, -1));
 
@@ -283,12 +296,47 @@ public class TrangChu extends javax.swing.JPanel {
         jP_menuCanhBao.setPreferredSize(new Dimension((int) screenSize.getWidth(), 40));
         jP_menuCanhBao.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 50, 5));
 
+        btn_hangSapHet.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btn_hangSapHet.setText("Hàng hóa sắp hết hàng");
+        btn_hangSapHet.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btn_hangSapHet.setBorderPainted(false);
+        btn_hangSapHet.setContentAreaFilled(false);
+        btn_hangSapHet.setPreferredSize(new java.awt.Dimension(250, 30));
+        btn_hangSapHet.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_hangSapHetMouseClicked(evt);
+            }
+        });
+        btn_hangSapHet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hangSapHetActionPerformed(evt);
+            }
+        });
+        jP_menuCanhBao.add(btn_hangSapHet);
+
+        btn_hangSapHetHan.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btn_hangSapHetHan.setText("Hàng hóa sắp hết hạn");
+        btn_hangSapHetHan.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btn_hangSapHetHan.setContentAreaFilled(false);
+        btn_hangSapHetHan.setPreferredSize(new java.awt.Dimension(250, 30));
+        btn_hangSapHetHan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_hangSapHetHanMouseClicked(evt);
+            }
+        });
+        btn_hangSapHetHan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_hangSapHetHanActionPerformed(evt);
+            }
+        });
+        jP_menuCanhBao.add(btn_hangSapHetHan);
+
         btn_hangDaHetHan.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btn_hangDaHetHan.setText("Hàng hóa đã hết hạn");
         btn_hangDaHetHan.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btn_hangDaHetHan.setBorderPainted(false);
         btn_hangDaHetHan.setContentAreaFilled(false);
-        btn_hangDaHetHan.setPreferredSize(new java.awt.Dimension(190, 30));
+        btn_hangDaHetHan.setPreferredSize(new java.awt.Dimension(250, 30));
         btn_hangDaHetHan.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_hangDaHetHanMouseClicked(evt);
@@ -301,44 +349,43 @@ public class TrangChu extends javax.swing.JPanel {
         });
         jP_menuCanhBao.add(btn_hangDaHetHan);
 
-        btn_hangSapHetHan.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btn_hangSapHetHan.setText("Hàng hóa sắp hết hạn");
-        btn_hangSapHetHan.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btn_hangSapHetHan.setContentAreaFilled(false);
-        btn_hangSapHetHan.setPreferredSize(new java.awt.Dimension(190, 30));
-        btn_hangSapHetHan.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_hangSapHetHanMouseClicked(evt);
-            }
-        });
-        jP_menuCanhBao.add(btn_hangSapHetHan);
-
-        btn_hangSapHet.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btn_hangSapHet.setText("Hàng hóa sắp hết hàng");
-        btn_hangSapHet.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        btn_hangSapHet.setBorderPainted(false);
-        btn_hangSapHet.setContentAreaFilled(false);
-        btn_hangSapHet.setPreferredSize(new java.awt.Dimension(190, 30));
-        btn_hangSapHet.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_hangSapHetMouseClicked(evt);
-            }
-        });
-        jP_menuCanhBao.add(btn_hangSapHet);
-
         jP_canhBaoContent.add(jP_menuCanhBao, java.awt.BorderLayout.PAGE_START);
 
         jP_table.setBackground(new java.awt.Color(255, 255, 255));
         jP_table.setLayout(new java.awt.BorderLayout());
 
-        
+        tb_hangHoa.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "STT", "Mã hàng hóa", "Tên hàng hóa", "Số lô", "Số lượng", "Hạn sử dụng"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
 
-            String[] columnNames = {"STT", "Mã hàng hóa", "Tên hàng hóa", "Số lô", "Số lượng", "Hạn sử dụng"};
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-            // Set data to table model
-            loHangModel = new DefaultTableModel(null, columnNames);
-            
-            tb_hangHoa.setModel(loHangModel);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tb_hangHoa.setRowHeight(50);
         jScrollPane2.setViewportView(tb_hangHoa);
         if (tb_hangHoa.getColumnModel().getColumnCount() > 0) {
@@ -363,7 +410,13 @@ public class TrangChu extends javax.swing.JPanel {
 
     private void btn_hangDaHetHanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_hangDaHetHanMouseClicked
         // TODO add your handling code here:
-        Font selected_font = new Font("Times new roman", Font.BOLD, 18);
+        
+
+    }//GEN-LAST:event_btn_hangDaHetHanMouseClicked
+
+    private void btn_hangDaHetHanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hangDaHetHanActionPerformed
+        // TODO add your handling code here:
+    	Font selected_font = new Font("Times new roman", Font.BOLD, 18);
         Font unSelected_font = new Font("Times new roman",0, 18);
 
         btn_hangDaHetHan.setFont(selected_font);
@@ -374,16 +427,24 @@ public class TrangChu extends javax.swing.JPanel {
 
         btn_hangSapHet.setFont(unSelected_font);
         btn_hangSapHet.setForeground(Color.BLACK);
-
-    }//GEN-LAST:event_btn_hangDaHetHanMouseClicked
-
-    private void btn_hangDaHetHanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hangDaHetHanActionPerformed
-        // TODO add your handling code here:
+    	addDsHangHetHan();
     }//GEN-LAST:event_btn_hangDaHetHanActionPerformed
 
     private void btn_hangSapHetHanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_hangSapHetHanMouseClicked
         // TODO add your handling code here:
-        Font selected_font = new Font("Times new roman", Font.BOLD, 18);
+        
+        
+    }//GEN-LAST:event_btn_hangSapHetHanMouseClicked
+
+    private void btn_hangSapHetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_hangSapHetMouseClicked
+        // TODO add your handling code here:
+       
+    }//GEN-LAST:event_btn_hangSapHetMouseClicked
+
+    private void btn_hangSapHetHanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hangSapHetHanActionPerformed
+        // TODO add your handling code here:
+    	addDsHangSapHetHan();
+    	Font selected_font = new Font("Times new roman", Font.BOLD, 18);
         Font unSelected_font = new Font("Times new roman",0, 18);
 
         btn_hangSapHetHan.setFont(selected_font);
@@ -394,11 +455,45 @@ public class TrangChu extends javax.swing.JPanel {
 
         btn_hangSapHet.setFont(unSelected_font);
         btn_hangSapHet.setForeground(Color.BLACK);
-    }//GEN-LAST:event_btn_hangSapHetHanMouseClicked
+    	//addDsHangSapHetHan();
+    }//GEN-LAST:event_btn_hangSapHetHanActionPerformed
 
-    private void btn_hangSapHetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_hangSapHetMouseClicked
+    private void btn_hangSapHetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hangSapHetActionPerformed
         // TODO add your handling code here:
-        Font selected_font = new Font("Times new roman", Font.BOLD, 18);
+    	addDsHangSapHetHang();
+    	 Font selected_font = new Font("Times new roman", Font.BOLD, 18);
+         Font unSelected_font = new Font("Times new roman",0, 18);
+         btn_hangSapHet.setFont(selected_font);
+         btn_hangSapHet.setForeground(new Color(255,169,169));
+
+         btn_hangSapHetHan.setFont(unSelected_font);
+         btn_hangSapHetHan.setForeground(Color.BLACK);
+
+         btn_hangDaHetHan.setFont(unSelected_font);
+         btn_hangDaHetHan.setForeground(Color.BLACK);
+    }//GEN-LAST:event_btn_hangSapHetActionPerformed
+    
+    private void loadData() {
+    	 // Lấy ngày hiện tại
+        LocalDate today = LocalDate.now();
+        // Lấy ngày đầu tháng
+        LocalDate firstDayOfMonth = today.with(TemporalAdjusters.firstDayOfMonth());
+        // Lấy ngày bắt đầu của tháng trước
+        LocalDate firstDayOfLastMonth = today.minusMonths(1).with(TemporalAdjusters.firstDayOfMonth());
+        // Lấy ngày kết thúc của tháng trước
+        LocalDate lastDayOfLastMonth = today.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
+ 
+    	jL_doanhThuThangTruoc.setText("  "+Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoang(firstDayOfLastMonth, lastDayOfLastMonth)-
+    			phieuTraHangDao.getTongTienHoaDonTraTrongKhoang(firstDayOfLastMonth, lastDayOfLastMonth)));
+    	jL_doanhThuThangNay.setText("  "+Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoang(firstDayOfMonth, today)-
+    			phieuTraHangDao.getTongTienHoaDonTraTrongKhoang(firstDayOfMonth, today)));
+    	jL_hoaDonThangTruoc.setText("  "+hoaDonDao.getSoLuongHoaDonTrongKhoang(firstDayOfLastMonth, lastDayOfLastMonth)+"");
+    	jL_hoaDonThangNay.setText("  "+hoaDonDao.getSoLuongHoaDonTrongKhoang(firstDayOfMonth, today)+"");
+    	jL_doanhThuThuDuoc.setText("  "+Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoang(today, today)-
+    			phieuTraHangDao.getTongTienHoaDonTraTrongKhoang(today, today)));
+    	jL_soHoaDonNgay.setText("  "+hoaDonDao.getSoLuongHoaDonTrongKhoang(today, today)+"");
+    	
+    	Font selected_font = new Font("Times new roman", Font.BOLD, 18);
         Font unSelected_font = new Font("Times new roman",0, 18);
         btn_hangSapHet.setFont(selected_font);
         btn_hangSapHet.setForeground(new Color(255,169,169));
@@ -408,34 +503,15 @@ public class TrangChu extends javax.swing.JPanel {
 
         btn_hangDaHetHan.setFont(unSelected_font);
         btn_hangDaHetHan.setForeground(Color.BLACK);
-    }//GEN-LAST:event_btn_hangSapHetMouseClicked
-    
-    private void loadData() {
-    	 // Lấy ngày hiện tại
-        LocalDate today = LocalDate.now();
-        // Lấy ngày đầu tháng
-        LocalDate firstDayOfMonth = today.with(TemporalAdjusters.firstDayOfMonth());
-        System.out.println(firstDayOfMonth);
-        // Lấy ngày bắt đầu của tháng trước
-        LocalDate firstDayOfLastMonth = today.minusMonths(1).with(TemporalAdjusters.firstDayOfMonth());
-        // Lấy ngày kết thúc của tháng trước
-        LocalDate lastDayOfLastMonth = today.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
- 
-    	jL_doanhThuThangTruoc.setText(Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoang(firstDayOfLastMonth, lastDayOfLastMonth)-
-    			phieuTraHangDao.getTongTienHoaDonTraTrongKhoang(firstDayOfLastMonth, lastDayOfLastMonth)));
-    	jL_doanhThuThangNay.setText(Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoang(firstDayOfMonth, today)-
-    			phieuTraHangDao.getTongTienHoaDonTraTrongKhoang(firstDayOfMonth, today)));
-    	jL_hoaDonThangTruoc.setText(hoaDonDao.getSoLuongHoaDonTrongKhoang(firstDayOfLastMonth, lastDayOfLastMonth)+"");
-    	jL_hoaDonThangNay.setText(hoaDonDao.getSoLuongHoaDonTrongKhoang(firstDayOfMonth, today)+"");
-    	jL_doanhThuThuDuoc.setText(Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoang(today, today)-
-    			phieuTraHangDao.getTongTienHoaDonTraTrongKhoang(today, today)));
-    	jL_soHoaDonNgay.setText(hoaDonDao.getSoLuongHoaDonTrongKhoang(today, today)+"");
     	
-    	addDsHangHetHan();
+    	btn_hangSapHetHan.setText("Hàng hóa sắp hết hạn ("+addDsHangSapHetHan()+")");
+    	btn_hangDaHetHan.setText("Hàng hóa đã hết hạn ("+addDsHangHetHan()+")");
+    	btn_hangSapHet.setText("Hàng hóa sắp hết hàng ("+addDsHangSapHetHang()+")");
+    	
     	
     }
-    private void addDsHangHetHan() {
-    	List<LoHang> dsLoHangHetHan = loHangDao.getDSLoHetHSD();
+    private int addDsHangHetHan() {
+    	List<LoHang> dsLoHangHetHan = loHangDao.getDSLoTheoHSD(LocalDate.now());
         int stt = 1;
         loHangModel.setNumRows(0);
         for (LoHang loHang : dsLoHangHetHan) {
@@ -448,8 +524,69 @@ public class TrangChu extends javax.swing.JPanel {
 		}
         tb_hangHoa.setModel(loHangModel);
         
+        TableColumnModel columnModel = tb_hangHoa.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(20); 
+        columnModel.getColumn(2).setPreferredWidth(300);
+        
+        formatJtable();
+        
+        return stt-1;
     }
-    private DefaultTableModel loHangModel;
+    private int addDsHangSapHetHan() {
+    	LocalDate today = LocalDate.now();
+    	LocalDate hsd = LocalDate.of(today.getYear(), today.getMonthValue()+6, today.getDayOfMonth());
+    	List<LoHang> dsLoHangHetHan = loHangDao.getDSLoSapHetHSD(hsd);
+        int stt = 1;
+        loHangModel.setNumRows(0);
+        for (LoHang loHang : dsLoHangHetHan) {
+			loHangModel.addRow(new Object[] {
+					stt++,loHang.getHangHoa().getMaHangHoa(),
+					loHang.getHangHoa().getTenHangHoa(),
+					loHang.getSoLo(), loHang.getSoLuong(), loHang.getHanSuDung()
+			});
+			
+		}
+        tb_hangHoa.setModel(loHangModel);
+        
+        TableColumnModel columnModel = tb_hangHoa.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(20); 
+        columnModel.getColumn(2).setPreferredWidth(300);
+        
+        formatJtable();
+        
+        return stt-1;
+    }
+    private int addDsHangSapHetHang() {
+    	String header[] = "STT;Mã hàng hóa;Tên hàng hóa;Số lượng".split(";");
+        DefaultTableModel hangHoaModel = new DefaultTableModel(header,0);
+    	List<entities.HangHoa> dsHangHoa = hangHoaDao.getHangHoaHetHang();
+        int stt = 1;
+        hangHoaModel.setNumRows(0);
+        for (HangHoa hangHoa : dsHangHoa) {
+			hangHoaModel.addRow(new Object[] {
+					stt++, hangHoa.getMaHangHoa(),hangHoa.getTenHangHoa(),hangHoa.getSoLuongDinhMuc()
+			});
+			
+		}
+        tb_hangHoa.setModel(hangHoaModel);
+        
+        TableColumnModel columnModel = tb_hangHoa.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(20); 
+        columnModel.getColumn(1).setPreferredWidth(200);
+        columnModel.getColumn(2).setPreferredWidth(500);
+        columnModel.getColumn(3).setPreferredWidth(200);
+        
+        formatJtable();
+        
+        return stt-1;
+    }
+    private void formatJtable() {
+    	FormatJtable.setFontJtable(tb_hangHoa);
+    	FormatJtable.setCellEditable(tb_hangHoa);
+    }
+    String header[] = "STT;Mã hàng hóa;Tên hàng hóa;Số lô;Số lượng;Hạn sử dụng".split(";");
+    private DefaultTableModel loHangModel = new DefaultTableModel(header,0);
+    private HangHoaDao hangHoaDao;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_hangDaHetHan;
     private javax.swing.JButton btn_hangSapHet;

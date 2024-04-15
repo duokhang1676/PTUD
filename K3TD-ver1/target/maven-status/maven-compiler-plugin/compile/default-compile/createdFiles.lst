@@ -5,6 +5,7 @@ ui\XuatTra$1.class
 ui\TaoPhieuNhapHang$8.class
 ui\XuatTra.class
 ui\NhapHang$5.class
+ui\TrangChu$7.class
 ui\XuatTra$2.class
 ui\NhapHang$4.class
 ui\NhanVien$1.class
@@ -23,6 +24,7 @@ ui\BanHang$6.class
 ui\HoaDon$3.class
 ui\NhanVien$8.class
 ui\TaiKhoan$10.class
+ui\TrangChu$5.class
 components\ResizeContent.class
 ui\NhapHang$3.class
 ui\TaoHangHoa$18.class
@@ -32,6 +34,7 @@ ui\TaoHangHoa$19.class
 ui\TaoPhieuXuatTra$8.class
 components\ColorSample.class
 ui\NhanVien$9.class
+ui\TrangChu$6.class
 ui\HangHoa.class
 ui\NhanVien$7.class
 ui\BanHang$4.class

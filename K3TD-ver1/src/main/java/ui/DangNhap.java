@@ -307,7 +307,7 @@ public class DangNhap extends javax.swing.JFrame {
         // TODO add your handling code here
     	if(!KiemTraDangNhap())
     		return;
-    	ConnectionDB(true);//parameter true dung clound db false dung local db
+    	ConnectionDB(false);//parameter true dung clound db false dung local db
         this.setVisible(false);
         RootFrame rf =  new RootFrame();
         LoginInfo.addRootframe(rf);
