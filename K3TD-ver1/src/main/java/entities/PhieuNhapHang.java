@@ -1,17 +1,18 @@
 package entities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class PhieuNhapHang {
 	private String maPhieu;
-	private LocalDateTime thoiGianTao;
+	private LocalDate thoiGianTao;
 	private String ghiChu;
 	private String maHoaDonNCC;
 	private NhaCungCap nhaCungCap;
 	private double tongGiamGia;
 	private TrangThaiPhieuNhapHang trangThai;
 	
-	public PhieuNhapHang(String maPhieu, LocalDateTime thoiGianTao, String ghiChu, String maHoaDonNCC,
+	public PhieuNhapHang(String maPhieu, LocalDate thoiGianTao, String ghiChu, String maHoaDonNCC,
 			NhaCungCap nhaCungCap, double tongGiamGia, TrangThaiPhieuNhapHang trangThai) {
 		super();
 		this.maPhieu = maPhieu;
@@ -35,10 +36,10 @@ public class PhieuNhapHang {
 	public void setMaPhieu(String maPhieu) {
 		this.maPhieu = maPhieu;
 	}
-	public LocalDateTime getThoiGianTao() {
+	public LocalDate getThoiGianTao() {
 		return thoiGianTao;
 	}
-	public void setThoiGianTao(LocalDateTime thoiGianTao) {
+	public void setThoiGianTao(LocalDate thoiGianTao) {
 		this.thoiGianTao = thoiGianTao;
 	}
 	public String getGhiChu() {

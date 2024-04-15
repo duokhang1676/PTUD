@@ -1,16 +1,17 @@
 package entities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class PhieuXuatTra {
 	private String maPhieuXuatTra;
-	private LocalDateTime thoiGianTao;
+	private LocalDate thoiGianTao;
 	private String ghiChu;
 	private String maHoaDonNCC;
 	private NhaCungCap nhaCungCap;
 	private double tongTienGiam;
 	private TrangThaiPhieuXuatTra trangThai;
-	public PhieuXuatTra(String maPhieuXuatTra, LocalDateTime thoiGianTao, String ghiChu, String maHoaDonNCC,
+	public PhieuXuatTra(String maPhieuXuatTra, LocalDate thoiGianTao, String ghiChu, String maHoaDonNCC,
 			NhaCungCap nhaCungCap, double tongTienGiam, TrangThaiPhieuXuatTra trangThai) {
 		super();
 		this.maPhieuXuatTra = maPhieuXuatTra;
@@ -34,10 +35,10 @@ public class PhieuXuatTra {
 	public void setMaPhieuXuatTra(String maPhieuXuatTra) {
 		this.maPhieuXuatTra = maPhieuXuatTra;
 	}
-	public LocalDateTime getThoiGianTao() {
+	public LocalDate getThoiGianTao() {
 		return thoiGianTao;
 	}
-	public void setThoiGianTao(LocalDateTime thoiGianTao) {
+	public void setThoiGianTao(LocalDate thoiGianTao) {
 		this.thoiGianTao = thoiGianTao;
 	}
 	public String getGhiChu() {
