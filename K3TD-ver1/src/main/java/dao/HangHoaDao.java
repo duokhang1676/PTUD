@@ -62,10 +62,10 @@ public class HangHoaDao {
 		PreparedStatement stmt = null;
 		try {
 			String sql = "select * from HangHoa left join NhomHang on HangHoa.MaNhomHang = NhomHang.MaNhomHang "
-					+ "where MaHangHoa = ?";
+					+ "where MaHangHoa = ? OR MaVach = ?";
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, maHHoa);
-			
+			stmt.setString(2, maHHoa);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				String maHH = rs.getString("MaHangHoa");

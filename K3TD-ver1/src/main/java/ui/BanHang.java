@@ -6,21 +6,31 @@ package ui;
 
 import components.AddContent;
 import components.FormatJtable;
+import components.GeneratePK;
 import components.LoginInfo;
 import components.ResizeContent;
 import dao.HangHoaDao;
+import dao.HoaDonDao;
+import entities.Ca;
+import entities.HoaDon;
+import entities.NhanVien;
+import entities.TrangThaiHoaDon;
 
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.time.LocalDateTime;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.KeyStroke;
@@ -29,6 +39,8 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.text.DefaultFormatter;
+
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -41,6 +53,7 @@ public class BanHang extends javax.swing.JPanel {
      */
     public BanHang() {
     	hangHoaDao = new HangHoaDao();
+    	hoaDonDao = new HoaDonDao();
         initComponents();
         ResizeContent.resizeContent(this);
         tbChiTietHoaDon.setModel(tableModel);
@@ -643,6 +656,29 @@ public class BanHang extends javax.swing.JPanel {
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         // TODO add your handling code here:
+    	entities.HoaDon hoaDon = new HoaDon();
+    	try {
+			hoaDon.setMaHoaDon(GeneratePK.getMaHD());
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	hoaDon.setNhanVien(new NhanVien("NV00001","Vo Duong Khang"));
+    	hoaDon.setKhachHang(new entities.KhachHang("KH00001", "Vo Duong Khang"));
+    	hoaDon.setCa(new Ca("CA00001"));
+    	hoaDon.setGhiChu(txtGhiChu.getText());
+    	hoaDon.setTrangThaiHoaDon(TrangThaiHoaDon.HOAN_THANH);
+    	hoaDon.setThoiGianLapHoaDon(LocalDateTime.now());
+    	System.out.println(hoaDon);
+    	hoaDonDao.addHoaDon(hoaDon, reload());
+    	JOptionPane.showMessageDialog(this, "Tạo hóa đơn thành công!");
+    	AddContent.addContent(new BanHang());
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void btnLuuTamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuTamActionPerformed
@@ -712,7 +748,7 @@ public class BanHang extends javax.swing.JPanel {
     String headerString[] = "Tên sản phẩm;Đơn vị tính;Số lượng;Giá bán;Thành tiền".split(";");
     private DefaultTableModel tableModel = new DefaultTableModel(headerString,0);
     private HangHoaDao hangHoaDao;
-    
+    private HoaDonDao hoaDonDao;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLuuTam;
     private javax.swing.JButton btnThanhToan;
