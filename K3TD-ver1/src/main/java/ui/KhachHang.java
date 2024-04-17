@@ -6,6 +6,8 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JScrollPane;
@@ -29,6 +31,7 @@ public class KhachHang extends javax.swing.JPanel {
     private KhachHang_DAO KH_dao;
 	private DefaultTableModel model_KH;
 	private JTable tbl_KH;
+	private KhachHang_DAO kh_DAO = new KhachHang_DAO();
 	/**
      * Creates new form NhanVien_httk
      */
@@ -91,43 +94,44 @@ public class KhachHang extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btn_Group_GioiTinh = new javax.swing.ButtonGroup();
         pnl_left = new javax.swing.JPanel();
         pnlHeader = new javax.swing.JPanel();
         pnlForm = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        txtTenNhanVien = new javax.swing.JTextField();
-        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
-        datePicker2 = new com.github.lgooddatepicker.components.DatePicker();
+        txtTenKhachhang = new javax.swing.JTextField();
+        dateNgaySinh = new com.github.lgooddatepicker.components.DatePicker();
+        dateNgayTao = new com.github.lgooddatepicker.components.DatePicker();
         txtSoDienThoai = new javax.swing.JTextField();
         pnlFooter = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        txt_maNhanVien = new javax.swing.JTextField();
+        txt_maKhachHang = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        btn_Nu = new javax.swing.JRadioButton();
+        btn_Nam = new javax.swing.JRadioButton();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbo_TrangThai = new javax.swing.JComboBox<>();
         jLabel16 = new javax.swing.JLabel();
         btn_Dong = new javax.swing.JButton();
         btn_Luu = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txt_GhiChu = new javax.swing.JTextArea();
         jLabel17 = new javax.swing.JLabel();
-        txtSoDienThoai1 = new javax.swing.JTextField();
+        txtDiemThuong = new javax.swing.JTextField();
         pnlCenter = new javax.swing.JPanel();
         pnlNorth = new javax.swing.JPanel();
         btn_Tim = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        cbo_tim_TrangThai = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         btn_Tim1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        txt_tim = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -146,11 +150,11 @@ public class KhachHang extends javax.swing.JPanel {
 
         jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
 
-        txtTenNhanVien.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        txtTenNhanVien.setPreferredSize(new java.awt.Dimension(64, 35));
-        txtTenNhanVien.addActionListener(new java.awt.event.ActionListener() {
+        txtTenKhachhang.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtTenKhachhang.setPreferredSize(new java.awt.Dimension(64, 35));
+        txtTenKhachhang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTenNhanVienActionPerformed(evt);
+                txtTenKhachhangActionPerformed(evt);
             }
         });
 
@@ -180,12 +184,12 @@ public class KhachHang extends javax.swing.JPanel {
         jLabel10.setText("Họ và tên");
         jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
-        txt_maNhanVien.setEditable(false);
-        txt_maNhanVien.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        txt_maNhanVien.setPreferredSize(new java.awt.Dimension(64, 35));
-        txt_maNhanVien.addActionListener(new java.awt.event.ActionListener() {
+        txt_maKhachHang.setEditable(false);
+        txt_maKhachHang.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txt_maKhachHang.setPreferredSize(new java.awt.Dimension(64, 35));
+        txt_maKhachHang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_maNhanVienActionPerformed(evt);
+                txt_maKhachHangActionPerformed(evt);
             }
         });
 
@@ -195,19 +199,21 @@ public class KhachHang extends javax.swing.JPanel {
         jLabel12.setText("Ngày tạo");
         jLabel12.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
-        jRadioButton1.setText("Nữ");
-        jRadioButton1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_Group_GioiTinh.add(btn_Nu);
+        btn_Nu.setText("Nữ");
+        btn_Nu.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btn_Nu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                btn_NuActionPerformed(evt);
             }
         });
 
-        jRadioButton2.setText("Nam");
-        jRadioButton2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_Group_GioiTinh.add(btn_Nam);
+        btn_Nam.setText("Nam");
+        btn_Nam.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        btn_Nam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
+                btn_NamActionPerformed(evt);
             }
         });
 
@@ -220,11 +226,11 @@ public class KhachHang extends javax.swing.JPanel {
         jLabel15.setText("Số điện thoại");
         jLabel15.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đang hoạt động", "Ngừng hoạt động" }));
-        jComboBox2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        cbo_TrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đang hoạt động", "Ngừng hoạt động" }));
+        cbo_TrangThai.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        cbo_TrangThai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                cbo_TrangThaiActionPerformed(evt);
             }
         });
 
@@ -249,17 +255,17 @@ public class KhachHang extends javax.swing.JPanel {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jScrollPane2.setViewportView(jTextArea1);
+        txt_GhiChu.setColumns(20);
+        txt_GhiChu.setRows(5);
+        txt_GhiChu.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jScrollPane2.setViewportView(txt_GhiChu);
 
         jLabel17.setText("Trạng thái");
         jLabel17.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
-        txtSoDienThoai1.setEditable(false);
-        txtSoDienThoai1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        txtSoDienThoai1.setPreferredSize(new java.awt.Dimension(64, 35));
+        txtDiemThuong.setEditable(false);
+        txtDiemThuong.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txtDiemThuong.setPreferredSize(new java.awt.Dimension(64, 35));
 
         javax.swing.GroupLayout pnlFormLayout = new javax.swing.GroupLayout(pnlForm);
         pnlForm.setLayout(pnlFormLayout);
@@ -277,20 +283,20 @@ public class KhachHang extends javax.swing.JPanel {
                         .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(311, Short.MAX_VALUE))
                     .addGroup(pnlFormLayout.createSequentialGroup()
-                        .addComponent(txtSoDienThoai1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtDiemThuong, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(38, 38, 38)
                         .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(pnlFormLayout.createSequentialGroup()
-                                .addComponent(jRadioButton2)
+                                .addComponent(btn_Nam)
                                 .addGap(33, 33, 33)
-                                .addComponent(jRadioButton1)))
+                                .addComponent(btn_Nu)))
                         .addContainerGap(70, Short.MAX_VALUE))
                     .addGroup(pnlFormLayout.createSequentialGroup()
                         .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlFormLayout.createSequentialGroup()
                                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dateNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtSoDienThoai, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -298,13 +304,13 @@ public class KhachHang extends javax.swing.JPanel {
                                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(datePicker2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(dateNgayTao, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbo_TrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txt_maNhanVien, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txt_maKhachHang, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtTenNhanVien, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtTenKhachhang, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -330,11 +336,11 @@ public class KhachHang extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_maNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_maKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(txtTenNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTenKhachhang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -342,17 +348,17 @@ public class KhachHang extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jRadioButton2)
-                        .addComponent(jRadioButton1))
-                    .addComponent(txtSoDienThoai1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btn_Nam)
+                        .addComponent(btn_Nu))
+                    .addComponent(txtDiemThuong, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(datePicker2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dateNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateNgayTao, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -360,7 +366,7 @@ public class KhachHang extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSoDienThoai, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbo_TrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -403,9 +409,9 @@ public class KhachHang extends javax.swing.JPanel {
         jLabel1.setText("Danh sách khách hàng (24)");
         jLabel1.setFont(new java.awt.Font("Times New Roman", 2, 12)); // NOI18N
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đang hoạt động", "Ngừng hoạt động", "Tất cả" }));
-        jComboBox4.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jComboBox4.setPreferredSize(new java.awt.Dimension(163, 35));
+        cbo_tim_TrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đang hoạt động", "Ngừng hoạt động", "Tất cả" }));
+        cbo_tim_TrangThai.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        cbo_tim_TrangThai.setPreferredSize(new java.awt.Dimension(163, 35));
 
         jLabel3.setText("Tìm kiếm theo từ khóa (F4)");
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -422,10 +428,10 @@ public class KhachHang extends javax.swing.JPanel {
             }
         });
 
-        jTextField1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txt_tim.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txt_tim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txt_timActionPerformed(evt);
             }
         });
 
@@ -439,12 +445,12 @@ public class KhachHang extends javax.swing.JPanel {
             .addGroup(pnlNorthLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(pnlNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbo_tim_TrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50)
                 .addGroup(pnlNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlNorthLayout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_tim, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_Tim, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50)
@@ -462,8 +468,8 @@ public class KhachHang extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                        .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txt_tim, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                        .addComponent(cbo_tim_TrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btn_Tim, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btn_Tim1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -493,11 +499,13 @@ public class KhachHang extends javax.swing.JPanel {
 
     private void btn_LuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LuuActionPerformed
         // TODO add your handling code here:
+        luu();
     }//GEN-LAST:event_btn_LuuActionPerformed
 
-    private void txtTenNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenNhanVienActionPerformed
+    private void txtTenKhachhangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenKhachhangActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtTenNhanVienActionPerformed
+        timTheoTuKhoa_trangThai();
+    }//GEN-LAST:event_txtTenKhachhangActionPerformed
 
     private void btn_TimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimActionPerformed
         // TODO add your handling code here:
@@ -508,44 +516,47 @@ public class KhachHang extends javax.swing.JPanel {
         pnl_left.setVisible(false);
     }//GEN-LAST:event_btn_DongActionPerformed
 
-    private void txt_maNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_maNhanVienActionPerformed
+    private void txt_maKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_maKhachHangActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_maNhanVienActionPerformed
+    }//GEN-LAST:event_txt_maKhachHangActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void btn_NuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NuActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_btn_NuActionPerformed
 
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+    private void btn_NamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NamActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
+    }//GEN-LAST:event_btn_NamActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void cbo_TrangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_TrangThaiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_cbo_TrangThaiActionPerformed
 
     private void btn_Tim1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Tim1ActionPerformed
         // TODO add your handling code here:
         pnl_left.setVisible(true);
     }//GEN-LAST:event_btn_Tim1ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txt_timActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_timActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txt_timActionPerformed
     public void setPnlRightTrue(){
         pnl_left.setVisible(true);
-        txtTenNhanVien.requestFocus();
+        txtTenKhachhang.requestFocus();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Dong;
+    private javax.swing.ButtonGroup btn_Group_GioiTinh;
     private javax.swing.JButton btn_Luu;
+    private javax.swing.JRadioButton btn_Nam;
+    private javax.swing.JRadioButton btn_Nu;
     private javax.swing.JButton btn_Tim;
     private javax.swing.JButton btn_Tim1;
-    private com.github.lgooddatepicker.components.DatePicker datePicker1;
-    private com.github.lgooddatepicker.components.DatePicker datePicker2;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> cbo_TrangThai;
+    private javax.swing.JComboBox<String> cbo_tim_TrangThai;
+    private com.github.lgooddatepicker.components.DatePicker dateNgaySinh;
+    private com.github.lgooddatepicker.components.DatePicker dateNgayTao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -560,22 +571,70 @@ public class KhachHang extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlFooter;
     private javax.swing.JPanel pnlForm;
     private javax.swing.JPanel pnlHeader;
     private javax.swing.JPanel pnlNorth;
     private javax.swing.JPanel pnl_left;
+    private javax.swing.JTextField txtDiemThuong;
     private javax.swing.JTextField txtSoDienThoai;
-    private javax.swing.JTextField txtSoDienThoai1;
-    private javax.swing.JTextField txtTenNhanVien;
-    private javax.swing.JTextField txt_maNhanVien;
+    private javax.swing.JTextField txtTenKhachhang;
+    private javax.swing.JTextArea txt_GhiChu;
+    private javax.swing.JTextField txt_maKhachHang;
+    private javax.swing.JTextField txt_tim;
     // End of variables declaration//GEN-END:variables
+	private entities.KhachHang kH;
+    
+    private void revert_KhachHang() {
+    	String ma = txt_maKhachHang.getText();
+    	String ten = txtTenKhachhang.getText();
+    	LocalDate ngaySinh = dateNgaySinh.getDate();
+    	boolean gioiTinh = btn_Group_GioiTinh.getSelection().toString().equals("Nam") ? true : false ;
+    	String soDienThoai = txtSoDienThoai.getText(); 
+    	int diemThuong = txtDiemThuong.getText().trim().isEmpty() ? 0: Integer.parseInt(txtDiemThuong.getText());
+    	LocalDate ngayTao = dateNgayTao.getDate();
+    	String ghiChu = txt_GhiChu.getText();
+    	TrangThaiKhachHang trangThai = cbo_TrangThai.getSelectedItem().toString().equals("Đang hoạt động") ? TrangThaiKhachHang.DANG_HOAT_DONG : TrangThaiKhachHang.NGUNG_HOAT_DONG; 
+    	kH = new entities.KhachHang(ma, ten, ngaySinh, gioiTinh, soDienThoai, diemThuong, ngayTao, ghiChu, trangThai);
+    }
+    private void luu() {
+    	revert_KhachHang();
+    	int n = 0;
+    	if (kh_DAO.create(kH)) {
+			model_KH.addRow(new Object [] {
+					n + "",
+					txt_maKhachHang.getText(),
+					txtTenKhachhang.getText(),
+					txtDiemThuong.getText().trim().isEmpty() ? 0: txtDiemThuong.getText(),
+					txtSoDienThoai.getText(),
+					txt_GhiChu.getText(),
+					cbo_TrangThai.getSelectedItem().toString(),
+					
+			});
+		}
+    }
+    private void timTheoTuKhoa_trangThai() {
+    	KhachHang_DAO ds = new KhachHang_DAO();
+    	int n =1;
+    	String tuKhoa =txt_tim.getText();
+    	String tt = cbo_tim_TrangThai.getSelectedItem().toString();
+    	ArrayList<ArrayList<Object>> list = ds.timKiem_tuKhoa_TrangThai(tuKhoa, tt);
+    	model_KH.setRowCount(0);
+    	for (ArrayList<Object> arrayList : list) {
+    		model_KH.addRow(new Object[] {
+    				n + " ",
+    				arrayList.get(0) + " ",
+    				arrayList.get(1) + "",
+    				arrayList.get(2) + "",
+    				arrayList.get(3) + "",
+    				arrayList.get(4) + "",
+    				arrayList.get(5) + "",
+    		});
+			
+		}
+    }
 }

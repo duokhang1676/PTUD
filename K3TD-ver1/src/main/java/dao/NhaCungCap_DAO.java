@@ -71,34 +71,69 @@ public class NhaCungCap_DAO {
          }
          return n >0;
      }
-     public ArrayList<NhaCungCap> timtheo_TUKHOA(String tuKhoa){
-         ArrayList<NhaCungCap> dsNhaCungCap = new ArrayList<NhaCungCap>();
-         try {
-             Connection con = ConnectDB.getInstance().getConnection();
-             String sql = "SELECT * FROM NhaCungCap WHERE MaNhaCungCap LIKE ? OR TenNhaCungCap LIKE ? OR SoDienThoai LIKE ? OR DiaChi LIKE ? OR Email LIKE ? OR GhiChu LIKE ? TrangThai LIKE ?";
-             PreparedStatement stmt = con.prepareStatement(sql);
-             stmt.setString(1, "%" + tuKhoa + "%");
-             stmt.setString(2, "%" + tuKhoa + "%");
-             stmt.setString(3, "%" + tuKhoa + "%");
-             stmt.setString(4, "%" + tuKhoa + "%");
-             stmt.setString(5, "%" + tuKhoa + "%");
-             stmt.setString(6, "%" + tuKhoa + "%");
-             stmt.setString(7, "%" + tuKhoa + "%");
-             ResultSet rs = stmt.executeQuery();
-             while(rs.next()){
-                 String ma = rs.getString(1);
-                 String ten = rs.getString(2);
-                 String sdt = rs.getString(3);
-                 String diachi = rs.getString(4);
-                 String email = rs.getString(5);
-                 String ghichu = rs.getString(6);
-                 TrangThaiNCC ttNCC = trangThaiHoatDong(rs.getString(7));
-                 NhaCungCap nCC = new NhaCungCap(ma, ten, sdt, diachi, email, ghichu, ttNCC);
-                 dsNhaCungCap.add(nCC);
-             }
-         } catch (Exception e) {
-             e.printStackTrace();
-         }
-         return dsNhaCungCap;
-     }
+    public ArrayList<NhaCungCap> timkiem_TuKhoa_TrangThai(String tuKhoa, String trangThai){
+    	ArrayList<NhaCungCap> dsNhaCungCap4 = new ArrayList<>();
+		String Change_Value__TrangThai = trangThai.equals("Đang hoạt động") ? "DANG_HOAT_DONG" : "NGUNG_HOAT_DONG";
+
+    	try {
+			Connection con = ConnectDB.getInstance().getConnection();
+			String sql ;
+			PreparedStatement stmt;
+			if (tuKhoa.trim().isEmpty() ) {
+				if (trangThai.equalsIgnoreCase("Tất cả")) {
+					sql ="SELECT * FROM NhaCungCap";
+					stmt =con.prepareStatement(sql);
+				
+				}
+				else {
+					sql = "SELECT * FROM NhaCungCap WHERE TrangThai = ?";
+					stmt = con.prepareStatement(sql);
+					stmt.setString(1, Change_Value__TrangThai);
+				}	
+			}
+			else {
+				if (trangThai.equalsIgnoreCase("Tất cả")) {
+					sql = "SELECT * FROM LOPHOC WHERE MaNhaCungCap = ? OR TenNhaCungCap = ? OR SoDienThoai= ? OR  DiaChi = ? OR Email = ? OR GhiChu = ?";
+					stmt = con.prepareStatement(sql);
+		            stmt.setString(1, "%" + tuKhoa + "%");
+		            stmt.setString(2, "%" + tuKhoa + "%");
+		            stmt.setString(3, "%" + tuKhoa + "%");
+		            stmt.setString(4, "%" + tuKhoa + "%");
+		            stmt.setString(5, "%" + tuKhoa + "%");
+		            stmt.setString(6, "%" + tuKhoa + "%");
+		            stmt.setString(7, "%" + tuKhoa + "%");
+				}
+				else {
+					String Change_Value_to_Suitable_for_sql = trangThai.equals("Đang hoạt động") ? "DANG_HOAT_DONG" : "NGUNG_HOAT_DONG";
+					sql = "SELECT * FROM LOPHOC WHERE (MaNhaCungCap = ? OR TenNhaCungCap = ? OR SoDienThoai= ? OR  DiaChi = ? OR Email = ? OR GhiChu = ?) AND TrangThai =?";
+					stmt = con.prepareStatement(sql);
+		            stmt.setString(1, "%" + tuKhoa + "%");
+		            stmt.setString(2, "%" + tuKhoa + "%");
+		            stmt.setString(3, "%" + tuKhoa + "%");
+		            stmt.setString(4, "%" + tuKhoa + "%");
+		            stmt.setString(5, "%" + tuKhoa + "%");
+		            stmt.setString(6, "%" + tuKhoa + "%");
+		            stmt.setString(7, "%" + tuKhoa + "%");
+		            stmt.setString(8, Change_Value_to_Suitable_for_sql);
+				}
+			}
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				String ma = rs.getString("MaNhaCUngCap");
+				String ten = rs.getString("TenNhaCungCap");
+				String so = rs.getString("SoDienThoai");
+				String diachi = rs.getString("DiaChi");
+				String email = rs.getString("Email");
+				String ghiChu = rs.getString("GhiChu");
+				TrangThaiNCC trangthai = rs.getString("TrangThai").equals("DANG_HOAT_DONG") ? TrangThaiNCC.DANG_HOAT_DONG : TrangThaiNCC.NGUNG_HOAT_DONG;
+				NhaCungCap nCC = new NhaCungCap(ma, ten, so, diachi, email, ghiChu, trangthai);
+				dsNhaCungCap4.add(nCC);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+    	return dsNhaCungCap4;
+    }
+     
 }

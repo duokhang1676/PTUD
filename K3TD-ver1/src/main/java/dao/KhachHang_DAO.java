@@ -9,6 +9,7 @@ import entities.KhachHang;
 import java.sql.Connection;
 import db.ConnectDB;
 import entities.TrangThaiKhachHang;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -101,5 +102,77 @@ public class KhachHang_DAO {
             e.printStackTrace();
         }
         return n >0;
+    }
+    public ArrayList<ArrayList<Object>> timKiem_tuKhoa_TrangThai(String tuKhoa, String trangThai){
+    	ArrayList<ArrayList<Object>> dsTamThoi = new ArrayList<>();
+    	ArrayList<Object> doituong = new ArrayList<>();
+		String Change_Value__TrangThai = trangThai.equals("Đang hoạt động") ? "DANG_HOAT_DONG" : "NGUNG_HOAT_DONG";
+		try {
+			Connection con = ConnectDB.getInstance().getConnection();
+			String sql;
+			PreparedStatement stmt;
+			if (tuKhoa.trim().isEmpty() ) {
+				if (trangThai.equalsIgnoreCase("Tất cả")) {
+					sql ="select * from KhachHang join HoaDon on KhachHang.MaKhachHang = HoaDon.MaKhachHang";
+					stmt =con.prepareStatement(sql);
+				
+				}
+				else {
+					sql = "SELECT * "
+							+ "FROM KhachHang "
+							+ "JOIN HoaDon on KhachHang.MaKhachHang = HoaDon.MaKhachHang"
+							+ " WHERE TrangThai = ?";
+					stmt = con.prepareStatement(sql);
+					stmt.setString(1, Change_Value__TrangThai);
+				}	
+			}
+			else {
+				if (trangThai.equalsIgnoreCase("Tất cả")) {
+					sql = "SELECT * "
+							+ "FROM KhachHang "
+							+ "JOIN HoaDon on KhachHang.MaKhachHang = HoaDon.MaKhachHang"
+							+ " WHERE MaKhachHang LIKE ? OR TenKhachHang LIKE ?  OR TongTien LIKE ? SoDienThoai LIKE ? OR GhiChu LIKE ?";
+					stmt = con.prepareStatement(sql);
+		            stmt.setString(1, "%" + tuKhoa + "%");
+		            stmt.setString(2, "%" + tuKhoa + "%");
+		            stmt.setString(3, "%" + tuKhoa + "%");
+		            stmt.setString(4, "%" + tuKhoa + "%");
+		            stmt.setString(5, "%" + tuKhoa + "%");
+				}
+				else {
+					sql = "SELECT * "
+							+ "FROM KhachHang "
+							+ "JOIN HoaDon on KhachHang.MaKhachHang = HoaDon.MaKhachHang"
+							+ " WHERE (MaKhachHang LIKE ? OR TenKhachHang LIKE ?  OR TongTien LIKE ? SoDienThoai LIKE ? OR GhiChu LIKE ?) AND TrangThai";
+					stmt = con.prepareStatement(sql);
+		            stmt.setString(1, "%" + tuKhoa + "%");
+		            stmt.setString(2, "%" + tuKhoa + "%");
+		            stmt.setString(3, "%" + tuKhoa + "%");
+		            stmt.setString(4, "%" + tuKhoa + "%");
+		            stmt.setString(5, "%" + tuKhoa + "%");
+		            stmt.setString(6, Change_Value__TrangThai);
+				}
+			}
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()){
+				String ma = rs.getString("MaKhachHang");
+				String ten  = rs.getString("TenKhachHang");
+				double tongTien = rs.getDouble("TongTien");
+				String sdt = rs.getString("SoDienThoai");
+				String ghiChu = rs.getString("GhiChu");
+				TrangThaiKhachHang ttKh = rs.getString("TrangThai").equals("DANG_HOAT_DONG") ? TrangThaiKhachHang.DANG_HOAT_DONG : TrangThaiKhachHang.NGUNG_HOAT_DONG;
+				doituong.add(ma);
+				doituong.add(ten);
+				doituong.add(tongTien);
+				doituong.add(sdt);
+				doituong.add(ghiChu);
+				doituong.add(ttKh);
+				dsTamThoi.add(doituong);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsTamThoi;
     }
 }
