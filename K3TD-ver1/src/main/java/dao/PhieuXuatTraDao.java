@@ -30,10 +30,11 @@ public class PhieuXuatTraDao {
 				NhaCungCap ncc = new NhaCungCap(rs.getString("MaNhaCungCap"), rs.getString("TenNhaCungCap"));
 				String ghiChu = rs.getString("GhiChu");
 				String trangThaiStr = rs.getString("TrangThai");
-				double tienGiam = rs.getDouble("TongTienGiam");
+				double tienGiam = rs.getDouble("TongGiamGia");
+				double tongTienHang = rs.getDouble("TongTienHang");
 				TrangThaiPhieuXuatTra trangThai = TrangThaiPhieuXuatTra.valueOf(trangThaiStr);
 				
-				PhieuXuatTra pth = new PhieuXuatTra(maPTH, thoiGianTao, ghiChu, maHoaDon, ncc, tienGiam, trangThai);
+				PhieuXuatTra pth = new PhieuXuatTra(maPTH, thoiGianTao, ghiChu, maHoaDon, ncc, tienGiam,tongTienHang, trangThai);
 				dsPXT.add(pth);
 			}
 		} catch (Exception e) {

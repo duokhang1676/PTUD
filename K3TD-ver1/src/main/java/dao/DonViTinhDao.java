@@ -55,14 +55,15 @@ public class DonViTinhDao {
 				int maDVT = rs.getInt("MaDonViTinh");	
 				String tenDVT = rs.getString("TenDonViTinh");
 				String maHH = rs.getString("MaHangHoa");
-				HangHoa hh = new HangHoa(maHH);
+				HangHoa hh = null;
 				int quyDoi = rs.getInt("QuyDoi");
 				Double giaBan = rs.getDouble("GiaBan");
+				String maVach = rs.getString("MaVach");
 				
 				String trangThaiStr = rs.getString("TrangThaiDonViTinh");
 				TrangThaiDonViTinh trangThai = TrangThaiDonViTinh.valueOf(trangThaiStr);
 				
-				DonViTinh dvt = new DonViTinh(maDVT, tenDVT, hh, quyDoi, giaBan, trangThai);
+				DonViTinh dvt = new DonViTinh(maDVT, tenDVT, hh, quyDoi, giaBan, maVach, trangThai);
 				dsDVT.add(dvt);
 				return dsDVT;
 			}

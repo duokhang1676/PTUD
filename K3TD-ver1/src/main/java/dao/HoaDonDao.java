@@ -87,14 +87,15 @@ public class HoaDonDao {
 				KhachHang kh = new KhachHang(rs.getString("MaKhachHang"), rs.getString("TenKhachHang"));
 				double tienKhachTra = rs.getDouble("TienKhachTra");
 				int diemQuyDoi = rs.getInt("DiemQuyDoi");
-//				double tongTien = rs.getDouble("TongTien");
+				double tongTien = rs.getDouble("TongTien");
 //				double tienThua = rs.getDouble("TienThua");
 				String ghiChu = rs.getString("GhiChu");
 				Ca ca = new Ca(rs.getString("MaCa"));
 				String trangThaiStr = rs.getString("TrangThai");
 				TrangThaiHoaDon trangThai = TrangThaiHoaDon.valueOf(trangThaiStr);
 				
-				HoaDon hd = new HoaDon(maHD, thoiGianLap, nv, kh, tienKhachTra, diemQuyDoi, ghiChu, ca, trangThai);
+				
+				HoaDon hd = new HoaDon(maHD, thoiGianLap, nv, kh, tienKhachTra, diemQuyDoi, ghiChu, ca, trangThai, 0);
 				dsHoaDon.add(hd);
 			}
 		} catch (Exception e) {

@@ -3,35 +3,25 @@ package entities;
 import java.time.LocalDate;
 
 public class ChiTietDonThuocMau {
-	private int maChiTietDonThuocMau;
 	private DonThuocMau donThuocMau;
 	private HangHoa hangHoa;
 	private String lieuDung;
 	private int soLuong;
 	private DonViTinh donViTinh;
-	public ChiTietDonThuocMau(int maChiTietDonThuocMau, DonThuocMau donThuocMau, HangHoa hangHoa, String lieuDung,
+	public ChiTietDonThuocMau(DonThuocMau donThuocMau, HangHoa hangHoa, String lieuDung,
 			int soLuong, DonViTinh donViTinh) {
 		super();
-		this.maChiTietDonThuocMau = maChiTietDonThuocMau;
 		this.donThuocMau = donThuocMau;
 		this.hangHoa = hangHoa;
 		this.lieuDung = lieuDung;
 		this.soLuong = soLuong;
 		this.donViTinh = donViTinh;
 	}
-	public ChiTietDonThuocMau(int maChiTietDonThuocMau) {
-		super();
-		this.maChiTietDonThuocMau = maChiTietDonThuocMau;
-	}
+	
 	public ChiTietDonThuocMau() {
 		super();
 	}
-	public int getMaChiTietDonThuocMau() {
-		return maChiTietDonThuocMau;
-	}
-	public void setMaChiTietDonThuocMau(int maChiTietDonThuocMau) {
-		this.maChiTietDonThuocMau = maChiTietDonThuocMau;
-	}
+
 	public DonThuocMau getDonThuocMau() {
 		return donThuocMau;
 	}
@@ -64,7 +54,7 @@ public class ChiTietDonThuocMau {
 	}
 	@Override
 	public String toString() {
-		return "ChiTietDonThuocMau [maChiTietDonThuocMau=" + maChiTietDonThuocMau + ", donThuocMau=" + donThuocMau
+		return "ChiTietDonThuocMau [donThuocMau=" + donThuocMau
 				+ ", hangHoa=" + hangHoa + ", lieuDung=" + lieuDung + ", soLuong=" + soLuong + ", donViTinh="
 				+ donViTinh + "]";
 	}

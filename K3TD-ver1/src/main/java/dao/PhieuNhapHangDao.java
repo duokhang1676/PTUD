@@ -36,9 +36,10 @@ public class PhieuNhapHangDao {
 				String ghiChu = rs.getString("GhiChu");
 				String trangThaiStr = rs.getString("TrangThai");
 				double tienGiam = rs.getDouble("TongTienGiam");
+				double tongTienHang = rs.getDouble("TongTienHang");
 				TrangThaiPhieuNhapHang trangThai = TrangThaiPhieuNhapHang.valueOf(trangThaiStr);
 				
-				PhieuNhapHang pnh = new PhieuNhapHang(maPNH, thoiGianTao, ghiChu, maHoaDon, ncc, tienGiam, trangThai);
+				PhieuNhapHang pnh = new PhieuNhapHang(maPNH, thoiGianTao, ghiChu, maHoaDon, ncc, tienGiam, tongTienHang,trangThai);
 				dsPNH.add(pnh);
 			}
 		} catch (Exception e) {

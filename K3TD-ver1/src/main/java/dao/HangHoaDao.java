@@ -39,14 +39,14 @@ public class HangHoaDao {
 				String quyCachDG = rs.getString("QuyCachDongGoi");
 				String moTa = rs.getString("MoTa");
 				double thue = rs.getDouble("Thue");
-				String maVach = rs.getString("MaVach");
+	
 				int soLuongDinhMuc = rs.getInt("SoLuongDinhMuc");
 				int soLuongCanhBao = rs.getInt("SoLuongCanhBao");
 				
 				String trangThaiStr = rs.getString("TrangThai");
 				TrangThaiHangHoa trangThai = TrangThaiHangHoa.valueOf(trangThaiStr);
 				
-				HangHoa hangHoa = new HangHoa(maHH, tenHH, soDKy, maNH, nuocSX, hangSX, hoatChat, hamLuong, quyCachDG, moTa, thue, maVach, soLuongDinhMuc, soLuongCanhBao, trangThai, loaiHang);
+				HangHoa hangHoa = new HangHoa(maHH, tenHH, loaiHang, soDKy, maNH, nuocSX, hangSX, hoatChat, hamLuong, quyCachDG, moTa, thue, soLuongDinhMuc, soLuongCanhBao, trangThai);
 				
 				dsHangHoa.add(hangHoa);
 			}
@@ -62,10 +62,9 @@ public class HangHoaDao {
 		PreparedStatement stmt = null;
 		try {
 			String sql = "select * from HangHoa left join NhomHang on HangHoa.MaNhomHang = NhomHang.MaNhomHang "
-					+ "where MaHangHoa = ? OR MaVach = ?";
+					+ "where MaHangHoa = ?";
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, maHHoa);
-			stmt.setString(2, maHHoa);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				String maHH = rs.getString("MaHangHoa");
@@ -86,14 +85,13 @@ public class HangHoaDao {
 				String quyCachDG = rs.getString("QuyCachDongGoi");
 				String moTa = rs.getString("MoTa");
 				double thue = rs.getDouble("Thue");
-				String maVach = rs.getString("MaVach");
 				int soLuongDinhMuc = rs.getInt("SoLuongDinhMuc");
 				int soLuongCanhBao = rs.getInt("SoLuongCanhBao");
 				
 				String trangThaiStr = rs.getString("TrangThai");
 				TrangThaiHangHoa trangThai = TrangThaiHangHoa.valueOf(trangThaiStr);
 				
-				HangHoa hangHoa = new HangHoa(maHH, tenHH, soDKy, maNH, nuocSX, hangSX, hoatChat, hamLuong, quyCachDG, moTa, thue, maVach, soLuongDinhMuc, soLuongCanhBao, trangThai, loaiHang);
+				HangHoa hangHoa = new HangHoa(maHH, tenHH, loaiHang, soDKy, maNH, nuocSX, hangSX, hoatChat, hamLuong, quyCachDG, moTa, thue, soLuongDinhMuc, soLuongCanhBao, trangThai);
 				
 				return hangHoa;
 			}
@@ -128,14 +126,13 @@ public class HangHoaDao {
 				String quyCachDG = rs.getString("QuyCachDongGoi");
 				String moTa = rs.getString("MoTa");
 				double thue = rs.getDouble("Thue");
-				String maVach = rs.getString("MaVach");
 				int soLuongDinhMuc = rs.getInt("SoLuongDinhMuc");
 				int soLuongCanhBao = rs.getInt("SoLuongCanhBao");
 				
 				String trangThaiStr = rs.getString("TrangThai");
 				TrangThaiHangHoa trangThai = TrangThaiHangHoa.valueOf(trangThaiStr);
 				
-				HangHoa hangHoa = new HangHoa(maHH, tenHH, soDKy, maNH, nuocSX, hangSX, hoatChat, hamLuong, quyCachDG, moTa, thue, maVach, soLuongDinhMuc, soLuongCanhBao, trangThai, loaiHang);
+				HangHoa hangHoa = new HangHoa(maHH, tenHH, loaiHang, soDKy, maNH, nuocSX, hangSX, hoatChat, hamLuong, quyCachDG, moTa, thue, soLuongDinhMuc, soLuongCanhBao, trangThai);
 				
 				dsHangHoa.add(hangHoa);
 			}
@@ -191,14 +188,13 @@ public class HangHoaDao {
 				String quyCachDG = rs.getString("QuyCachDongGoi");
 				String moTa = rs.getString("MoTa");
 				double thue = rs.getDouble("Thue");
-				String maVach = rs.getString("MaVach");
 				int soLuongDinhMuc = rs.getInt("SoLuongDinhMuc");
 				int soLuongCanhBao = rs.getInt("SoLuongCanhBao");
 				
 				String trangThaiStr = rs.getString("TrangThai");
 				TrangThaiHangHoa trangThai = TrangThaiHangHoa.valueOf(trangThaiStr);
 				
-				HangHoa hangHoa = new HangHoa(maHH, tenHH, soDKy, maNH, nuocSX, hangSX, hoatChat, hamLuong, quyCachDG, moTa, thue, maVach, soLuongDinhMuc, soLuongCanhBao, trangThai, loaiHang);
+				HangHoa hangHoa = new HangHoa(maHH, tenHH, loaiHang, soDKy, maNH, nuocSX, hangSX, hoatChat, hamLuong, quyCachDG, moTa, thue, soLuongDinhMuc, soLuongCanhBao, trangThai);
 				
 //				dsHangHoa.add(hangHoa);
 				return hangHoa;
@@ -246,14 +242,13 @@ public class HangHoaDao {
 				String quyCachDG = rs.getString("QuyCachDongGoi");
 				String moTa = rs.getString("MoTa");
 				double thue = rs.getDouble("Thue");
-				String maVach = rs.getString("MaVach");
 				int soLuongDinhMuc = rs.getInt("SoLuongDinhMuc");
 				int soLuongCanhBao = rs.getInt("SoLuongCanhBao");
 				
 				String trangThaiStr = rs.getString("TrangThai");
 				TrangThaiHangHoa trangThai = TrangThaiHangHoa.valueOf(trangThaiStr);
 				
-				HangHoa hangHoa = new HangHoa(maHH, tenHH, soDKy, maNH, nuocSX, hangSX, hoatChat, hamLuong, quyCachDG, moTa, thue, maVach, soLuongDinhMuc, soLuongCanhBao, trangThai, loaiHang);
+				HangHoa hangHoa = new HangHoa(maHH, tenHH, loaiHang, soDKy, maNH, nuocSX, hangSX, hoatChat, hamLuong, quyCachDG, moTa, thue, soLuongDinhMuc, soLuongCanhBao, trangThai);
 				
 				dsHangHoa.add(hangHoa);
 				
@@ -271,8 +266,8 @@ public class HangHoaDao {
 		PreparedStatement stmt = null;
 		String sql = "Insert into HangHoa "
 				+ "(TenHangHoa, LoaiHang, SoDangKy, MaNhomHang, NuocSanXuat,"
-				+ "HangSanXuat, HoatChatChinh, HamLuong, QuyCachDongGoi, MoTa, Thue, MaVach, SoLuongDinhMuc, SoLuongCanhBao, TrangThai) "
-				+ "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				+ "HangSanXuat, HoatChatChinh, HamLuong, QuyCachDongGoi, MoTa, Thue, SoLuongDinhMuc, SoLuongCanhBao, TrangThai) "
+				+ "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		try {
 			stmt = con.prepareStatement(sql);
 			
@@ -287,10 +282,9 @@ public class HangHoaDao {
 			stmt.setString(9,  hh.getQuyCachDongGoi());
 			stmt.setString(10, hh.getMoTa());
 			stmt.setDouble(11, hh.getThue());
-			stmt.setString(12, hh.getMaVach());
-			stmt.setInt(13, hh.getSoLuongDinhMuc());
-			stmt.setInt(14, hh.getSoLuongCanhBao());
-			stmt.setString(15, hh.getTrangThaiHangHoa().toString());
+			stmt.setInt(12, hh.getSoLuongDinhMuc());
+			stmt.setInt(13, hh.getSoLuongCanhBao());
+			stmt.setString(14, hh.getTrangThaiHangHoa().toString());
 			
 			stmt.executeUpdate();
 			stmt.close();

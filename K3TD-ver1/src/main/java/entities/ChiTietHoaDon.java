@@ -1,34 +1,22 @@
 package entities;
 
 public class ChiTietHoaDon {
-	private int maChiTietHoaDon;
 	private HoaDon hoaDon;
 	private LoHang loHang;
 	private int soLuong;
 	private double donGia;
 	private DonViTinh donViTinh;
-	public ChiTietHoaDon(int maChiTietHoaDon, HoaDon hoaDon, LoHang loHang, int soLuong, double donGia,
+	public ChiTietHoaDon(HoaDon hoaDon, LoHang loHang, int soLuong, double donGia,
 			DonViTinh donViTinh) {
 		super();
-		this.maChiTietHoaDon = maChiTietHoaDon;
 		this.hoaDon = hoaDon;
 		this.loHang = loHang;
 		this.soLuong = soLuong;
 		this.donGia = donGia;
 		this.donViTinh = donViTinh;
 	}
-	public ChiTietHoaDon(int maChiTietHoaDon) {
-		super();
-		this.maChiTietHoaDon = maChiTietHoaDon;
-	}
 	public ChiTietHoaDon() {
 		super();
-	}
-	public int getMaChiTietHoaDon() {
-		return maChiTietHoaDon;
-	}
-	public void setMaChiTietHoaDon(int maChiTietHoaDon) {
-		this.maChiTietHoaDon = maChiTietHoaDon;
 	}
 	public HoaDon getHoaDon() {
 		return hoaDon;
@@ -62,9 +50,11 @@ public class ChiTietHoaDon {
 	}
 	@Override
 	public String toString() {
-		return "ChiTietHoaDon [maChiTietHoaDon=" + maChiTietHoaDon + ", hoaDon=" + hoaDon + ", loHang=" + loHang
+		return "ChiTietHoaDon [hoaDon=" + hoaDon + ", loHang=" + loHang
 				+ ", soLuong=" + soLuong + ", donGia=" + donGia + ", donViTinh=" + donViTinh + "]";
 	}
-	
+	public double tinhThanhTien() {
+		return soLuong*donGia;
+	}
 	
 }

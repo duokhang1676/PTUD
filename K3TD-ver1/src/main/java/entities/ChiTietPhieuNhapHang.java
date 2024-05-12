@@ -1,34 +1,22 @@
 package entities;
 
 public class ChiTietPhieuNhapHang {
-	private int maChiTietPhieuNhapHang;
 	private PhieuNhapHang phieuNhapHang;
 	private LoHang loHang;
 	private DonViTinh donViTinh;
 	private int soLuong;
 	private double chietKhau;
-	public ChiTietPhieuNhapHang(int maChiTietPhieuNhapHang, PhieuNhapHang phieuNhapHang, LoHang loHang,
+	public ChiTietPhieuNhapHang(PhieuNhapHang phieuNhapHang, LoHang loHang,
 			DonViTinh donViTinh, int soLuong, double chietKhau) {
-		super();
-		this.maChiTietPhieuNhapHang = maChiTietPhieuNhapHang;
+		super();;
 		this.phieuNhapHang = phieuNhapHang;
 		this.loHang = loHang;
 		this.donViTinh = donViTinh;
 		this.soLuong = soLuong;
 		this.chietKhau = chietKhau;
 	}
-	public ChiTietPhieuNhapHang(int maChiTietPhieuNhapHang) {
-		super();
-		this.maChiTietPhieuNhapHang = maChiTietPhieuNhapHang;
-	}
 	public ChiTietPhieuNhapHang() {
 		super();
-	}
-	public int getMaChiTietPhieuNhapHang() {
-		return maChiTietPhieuNhapHang;
-	}
-	public void setMaChiTietPhieuNhapHang(int maChiTietPhieuNhapHang) {
-		this.maChiTietPhieuNhapHang = maChiTietPhieuNhapHang;
 	}
 	public PhieuNhapHang getPhieuNhapHang() {
 		return phieuNhapHang;
@@ -62,10 +50,12 @@ public class ChiTietPhieuNhapHang {
 	}
 	@Override
 	public String toString() {
-		return "ChiTietPhieuNhapHang [maChiTietPhieuNhapHang=" + maChiTietPhieuNhapHang + ", phieuNhapHang="
+		return "ChiTietPhieuNhapHang [phieuNhapHang="
 				+ phieuNhapHang + ", loHang=" + loHang + ", donViTinh=" + donViTinh + ", soLuong=" + soLuong
 				+ ", chietKhau=" + chietKhau + "]";
 	}
-	
+	public double tinhThanhTien() {
+		return soLuong*loHang.getGiaNhap()-soLuong*loHang.getGiaNhap()*chietKhau;
+	}
 	
 }
