@@ -2,16 +2,14 @@ package entities;
 
 public class ChiTietPhieuTraHang {
 	private PhieuTraHang phieuTraHang;
-	private LoHang loHang;
 	private int soLuongTra;
 	private double donGia;
 	private DonViTinh donViTinh;
 	private String lyDoTra;
-	public ChiTietPhieuTraHang(PhieuTraHang phieuTraHang, LoHang loHang, int soLuongTra, double donGia,
+	public ChiTietPhieuTraHang(PhieuTraHang phieuTraHang, int soLuongTra, double donGia,
 			DonViTinh donViTinh, String lyDoTra) {
 		super();
 		this.phieuTraHang = phieuTraHang;
-		this.loHang = loHang;
 		this.soLuongTra = soLuongTra;
 		this.donGia = donGia;
 		this.donViTinh = donViTinh;
@@ -25,12 +23,6 @@ public class ChiTietPhieuTraHang {
 	}
 	public void setPhieuTraHang(PhieuTraHang phieuTraHang) {
 		this.phieuTraHang = phieuTraHang;
-	}
-	public LoHang getLoHang() {
-		return loHang;
-	}
-	public void setLoHang(LoHang loHang) {
-		this.loHang = loHang;
 	}
 	public int getSoLuongTra() {
 		return soLuongTra;
@@ -58,7 +50,7 @@ public class ChiTietPhieuTraHang {
 	}
 	@Override
 	public String toString() {
-		return "ChiTietPhieuTraHang [phieuTraHang=" + phieuTraHang + ", loHang=" + loHang + ", soLuongTra=" + soLuongTra
+		return "ChiTietPhieuTraHang [phieuTraHang=" + phieuTraHang +  ", soLuongTra=" + soLuongTra
 				+ ", donGia=" + donGia + ", donViTinh=" + donViTinh + ", lyDoTra=" + lyDoTra + "]";
 	}
 	

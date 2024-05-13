@@ -4,15 +4,13 @@ import java.time.LocalDate;
 
 public class ChiTietDonThuocMau {
 	private DonThuocMau donThuocMau;
-	private HangHoa hangHoa;
 	private String lieuDung;
 	private int soLuong;
 	private DonViTinh donViTinh;
-	public ChiTietDonThuocMau(DonThuocMau donThuocMau, HangHoa hangHoa, String lieuDung,
+	public ChiTietDonThuocMau(DonThuocMau donThuocMau, String lieuDung,
 			int soLuong, DonViTinh donViTinh) {
 		super();
 		this.donThuocMau = donThuocMau;
-		this.hangHoa = hangHoa;
 		this.lieuDung = lieuDung;
 		this.soLuong = soLuong;
 		this.donViTinh = donViTinh;
@@ -27,12 +25,6 @@ public class ChiTietDonThuocMau {
 	}
 	public void setDonThuocMau(DonThuocMau donThuocMau) {
 		this.donThuocMau = donThuocMau;
-	}
-	public HangHoa getHangHoa() {
-		return hangHoa;
-	}
-	public void setHangHoa(HangHoa hangHoa) {
-		this.hangHoa = hangHoa;
 	}
 	public String getLieuDung() {
 		return lieuDung;
@@ -55,7 +47,7 @@ public class ChiTietDonThuocMau {
 	@Override
 	public String toString() {
 		return "ChiTietDonThuocMau [donThuocMau=" + donThuocMau
-				+ ", hangHoa=" + hangHoa + ", lieuDung=" + lieuDung + ", soLuong=" + soLuong + ", donViTinh="
+				+ ", lieuDung=" + lieuDung + ", soLuong=" + soLuong + ", donViTinh="
 				+ donViTinh + "]";
 	}
 	

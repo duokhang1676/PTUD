@@ -2,15 +2,13 @@ package entities;
 
 public class ChiTietHoaDon {
 	private HoaDon hoaDon;
-	private LoHang loHang;
 	private int soLuong;
 	private double donGia;
 	private DonViTinh donViTinh;
-	public ChiTietHoaDon(HoaDon hoaDon, LoHang loHang, int soLuong, double donGia,
+	public ChiTietHoaDon(HoaDon hoaDon, int soLuong, double donGia,
 			DonViTinh donViTinh) {
 		super();
 		this.hoaDon = hoaDon;
-		this.loHang = loHang;
 		this.soLuong = soLuong;
 		this.donGia = donGia;
 		this.donViTinh = donViTinh;
@@ -23,12 +21,6 @@ public class ChiTietHoaDon {
 	}
 	public void setHoaDon(HoaDon hoaDon) {
 		this.hoaDon = hoaDon;
-	}
-	public LoHang getLoHang() {
-		return loHang;
-	}
-	public void setLoHang(LoHang loHang) {
-		this.loHang = loHang;
 	}
 	public int getSoLuong() {
 		return soLuong;
@@ -50,7 +42,7 @@ public class ChiTietHoaDon {
 	}
 	@Override
 	public String toString() {
-		return "ChiTietHoaDon [hoaDon=" + hoaDon + ", loHang=" + loHang
+		return "ChiTietHoaDon [hoaDon=" + hoaDon 
 				+ ", soLuong=" + soLuong + ", donGia=" + donGia + ", donViTinh=" + donViTinh + "]";
 	}
 	public double tinhThanhTien() {
