@@ -87,14 +87,15 @@ public class HoaDonDao {
 				KhachHang kh = new KhachHang(rs.getString("MaKhachHang"), rs.getString("TenKhachHang"));
 				double tienKhachTra = rs.getDouble("TienKhachTra");
 				int diemQuyDoi = rs.getInt("DiemQuyDoi");
-//				double tongTien = rs.getDouble("TongTien");
+				double tongTien = rs.getDouble("TongTien");
 //				double tienThua = rs.getDouble("TienThua");
 				String ghiChu = rs.getString("GhiChu");
 				Ca ca = new Ca(rs.getString("MaCa"));
 				String trangThaiStr = rs.getString("TrangThai");
 				TrangThaiHoaDon trangThai = TrangThaiHoaDon.valueOf(trangThaiStr);
 				
-				HoaDon hd = new HoaDon(maHD, thoiGianLap, nv, kh, tienKhachTra, diemQuyDoi, ghiChu, ca, trangThai);
+				
+				HoaDon hd = new HoaDon(maHD, thoiGianLap, nv, kh, tienKhachTra, diemQuyDoi, ghiChu, ca, trangThai, 0);
 				dsHoaDon.add(hd);
 			}
 		} catch (Exception e) {
@@ -104,12 +105,12 @@ public class HoaDonDao {
 		return dsHoaDon;
 	}
 	
-	public boolean addHoaDon(HoaDon hd) {
+	public boolean addHoaDon(HoaDon hd, double tongTien) {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection(); 
 		PreparedStatement stmt = null;
-		String sql = "insert into HoaDon (ThoiGianLapHoaDon, MaNhanVien, MaKhachHang, TienKhachTra, DiemQuyDoi, GhiChu, MaCa, TrangThai) "
-				+ "values (?,?,?,?,?,?,?,?)";
+		String sql = "insert into HoaDon (ThoiGianLapHoaDon, MaNhanVien, MaKhachHang, TienKhachTra, DiemQuyDoi, GhiChu, MaCa, TrangThai, TongTien, MaHoaDon) "
+				+ "values (?,?,?,?,?,?,?,?,?,?)";
 		try {
 			stmt = con.prepareStatement(sql);
 			
@@ -121,6 +122,8 @@ public class HoaDonDao {
 			stmt.setString(6, hd.getGhiChu());
 			stmt.setString(7, hd.getCa().getMaCa());
 			stmt.setString(8, hd.getTrangThaiHoaDon().toString());
+			stmt.setDouble(9, tongTien);
+			stmt.setString(10, hd.getMaHoaDon());
 			
 			stmt.executeUpdate();
 			stmt.close();

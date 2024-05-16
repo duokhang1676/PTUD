@@ -557,7 +557,7 @@ public class TrangChu extends javax.swing.JPanel {
         return stt-1;
     }
     private int addDsHangSapHetHang() {
-    	String header[] = "STT;Mã hàng hóa;Tên hàng hóa;Số lượng".split(";");
+    	String header[] = "STT;Mãua hàng hóa;Tên hàng hóa;Số lượng".split(";");
         DefaultTableModel hangHoaModel = new DefaultTableModel(header,0);
     	List<entities.HangHoa> dsHangHoa = hangHoaDao.getHangHoaHetHang();
         int stt = 1;

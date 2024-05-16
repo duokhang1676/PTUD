@@ -26,16 +26,17 @@ public class PhieuXuatTraDao {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
 			while (rs.next()) {
 				String maPTH = rs.getString("MaPhieuXuatTra");
-//				LocalDateTime thoiGianTao = LocalDateTime.parse(rs.getString("ThoiGianTao"), formatter);
-				LocalDate thoiGianTao = LocalDate.parse(rs.getString("ThoiGianTao"));
+				LocalDateTime thoiGianTao = LocalDateTime.parse(rs.getString("ThoiGianTao"), formatter);
+//				LocalDate thoiGianTao = LocalDate.parse(rs.getString("ThoiGianTao"));
 				String maHoaDon = rs.getString("MaHoaDonNCC");
 				NhaCungCap ncc = new NhaCungCap(rs.getString("MaNhaCungCap"), rs.getString("TenNhaCungCap"));
 				String ghiChu = rs.getString("GhiChu");
 				String trangThaiStr = rs.getString("TrangThai");
-				double tienGiam = rs.getDouble("TongTienGiam");
+				double tienGiam = rs.getDouble("TongGiamGia");
+				double tongTienHang = rs.getDouble("TongTienHang");
 				TrangThaiPhieuXuatTra trangThai = TrangThaiPhieuXuatTra.valueOf(trangThaiStr);
 				
-				PhieuXuatTra pth = new PhieuXuatTra(maPTH, thoiGianTao, ghiChu, maHoaDon, ncc, tienGiam, trangThai);
+				PhieuXuatTra pth = new PhieuXuatTra(maPTH, thoiGianTao, ghiChu, maHoaDon, ncc, tienGiam,tongTienHang, trangThai);
 				dsPXT.add(pth);
 			}
 		} catch (Exception e) {

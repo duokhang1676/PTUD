@@ -1,38 +1,22 @@
 package entities;
 
 public class ChiTietPhieuTraHang {
-	private int maChiTietPhieuTraHang;
-	private ChiTietHoaDon chiTietHoaDon;
 	private PhieuTraHang phieuTraHang;
 	private int soLuongTra;
+	private double donGia;
+	private DonViTinh donViTinh;
 	private String lyDoTra;
-	public ChiTietPhieuTraHang(int maChiTietPhieuTraHang, ChiTietHoaDon chiTietHoaDon, PhieuTraHang phieuTraHang,
-			int soLuongTra, String lyDoTra) {
+	public ChiTietPhieuTraHang(PhieuTraHang phieuTraHang, int soLuongTra, double donGia,
+			DonViTinh donViTinh, String lyDoTra) {
 		super();
-		this.maChiTietPhieuTraHang = maChiTietPhieuTraHang;
-		this.chiTietHoaDon = chiTietHoaDon;
 		this.phieuTraHang = phieuTraHang;
 		this.soLuongTra = soLuongTra;
+		this.donGia = donGia;
+		this.donViTinh = donViTinh;
 		this.lyDoTra = lyDoTra;
-	}
-	public ChiTietPhieuTraHang(int maChiTietPhieuTraHang) {
-		super();
-		this.maChiTietPhieuTraHang = maChiTietPhieuTraHang;
 	}
 	public ChiTietPhieuTraHang() {
 		super();
-	}
-	public int getMaChiTietPhieuTraHang() {
-		return maChiTietPhieuTraHang;
-	}
-	public void setMaChiTietPhieuTraHang(int maChiTietPhieuTraHang) {
-		this.maChiTietPhieuTraHang = maChiTietPhieuTraHang;
-	}
-	public ChiTietHoaDon getChiTietHoaDon() {
-		return chiTietHoaDon;
-	}
-	public void setChiTietHoaDon(ChiTietHoaDon chiTietHoaDon) {
-		this.chiTietHoaDon = chiTietHoaDon;
 	}
 	public PhieuTraHang getPhieuTraHang() {
 		return phieuTraHang;
@@ -46,6 +30,18 @@ public class ChiTietPhieuTraHang {
 	public void setSoLuongTra(int soLuongTra) {
 		this.soLuongTra = soLuongTra;
 	}
+	public double getDonGia() {
+		return donGia;
+	}
+	public void setDonGia(double donGia) {
+		this.donGia = donGia;
+	}
+	public DonViTinh getDonViTinh() {
+		return donViTinh;
+	}
+	public void setDonViTinh(DonViTinh donViTinh) {
+		this.donViTinh = donViTinh;
+	}
 	public String getLyDoTra() {
 		return lyDoTra;
 	}
@@ -54,10 +50,12 @@ public class ChiTietPhieuTraHang {
 	}
 	@Override
 	public String toString() {
-		return "ChiTietPhieuTraHang [maChiTietPhieuTraHang=" + maChiTietPhieuTraHang + ", chiTietHoaDon="
-				+ chiTietHoaDon + ", phieuTraHang=" + phieuTraHang + ", soLuongTra=" + soLuongTra + ", lyDoTra="
-				+ lyDoTra + "]";
+		return "ChiTietPhieuTraHang [phieuTraHang=" + phieuTraHang +  ", soLuongTra=" + soLuongTra
+				+ ", donGia=" + donGia + ", donViTinh=" + donViTinh + ", lyDoTra=" + lyDoTra + "]";
 	}
 	
+	public double tinhThanhTien() {
+		return soLuongTra*donGia;
+	}
 	
 }

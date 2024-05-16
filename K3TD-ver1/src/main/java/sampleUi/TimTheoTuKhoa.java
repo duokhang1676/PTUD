@@ -20,7 +20,7 @@ import javax.swing.JTextField;
  * @author thuthao
  */
 public class TimTheoTuKhoa extends JTextField{
-        private String hintText ="Tìm kiếm theo mã hoá đơn, tên khách";
+        private String hintText ="Tìm kiếm theo mã hoá đơn";
     /**
      * @return the prefixIcon
      */

@@ -8,8 +8,9 @@ public class PhieuTraHang {
 	private HoaDon hoaDon;
 	private String ghiChu;
 	private Ca ca;
+	private double tongTien;
 	private TrangThaiPhieuTraHang trangThai;
-	public PhieuTraHang(String maPhieu, LocalDateTime thoiGianTao, HoaDon hoaDon, String ghiChu, Ca ca,
+	public PhieuTraHang(String maPhieu, LocalDateTime thoiGianTao, HoaDon hoaDon, String ghiChu, Ca ca, double tongTien,
 			TrangThaiPhieuTraHang trangThai) {
 		super();
 		this.maPhieu = maPhieu;
@@ -17,11 +18,8 @@ public class PhieuTraHang {
 		this.hoaDon = hoaDon;
 		this.ghiChu = ghiChu;
 		this.ca = ca;
+		this.tongTien = tongTien;
 		this.trangThai = trangThai;
-	}
-	public PhieuTraHang(String maPhieu) {
-		super();
-		this.maPhieu = maPhieu;
 	}
 	public PhieuTraHang() {
 		super();
@@ -56,6 +54,12 @@ public class PhieuTraHang {
 	public void setCa(Ca ca) {
 		this.ca = ca;
 	}
+	public double getTongTien() {
+		return tongTien;
+	}
+	public void setTongTien(double tongTien) {
+		this.tongTien = tongTien;
+	}
 	public TrangThaiPhieuTraHang getTrangThai() {
 		return trangThai;
 	}
@@ -65,9 +69,7 @@ public class PhieuTraHang {
 	@Override
 	public String toString() {
 		return "PhieuTraHang [maPhieu=" + maPhieu + ", thoiGianTao=" + thoiGianTao + ", hoaDon=" + hoaDon + ", ghiChu="
-				+ ghiChu + ", ca=" + ca + ", trangThai=" + trangThai + "]";
+				+ ghiChu + ", ca=" + ca + ", tongTien=" + tongTien + ", trangThai=" + trangThai + "]";
 	}
-
-	
 	
 }

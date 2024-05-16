@@ -2,6 +2,8 @@ package entities;
 
 import java.time.LocalDateTime;
 
+import components.Formater;
+
 public class HoaDon {
 	private String maHoaDon;
 	private LocalDateTime thoiGianLapHoaDon;
@@ -12,10 +14,10 @@ public class HoaDon {
 	private String ghiChu;
 	private Ca ca;
 	private TrangThaiHoaDon trangThaiHoaDon;
-	
+	private double tongTien;
 	public HoaDon(String maHoaDon, LocalDateTime thoiGianLapHoaDon, NhanVien nhanVien, KhachHang khachHang,
-			double tienKhachTra, int diemQuyDoi, String ghiChu, Ca ca,
-			TrangThaiHoaDon trangThaiHoaDon) {
+			double tienKhachTra, int diemQuyDoi, String ghiChu, Ca ca, TrangThaiHoaDon trangThaiHoaDon,
+			double tongTien) {
 		super();
 		this.maHoaDon = maHoaDon;
 		this.thoiGianLapHoaDon = thoiGianLapHoaDon;
@@ -26,10 +28,7 @@ public class HoaDon {
 		this.ghiChu = ghiChu;
 		this.ca = ca;
 		this.trangThaiHoaDon = trangThaiHoaDon;
-	}
-	public HoaDon(String maHoaDon) {
-		super();
-		this.maHoaDon = maHoaDon;
+		this.tongTien = tongTien;
 	}
 	public HoaDon() {
 		super();
@@ -88,14 +87,24 @@ public class HoaDon {
 	public void setTrangThaiHoaDon(TrangThaiHoaDon trangThaiHoaDon) {
 		this.trangThaiHoaDon = trangThaiHoaDon;
 	}
+	public double getTongTien() {
+		return tongTien;
+	}
+	public void setTongTien(double tongTien) {
+		this.tongTien = tongTien;
+	}
+	public double tinhThanhTien() {
+		return Formater.roundToNearest500(tongTien-diemQuyDoi);
+	}
+	public double tinhTienThua() {
+		return tienKhachTra-tinhThanhTien();
+	}
 	@Override
 	public String toString() {
 		return "HoaDon [maHoaDon=" + maHoaDon + ", thoiGianLapHoaDon=" + thoiGianLapHoaDon + ", nhanVien=" + nhanVien
 				+ ", khachHang=" + khachHang + ", tienKhachTra=" + tienKhachTra + ", diemQuyDoi=" + diemQuyDoi
-				+ ", ghiChu=" + ghiChu + ", ca=" + ca
-				+ ", trangThaiHoaDon=" + trangThaiHoaDon + "]";
+				+ ", ghiChu=" + ghiChu + ", ca=" + ca + ", trangThaiHoaDon=" + trangThaiHoaDon + ", tongTien="
+				+ tongTien + "]";
 	}
-	
-	
 	
 }

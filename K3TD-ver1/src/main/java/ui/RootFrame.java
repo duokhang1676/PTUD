@@ -91,6 +91,9 @@ public class RootFrame extends javax.swing.JFrame {
         btnNhanVien = new javax.swing.JButton();
         btnCaLamViec = new javax.swing.JButton();
         Drop7 = new javax.swing.JPanel();
+        btnTheoHangHoa = new javax.swing.JButton();
+        btnTheoNhanVien = new javax.swing.JButton();
+        btnTheoKhachHang = new javax.swing.JButton();
         pnlFooter = new javax.swing.JPanel();
         lblFooter = new javax.swing.JLabel();
 
@@ -559,15 +562,56 @@ public class RootFrame extends javax.swing.JFrame {
         Drop7.setBackground(new java.awt.Color(193, 219, 208));
         Drop7.setPreferredSize(new java.awt.Dimension(150, 200));
 
+        btnTheoHangHoa.setBackground(new java.awt.Color(193, 219, 208));
+        btnTheoHangHoa.setText("Theo hàng hóa");
+        btnTheoHangHoa.setBorderPainted(false);
+        btnTheoHangHoa.setPreferredSize(new java.awt.Dimension(150, 40));
+        btnTheoHangHoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTheoHangHoaActionPerformed(evt);
+            }
+        });
+
+        btnTheoNhanVien.setBackground(new java.awt.Color(193, 219, 208));
+        btnTheoNhanVien.setText("Theo nhân viên");
+        btnTheoNhanVien.setBorderPainted(false);
+        btnTheoNhanVien.setPreferredSize(new java.awt.Dimension(150, 40));
+        btnTheoNhanVien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTheoNhanVienActionPerformed(evt);
+            }
+        });
+
+        btnTheoKhachHang.setBackground(new java.awt.Color(193, 219, 208));
+        btnTheoKhachHang.setText("Theo khách hàng");
+        btnTheoKhachHang.setBorderPainted(false);
+        btnTheoKhachHang.setPreferredSize(new java.awt.Dimension(150, 40));
+        btnTheoKhachHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTheoKhachHangActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout Drop7Layout = new javax.swing.GroupLayout(Drop7);
         Drop7.setLayout(Drop7Layout);
         Drop7Layout.setHorizontalGroup(
             Drop7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
+            .addGroup(Drop7Layout.createSequentialGroup()
+                .addGroup(Drop7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnTheoHangHoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTheoNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTheoKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         Drop7Layout.setVerticalGroup(
             Drop7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(Drop7Layout.createSequentialGroup()
+                .addComponent(btnTheoHangHoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTheoNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnTheoKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLayeredPane1.setLayer(pnlContent, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -691,7 +735,7 @@ public class RootFrame extends javax.swing.JFrame {
     }                                           
 
     private void btnBanHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBanHangActionPerformed
-    	AddContent.addContent(banHang);
+    	AddContent.addContent(new BanHangPage());
     }//GEN-LAST:event_btnBanHangActionPerformed
    
     private void hideAllDropMenu(){
@@ -759,7 +803,7 @@ public class RootFrame extends javax.swing.JFrame {
         if(!StatusMenu.temp7){
             hideAllDropMenu();
             Drop7.setLocation(btnThongKe.getLocation());
-            Drop7.setSize(150, 90);
+            Drop7.setSize(150, 135);
             StatusMenu.temp7=!StatusMenu.temp7;
         }else{
             hideAllDropMenu();
@@ -767,7 +811,7 @@ public class RootFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThongKeActionPerformed
 
     private void btnHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonActionPerformed
-    	AddContent.addContent(new HoaDon());
+    	AddContent.addContent(new HoaDonPage());
     }//GEN-LAST:event_btnHoaDonActionPerformed
 
     private void btnTraHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraHangActionPerformed
@@ -780,7 +824,7 @@ public class RootFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTraHangActionPerformed
 
     private void btnHangHoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHangHoaActionPerformed
-    	AddContent.addContent(new HangHoa());
+    	AddContent.addContent(new HangHoaPage());
     }//GEN-LAST:event_btnHangHoaActionPerformed
 
     private void btnDonThuocMauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDonThuocMauActionPerformed
@@ -793,7 +837,7 @@ public class RootFrame extends javax.swing.JFrame {
 
     private void btnNhapHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhapHangActionPerformed
         // TODO add your handling code here:
-    	AddContent.addContent(new NhapHang());
+    	AddContent.addContent(new NhapHangPage());
     }//GEN-LAST:event_btnNhapHangActionPerformed
 
     private void lblTienIchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTienIchMouseEntered
@@ -880,22 +924,22 @@ public class RootFrame extends javax.swing.JFrame {
             }
     private void btnKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhachHangActionPerformed
         // TODO add your handling code here:
-        AddContent.addContent(new KhachHang());
+        AddContent.addContent(new KhachHangPage());
     }//GEN-LAST:event_btnKhachHangActionPerformed
 
     private void btnNhaCungCapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhaCungCapActionPerformed
         // TODO add your handling code here:
-    	AddContent.addContent(new NhaCungCap());
+    	AddContent.addContent(new NhaCungCapPage());
     }//GEN-LAST:event_btnNhaCungCapActionPerformed
 
     private void btnNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhanVienActionPerformed
         // TODO add your handling code here:
-    	AddContent.addContent(new NhanVien());
+    	AddContent.addContent(new NhanVienPage());
     }//GEN-LAST:event_btnNhanVienActionPerformed
 
     private void btnXuatTraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatTraActionPerformed
         // TODO add your handling code here:
-    	AddContent.addContent(new XuatTra());
+    	AddContent.addContent(new XuatTraPage());
         
         
 
@@ -903,12 +947,24 @@ public class RootFrame extends javax.swing.JFrame {
 
     private void lblUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblUserMouseClicked
         // TODO add your handling code here:
-    	AddContent.addContent(new TaiKhoan());
+    	AddContent.addContent(new TaiKhoanPage());
     }//GEN-LAST:event_lblUserMouseClicked
 
     private void pnlBodyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlBodyMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_pnlBodyMouseClicked
+
+    private void btnTheoHangHoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTheoHangHoaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTheoHangHoaActionPerformed
+
+    private void btnTheoNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTheoNhanVienActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTheoNhanVienActionPerformed
+
+    private void btnTheoKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTheoKhachHangActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTheoKhachHangActionPerformed
     
     private void setFontAll(Font font){
         lblTienIch.setFont(font);
@@ -988,6 +1044,9 @@ public class RootFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnNhapHang;
     private javax.swing.JButton btnQLDonHang;
     private javax.swing.JButton btnQLHangHoa;
+    private javax.swing.JButton btnTheoHangHoa;
+    private javax.swing.JButton btnTheoKhachHang;
+    private javax.swing.JButton btnTheoNhanVien;
     private javax.swing.JButton btnThongKe;
     private javax.swing.JButton btnTraHang;
     private javax.swing.JButton btnTrangChu;
@@ -1004,6 +1063,5 @@ public class RootFrame extends javax.swing.JFrame {
     private javax.swing.JPanel pnlHeaderMenu;
     private javax.swing.JPanel pnlHeaderTop;
     private javax.swing.JPanel pnlMain;
-    private BanHang banHang = new BanHang();
     // End of variables declaration//GEN-END:variables
 }
