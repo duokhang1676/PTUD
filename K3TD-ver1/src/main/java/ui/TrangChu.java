@@ -20,7 +20,7 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
-import components.ColorSample;
+import components.ColorSamples;
 import components.FormatJtable;
 import components.Formater;
 import dao.HangHoaDao;

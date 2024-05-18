@@ -12,7 +12,7 @@ import javax.swing.JPanel;
  *
  * @author ACER
  */
-public class ResizeContent {
+public class ResizeContents {
 	public static Toolkit toolkit = Toolkit.getDefaultToolkit();
     public static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     public static void resizeContent(JPanel p){

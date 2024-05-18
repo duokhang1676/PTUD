@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import components.ResizeContent;
+
 import dao.HoaDonDao;
 import entities.TrangThaiHoaDon;
 
@@ -36,7 +36,7 @@ public class HoaDonPage extends javax.swing.JPanel {
      */
     public HoaDonPage() {
         initComponents();
-        ResizeContent.resizeContent(this);
+       
         addTableHoaDon();
         loadDataTableHD();
     }
@@ -150,7 +150,7 @@ String[] colNames = {"STT","Mã hóa đơn", "Khách hàng", "Nhân viên bán h
         lblLocTheoThoiGian.setText("Lọc theo thời gian");
         lblLocTheoThoiGian.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
-        cbLocTheoThoiGian.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hôm nay", "Hôm qua", "7 ngày trước", "30 ngày trước", "Tháng này", "Tháng trước", "Năm này", "Năm trước" }));
+        cbLocTheoThoiGian.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hôm nay", "Hôm qua", "7 ngày trước", "Tháng này", "Tháng trước", "Năm này", "Năm trước", "Tất cả" }));
         cbLocTheoThoiGian.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         cbLocTheoThoiGian.setPreferredSize(new java.awt.Dimension(115, 25));
 

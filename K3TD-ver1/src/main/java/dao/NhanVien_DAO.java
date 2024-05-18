@@ -6,8 +6,11 @@ package dao;
 
 import db.ConnectDB;
 import entities.ChucVuNhanVien;
+import entities.KhachHang;
+
 import java.util.ArrayList;
 import entities.NhanVien;
+import entities.TrangThaiKhachHang;
 import entities.TrangThaiNhanVien;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -85,5 +88,43 @@ public class NhanVien_DAO {
             e.printStackTrace();
         }
         return n >0;
+    }
+    public NhanVien getNVbyMa(String maNV) {
+    	ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		try {
+			String sql = "select * from NhanVien where MaNhanVien = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, maNV);
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			
+			String tenNV = rs.getString("TenNhanVien");
+			LocalDate ngaySinh = null;
+			try {
+				 ngaySinh = rs.getDate("NgaySinh").toLocalDate();
+			} catch (Exception e) {
+				// TODO: handle exception
+				
+			}
+			
+			Boolean gioiTinh = rs.getBoolean("GioiTinh");
+			String sdt = rs.getString("SoDienThoai");
+			String matKhau = rs.getString("MatKhau");
+			LocalDate ngayTao = rs.getDate("NgayTao").toLocalDate();
+			String ghiChu = rs.getString("GhiChu");
+			ChucVuNhanVien cv = ChucVuNhanVien.valueOf(rs.getString("ChucVu"));
+			TrangThaiNhanVien tt =  TrangThaiNhanVien.valueOf(rs.getString("TrangThai"));
+			
+			NhanVien nv = new NhanVien(maNV, tenNV, ngaySinh, gioiTinh, sdt, matKhau, ngayTao, ghiChu, cv, tt);
+			return nv;
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			
+		}
+		return null;
     }
 }

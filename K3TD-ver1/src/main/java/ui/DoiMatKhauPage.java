@@ -5,7 +5,7 @@
 package ui;
 
 import components.AddContent;
-import components.ResizeContent;
+import components.ResizeContents;
 
 /**
  *

@@ -8,7 +8,7 @@ import components.AddContent;
 import components.FormatJtable;
 import components.GeneratePK;
 import components.LoginInfo;
-import components.ResizeContent;
+import components.ResizeContents;
 import dao.HangHoaDao;
 import dao.HoaDonDao;
 import entities.Ca;
@@ -55,7 +55,7 @@ public class BanHangPage extends javax.swing.JPanel {
     	hangHoaDao = new HangHoaDao();
     	hoaDonDao = new HoaDonDao();
         initComponents();
-        ResizeContent.resizeContent(this);
+        ResizeContents.resizeContent(this);
         tbChiTietHoaDon.setModel(tableModel);
         FormatJtable.setCellEditable(tbChiTietHoaDon);
         
@@ -122,7 +122,7 @@ public class BanHangPage extends javax.swing.JPanel {
 
         pnlHeader.setBackground(new java.awt.Color(255, 255, 255));
         pnlHeader.setPreferredSize(new java.awt.Dimension(1920, 50));
-        pnlHeader.setPreferredSize(new Dimension(ResizeContent.getWidth(),50));
+        pnlHeader.setPreferredSize(new Dimension(ResizeContents.getWidth(),50));
 
         lblThoiGian.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         lblThoiGian.setText("Thời gian:");
@@ -317,7 +317,7 @@ public class BanHangPage extends javax.swing.JPanel {
         pnlBody.add(pnlLeft, java.awt.BorderLayout.CENTER);
 
         pnlRight.setPreferredSize(new java.awt.Dimension(900, 720));
-        if(ResizeContent.getScale()==1)pnlRight.setPreferredSize(new java.awt.Dimension((int)((int)ResizeContent.getWidth()*0.28),(int)ResizeContent.getHeight()-270));
+        if(ResizeContents.getScale()==1)pnlRight.setPreferredSize(new java.awt.Dimension((int)((int)ResizeContents.getWidth()*0.28),(int)ResizeContents.getHeight()-270));
         pnlRight.setLayout(new java.awt.BorderLayout());
 
         pnlKhachHang.setBackground(new java.awt.Color(255, 255, 255));

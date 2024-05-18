@@ -21,7 +21,7 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 import components.ButtonColumnUtil;
-import components.ResizeContent;
+import components.ResizeContents;
 import dao.DonViTinhDao;
 import dao.HangHoaDao;
 import dao.NhomHangDao;
@@ -50,7 +50,7 @@ public class TaoHangHoaPage extends javax.swing.JPanel {
      */
     public TaoHangHoaPage() {
         initComponents();
-        ResizeContent.resizeContent(this);
+        ResizeContents.resizeContent(this);
         loadDataLoaiHang();
         loadDataNhomHang();
         addTableDVT();
@@ -514,7 +514,7 @@ public class TaoHangHoaPage extends javax.swing.JPanel {
                 .addGap(18, 18, 18))
         );
 
-        if(ResizeContent.getScale()==1)
+        if(ResizeContents.getScale()==1)
         reponsiveScale1();
 
         add(pnlHeader, java.awt.BorderLayout.PAGE_START);
