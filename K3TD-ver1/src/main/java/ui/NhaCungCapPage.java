@@ -13,7 +13,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import components.ResizeContents;
+import components.ResizeContent;
 import dao.NhaCungCap_DAO;
 import entities.TrangThaiNCC;
 
@@ -32,7 +32,7 @@ public class NhaCungCapPage extends javax.swing.JPanel {
      */
     public NhaCungCapPage() {
         initComponents();
-        ResizeContents.resizeContent(this);
+        ResizeContent.resizeContent(this);
         pnl_left.setVisible(false);
         addTableNCC();
         loadDataNCC();

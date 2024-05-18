@@ -4,7 +4,7 @@
  */
 package ui;
 
-import components.ResizeContents;
+import components.ResizeContent;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JPanel;
@@ -20,7 +20,7 @@ public class TaoPhieuXuatTraPage extends javax.swing.JPanel {
      */
     public TaoPhieuXuatTraPage() {
         initComponents();
-        new ResizeContents().resizeContent(this);
+        new ResizeContent().resizeContent(this);
         
     }
 

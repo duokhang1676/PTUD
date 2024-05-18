@@ -13,7 +13,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-import components.ResizeContents;
+import components.ResizeContent;
 import dao.NhanVien_DAO;
 import entities.ChucVuNhanVien;
 import entities.TrangThaiNhanVien;
@@ -32,7 +32,7 @@ public class NhanVienPage extends javax.swing.JPanel {
      */
     public NhanVienPage() {
         initComponents();
-        ResizeContents.resizeContent(this);
+        ResizeContent.resizeContent(this);
         pnl_left.setVisible(false);
         addTableNV();
         loadDataNV();

@@ -5,7 +5,7 @@
 package ui;
 
 import components.AddContent;
-import components.ResizeContents;
+import components.ResizeContent;
 import dao.PhieuNhapHangDao;
 import entities.PhieuNhapHang;
 import entities.TrangThaiPhieuNhapHang;
@@ -38,7 +38,7 @@ public class NhapHangPage extends javax.swing.JPanel {
      */
     public NhapHangPage() {
         initComponents();
-        ResizeContents.resizeContent(this);
+        ResizeContent.resizeContent(this);
         addTablePhieuNH();
         loadDataPNH();
     }

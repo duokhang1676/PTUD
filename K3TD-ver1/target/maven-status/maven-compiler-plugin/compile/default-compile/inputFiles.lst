@@ -14,6 +14,7 @@ C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\DonThuoc.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\components\LoginInfo.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\dao\DonViTinhDao.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\printer\PdfWriterExample.java
+C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\components\ResizeContent.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\dao\KhachHang_DAO.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\sampleUi\tuyChonBanHang\TableActionCellEditor.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\sampleUi\paginationStyle\Page.java
@@ -75,7 +76,6 @@ C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\TrangThaiHoaDon.ja
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\ui\ThongKeNhanVien.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\dao\PhieuXuatTraDao.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\ui\KetCaPage.java
-C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\components\ResizeContents.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\ui\NhanVienPage.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\ChiTietHoaDon.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\sampleUi\tuyChonHoaDon\TableActionCellRender.java

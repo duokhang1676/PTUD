@@ -5,7 +5,7 @@
 package ui;
 
 import components.AddContent;
-import components.ResizeContents;
+import components.ResizeContent;
 import dao.PhieuNhapHangDao;
 import dao.PhieuXuatTraDao;
 import entities.PhieuNhapHang;
@@ -41,7 +41,7 @@ public class XuatTraPage extends javax.swing.JPanel {
      */
     public XuatTraPage() {
         initComponents();
-        ResizeContents.resizeContent(this);
+        ResizeContent.resizeContent(this);
         addTablePhieuNH();
         loadDataXT();
         

@@ -6,7 +6,7 @@ package ui;
 
 import components.AddContent;
 import components.ColorSamples;
-import components.ResizeContents;
+import components.ResizeContent;
 import components.StatusMenu;
 
 import java.awt.BorderLayout;

@@ -6,7 +6,7 @@ package ui;
 
 import components.AddContent;
 import components.LoginInfo;
-import components.ResizeContents;
+import components.ResizeContent;
 
 /**
  *
