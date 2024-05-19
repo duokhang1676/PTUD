@@ -5,7 +5,13 @@
 package dao;
 
 import java.util.ArrayList;
+
+import entities.HangHoa;
 import entities.KhachHang;
+import entities.LoaiHang;
+import entities.NhomHang;
+import entities.TrangThaiHangHoa;
+
 import java.sql.Connection;
 import db.ConnectDB;
 import entities.TrangThaiKhachHang;
@@ -26,6 +32,43 @@ public class KhachHang_DAO {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
     public KhachHang_DAO(){
         dsKhachHang = new ArrayList<KhachHang>();
+    }
+    public KhachHang getKHbyMa(String maKH) {
+    	ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		try {
+			String sql = "select * from KhachHang where MaKhachHang = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, maKH);
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			
+			String tenKH = rs.getString("TenKhachHang");
+			LocalDate ngaySinh = null;
+			try {
+				 ngaySinh = rs.getDate("NgaySinh").toLocalDate();
+			} catch (Exception e) {
+				// TODO: handle exception
+				
+			}
+			
+			Boolean gioiTinh = rs.getBoolean("GioiTinh");
+			String sdt = rs.getString("SoDienThoai");
+			Integer diem = rs.getInt("DiemThuong");
+			LocalDate ngayTao = rs.getDate("NgayTao").toLocalDate();
+			String ghiChu = rs.getString("GhiChu");
+			TrangThaiKhachHang tt =  TrangThaiKhachHang.valueOf(rs.getString("TrangThai"));
+			
+			KhachHang khachHang = new KhachHang(maKH, tenKH, ngaySinh, gioiTinh, sdt, diem, ngayTao, ghiChu, tt);
+			return khachHang;
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			
+		}
+		return null;
     }
     public ArrayList<KhachHang> docTuBang(){
         try {

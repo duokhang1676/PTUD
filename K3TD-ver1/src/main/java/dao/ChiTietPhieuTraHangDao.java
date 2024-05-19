@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
@@ -11,32 +10,8 @@ import java.util.List;
 import db.ConnectDB;
 import entities.ChiTietHoaDon;
 import entities.DonViTinh;
-import entities.HangHoa;
-import entities.TrangThaiDonViTinh;
 
-public class ChiTietHoaDonDao {
-	public boolean addChiTietHD(ChiTietHoaDon ct) {
-		ConnectDB.getInstance();
-		Connection con = ConnectDB.getConnection(); 
-		PreparedStatement stmt = null;
-		String sql = "insert into ChiTietHoaDon (MaHoaDon, SoLuong, DonGia, MaDonViTinh) values(?,?,?,?,?)";
-		try {
-			stmt = con.prepareStatement(sql);
-			
-			stmt.setString(1, ct.getHoaDon().getMaHoaDon());
-			stmt.setInt(2, ct.getSoLuong());
-			stmt.setDouble(3, ct.getDonGia());
-			stmt.setInt(4, ct.getDonViTinh().getMaDonViTinh());
-			
-			stmt.executeUpdate();
-			stmt.close();
-			return true;
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		return false;
-	}
+public class ChiTietPhieuTraHangDao {
 	public List<ChiTietHoaDon> getDSDonViTinh(LocalDate from, LocalDate to){
 		List<ChiTietHoaDon> dsDVT = new ArrayList<>();
 		ConnectDB.getInstance();
@@ -45,14 +20,14 @@ public class ChiTietHoaDonDao {
 		try {
 			String sql = "SELECT \r\n"
 					+ "	ct.MaDonViTinh,\r\n"
-					+ "	sum(ct.SoLuong) as SoLuong,\r\n"
+					+ "	sum(ct.SoLuongTra) as SoLuong,\r\n"
 					+ "	sum(ct.ThanhTien) as ThanhTien \r\n"
 					+ "FROM \r\n"
-					+ "    HoaDon hd\r\n"
+					+ "    PhieuTraHang hd\r\n"
 					+ "JOIN \r\n"
-					+ "    ChiTietHoaDon ct ON hd.MaHoaDon = ct.MaHoaDon\r\n"
+					+ "    ChiTietPhieuTraHang ct ON hd.MaPhieuTraHang = ct.MaPhieuTraHang\r\n"
 					+ "WHERE \r\n"
-					+ "    hd.ThoiGianLapHoaDon BETWEEN ? AND ? and hd.TrangThai = 'HOAN_THANH'\r\n"
+					+ "    hd.ThoiGianTao BETWEEN ? AND ? and hd.TrangThai = 'HOAN_THANH'\r\n"
 					+ "Group by\r\n"
 					+ "	ct.MaDonViTinh\r\n"
 					+ "order by\r\n"
