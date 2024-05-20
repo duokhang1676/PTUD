@@ -85,6 +85,9 @@ public class Ca {
 				+ ", ghiChu=" + ghiChu + "]";
 	}
 	
+	public double tinhTienChenhLech() {
+		return Math.abs(tongTien-tongTienThucTe);
+	}
 	
 	
 }

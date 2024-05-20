@@ -1,4 +1,7 @@
-/META-INF/
 /ui/
+/components/
 /dao/
+/db/
 /entities/
+/printer/
+/sampleUi/

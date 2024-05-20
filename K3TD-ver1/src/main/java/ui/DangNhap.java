@@ -307,7 +307,7 @@ public class DangNhap extends javax.swing.JFrame {
         // TODO add your handling code here
     	if(!KiemTraDangNhap())
     		return;
-    	ConnectionDB(true);//parameter true dung clound db false dung local db
+    	ConnectionDB(false);//parameter true dung clound db false dung local db
         this.setVisible(false);
         RootFrame rf =  new RootFrame();
         LoginInfo.addRootframe(rf);
@@ -357,7 +357,7 @@ public class DangNhap extends javax.swing.JFrame {
 	}
 
 	private boolean KiemTraDangNhap() {
-		// TODO Auto-generated method stub
+		
 		return true;
 	}
 
@@ -386,6 +386,8 @@ public class DangNhap extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(DangNhap.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

@@ -6,8 +6,9 @@ public class DonViTinh {
 	private HangHoa hangHoa;
 	private int quyDoi;
 	private double giaBan;
+	private String maVach;
 	private TrangThaiDonViTinh trangThaiDonViTinh;
-	public DonViTinh(int maDonViTinh, String tenDonViTinh, HangHoa hangHoa, int quyDoi, double giaBan,
+	public DonViTinh(int maDonViTinh, String tenDonViTinh, HangHoa hangHoa, int quyDoi, double giaBan, String maVach,
 			TrangThaiDonViTinh trangThaiDonViTinh) {
 		super();
 		this.maDonViTinh = maDonViTinh;
@@ -15,11 +16,8 @@ public class DonViTinh {
 		this.hangHoa = hangHoa;
 		this.quyDoi = quyDoi;
 		this.giaBan = giaBan;
+		this.maVach = maVach;
 		this.trangThaiDonViTinh = trangThaiDonViTinh;
-	}
-	public DonViTinh(int maDonViTinh) {
-		super();
-		this.maDonViTinh = maDonViTinh;
 	}
 	public DonViTinh() {
 		super();
@@ -54,6 +52,12 @@ public class DonViTinh {
 	public void setGiaBan(double giaBan) {
 		this.giaBan = giaBan;
 	}
+	public String getMaVach() {
+		return maVach;
+	}
+	public void setMaVach(String maVach) {
+		this.maVach = maVach;
+	}
 	public TrangThaiDonViTinh getTrangThaiDonViTinh() {
 		return trangThaiDonViTinh;
 	}
@@ -63,8 +67,10 @@ public class DonViTinh {
 	@Override
 	public String toString() {
 		return "DonViTinh [maDonViTinh=" + maDonViTinh + ", tenDonViTinh=" + tenDonViTinh + ", hangHoa=" + hangHoa
-				+ ", quyDoi=" + quyDoi + ", giaBan=" + giaBan + ", trangThaiDonViTinh=" + trangThaiDonViTinh + "]";
+				+ ", quyDoi=" + quyDoi + ", giaBan=" + giaBan + ", maVach=" + maVach + ", trangThaiDonViTinh="
+				+ trangThaiDonViTinh + "]";
 	}
+	 
 	
 	
 }
