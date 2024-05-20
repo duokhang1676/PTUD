@@ -160,8 +160,7 @@ public class NhanVien_DAO {
 						stmt.setString(1, Change_Value__TrangThai);
 						stmt.setString(2, Change_Value__ChucVu);
 					}
-				}
-					
+				}	
 			}
 			else {
 				if (chucVu.equals("Tất cả")) {
