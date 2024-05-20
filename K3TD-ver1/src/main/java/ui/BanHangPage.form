@@ -580,6 +580,9 @@
                       <Image iconType="3" name="/icon/icons8-find-24.png"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="timSDTKhachHang1ActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

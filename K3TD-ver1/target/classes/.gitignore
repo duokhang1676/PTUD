@@ -1,7 +1,2 @@
-/printer/
-/components/
-/ui/
 /dao/
-/db/
-/entities/
-/sampleUi/
+/ui/

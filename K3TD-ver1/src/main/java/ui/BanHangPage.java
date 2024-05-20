@@ -11,8 +11,10 @@ import components.LoginInfo;
 import components.ResizeContent;
 import dao.HangHoaDao;
 import dao.HoaDonDao;
+import dao.KhachHang_DAO;
 import entities.Ca;
 import entities.HoaDon;
+import entities.KhachHang;
 import entities.NhanVien;
 import entities.TrangThaiHoaDon;
 
@@ -54,6 +56,7 @@ public class BanHangPage extends javax.swing.JPanel {
     public BanHangPage() {
     	hangHoaDao = new HangHoaDao();
     	hoaDonDao = new HoaDonDao();
+    	khachHangDao = new KhachHang_DAO();
         initComponents();
         ResizeContent.resizeContent(this);
         tbChiTietHoaDon.setModel(tableModel);
@@ -236,24 +239,7 @@ public class BanHangPage extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        
-     // Tạo một Action và gán chức năng khi nhấn phím esc
-        Action action = new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-          	  tableModel.removeRow(tbChiTietHoaDon.getSelectedRow());
-            }
-        };
-     // Gắn hành động với phím tắt F4
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F9, 0), "performF4Action");
-        this.getActionMap().put("performF4Action", action);
-
-     
-
-	
-
-        
-        tbChiTietHoaDon.setPreferredSize(new java.awt.Dimension(100, 500));
+        tbChiTietHoaDon.setPreferredSize(new java.awt.Dimension(100, 100));
         tbChiTietHoaDon.setRequestFocusEnabled(false);
         tbChiTietHoaDon.setRowHeight(40);
         jScrollPane1.setViewportView(tbChiTietHoaDon);
@@ -399,6 +385,11 @@ public class BanHangPage extends javax.swing.JPanel {
 
         timSDTKhachHang1.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
         timSDTKhachHang1.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-find-24.png"))); // NOI18N
+        timSDTKhachHang1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                timSDTKhachHang1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlKhachHangLayout = new javax.swing.GroupLayout(pnlKhachHang);
         pnlKhachHang.setLayout(pnlKhachHangLayout);
@@ -594,15 +585,7 @@ public class BanHangPage extends javax.swing.JPanel {
 
         add(pnlBody, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-//Ham tao cac item cho combo box
-    public static class donViTinh extends JComboBox{
-		donViTinh(){
-			addItem("Hop");
-			addItem("Vi");
-			addItem("Vien");
-		}
-	}
-    
+
   //Ham them spinner cho column
     public static class soLuongJSpinner extends DefaultCellEditor{
     	private JSpinner input;
@@ -737,6 +720,24 @@ public class BanHangPage extends javax.swing.JPanel {
     	
     	
     }//GEN-LAST:event_timMaSP1ActionPerformed
+
+    private void timSDTKhachHang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timSDTKhachHang1ActionPerformed
+        // TODO add your handling code here:
+    	KhachHang khach = khachHangDao.layKhachHangTheoSDT(timSDTKhachHang1.getText());
+			if (khach != null) {
+        		txtTenKH.setText(khach.getTenKhachHang());
+        		txtSDTKH.setText(khach.getSoDienThoai());
+        		String diem = String.valueOf(khach.getDiemThuong());
+        		txtDiemThuong.setText(diem);
+    		}
+    		else {
+    			JOptionPane.showConfirmDialog(this, "Không tìm thấy khách hàng!", "Thông báo", JOptionPane.OK_CANCEL_OPTION);
+			} 
+//    	else {
+//			JOptionPane.showConfirmDialog(this, "Yêu cầu nhập số điện thoại!", "Thông báo", JOptionPane.OK_CANCEL_OPTION);
+//		}
+    	
+    }//GEN-LAST:event_timSDTKhachHang1ActionPerformed
     
     public double reload() {
     	double tongTien = 0;
@@ -755,6 +756,7 @@ public class BanHangPage extends javax.swing.JPanel {
     private DefaultTableModel tableModel = new DefaultTableModel(headerString,0);
     private HangHoaDao hangHoaDao;
     private HoaDonDao hoaDonDao;
+    private KhachHang_DAO khachHangDao;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLuuTam;
     private javax.swing.JButton btnThanhToan;
