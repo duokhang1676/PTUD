@@ -616,33 +616,22 @@ public class NhanVienPage extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 	private entities.NhanVien nV;
     
-    private void revert_NhanVien() {
+    private entities.NhanVien revert_NhanVien() {
     	String ma = txt_maNhanVien.getText();
     	String ten = txtTenNhanVien.getText();
     	LocalDate ngaySinh = datengaySinh.getDate();
-    	boolean gioiTInh = btn_Group_gioiTinh.getSelection().toString().equals("Nam") ? true : false ;
+    	boolean gioiTinh = btn_Group_gioiTinh.getSelection().getActionCommand().equals("Nam") ? true : false ;
     	String soDienThoai = txtSoDienThoai.getText();
     	String matKhau = "123456";
     	LocalDate ngayTao = dateNgayTao.getDate();
     	String ghiChu = txtarea_GhiChu.getText();
-    	ChucVuNhanVien cvNhanVien = cbo_ChucVu.getSelectedItem().toString().equals("Nhân Viên") ? ChucVuNhanVien.NHAN_VIEN : ChucVuNhanVien.QUAN_LY;
+    	ChucVuNhanVien cvNhanVien = cbo_ChucVu.getSelectedItem().toString().equals("Nhân viên") ? ChucVuNhanVien.NHAN_VIEN : ChucVuNhanVien.QUAN_LY;
     	TrangThaiNhanVien ttNhanVien = cbo_TrangThai.getSelectedItem().toString().equals("Đang hoạt động") ? TrangThaiNhanVien.DANG_HOAT_DONG : TrangThaiNhanVien.NGUNG_HOAT_DONG;
-    	nV = new entities.NhanVien(ma, ten, ngaySinh, gioiTInh, soDienThoai, matKhau, ngayTao, ghiChu, cvNhanVien, ttNhanVien);
+    	return new entities.NhanVien("NV0001", ten, ngaySinh, gioiTinh, soDienThoai, matKhau, ngayTao, ghiChu, cvNhanVien, ttNhanVien);
     }
     private void luu() {
-    	revert_NhanVien();
-    	int n =0;
-    	if (nv_DAO.create(nV)) {
-			model_NV.addRow( new Object [] {
-					n + "",
-					txt_maNhanVien.getText(),
-					txtTenNhanVien.getText(),
-					cbo_ChucVu.getSelectedItem().toString(),
-					txtSoDienThoai.getText(),
-					txtarea_GhiChu.getText(),
-					cbo_TrangThai.getSelectedItem().toString()
-			});
-		}
+    	entities.NhanVien nv1 = revert_NhanVien();
+        nv_DAO.create(nv1);
     }
     private void timTheoTuKhoa_TrangThai_ChucVu() {
     	NhanVien_DAO ds = new NhanVien_DAO();

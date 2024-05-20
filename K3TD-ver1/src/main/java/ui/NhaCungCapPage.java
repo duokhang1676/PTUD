@@ -504,7 +504,8 @@ public class NhaCungCapPage extends javax.swing.JPanel {
     private javax.swing.JTextField txt_tim;
     // End of variables declaration//GEN-END:variables
     
-    private void revert_NhaCungCap() {
+   
+    private entities.NhaCungCap revert_NhaCungCap() {
     	String ma = txt_maNhaCungCap.getText();
     	String ten  = txtTenNhaCungCap.getText();
     	String diaCHi = txtDiaChi1.getText();
@@ -512,47 +513,35 @@ public class NhaCungCapPage extends javax.swing.JPanel {
     	String soDienThoai = txtSoDienThoai.getText();
     	String ghiChu = txtArea_ghiChu.getText();
     	TrangThaiNCC trangThai = cbo_TrangThai.getSelectedItem().toString() == "Đang hoạt động" ? TrangThaiNCC.DANG_HOAT_DONG : TrangThaiNCC.NGUNG_HOAT_DONG ;
-    	nCC = new entities.NhaCungCap(ma, ten, soDienThoai, diaCHi, Email, ghiChu, trangThai);
+        entities.NhaCungCap ncc2 = new entities.NhaCungCap("NCC0001", ten, soDienThoai, diaCHi, Email, ghiChu, trangThai);
+        return ncc2;
     }
     private void luu() {
-    	revert_NhaCungCap();
-    	int n = 0;
-    	if (nhaCC_dao.create(nCC)) {
-    		Object [] rowData = {
-    				n + "",
-    				txt_maNhaCungCap.getText(),
-    				txtTenNhaCungCap.getText(),
-    				txtDiaChi1.getText(),
-    				txtEmail.getText(),
-    				txtSoDienThoai.getText(),
-    				txtArea_ghiChu.getText(),
-    				cbo_TrangThai.getSelectedItem().toString()
-    			
-    		};
-			model_NCC.addRow(rowData);
-		}
+        entities.NhaCungCap ncc2 = revert_NhaCungCap();
+    	nhaCC_dao.create(ncc2);
     }
     private void timTheoTuKhoa_TrangThai() {
     	NhaCungCap_DAO ds = new NhaCungCap_DAO();
     	String tukhoa = txt_tim.getText();
     	String trangthai = jComboBox4.getSelectedItem().toString();
+        System.out.println(trangthai);
     	List<entities.NhaCungCap> list1 = ds.timkiem_TuKhoa_TrangThai(tukhoa,trangthai);
-    	if (list1.size() ==0) {
+    	if (list1.size() ==0 ) {
 			JOptionPane.showMessageDialog(this, "Khong tim thay");
 		}
     	else {
-    		int stt = tbl_NCC.getSelectedRow() +1;
     		model_NCC.setRowCount(0);
+                int a = 0;
     		for (entities.NhaCungCap ncc : list1) {
+                     a ++;
 				model_NCC.addRow(new Object [] {
-						stt + "",
+						a + "",
 						ncc.getMaNhaCungCap(),
 						ncc.getTenNhaCungCap(),
-						ncc.getSoDienThoai(),
-						ncc.getDiaChi(),
 						ncc.getEmail(),
+						ncc.getSoDienThoai(),
 						ncc.getGhiChu(),
-						ncc.getTrangThaiNCC()
+						ncc.getTrangThaiNCC().equals(ncc.getTrangThaiNCC().DANG_HOAT_DONG) ? "Đang hoạt động" : "Ngừng hoạt động"
 						
 				});
 			}
