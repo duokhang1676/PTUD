@@ -25,9 +25,8 @@ public class NhaCungCap_DAO {
     public ArrayList<NhaCungCap> docTuBang(){
         try {
             Connection con = ConnectDB.getInstance().getConnection();
-            String sql = "Select * from NhaCungCap";
+            String sql = "SELECT * FROM NhaCungCap";
             Statement stmt = con.createStatement();
-            
             ResultSet rs  = stmt.executeQuery(sql);
             while (rs.next()){
                 String ma  = rs.getString("MaNhaCungCap");
@@ -39,7 +38,7 @@ public class NhaCungCap_DAO {
                 TrangThaiNCC ttNCC = trangThaiHoatDong(rs.getString("TrangThai"));
                 NhaCungCap nCC1 = new NhaCungCap(ma, ten, soDienThoai, diaChi, eMail, ghiChu, ttNCC);
                 dsNhaCungCap.add(nCC1);
-                
+        
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -211,7 +211,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Times New Roman" size="20" style="1"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Th&#xf4;ng tin nh&#xe0; cung c&#x1ea5;p"/>
+                    <Property name="text" type="java.lang.String" value="Th&#xf4;ng tin &#x111;&#x1a1;n thu&#x1ed1;c m&#x1eab;u"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel10">

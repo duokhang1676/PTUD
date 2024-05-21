@@ -122,7 +122,7 @@ public class DonThuocMauPage extends javax.swing.JPanel {
         jLabel9.setText("Mã Đơn thuốc mẫu");
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
-        jLabel2.setText("Thông tin nhà cung cấp");
+        jLabel2.setText("Thông tin đơn thuốc mẫu");
 
         jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel10.setText("Tên đơn thuốc mẫu ");

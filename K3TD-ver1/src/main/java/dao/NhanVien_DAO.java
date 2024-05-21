@@ -15,6 +15,7 @@ import entities.TrangThaiNhanVien;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 /**
@@ -35,18 +36,20 @@ public class NhanVien_DAO {
             
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()){
-                String ma = rs.getString(1);
-                String ten  = rs.getString(2);
-                LocalDate ngaySinh = rs.getDate(3).toLocalDate();
-                boolean gioitinh = rs.getBoolean(4);
-                String sdt = rs.getString(5);
-                String matKhau = rs.getString(6);
-                LocalDate ngayTao = rs.getDate(7).toLocalDate();
-                String ghiChu = rs.getString(8);
-                String chucVu = rs.getString(9);
-                ChucVuNhanVien cvNhanVien =  chucvuNhanVien(chucVu);
+                String ma = rs.getString("MaNhanVien");
+                String ten  = rs.getString("TenNhanVien");
+                LocalDate ngaySinh = rs.getDate("NgaySinh").toLocalDate();
+                boolean gioitinh = rs.getBoolean("GioiTinh");
+                String sdt = rs.getString("SoDienThoai");
+                String matKhau = rs.getString("MatKhau");
+                LocalDate ngayTao = rs.getDate("NgayTao").toLocalDate();
+                String ghiChu = rs.getString("GhiChu"); 
+                
+                String chucVu = rs.getString("ChucVu");
+                ChucVuNhanVien cvNhanVien =  rs.getString("ChucVu").equals("QUAN_LY") ? ChucVuNhanVien.QUAN_LY : ChucVuNhanVien.NHAN_VIEN;
+                
                 String trangThai = rs.getString(10);
-                TrangThaiNhanVien ttNhanVien = trangthaiNhanVien(trangThai);
+                TrangThaiNhanVien ttNhanVien = rs.getString("TrangThai").equals("DANG_HOAT_DONG") ? TrangThaiNhanVien.DANG_HOAT_DONG : TrangThaiNhanVien.NGUNG_HOAT_DONG;
                 
                 NhanVien nv = new NhanVien(ma, ten, ngaySinh, gioitinh, sdt, matKhau, ngayTao,ghiChu,cvNhanVien, ttNhanVien);
                 dsNhanVien.add(nv);
@@ -57,6 +60,7 @@ public class NhanVien_DAO {
         return dsNhanVien;
         
     }
+
     private ChucVuNhanVien chucvuNhanVien(String cv){
         if (cv.equals("Quản Lý")) {
             return ChucVuNhanVien.QUAN_LY;
@@ -83,7 +87,9 @@ public class NhanVien_DAO {
             stmt.setString(4, nv.getSoDienThoai());
             stmt.setString(5, nv.getMatKhau());
             stmt.setDate(6, java.sql.Date.valueOf(nv.getNgayTao()));
-            stmt.setString(7,nv.getTrangThaiNhanVien().toString());
+            stmt.setString(7, nv.getGhiChu());
+            stmt.setString(8, nv.getChucVu().toString());
+            stmt.setString(9,nv.getTrangThaiNhanVien().toString());
             n = stmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

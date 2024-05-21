@@ -47,9 +47,14 @@ public class NhanVienPage extends javax.swing.JPanel {
 		NV_dao = new NhanVien_DAO();
 		List<entities.NhanVien> dsNV = NV_dao.docTuBang();
 		for (entities.NhanVien nv : dsNV) {
-			model_NV.addRow(new Object[] {stt, nv.getMaNhanVien(), nv.getTenNhanVien(), nv.getChucVu().equals(ChucVuNhanVien.NHAN_VIEN) ? "Nhân Viên" : "Quản Lý", nv.getSoDienThoai(),
-					nv.getGhiChu(), nv.getTrangThaiNhanVien().equals(TrangThaiNhanVien.DANG_HOAT_DONG)?"Đang hoạt động":"Ngưng hoạt động"});
-			
+			model_NV.addRow(new Object[] {
+                            stt,
+                            nv.getMaNhanVien(),
+                            nv.getTenNhanVien(),
+                            nv.getChucVu().equals(ChucVuNhanVien.NHAN_VIEN) ? " Nhân Viên " : " Quản Lý ",
+                            nv.getSoDienThoai(),
+                            nv.getGhiChu(),
+                            nv.getTrangThaiNhanVien().equals(TrangThaiNhanVien.DANG_HOAT_DONG) ? "Đang hoạt động" : "Ngừng hoạt động"});
 			stt++;
 		}
 	}

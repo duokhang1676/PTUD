@@ -32,28 +32,16 @@ public class NhaCungCapPage extends javax.swing.JPanel {
 	/**
      * Creates new form NhanVien_httk
      */
-    public NhaCungCapPage() {
+    public NhaCungCapPage()  {
         initComponents();
         ResizeContent.resizeContent(this);
         pnl_left.setVisible(false);
         addTableNCC();
+        
         loadDataNCC();
     }
 
-    private void loadDataNCC() {
-		// TODO Auto-generated method stub
-    	int stt = 1;
-		model_NCC.setNumRows(0);
-		
-		nhaCC_dao = new NhaCungCap_DAO();
-		List<entities.NhaCungCap> dsNCC = nhaCC_dao.docTuBang();
-		for (entities.NhaCungCap ncc : dsNCC) {
-			model_NCC.addRow(new Object[] {stt, ncc.getMaNhaCungCap(), ncc.getTenNhaCungCap(), ncc.getEmail(), ncc.getSoDienThoai(),
-					ncc.getGhiChu(), ncc.getTrangThaiNCC().equals(TrangThaiNCC.DANG_HOAT_DONG)?"Đang hoạt động":"Ngưng hoạt động"});
-			
-			stt++;
-		}
-	}
+
 
 	private void addTableNCC() {
 		// TODO Auto-generated method stub
@@ -547,4 +535,20 @@ public class NhaCungCapPage extends javax.swing.JPanel {
 			}
     	}
     }
+    
+    
+        private void loadDataNCC() {
+		// TODO Auto-generated method stub
+    	int stt = 1;
+		model_NCC.setNumRows(0);
+		
+		nhaCC_dao = new NhaCungCap_DAO();
+		List<entities.NhaCungCap> dsNCC = nhaCC_dao.docTuBang();
+		for (entities.NhaCungCap ncc : dsNCC) {
+			model_NCC.addRow(new Object[] {stt, ncc.getMaNhaCungCap(), ncc.getTenNhaCungCap(), ncc.getEmail(), ncc.getSoDienThoai(),
+					ncc.getGhiChu(), ncc.getTrangThaiNCC().equals(TrangThaiNCC.DANG_HOAT_DONG)?"Đang hoạt động":"Ngưng hoạt động"});
+			
+			stt++;
+		}
+	}
 }
