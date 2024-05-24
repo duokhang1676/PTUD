@@ -92,7 +92,7 @@ public class NhaCungCap_DAO {
                         else{
                             if (trangThai.equalsIgnoreCase("Tất cả")) {
                                 sql = "SELECT * FROM NhaCungCap"
-                                        + " WHERE MaNhaCungCap LIKE ? OR TenNhaCungCap LIKE ? OR SoDienThoai LIKE ? OR Email LIKE ? GhiChu LIKE ?   ";
+                                        + " WHERE MaNhaCungCap LIKE ? OR TenNhaCungCap LIKE ? OR SoDienThoai LIKE ? OR Email LIKE ? OR GhiChu LIKE ?   ";
                                 stmt = con.prepareStatement(sql);
                                 stmt.setString(1, "%" + tuKhoa + "%");
                                 stmt.setString(2, "%" + tuKhoa + "%");
@@ -102,7 +102,7 @@ public class NhaCungCap_DAO {
                             }
                             else{
                                 sql = "SELECT * FROM NhaCungCap"
-                                        + " WHERE (MaNhaCungCap LIKE ? OR TenNhaCungCap LIKE ? OR SoDienThoai LIKE ? OR Email LIKE ? GhiChu LIKE ? ) AND TrangThai = ?   ";
+                                        + " WHERE (MaNhaCungCap LIKE ? OR TenNhaCungCap LIKE ? OR SoDienThoai LIKE ? OR Email LIKE ? OR GhiChu LIKE ? ) AND TrangThai = ?   ";
                                                                 stmt = con.prepareStatement(sql);
                                 stmt.setString(1, "%" + tuKhoa + "%");
                                 stmt.setString(2, "%" + tuKhoa + "%");

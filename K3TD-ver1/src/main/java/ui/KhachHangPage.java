@@ -6,10 +6,16 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -18,6 +24,7 @@ import javax.swing.table.JTableHeader;
 import components.ResizeContent;
 import dao.KhachHang_DAO;
 import dao.NhanVien_DAO;
+import db.ConnectDB;
 import entities.ChucVuNhanVien;
 import entities.TrangThaiKhachHang;
 import entities.TrangThaiNhanVien;
@@ -37,25 +44,31 @@ public class KhachHangPage extends javax.swing.JPanel {
      */
     public KhachHangPage() {
         initComponents();
+        try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         ResizeContent.resizeContent(this);
         pnl_left.setVisible(false);
         addTableNV();
-        loadDataNV();
+        kh_DAO.loadDataNV(model_KH);
     }
-    private void loadDataNV() {
-		// TODO Auto-generated method stub
-    	int stt = 1;
-		model_KH.setNumRows(0);
-		
-		KH_dao = new KhachHang_DAO();
-		List<entities.KhachHang> dsKH = KH_dao.docTuBang();
-		for (entities.KhachHang kh : dsKH) {
-			model_KH.addRow(new Object[] {stt, kh.getMaKhachHang(), kh.getTenKhachHang(),"100", kh.getSoDienThoai(),
-					kh.getGhiChu(), kh.getTrangThaiKhachHang().equals(TrangThaiKhachHang.DANG_HOAT_DONG)?"Đang hoạt động":"Ngưng hoạt động"});
-			
-			stt++;
-		}
-	}
+//    private void loadDataNV() {
+//		// TODO Auto-generated method stub
+//    	int stt = 1;
+//		model_KH.setNumRows(0);
+//		
+//		KH_dao = new KhachHang_DAO();
+//		List<entities.KhachHang> dsKH = KH_dao.docTuBang();
+//		for (entities.KhachHang kh : dsKH) {
+//			model_KH.addRow(new Object[] {stt, kh.getMaKhachHang(), kh.getTenKhachHang(),"100", kh.getSoDienThoai(),
+//					kh.getGhiChu(), kh.getTrangThaiKhachHang().equals(TrangThaiKhachHang.DANG_HOAT_DONG)?"Đang hoạt động":"Ngưng hoạt động"});
+//			
+//			stt++;
+//		}
+//	}
 
 	private void addTableNV() {
 		// TODO Auto-generated method stub
@@ -508,7 +521,8 @@ public class KhachHangPage extends javax.swing.JPanel {
     }//GEN-LAST:event_txtTenKhachhangActionPerformed
 
     private void btn_TimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimActionPerformed
-        // TODO add your handling code here:
+                // TODO add your handling code here:
+                timTheoTuKhoa_trangThai();
     }//GEN-LAST:event_btn_TimActionPerformed
 
     private void btn_DongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DongActionPerformed
@@ -625,16 +639,25 @@ public class KhachHangPage extends javax.swing.JPanel {
     	ArrayList<ArrayList<Object>> list = ds.timKiem_tuKhoa_TrangThai(tuKhoa, tt);
     	model_KH.setRowCount(0);
     	for (ArrayList<Object> arrayList : list) {
+    		String ghiChu = arrayList.get(4) != null ? arrayList.get(4).toString() : "";
     		model_KH.addRow(new Object[] {
     				n + " ",
     				arrayList.get(0) + " ",
     				arrayList.get(1) + "",
     				arrayList.get(2) + "",
     				arrayList.get(3) + "",
-    				arrayList.get(4) + "",
-    				arrayList.get(5) + "",
+    				ghiChu,
+    				(arrayList.get(5) + "").equals(TrangThaiNhanVien.DANG_HOAT_DONG.toString()) ? "Đang hoạt động" : "Ngừng hoạt động",
     		});
 			
 		}
     }
-}
+  
+    public static void main(String[] args) {
+  	  JFrame rs = new JFrame();
+  	  rs.add(new KhachHangPage());
+  	  rs.setVisible(true);
+	}
+    
+    
+    }

@@ -6,8 +6,10 @@ package ui;
 
 import components.AddContent;
 import components.ColorSamples;
+import components.*;
 import components.ResizeContent;
 import components.StatusMenu;
+
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -828,11 +830,7 @@ public class RootFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHangHoaActionPerformed
 
     private void btnDonThuocMauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDonThuocMauActionPerformed
-        hideAllDropMenu();
-        pnlContent.removeAll();
-    	
-    	pnlContent.revalidate();
-        pnlContent.repaint();
+        AddContent.addContent(new DonThuocMauPage());
     }//GEN-LAST:event_btnDonThuocMauActionPerformed
 
     private void btnNhapHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhapHangActionPerformed

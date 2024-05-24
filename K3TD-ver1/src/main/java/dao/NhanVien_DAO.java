@@ -171,43 +171,42 @@ public class NhanVien_DAO {
 			else {
 				if (chucVu.equals("Tất cả")) {
 					if (trangThai.equalsIgnoreCase("Tất cả")) {
-						sql = "SELECT * FROM NhanVien WHERE MaNhanVien LIKE ? OR TenNhanVien LIKE ? OR"
-								+ " ChucVu LIKE ? OR SoDienThoai LIKE ? OR GhiChu LIKE ?";
+						sql = "SELECT * FROM NhanVien WHERE MaNhanVien LIKE ? OR TenNhanVien LIKE ? OR SoDienThoai LIKE ? OR GhiChu LIKE ?";
 						stmt =con.prepareStatement(sql);
 			            stmt.setString(1, "%" + tuKhoa + "%");
 			            stmt.setString(2, "%" + tuKhoa + "%");
 			            stmt.setString(3, "%" + tuKhoa + "%");
 			            stmt.setString(4, "%" + tuKhoa + "%");
-			            stmt.setString(5, "%" + tuKhoa + "%");
 					}
 					else {
-						sql = "SELECT * FROM NhanVien WHERE (  MaNhanVien LIKE ? OR TenNhanVien LIKE ? OR ChucVu LIKE ? OR SoDienThoai LIKE ? OR GhiChu LIKE ?  ) AND TrangThai = ?";
+						sql = "SELECT * FROM NhanVien WHERE (  MaNhanVien LIKE ? OR TenNhanVien LIKE ?  OR SoDienThoai LIKE ? OR GhiChu LIKE ?  ) AND TrangThai = ?";
 						stmt =con.prepareStatement(sql);
 			            stmt.setString(1, "%" + tuKhoa + "%");
 			            stmt.setString(2, "%" + tuKhoa + "%");
 			            stmt.setString(3, "%" + tuKhoa + "%");
 			            stmt.setString(4, "%" + tuKhoa + "%");
-			            stmt.setString(5, "%" + tuKhoa + "%");
-						stmt.setString(6, Change_Value__TrangThai);
+						stmt.setString(5, Change_Value__TrangThai);
 					}
 				}
 				else {
 					if (trangThai.equals("Tất cả")) {
-						sql = "SELECT * FROM NhanVien WHERE ChucVu = ?";
-						stmt =con.prepareStatement(sql);
-						stmt.setString(1, chucVu);
-					}
-					else {
-						sql = "SELECT * FROM NhanVien WHERE   (  MaNhanVien LIKE ? OR TenNhanVien LIKE ? OR\\\"\\r\\n\"\r\n"
-								+ "								+ \"								+ \\\" ChucVu LIKE ? OR SoDienThoai LIKE ? OR GhiChu LIKE ?  ) AND   (TrangThai = ? AND ChucVu = ? )";
+						sql = "SELECT * FROM NhanVien WHERE  (  MaNhanVien LIKE ? OR TenNhanVien LIKE ?  OR SoDienThoai LIKE ? OR GhiChu LIKE ?  ) AND ChucVu = ? ";
 						stmt =con.prepareStatement(sql);
 			            stmt.setString(1, "%" + tuKhoa + "%");
 			            stmt.setString(2, "%" + tuKhoa + "%");
 			            stmt.setString(3, "%" + tuKhoa + "%");
 			            stmt.setString(4, "%" + tuKhoa + "%");
-			            stmt.setString(5, "%" + tuKhoa + "%");
-						stmt.setString(6, Change_Value__TrangThai);
-						stmt.setString(7, Change_Value__ChucVu);
+						stmt.setString(5, Change_Value__ChucVu);
+					}
+					else {
+						sql = "SELECT * FROM NhanVien WHERE   (  MaNhanVien LIKE ? OR TenNhanVien LIKE ?  OR SoDienThoai LIKE ? OR GhiChu LIKE ?  ) AND   (TrangThai = ? AND ChucVu = ? )";
+						stmt =con.prepareStatement(sql);
+			            stmt.setString(1, "%" + tuKhoa + "%");
+			            stmt.setString(2, "%" + tuKhoa + "%");
+			            stmt.setString(3, "%" + tuKhoa + "%");
+			            stmt.setString(4, "%" + tuKhoa + "%");
+						stmt.setString(5, Change_Value__TrangThai);
+						stmt.setString(6, Change_Value__ChucVu);
 					}
 				}
 			}

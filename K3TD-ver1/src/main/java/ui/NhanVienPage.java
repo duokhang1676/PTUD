@@ -6,9 +6,11 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -16,6 +18,7 @@ import javax.swing.table.JTableHeader;
 
 import components.ResizeContent;
 import dao.NhanVien_DAO;
+import db.ConnectDB;
 import entities.ChucVuNhanVien;
 import entities.TrangThaiNhanVien;
 
@@ -33,6 +36,12 @@ public class NhanVienPage extends javax.swing.JPanel {
      * Creates new form NhanVien_httk
      */
     public NhanVienPage() {
+    	try {
+			db.ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         initComponents();
         ResizeContent.resizeContent(this);
         pnl_left.setVisible(false);
@@ -650,14 +659,19 @@ public class NhanVienPage extends javax.swing.JPanel {
         for (entities.NhanVien s : list) {
 			model_NV.addRow( new Object [] {
 					n + "",
-					txt_maNhanVien.getText(),
-					txtTenNhanVien.getText(),
-					cbo_ChucVu.getSelectedItem().toString(),
-					txtSoDienThoai.getText(),
-					txtarea_GhiChu.getText(),
-					cbo_TrangThai.getSelectedItem().toString()
+					s.getMaNhanVien(),
+					s.getTenNhanVien(),
+					s.getChucVu().equals(ChucVuNhanVien.NHAN_VIEN) ? "Nhân viên" : "Quản lý",
+					s.getSoDienThoai(),
+					s.getGhiChu(),
+					s.getTrangThaiNhanVien().equals(TrangThaiNhanVien.DANG_HOAT_DONG)? "Đang hoạt động" : "Ngừng hoạt động"
 			});
 			n++;
 		}
     }
+    public static void main(String[] args) {
+  	  JFrame rs = new JFrame();
+  	  rs.add(new NhanVienPage());
+  	  rs.setVisible(true);
+	}
 }

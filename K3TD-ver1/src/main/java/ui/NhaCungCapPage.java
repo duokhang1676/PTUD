@@ -6,8 +6,10 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.sql.SQLException;
 import java.util.List;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -16,6 +18,7 @@ import javax.swing.table.JTableHeader;
 
 import components.ResizeContent;
 import dao.NhaCungCap_DAO;
+import db.ConnectDB;
 import entities.*;
 /**
  *
@@ -34,6 +37,12 @@ public class NhaCungCapPage extends javax.swing.JPanel {
      */
     public NhaCungCapPage()  {
         initComponents();
+        try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         ResizeContent.resizeContent(this);
         pnl_left.setVisible(false);
         addTableNCC();
@@ -529,7 +538,7 @@ public class NhaCungCapPage extends javax.swing.JPanel {
 						ncc.getEmail(),
 						ncc.getSoDienThoai(),
 						ncc.getGhiChu(),
-						ncc.getTrangThaiNCC().equals(ncc.getTrangThaiNCC().DANG_HOAT_DONG) ? "Đang hoạt động" : "Ngừng hoạt động"
+						ncc.getTrangThaiNCC().equals(ncc.getTrangThaiNCC().DANG_HOAT_DONG) ? "Đang hoạt động" : "Ngừng hoạt động",
 						
 				});
 			}
@@ -551,4 +560,9 @@ public class NhaCungCapPage extends javax.swing.JPanel {
 			stt++;
 		}
 	}
+        public static void main(String[] args) {
+        	  JFrame rs = new JFrame();
+        	  rs.add(new NhaCungCapPage());
+        	  rs.setVisible(true);
+		}
 }
