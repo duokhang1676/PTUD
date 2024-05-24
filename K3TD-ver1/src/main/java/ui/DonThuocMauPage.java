@@ -38,6 +38,7 @@ public class DonThuocMauPage extends javax.swing.JPanel implements MouseListener
 
     private DefaultTableModel table_model2;
     private JScrollPane pnl_Scroll;
+    private JTable jtable_DonThuocMau;
 
 	
 	/**
@@ -52,7 +53,6 @@ public class DonThuocMauPage extends javax.swing.JPanel implements MouseListener
         }
         ResizeContent.resizeContent(this);
         jPanel1.add(jscp_donThuocMau(),BorderLayout.CENTER);
-
 
         
     }
@@ -77,6 +77,7 @@ public class DonThuocMauPage extends javax.swing.JPanel implements MouseListener
         btn_Tim = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txt_tim = new javax.swing.JTextField();
+        btn_Them = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
 
         setPreferredSize(new java.awt.Dimension(1920, 840));
@@ -88,7 +89,7 @@ public class DonThuocMauPage extends javax.swing.JPanel implements MouseListener
         pnlNorth.setBackground(new java.awt.Color(255, 255, 255));
         pnlNorth.setPreferredSize(new java.awt.Dimension(1450, 100));
 
-        cbo_TrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đang hoạt động", "Ngừng hoạt động", "Tất cả" }));
+        cbo_TrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đang bán", "Tạm dừng" }));
         cbo_TrangThai.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         cbo_TrangThai.setPreferredSize(new java.awt.Dimension(163, 35));
 
@@ -109,6 +110,15 @@ public class DonThuocMauPage extends javax.swing.JPanel implements MouseListener
 
         txt_tim.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
+        btn_Them.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/image 15.png"))); // NOI18N
+        btn_Them.setText("Thêm đơn thuốc mẫu");
+        btn_Them.setPreferredSize(new java.awt.Dimension(72, 35));
+        btn_Them.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ThemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlNorthLayout = new javax.swing.GroupLayout(pnlNorth);
         pnlNorth.setLayout(pnlNorthLayout);
         pnlNorthLayout.setHorizontalGroup(
@@ -123,9 +133,11 @@ public class DonThuocMauPage extends javax.swing.JPanel implements MouseListener
                     .addGroup(pnlNorthLayout.createSequentialGroup()
                         .addComponent(txt_tim, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_Tim, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btn_Tim, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60)
+                        .addComponent(btn_Them, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(918, Short.MAX_VALUE))
+                .addContainerGap(668, Short.MAX_VALUE))
         );
         pnlNorthLayout.setVerticalGroup(
             pnlNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,7 +150,8 @@ public class DonThuocMauPage extends javax.swing.JPanel implements MouseListener
                 .addGroup(pnlNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_tim, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                     .addComponent(btn_Tim, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbo_TrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbo_TrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_Them, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28))
         );
 
@@ -160,8 +173,14 @@ public class DonThuocMauPage extends javax.swing.JPanel implements MouseListener
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    private void btn_ThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ThemActionPerformed
+        // TODO add your handling code here:
+        AddContent.addContent(new TaoDonThuocMauPage());
+    }//GEN-LAST:event_btn_ThemActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_Them;
     private javax.swing.JButton btn_Tim;
     private javax.swing.JComboBox<String> cbo_TrangThai;
     private javax.swing.JLabel jLabel3;
@@ -170,7 +189,6 @@ public class DonThuocMauPage extends javax.swing.JPanel implements MouseListener
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlNorth;
     private javax.swing.JTextField txt_tim;
-	private JTable jtable_DonThuocMau;
     // End of variables declaration//GEN-END:variables
     
    

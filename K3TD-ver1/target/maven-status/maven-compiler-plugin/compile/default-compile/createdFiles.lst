@@ -51,7 +51,6 @@ ui\NhanVienPage$6.class
 ui\TaoHangHoaPage$3.class
 ui\TaiKhoanPage$1.class
 ui\KhachHangPage.class
-ui\ChiTietDonThuocMauPage$6.class
 ui\TaoPhieuXuatTraPage$2.class
 ui\ThongKeHangHoaPage$3.class
 ui\KetCaPage$2.class
@@ -157,6 +156,7 @@ ui\RootFrame$8.class
 ui\TaoHangHoaPage$5.class
 ui\RootFrame$17.class
 ui\BanHangPage$6.class
+ui\DonThuocMauPage$3.class
 ui\TaoHangHoaPage$15.class
 ui\TrangChu$6.class
 ui\DoiMatKhauPage$1.class
