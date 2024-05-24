@@ -5,31 +5,56 @@
 package ui;
 
 import components.AddContent;
+import components.ButtonRender;
 import components.FormatJtable;
+import components.Formater;
 import components.GeneratePK;
 import components.LoginInfo;
 import components.ResizeContent;
+import components.SpinnerEditor;
+import components.TableActionCellEditor;
+import components.TableActionEvent;
+import dao.Ca_DAO;
+import dao.ChiTietHoaDonDao;
+import dao.DonThuocMau_DAO;
+import dao.DonViTinhDao;
 import dao.HangHoaDao;
 import dao.HoaDonDao;
 import dao.KhachHang_DAO;
 import entities.Ca;
+import entities.ChiTietHoaDon;
+import entities.DonThuocMau;
+import entities.DonViTinh;
+import entities.HangHoa;
 import entities.HoaDon;
 import entities.KhachHang;
 import entities.NhanVien;
 import entities.TrangThaiHoaDon;
+import entities.TrangThaiKhachHang;
+import printer.PdfWriterExample;
+import printer.PrintExample;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultCellEditor;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -38,9 +63,17 @@ import javax.swing.JTable;
 import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultFormatter;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.PlainDocument;
+import javax.swing.text.DocumentFilter.FilterBypass;
 
 import org.json.simple.parser.ParseException;
 
@@ -57,11 +90,20 @@ public class BanHangPage extends javax.swing.JPanel {
     	hangHoaDao = new HangHoaDao();
     	hoaDonDao = new HoaDonDao();
     	khachHangDao = new KhachHang_DAO();
+    	donThuocMauDao = new DonThuocMau_DAO();
+    	donViTinhDao = new DonViTinhDao();
+    	caDao = new Ca_DAO();
+    	chiTietHDDao = new ChiTietHoaDonDao();
         initComponents();
         ResizeContent.resizeContent(this);
-        tbChiTietHoaDon.setModel(tableModel);
-        FormatJtable.setCellEditable(tbChiTietHoaDon);
+        setTable();
+        FormatJtable.setCellEditableForBH(tbChiTietHoaDon);
+        updateTime();
+        phimTat();
+        themDonThuocMau();
+        inputNumber();
         
+        //config();
     }
 
     /**
@@ -76,9 +118,10 @@ public class BanHangPage extends javax.swing.JPanel {
         pnlHeader = new javax.swing.JPanel();
         lblThoiGian = new javax.swing.JLabel();
         cbChonDonThuocMau = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
+        lbLapHD = new javax.swing.JLabel();
         timMaSP1 = new sampleUi.TimMaSP();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        ckBBanTheoDon = new javax.swing.JCheckBox();
+        nhapMaDonThuoc1 = new sampleUi.NhapMaDonThuoc();
         pnlBody = new javax.swing.JPanel();
         pnlLeft = new javax.swing.JPanel();
         lblPhimTat = new javax.swing.JLabel();
@@ -132,16 +175,16 @@ public class BanHangPage extends javax.swing.JPanel {
         lblThoiGian.setPreferredSize(new Dimension(pnlRight.getPreferredSize().width,20));
 
         cbChonDonThuocMau.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        cbChonDonThuocMau.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn đơn thuốc mẫu", " " }));
+        cbChonDonThuocMau.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn đơn thuốc mẫu" }));
         cbChonDonThuocMau.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbChonDonThuocMauActionPerformed(evt);
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(51, 51, 255));
-        jLabel1.setText("LẬP HOÁ ĐƠN");
+        lbLapHD.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
+        lbLapHD.setForeground(new java.awt.Color(51, 51, 255));
+        lbLapHD.setText("LẬP HOÁ ĐƠN");
 
         timMaSP1.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
         timMaSP1.setPrefixIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-find-24.png"))); // NOI18N
@@ -151,8 +194,22 @@ public class BanHangPage extends javax.swing.JPanel {
             }
         });
 
-        jCheckBox1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jCheckBox1.setText("Bán theo đơn");
+        ckBBanTheoDon.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        ckBBanTheoDon.setText("Bán theo đơn");
+        ckBBanTheoDon.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                ckBBanTheoDonItemStateChanged(evt);
+            }
+        });
+
+        nhapMaDonThuoc1.setEditable(false);
+        nhapMaDonThuoc1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        nhapMaDonThuoc1.setFont(new java.awt.Font("Times New Roman", 2, 16)); // NOI18N
+        nhapMaDonThuoc1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nhapMaDonThuoc1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
         pnlHeader.setLayout(pnlHeaderLayout);
@@ -160,33 +217,39 @@ public class BanHangPage extends javax.swing.JPanel {
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeaderLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(lbLapHD)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(timMaSP1, javax.swing.GroupLayout.PREFERRED_SIZE, 668, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
-                .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
+                .addComponent(ckBBanTheoDon, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nhapMaDonThuoc1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
                 .addComponent(cbChonDonThuocMau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(37, 37, 37)
                 .addComponent(lblThoiGian, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(230, 230, 230))
+                .addGap(22, 22, 22))
         );
         pnlHeaderLayout.setVerticalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeaderLayout.createSequentialGroup()
-                .addGap(9, 9, 9)
                 .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblThoiGian, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeaderLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lbLapHD, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlHeaderLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
+                        .addGap(10, 10, 10)
                         .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                            .addComponent(timMaSP1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(cbChonDonThuocMau))
+                            .addComponent(ckBBanTheoDon, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(timMaSP1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(7, 7, 7))
+            .addGroup(pnlHeaderLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblThoiGian, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbChonDonThuocMau, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(nhapMaDonThuoc1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         add(pnlHeader, java.awt.BorderLayout.NORTH);
@@ -209,16 +272,7 @@ public class BanHangPage extends javax.swing.JPanel {
         tbChiTietHoaDon.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         tbChiTietHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Tên sản phẩm", "Đơn vị tính", "Số lượng", "Giá bán", "Thành tiền", ""
@@ -239,7 +293,6 @@ public class BanHangPage extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tbChiTietHoaDon.setPreferredSize(new java.awt.Dimension(100, 100));
         tbChiTietHoaDon.setRequestFocusEnabled(false);
         tbChiTietHoaDon.setRowHeight(40);
         jScrollPane1.setViewportView(tbChiTietHoaDon);
@@ -586,38 +639,6 @@ public class BanHangPage extends javax.swing.JPanel {
         add(pnlBody, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-  //Ham them spinner cho column
-    public static class soLuongJSpinner extends DefaultCellEditor{
-    	private JSpinner input;
-		public soLuongJSpinner() {
-			super(new JComboBox<>());
-			input = new JSpinner();
-			SpinnerNumberModel numberModel = (SpinnerNumberModel) input.getModel();
-			numberModel.setMinimum(1);
-			JSpinner.NumberEditor editor = (JSpinner.NumberEditor) input.getEditor();
-			DefaultFormatter formatter = (DefaultFormatter) editor.getTextField().getFormatter();
-			formatter.setCommitsOnValidEdit(true);
-			editor.getTextField().setHorizontalAlignment(SwingConstants.CENTER);
-			//Xu ly su kien
-//			input.addChangeListener((ChangeListener e) -> {
-//				
-//			});
-		}
-		@Override
-		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-			super.getTableCellEditorComponent(table, value, isSelected, row, column);
-			int soLuong = Integer.parseInt(value.toString());
-			input.setValue(soLuong);
-			return input;
-		}
-		
-		@Override
-		public Object getCellEditorValue() {
-			return input.getValue();
-		}
-		
-		
-	}
     private void cbChonDonThuocMauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbChonDonThuocMauActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbChonDonThuocMauActionPerformed
@@ -636,49 +657,323 @@ public class BanHangPage extends javax.swing.JPanel {
     private void txtTenKHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenKHActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTenKHActionPerformed
-
+//
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
-        // TODO add your handling code here:
-    	entities.HoaDon hoaDon = new HoaDon();
-    	try {
-			hoaDon.setMaHoaDon(GeneratePK.getMaHD());
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+        // TODO add your handling code here:khang
+    	LocalDateTime now = LocalDateTime.now();
+    	Ca ca = caDao.layMaCaTheoMaNVVaThoiGian("NV00003", LocalDate.now());
+    	entities.HoaDon hd = null;
+    	if(dsHH.size()==0) {
+    		JOptionPane.showMessageDialog(null,"Hóa đơn chưa có sản phẩm!","Cảnh báo", JOptionPane.WARNING_MESSAGE);
+    		return;
+    	}
+    	
+    	if(!ktQuyDoi())
+    		return;
+    	if(!ktTienKhachDua())
+    		return;
+    	
+    	int diemQuyDoi = 0;
+    	if(!txtDiemQuyDoi.getText().replaceAll(",", "").equalsIgnoreCase(""))
+    		diemQuyDoi = Integer.parseInt(txtDiemQuyDoi.getText().replaceAll(",", ""));
+    	
+    	double tienPhaiTra = Double.parseDouble(txtTienTra.getText().replaceAll(",", ""));
+    	String ghiChu = txtGhiChu.getText();
+    	double tienKhachDua = Double.parseDouble(txtTienDua.getText().replaceAll(",", ""));
+		
+		//Khách hàng
+    	if(khachHang!=null) {
+    		//Tạo đối tượng hóa đơn
+    		try {
+    			hd = new HoaDon(GeneratePK.getMaHD(), now, nhanVien, khachHang, tienKhachDua, diemQuyDoi,ghiChu, ca,TrangThaiHoaDon.HOAN_THANH,tienPhaiTra);
+    			PdfWriterExample.writePdf(tableModel, hd);
+    		} catch (FileNotFoundException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (ParseException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    		//Thêm hóa đơn vào CSDL
+        	themHoaDon(hd);
+    		
+    		int diemThuong = khachHang.getDiemThuong()+(int)(hd.getTongTien()/100)-diemQuyDoi;
+        	khachHang.setDiemThuong(diemThuong);
+        	updateKhachHang(khachHang);
+    	}
+    	else {
+    		//Tạo khách vãng lai
+    		int min = 1; // Giá trị tối thiểu
+    		int max = 1000; // Giá trị tối đa
+    		int randomNum = min + (int) (Math.random() * (max - min));
+    		
+        	KhachHang khachHangVL = new KhachHang("", "Khách vãng lai " + randomNum, null, false, "XXXXXXXXXX", 0, null, null, null);
+        	khachHangDao.taoKhachVangLai(khachHangVL);
+        	KhachHang khachVangLai = khachHangDao.layKhachVangLaiTheoTen(khachHangVL.getTenKhachHang());
+        	//Tạo đối tượng hóa đơn
+    		try {
+    			hd = new HoaDon(GeneratePK.getMaHD(), now, nhanVien, khachVangLai, tienKhachDua, diemQuyDoi,ghiChu, ca,TrangThaiHoaDon.HOAN_THANH,tienPhaiTra);
+    			PdfWriterExample.writePdf(tableModel, hd);
+    		} catch (FileNotFoundException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (ParseException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    		//Thêm hóa đơn vào CSDL
+        	themHoaDon(hd);
 		}
-    	hoaDon.setNhanVien(new NhanVien("NV00001","Vo Duong Khang"));
-    	hoaDon.setKhachHang(new entities.KhachHang("KH00001", "Vo Duong Khang"));
-    	hoaDon.setCa(new Ca("CA00001"));
-    	hoaDon.setGhiChu(txtGhiChu.getText());
-    	hoaDon.setTrangThaiHoaDon(TrangThaiHoaDon.HOAN_THANH);
-    	hoaDon.setThoiGianLapHoaDon(LocalDateTime.now());
-    	System.out.println(hoaDon);
-    	hoaDonDao.addHoaDon(hoaDon, reload());
-    	JOptionPane.showMessageDialog(this, "Tạo hóa đơn thành công!");
-    	AddContent.addContent(new BanHangPage());
+    	
+    	//Thêm chi tiết hóa đơn vào CSDL
+    	for(int i =0;i<dsHH.size();i++) {
+    		HangHoa hh = dsHH.get(i);
+    		int soLuong = (int)tbChiTietHoaDon.getValueAt(i, 2);
+    		hh.setSoLuongDinhMuc(hh.getSoLuongDinhMuc()-soLuong);
+    		DonViTinh donViTinh = donViTinhDao.layDVTTheoTenVaMaHangHoa(dsHH.get(i).getMaHangHoa(), tbChiTietHoaDon.getValueAt(i, 1).toString());    		
+    		double donGia =  Double.parseDouble(tbChiTietHoaDon.getValueAt(i, 3).toString().replaceAll(",", ""));
+    		ChiTietHoaDon cthd = new ChiTietHoaDon(hd, soLuong, donGia, donViTinh);
+    		themCTHD(cthd);
+    		updateHangHoa(hh);
+    	}
+    	
+		drop();
+		PrintExample.printContent();
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
-    private void btnLuuTamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuTamActionPerformed
+
+	private void updateHangHoa(HangHoa hang) {
+		// TODO Auto-generated method stub
+		hangHoaDao.capNhatSoLuongHangHoa(hang);
+	}
+
+	private void themCTHD(ChiTietHoaDon cthd) {
+	// TODO Auto-generated method stub
+		for (int j = 0; j < dsHH.size(); j++) {
+			double thanhTienCTHD = Double.parseDouble(tbChiTietHoaDon.getValueAt(j, 4).toString().replaceAll(",", ""));
+			chiTietHDDao.addChiTietHD(cthd, thanhTienCTHD);
+		}
+		
+	}
+
+	private void themHoaDon(HoaDon hd) {
+	// TODO Auto-generated method stub
+		double tongTien = Double.parseDouble(txtTongTien.getText().replaceAll(",", ""));
+    	double tienThua = Double.parseDouble(txtTienThua.getText().replaceAll(",", ""));
+		boolean ketQua = hoaDonDao.addHoaDon(hd, tongTien, tienThua);
+		if (ketQua == true) {
+			JOptionPane.showMessageDialog(null, "Thanh toán và in hóa đơn thành công!", "Thông báo", JOptionPane.OK_OPTION);
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Thanh toán và in hóa đơn không thành công!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	private void luuTamHoaDon(HoaDon hoaDon) {
+		double tongTien = Double.parseDouble(txtTongTien.getText().replaceAll(",", ""));
+		double tienThua;
+		if (txtTienThua.getText().equalsIgnoreCase("")) {
+			tienThua = 0;
+		}
+    	tienThua = Double.parseDouble(txtTienThua.getText().replaceAll(",", ""));
+		boolean ketQua = hoaDonDao.addHoaDon(hoaDon, tongTien, tienThua);
+		if (ketQua == true) {
+			JOptionPane.showMessageDialog(null, "Đã lưu tạm hóa đơn!", "Thông báo", JOptionPane.OK_OPTION);
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Lưu hóa đơn không thành công!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	private void drop() {
+		// TODO Auto-generated method stub
+		tableModel.setRowCount(0);
+		dsHH.clear();
+		khachHang = null;
+		timSDTKhachHang1.setText("");
+		txtTenKH.setText("");
+		txtSDTKH.setText("");
+		txtDiemThuong.setText("");
+		txtTongTien.setText("");
+		txtDiemQuyDoi.setText("");
+		txtTienGiam.setText("");
+		txtTienTra.setText("");
+		txtTienDua.setText("");
+		txtTienThua.setText("");
+		txtGhiChu.setText("");
+		timMaSP1.setText("");
+		timMaSP1.requestFocus();
+	}
+
+	private void updateKhachHang(KhachHang khach) {
+		// TODO Auto-generated method stub
+		khachHangDao.capNhatDiemKhachHang(khach);
+	}
+
+	private boolean ktQuyDoi() {
+    	if(txtDiemQuyDoi.getText().replaceAll(",", "").equalsIgnoreCase(""))
+    		return true;
+    	try { 
+    		double diemQD = Double.parseDouble(txtDiemQuyDoi.getText().replaceAll(",", ""));
+    		double diemThuong = khachHang.getDiemThuong();
+    		if(diemQD>diemThuong) {
+    			JOptionPane.showMessageDialog(this, "Không đủ điểm!");
+    			txtDiemQuyDoi.setText("");
+    			txtTienGiam.setText("0");
+    			return false;
+    		}else if(diemQD%1000!=0) {
+    			JOptionPane.showMessageDialog(this, "Điểm quy đổi phải chia hết cho 1000!");
+    			txtDiemQuyDoi.setText("");
+    			txtDiemQuyDoi.requestFocus();
+    			txtTienGiam.setText("0");
+    			return false;
+    		}else if(diemQD>Double.parseDouble(txtTongTien.getText().replaceAll(",", ""))) {
+    			JOptionPane.showMessageDialog(this, "Điểm quy đổi phải nhỏ hơn tổng tiền hàng!");
+    			txtDiemQuyDoi.setText("");
+    			txtDiemQuyDoi.requestFocus();
+    			txtTienGiam.setText("0");
+    			return false;
+    		}else
+    			txtTienGiam.setText(Formater.decimalFormat(diemQD));
+    		updateTienPhaiTra();
+			updateTienThua();
+			return true;
+		} catch (Exception e) {
+			txtDiemQuyDoi.setText("");
+			txtTienGiam.setText("0");
+			updateTienPhaiTra();
+			updateTienThua();
+			return false;
+		}
+	}
+
+	private void btnLuuTamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuTamActionPerformed
         // TODO add your handling code here:
+		LocalDateTime now = LocalDateTime.now();
+    	Ca ca = caDao.layMaCaTheoMaNVVaThoiGian("NV00003", LocalDate.now());
+    	entities.HoaDon hd = null;
+    	if(dsHH.size()==0) {
+    		JOptionPane.showMessageDialog(null,"Hóa đơn chưa có sản phẩm!","Cảnh báo", JOptionPane.WARNING_MESSAGE);
+    		return;
+    	}
+    	if(!ktQuyDoi())
+    		return;
+
+    	int diemQuyDoi = 0;
+    	
+    	if(!txtDiemQuyDoi.getText().replaceAll(",", "").equalsIgnoreCase(""))
+    		diemQuyDoi = Integer.parseInt(txtDiemQuyDoi.getText().replaceAll(",", ""));
+    	double tienPhaiTra = Double.parseDouble(txtTienTra.getText().replaceAll(",", ""));
+    	String ghiChu = txtGhiChu.getText();
+    	double tienKhachDua = 0;	
+		if (txtTienDua.getText().equalsIgnoreCase(""))
+			tienKhachDua = 0;
+		
+		//Khách hàng
+    	if(khachHang!=null) {
+    		//Tạo đối tượng hóa đơn
+    		try {
+    			hd = new HoaDon(GeneratePK.getMaHD(), now, nhanVien, khachHang, tienKhachDua, diemQuyDoi,ghiChu, ca,TrangThaiHoaDon.THEM_TAM,tienPhaiTra);
+    		} catch (FileNotFoundException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (ParseException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    		//Lưu hóa đơn vào CSDL
+        	luuTamHoaDon(hd);
+    		int diemThuong = khachHang.getDiemThuong()+(int)(hd.getTongTien()/100)-diemQuyDoi;
+        	khachHang.setDiemThuong(diemThuong);
+        	updateKhachHang(khachHang);
+    	}
+    	else {
+    		//Tạo khách vãng lai
+    		int min = 1; // Giá trị tối thiểu
+    		int max = 1000; // Giá trị tối đa
+    		int randomNum = min + (int) (Math.random() * (max - min));
+    		
+        	KhachHang khachHangVL = new KhachHang("", "Khách vãng lai " + randomNum, null, false, "XXXXXXXXXX", 0, null, null, null);
+        	khachHangDao.taoKhachVangLai(khachHangVL);
+        	KhachHang khachVangLai = khachHangDao.layKhachVangLaiTheoTen(khachHangVL.getTenKhachHang());
+        	//Tạo đối tượng hóa đơn
+    		try {
+    			hd = new HoaDon(GeneratePK.getMaHD(), now, nhanVien, khachVangLai, tienKhachDua, diemQuyDoi,ghiChu, ca,TrangThaiHoaDon.THEM_TAM,tienPhaiTra);
+    		} catch (FileNotFoundException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		} catch (ParseException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    		//Lưu hóa đơn vào CSDL
+        	luuTamHoaDon(hd);
+		}
+    	
+    	for(int i =0;i<dsHH.size();i++) {
+    		HangHoa hh = dsHH.get(i);
+    		int soLuong = (int)tbChiTietHoaDon.getValueAt(i, 2);
+    		hh.setSoLuongDinhMuc(hh.getSoLuongDinhMuc()-soLuong);
+    		DonViTinh donViTinh = donViTinhDao.layDVTTheoTenVaMaHangHoa(dsHH.get(i).getMaHangHoa(), tbChiTietHoaDon.getValueAt(i, 1).toString());    		
+    		double donGia =  Double.parseDouble(tbChiTietHoaDon.getValueAt(i, 3).toString().replaceAll(",", ""));
+    		ChiTietHoaDon cthd = new ChiTietHoaDon(hd, soLuong, donGia, donViTinh);
+    		themCTHD(cthd);
+    		updateHangHoa(hh);
+    	}
+		drop();
     }//GEN-LAST:event_btnLuuTamActionPerformed
 
     private void txtDiemQuyDoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDiemQuyDoiActionPerformed
         // TODO add your handling code here:
+    	ktQuyDoi();
     }//GEN-LAST:event_txtDiemQuyDoiActionPerformed
 
     private void txtTienDuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTienDuaActionPerformed
         // TODO add your handling code here:
-    	double tienThua = Double.parseDouble(txtTienDua.getText())-reload();
-    	txtTienThua.setText(tienThua+"");
+    	ktTienKhachDua();
+    	
     }//GEN-LAST:event_txtTienDuaActionPerformed
 
-    private void txtGhiChuAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_txtGhiChuAncestorAdded
+    private boolean ktTienKhachDua() {
+		// TODO Auto-generated method stub
+    	double tienKhachDua = 0;
+    	if(txtTienTra.getText().equalsIgnoreCase(""))
+    		return false;
+    	try {
+			tienKhachDua = Double.parseDouble(txtTienDua.getText().replaceAll(",", ""));
+			double tienPhaiTra = Double.parseDouble(txtTienTra.getText().replaceAll(",", ""));
+			if(tienKhachDua<tienPhaiTra) {
+				JOptionPane.showMessageDialog(null,"Tiền khách đưa phải lớn hơn hoặc bằng tiền phải trả!","Cảnh báo", JOptionPane.WARNING_MESSAGE);
+				txtTienDua.requestFocus();
+				updateTienThua();
+				return false;
+			}else {
+				txtTienDua.setText(Formater.decimalFormat(tienKhachDua));
+				updateTienThua();
+				return true;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			JOptionPane.showMessageDialog(null,"Tiền khách đưa phải lớn hơn hoặc bằng tiền phải trả!","Cảnh báo", JOptionPane.WARNING_MESSAGE);
+			txtTienDua.requestFocus();
+			updateTienThua();
+			return false;
+		}
+	}
+
+	private void txtGhiChuAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_txtGhiChuAncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_txtGhiChuAncestorAdded
 
@@ -691,30 +986,45 @@ public class BanHangPage extends javax.swing.JPanel {
     	//Khang
     	entities.HangHoa hangHoa = null;
     	try {
-    		hangHoa = hangHoaDao.timHangHoaTheoMa(timMaSP1.getText());
+    		hangHoa = hangHoaDao.timHangHoaTheoMaVachVaMaHH(timMaSP1.getText());
 		} catch (Exception e) {
 			// TODO: handle exception
 			return;
 		}
-    	
-    	int soLuong = 1;
-    	double giaBan = hangHoa.getThue()*10;
-    	for(int i=0;i<tableModel.getRowCount();i++) {
-    		if(tableModel.getValueAt(i, 0).toString().equalsIgnoreCase(hangHoa.getTenHangHoa())) {
-    			soLuong = ((int)tableModel.getValueAt(i, 2))+1;
-    			tableModel.setValueAt(soLuong, i, 2);
-    			tableModel.setValueAt(soLuong*giaBan, i, 4);
-    			reload();
-    			
+    	if(hangHoa!=null) { //Tìm thấy hàng hóa
+    		if(hangHoa.getSoLuongDinhMuc()==0) {//Kiểm tra số lượng
+    			JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
     			timMaSP1.setText("");
     			timMaSP1.requestFocus();
-    			
     			return;
-    		}
+    		}	
+    		int soLuong = 1;
+        	for(int i=0;i<tableModel.getRowCount();i++) {//Kiểm tra hh đã có trong table chưa
+        		if(dsHH.get(i).getMaHangHoa().equalsIgnoreCase(hangHoa.getMaHangHoa())) {//HH đã có trong table
+        			soLuong = ((int)tableModel.getValueAt(i, 2))+1;//Tăng số lượng lên 1
+        			if(soLuong>hangHoa.getSoLuongDinhMuc()) {//Kiểm tra số lượng DM
+        				JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
+        				soLuong = hangHoa.getSoLuongDinhMuc();
+        			}
+        			tableModel.setValueAt(soLuong, i, 2);//cập nhật sl
+        			reload();
+        			timMaSP1.setText("");
+        			timMaSP1.requestFocus();
+        			
+        			return;
+        		}
+        	}
+        	//Thêm mới
+        	dsHH.add(hangHoa);//Thêm vào dsHH
+        	DonViTinh donVi = donViTinhDao.layDVTTheoMa(timMaSP1.getText());
+        	double giaBan = donVi.getGiaBan();
+        	double thanhTien = soLuong * giaBan;
+        	tableModel.addRow(new Object[] {hangHoa.getTenHangHoa(), donVi.getTenDonViTinh(),soLuong,Formater.decimalFormat(giaBan),Formater.decimalFormat(thanhTien)});
+
+        	reload();
     	}
-    	double thanhTien = soLuong*giaBan;
-    	tableModel.addRow(new Object[] {hangHoa.getTenHangHoa(),"Viên", soLuong,giaBan,thanhTien});
-    	reload();
+    	else//Không tìm thấy HH
+    		JOptionPane.showMessageDialog(this, "Không tìm thấy sản phẩm tương ứng!");
     	timMaSP1.setText("");
 		timMaSP1.requestFocus();
     	
@@ -723,11 +1033,11 @@ public class BanHangPage extends javax.swing.JPanel {
 
     private void timSDTKhachHang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timSDTKhachHang1ActionPerformed
         // TODO add your handling code here:
-    	KhachHang khach = khachHangDao.layKhachHangTheoSDT(timSDTKhachHang1.getText());
-			if (khach != null) {
-        		txtTenKH.setText(khach.getTenKhachHang());
-        		txtSDTKH.setText(khach.getSoDienThoai());
-        		String diem = String.valueOf(khach.getDiemThuong());
+    	khachHang = khachHangDao.layKhachHangTheoSDT(timSDTKhachHang1.getText());
+			if (khachHang != null) {
+        		txtTenKH.setText(khachHang.getTenKhachHang());
+        		txtSDTKH.setText(khachHang.getSoDienThoai());
+        		String diem = String.valueOf(khachHang.getDiemThuong());
         		txtDiemThuong.setText(diem);
     		}
     		else {
@@ -738,37 +1048,309 @@ public class BanHangPage extends javax.swing.JPanel {
 //		}
     	
     }//GEN-LAST:event_timSDTKhachHang1ActionPerformed
+
+    private void nhapMaDonThuoc1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nhapMaDonThuoc1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nhapMaDonThuoc1ActionPerformed
+
+    private void ckBBanTheoDonItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ckBBanTheoDonItemStateChanged
+        // TODO add your handling code here:
+    	if (evt.getSource() == ckBBanTheoDon) {
+    		if (ckBBanTheoDon.isSelected()) {
+    			nhapMaDonThuoc1.setEditable(true);;
+    			nhapMaDonThuoc1.requestFocus();
+			}
+			else {
+				nhapMaDonThuoc1.setEditable(false);
+			}
+		}
+    }//GEN-LAST:event_ckBBanTheoDonItemStateChanged
     
-    public double reload() {
-    	double tongTien = 0;
-    	for(int i=0;i<tableModel.getRowCount();i++) {
-    		tongTien+=(double)tableModel.getValueAt(i, 4);
-    	}
-    	txtTongTien.setText(tongTien+"");
-    	txtTienTra.setText(tongTien+"");
-    	if(txtTienDua.getText().isEmpty())return tongTien;
-    	double tienThua = Double.parseDouble(txtTienDua.getText())-tongTien;
-    	txtTienThua.setText(tienThua+"");
-    	return tongTien;
+    public void reload() {
+    	double tongTien = capNhatThanhTien(); //thanhtien của tất cả cthd
+    	double tienGiam = 0;
+    	if(!txtTienGiam.getText().replaceAll(",", "").equalsIgnoreCase(""))
+    		tienGiam = Double.parseDouble(txtTienGiam.getText().replaceAll(",", ""));
+    	txtTongTien.setText(Formater.decimalFormat(tongTien));//Cập nhật thành tiền của từng cthd và tổng tiền
+    	double tienPhaiTra = updateTienPhaiTra();
+    	txtTienTra.setText(Formater.decimalFormat(tienPhaiTra));
+    	double tienKhachDua = 0;
+    	if(!txtTienDua.getText().replaceAll(",", "").equalsIgnoreCase(""))
+    			tienKhachDua = Double.parseDouble(txtTienDua.getText().replaceAll(",", ""));
+    	double tienThua = updateTienThua();
+    	txtTienThua.setText(Formater.decimalFormat(tienThua));
     }
     
-    String headerString[] = "Tên sản phẩm;Đơn vị tính;Số lượng;Giá bán;Thành tiền".split(";");
+    private double updateTienThua() {
+		// TODO Auto-generated method stub
+    	double tienThua = 0;
+    	try {
+			double tienKD = Double.parseDouble(txtTienDua.getText().replaceAll(",", ""));
+			double tienPT = Double.parseDouble(txtTienTra.getText().replaceAll(",", ""));
+			tienThua = tienKD-tienPT;
+			if(tienThua<0) {
+				txtTienThua.setText("0");
+				return 0;
+			}else {
+				txtTienThua.setText(Formater.decimalFormat(tienThua));
+				return tienThua;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			txtTienThua.setText(Formater.decimalFormat(tienThua));
+			return tienThua;
+		}
+	}
+
+	private double updateTienPhaiTra() {
+		// TODO Auto-generated method stub
+    	double tienHang = 0;
+		try {
+			tienHang = Double.parseDouble(txtTongTien.getText().replaceAll(",", ""));
+			double tienGiam = Double.parseDouble(txtTienGiam.getText().replaceAll(",", ""));
+			double tienPhaiTra = tienHang-tienGiam;
+			if(tienPhaiTra<0)
+				tienPhaiTra = 0;
+			else tienPhaiTra = roundToNearest500(tienPhaiTra);//Làm tròn 
+			txtTienTra.setText(Formater.decimalFormat(tienPhaiTra));
+			return tienPhaiTra;
+		} catch (Exception e) {
+			// TODO: handle exception
+			txtTienTra.setText(Formater.decimalFormat(roundToNearest500(tienHang)));
+			return tienHang;
+		}
+	}
+
+	public double roundToNearest500(double number) {
+        // Chia số ban đầu cho 500
+    	double quotient = number / 500;
+        // Làm tròn kết quả chia
+    	double roundedQuotient = Math.round(quotient);
+        // Nhân kết quả tròn với 500
+    	double roundedNumber = roundedQuotient * 500;
+        return roundedNumber;
+    }
+
+	private double capNhatThanhTien() {
+    	// TODO Auto-generated method stub
+    	double tongTien = 0;
+    	for(int i=0;i<tableModel.getRowCount();i++) {
+    		String thanhTienS = tableModel.getValueAt(i, 3).toString().replaceAll(",", "");
+    		double thanhTien = (int)tableModel.getValueAt(i, 2)*Double.parseDouble(thanhTienS);
+    		tableModel.setValueAt(Formater.decimalFormat(thanhTien), i, 4);
+    		tongTien+=thanhTien;
+    	}
+    	return tongTien;
+	}
+
+	//Them don thuoc mau
+    public void themDonThuocMau() {
+    		List<DonThuocMau> dsDonThuocMau = donThuocMauDao.layDuLieuDonThuocMau();
+    		dsDonThuocMau.forEach(donThuoc -> cbChonDonThuocMau.addItem(donThuoc.getTenDonThuocMau()));
+	}
+    
+    //Them du lieu don vi tinh vao ComboBox
+    public void doDuLieuVaoComboBoxDonViTinh(String maHH) {
+		List<DonViTinh> dsDonViTinh = donViTinhDao.timDVTTheoMaHH(maHH);
+		JComboBox cbDonViTinh = new JComboBox();
+		dsDonViTinh.forEach(donVi -> cbDonViTinh.addItem(donVi.getTenDonViTinh()));
+		tbChiTietHoaDon.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(cbDonViTinh));
+    }
+    
+    public void updateTime() {
+   	 // Tạo và khởi chạy một luồng để cập nhật thời gian liên tục
+       Thread updateTimeThread = new Thread(() -> {
+           try {
+               while (true) {
+               	LocalDateTime now = LocalDateTime.now();
+                   
+                   // Định dạng thời gian
+                   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
+                   
+                   // Chuyển đổi LocalDateTime thành chuỗi theo định dạng mong muốn
+                   String formattedDateTime = now.format(formatter);
+                   lblThoiGian.setText("Thời gian: "+formattedDateTime); // Cập nhật thời gian
+                   Thread.sleep(1000); // Ngủ 1 giây
+               }
+           } catch (InterruptedException e) {
+               e.printStackTrace();
+           }
+       });
+       updateTimeThread.start(); // Bắt đầu luồng
+
+       
+   }
+    
+    private void phimTat() {
+    	// Tạo một Action và gán chức năng khi nhấn phím 
+    	Action action = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+          	  if(tbChiTietHoaDon.getSelectedRow()!=-1)
+          		tableModel.removeRow(tbChiTietHoaDon.getSelectedRow());
+            }
+        };
+        Action action2 = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+          	  timMaSP1.requestFocus();
+          	  timMaSP1.setText("");
+            }
+        };
+     // Gắn hành động với phím tắt 
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0), "performF11Action");
+        this.getActionMap().put("performF11Action", action);
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0), "performF4Action");
+        this.getActionMap().put("performF4Action", action2);
+		
+	}
+    
+    public void setTable() {
+    	
+    	tbChiTietHoaDon.setModel(tableModel);
+    	TableColumn column1 = tbChiTietHoaDon.getColumnModel().getColumn(0);
+        column1.setPreferredWidth(200);
+        TableColumn column5 = tbChiTietHoaDon.getColumnModel().getColumn(5);
+        column5.setPreferredWidth(5);
+    	TableColumn column = tbChiTietHoaDon.getColumnModel().getColumn(2);
+        column.setCellEditor(new SpinnerEditor());
+        TableActionEvent event = new TableActionEvent() {
+			
+			@Override
+			public void onDelete(int row) {
+				if(tbChiTietHoaDon.isEditing()) {
+					tbChiTietHoaDon.getCellEditor().stopCellEditing();
+				}
+				DefaultTableModel model = (DefaultTableModel)tbChiTietHoaDon.getModel();
+				model.removeRow(row);
+				dsHH.remove(row);
+				reload();
+				
+			}
+		};
+        tbChiTietHoaDon.getColumnModel().getColumn(5).setCellEditor(new TableActionCellEditor(event));
+        tbChiTietHoaDon.getColumnModel().getColumn(5).setCellRenderer(new ButtonRender());
+        tableModel.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {//Bắt sự kiện thay đổi số lượng và đơn vị tính trên jtable
+                if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == 2) {
+                	int row = tbChiTietHoaDon.getSelectedRow();
+                	if(row==-1)return; //Trường hợp sl thay đổi khi thêm mới 
+                	int soLuong = Integer.parseInt(tbChiTietHoaDon.getValueAt(row, 2).toString());
+                   if(soLuong>dsHH.get(row).getSoLuongDinhMuc()) {//Kiểm tra số lượng
+                	   JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                	   tbChiTietHoaDon.setValueAt(dsHH.get(row).getSoLuongDinhMuc(), row,2);//Cập nhật số lượng = sl định mức
+                   }
+                   reload();
+                }    
+                else if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == 1) {
+					int row = tbChiTietHoaDon.getSelectedRow();
+					if (row == -1) {
+						return;
+					}
+					//if(soLuong>dsHH.get(row).getSoLuongDinhMuc()) {//Kiểm tra số lượng
+	                //	   JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
+	                //	   tbChiTietHoaDon.setValueAt(dsHH.get(row).getSoLuongDinhMuc(), row,1);//Cập nhật số lượng = sl định mức
+	                //   }
+					//double giaBan = layGiaBanTheoDonViTinh(dsDonViTinh.get(row).getMaDonViTinh());
+					//tbChiTietHoaDon.setValueAt(dsDonViTinh.get, row, 1);
+					//List<DonViTinh> dsDonViTinh = donViTinhDao.timDVTTheoMaHH(maHH);
+
+					DonViTinh donViChon = donViTinhDao.layDVTTheoTenVaMaHangHoa(dsHH.get(row).getMaHangHoa(), tbChiTietHoaDon.getValueAt(row, 1).toString());
+					double giaBan = donViChon.getGiaBan();
+					tbChiTietHoaDon.setValueAt(giaBan, row, 3);
+					reload();
+				}
+            }	
+
+        });
+        
+        
+        tbChiTietHoaDon.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				tbChiTietHoaDon.setSelectionBackground(Color.YELLOW);
+				tbChiTietHoaDon.setSelectionForeground(Color.BLACK);
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				tbChiTietHoaDon.setSelectionBackground(Color.YELLOW);
+				tbChiTietHoaDon.setSelectionForeground(Color.BLACK);
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//tbChiTietHoaDon.setBackground(getBackground());
+				int row = tbChiTietHoaDon.getSelectedRow();
+				doDuLieuVaoComboBoxDonViTinh(dsHH.get(row).getMaHangHoa());
+			}
+		});
+        
+    }
+    
+    public void inputNumber() {
+    	DocumentFilter filter = new DocumentFilter() {
+    	    @Override
+    	    public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+    	        if (string.matches("[0-9]*")) {
+    	            super.insertString(fb, offset, string, attr);
+    	        }
+    	    }
+
+    	    @Override
+    	    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+    	        if (text.matches("[0-9]*")) {
+    	            super.replace(fb, offset, length, text, attrs);
+    	        }
+    	    }
+    	};
+    	((PlainDocument) txtDiemQuyDoi.getDocument()).setDocumentFilter(filter);
+    	((PlainDocument) txtTienDua.getDocument()).setDocumentFilter(filter);
+    }
+    
+    
+    //private int hdCount = 1;
+    String headerString[] = "Tên sản phẩm;Đơn vị tính;Số lượng;Giá bán;Thành tiền; ".split(";");
     private DefaultTableModel tableModel = new DefaultTableModel(headerString,0);
+    private List<HangHoa> dsHH = new ArrayList<>();
     private HangHoaDao hangHoaDao;
     private HoaDonDao hoaDonDao;
+    private DonViTinhDao donViTinhDao;
     private KhachHang_DAO khachHangDao;
+    private DonThuocMau_DAO donThuocMauDao;
+    private Ca_DAO caDao;
+    private ChiTietHoaDonDao chiTietHDDao;
+    private KhachHang khachHang = null;
+    private NhanVien nhanVien = LoginInfo.nhanVien;
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLuuTam;
     private javax.swing.JButton btnThanhToan;
     private javax.swing.JButton btnThemHoaDon;
     private javax.swing.JButton btnThemKhachHang;
     private javax.swing.JComboBox<String> cbChonDonThuocMau;
+    private javax.swing.JCheckBox ckBBanTheoDon;
     private javax.swing.JButton jButton1;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbLapHD;
     private javax.swing.JLabel lblDiemQuyDoi;
     private javax.swing.JLabel lblDiemThuong;
     private javax.swing.JLabel lblGhiChu;
@@ -784,6 +1366,7 @@ public class BanHangPage extends javax.swing.JPanel {
     private javax.swing.JLabel lblTienThua;
     private javax.swing.JLabel lblTienTra;
     private javax.swing.JLabel lblTongTien;
+    private sampleUi.NhapMaDonThuoc nhapMaDonThuoc1;
     private javax.swing.JPanel pnlBody;
     private javax.swing.JPanel pnlHeader;
     private javax.swing.JPanel pnlKhachHang;

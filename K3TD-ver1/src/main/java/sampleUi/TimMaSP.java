@@ -16,7 +16,7 @@ import javax.swing.border.EmptyBorder;
 
 public class TimMaSP extends JTextField{
 
-    private String hintText ="Nhập mã sản phẩm";
+    private String hintText ="Nhập mã vạch hoặc mã hàng hóa";
     /**
      * @return the prefixIcon
      */
