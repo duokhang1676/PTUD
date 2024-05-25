@@ -119,7 +119,13 @@ public class HoaDonDao {
 			stmt.setDate(2, Date.valueOf(hd.getThoiGianLapHoaDon().toLocalDate()));
 //			stmt.setString(3, hd.getNhanVien().getMaNhanVien());
 			stmt.setString(3, "NV00003");
-			stmt.setString(4, hd.getKhachHang().getMaKhachHang());
+			if (hd.getKhachHang() == null) {
+				stmt.setString(4, null);
+			}
+			else {
+				stmt.setString(4, hd.getKhachHang().getMaKhachHang());
+			}
+			
 			stmt.setDouble(5, hd.getTienKhachTra());
 			stmt.setInt(6, hd.getDiemQuyDoi());
 			stmt.setDouble(7, tongTien);
