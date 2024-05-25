@@ -236,24 +236,7 @@ public class BanHangPage extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        
-     // Tạo một Action và gán chức năng khi nhấn phím esc
-        Action action = new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-          	  tableModel.removeRow(tbChiTietHoaDon.getSelectedRow());
-            }
-        };
-     // Gắn hành động với phím tắt F4
-        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F9, 0), "performF4Action");
-        this.getActionMap().put("performF4Action", action);
-
-     
-
-	
-
-        
-        tbChiTietHoaDon.setPreferredSize(new java.awt.Dimension(100, 500));
+        tbChiTietHoaDon.setPreferredSize(new java.awt.Dimension(100, 100));
         tbChiTietHoaDon.setRequestFocusEnabled(false);
         tbChiTietHoaDon.setRowHeight(40);
         jScrollPane1.setViewportView(tbChiTietHoaDon);

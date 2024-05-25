@@ -1,4 +1,6 @@
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\TrangThaiDonThuocMau.java
+C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\sampleUi\TimTheoMaNhanVien.java
+C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\ui\ThongKeNhanVienPage.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\dao\NhaCungCap_DAO.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\ui\TaoPhieuXuatTraPage.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\PhieuTraHang.java
@@ -21,6 +23,7 @@ C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\sampleUi\paginationStyle\Pa
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\sampleUi\tuyChonHoaDon\ButtonColumnTuyChinh.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\NhomHang.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\sampleUi\tuyChonBanHang\ButtonColumnTuyChinh.java
+C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\components\ColorSample.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\TrangThaiKhachHang.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\NhaCungCap.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\sampleUi\tuyChonHoaDon\TableActionEvent_HoaDon.java
@@ -31,8 +34,10 @@ C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\PhieuNhapHang.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\dao\HangHoaDao.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\ui\XuatTraPage.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\dao\ChiTietPhieuTraHangDao.java
+C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\ui\ThongKeKhachHangPage.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\dao\NhanVien_DAO.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\TrangThaiDonViTinh.java
+C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\ui\ChiTietPhieuTraHangPage.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\TrangThaiPhieuXuatTra.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\DonThuocMau.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\sampleUi\TimTheoTuKhoa.java
@@ -46,7 +51,9 @@ C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\TrangThaiHangHoa.j
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\dao\PhieuTraHangDao.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\ChucVuNhanVien.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\sampleUi\tuyChonHoaDon\PanelTuyChon.java
+C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\sampleUi\TimMaHD.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\HoaDon.java
+C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\ui\TaoPhieuTraHangPage.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\dao\PhieuNhapHangDao.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\DonViTinh.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\components\AddContent.java
@@ -59,6 +66,7 @@ C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\LoHang.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\db\ConnectDB.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\ui\TaoPhieuNhapHangPage.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\sampleUi\tuyChonHoaDon\TableActionCellEditor_HoaDon.java
+C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\ui\PhieuTraHangPage.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\printer\PrintExample.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\HangHoa.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\sampleUi\paginationStyle\Pagination.java
@@ -71,12 +79,11 @@ C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\TrangThaiNhanVien.
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\sampleUi\tuyChonBanHang\TableActionCellRender.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\ui\NhaCungCapPage.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\sampleUi\paginationStyle\PaginationItemRender.java
-C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\ui\ThongKeKhachHang.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\TrangThaiHoaDon.java
-C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\ui\ThongKeNhanVien.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\dao\PhieuXuatTraDao.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\ui\KetCaPage.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\ui\NhanVienPage.java
+C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\ui\CaLamViecPage.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\ChiTietHoaDon.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\sampleUi\tuyChonHoaDon\TableActionCellRender.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\components\StatusMenu.java
@@ -94,4 +101,3 @@ C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\ui\TaoHangHoaPage.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\ui\KhachHangPage.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\entities\PhieuXuatTra.java
 C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\components\PnlBanHang.java
-C:\Users\LENOVO\Desktop\PTUD\K3TD-ver1\src\main\java\components\ColorSamples.java

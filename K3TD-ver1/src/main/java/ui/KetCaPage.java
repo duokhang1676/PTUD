@@ -48,7 +48,6 @@ public class KetCaPage extends javax.swing.JPanel {
         jLabel13 = new javax.swing.JLabel();
         jTextField13 = new javax.swing.JTextField();
         jPanel15 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -56,9 +55,9 @@ public class KetCaPage extends javax.swing.JPanel {
         content.setBackground(new java.awt.Color(193, 219, 208));
         content.setPreferredSize(new java.awt.Dimension(600, 840));
 
+        jPanel2.setBackground(new java.awt.Color(193, 219, 208));
         jPanel2.setAlignmentX(0.0F);
         jPanel2.setAlignmentY(0.0F);
-        jPanel2.setBackground(new java.awt.Color(193, 219, 208));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -74,8 +73,8 @@ public class KetCaPage extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(193, 219, 208));
         jPanel1.setPreferredSize(new java.awt.Dimension(500, 100));
 
+        jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setText("Nhân viên kết ca");
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
         jTextField1.setEditable(false);
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -101,15 +100,15 @@ public class KetCaPage extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4))
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel8.setBackground(new java.awt.Color(193, 219, 208));
         jPanel8.setPreferredSize(new java.awt.Dimension(500, 100));
 
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel3.setText("Tên ca");
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
         jComboBox1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ca sáng", "Ca chiều" }));
@@ -131,15 +130,14 @@ public class KetCaPage extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel12.setBackground(new java.awt.Color(193, 219, 208));
         jPanel12.setPreferredSize(new java.awt.Dimension(500, 100));
 
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel11.setText("Tổng tiền");
-        jLabel11.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
         jTextField11.setEditable(false);
         jTextField11.addActionListener(new java.awt.event.ActionListener() {
@@ -163,17 +161,16 @@ public class KetCaPage extends javax.swing.JPanel {
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4))
+                .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel13.setBackground(new java.awt.Color(193, 219, 208));
         jPanel13.setPreferredSize(new java.awt.Dimension(500, 100));
 
+        jLabel12.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel12.setText("Tiền thực tế");
-        jLabel12.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
         jTextField12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -198,15 +195,14 @@ public class KetCaPage extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4))
+                .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel14.setBackground(new java.awt.Color(193, 219, 208));
         jPanel14.setPreferredSize(new java.awt.Dimension(500, 100));
 
+        jLabel13.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel13.setText("Lệch");
-        jLabel13.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
         jTextField13.setEditable(false);
         jTextField13.addActionListener(new java.awt.event.ActionListener() {
@@ -232,23 +228,14 @@ public class KetCaPage extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4))
+                .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel15.setBackground(new java.awt.Color(193, 219, 208));
         jPanel15.setPreferredSize(new java.awt.Dimension(500, 100));
 
-        jButton3.setText("Trở về");
-        jButton3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton1.setText("Xác nhận");
         jButton1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jButton1.setText("Xác nhận");
         jButton1.setPreferredSize(new java.awt.Dimension(125, 23));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -262,19 +249,15 @@ public class KetCaPage extends javax.swing.JPanel {
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(53, 53, 53))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout contentLayout = new javax.swing.GroupLayout(content);
@@ -298,16 +281,16 @@ public class KetCaPage extends javax.swing.JPanel {
             .addGroup(contentLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -336,16 +319,10 @@ public class KetCaPage extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    	AddContent.addContent(new TaiKhoanPage());
-    }//GEN-LAST:event_jButton3ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel content;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
