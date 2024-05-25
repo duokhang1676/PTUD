@@ -25,7 +25,7 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
-import components.ColorSamples;
+import components.ColorSample;
 import components.FormatJtable;
 import components.Formater;
 import dao.ChiTietHoaDonDao;
@@ -147,7 +147,7 @@ public class ThongKeHangHoaPage extends javax.swing.JPanel {
         chart.setBackgroundPaint(Color.white); // Set background color for the chart
         PiePlot plot = (PiePlot) chart.getPlot();
         
-        plot.setBackgroundPaint(ColorSamples.main); // Set background color for the plot
+        plot.setBackgroundPaint(ColorSample.main); // Set background color for the plot
         return chart;
     }
     private CategoryDataset createCategoryDataset() {
@@ -173,7 +173,7 @@ public class ThongKeHangHoaPage extends javax.swing.JPanel {
         );
         chart.setBackgroundPaint(Color.white); // Set background color for the chart
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
-        plot.setBackgroundPaint(ColorSamples.main); // Set background color for the plot
+        plot.setBackgroundPaint(ColorSample.main); // Set background color for the plot
         return chart;
     }
 	/**

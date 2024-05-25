@@ -295,6 +295,8 @@ public class BanHangPage extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tbChiTietHoaDon.setPreferredSize(new java.awt.Dimension(100, 100));
+
         tbChiTietHoaDon.setRequestFocusEnabled(false);
         tbChiTietHoaDon.setRowHeight(40);
         jScrollPane1.setViewportView(tbChiTietHoaDon);
@@ -707,6 +709,7 @@ public class BanHangPage extends javax.swing.JPanel {
         	updateKhachHang(khachHang);
     	}
     	else {
+<<<<<<< HEAD
 //    		//Tạo khách vãng lai
 //    		int min = 1; // Giá trị tối thiểu
 //    		int max = 1000; // Giá trị tối đa
@@ -719,6 +722,13 @@ public class BanHangPage extends javax.swing.JPanel {
     		try {
     			hd = new HoaDon(GeneratePK.getMaHD(), now, nhanVien, null, tienKhachDua, diemQuyDoi,ghiChu, ca,TrangThaiHoaDon.HOAN_THANH,tienPhaiTra);
     			//PdfWriterExample.writePdf(tableModel, hd);
+=======
+  
+        	//Tạo đối tượng hóa đơn
+    		try {
+    			hd = new HoaDon(GeneratePK.getMaHD(), now, nhanVien, null, tienKhachDua, diemQuyDoi,ghiChu, ca,TrangThaiHoaDon.HOAN_THANH,tienPhaiTra);
+    			PdfWriterExample.writePdf(tableModel, hd);
+>>>>>>> 85db75bb0bc3eb7f30c5ab50812ffb9582338620
     		} catch (FileNotFoundException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
@@ -899,17 +909,10 @@ public class BanHangPage extends javax.swing.JPanel {
         	updateKhachHang(khachHang);
     	}
     	else {
-    		//Tạo khách vãng lai
-    		int min = 1; // Giá trị tối thiểu
-    		int max = 1000; // Giá trị tối đa
-    		int randomNum = min + (int) (Math.random() * (max - min));
     		
-        	KhachHang khachHangVL = new KhachHang("", "Khách vãng lai " + randomNum, null, false, "XXXXXXXXXX", 0, null, null, null);
-        	khachHangDao.taoKhachVangLai(khachHangVL);
-        	KhachHang khachVangLai = khachHangDao.layKhachVangLaiTheoTen(khachHangVL.getTenKhachHang());
         	//Tạo đối tượng hóa đơn
     		try {
-    			hd = new HoaDon(GeneratePK.getMaHD(), now, nhanVien, khachVangLai, tienKhachDua, diemQuyDoi,ghiChu, ca,TrangThaiHoaDon.THEM_TAM,tienPhaiTra);
+    			hd = new HoaDon(GeneratePK.getMaHD(), now, nhanVien, null, tienKhachDua, diemQuyDoi,ghiChu, ca,TrangThaiHoaDon.THEM_TAM,tienPhaiTra);
     		} catch (FileNotFoundException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
