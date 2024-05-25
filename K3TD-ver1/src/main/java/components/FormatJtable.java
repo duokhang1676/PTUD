@@ -25,6 +25,22 @@ public class FormatJtable {
 		}
 	}
 	
+	public static void setCellEditableForBH(JTable tb) {
+		for (int i = 0; i < tb.getColumnCount(); i++) {
+			if(i!=2&&i!=5) {
+				tb.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(new JTextField()) {
+					@Override
+					public boolean isCellEditable(EventObject e) {
+						// Trả về false để ngăn chặn chỉnh sửa trực tiếp
+						return false;
+					}
+				});
+			}
+			
+		}
+	}
+	
+	
 	public static void setFontJtable(JTable tb) {
 		JTableHeader tableHeader = tb.getTableHeader();
     	tableHeader.setFont(new Font("Times New Roman", Font.BOLD, 16));

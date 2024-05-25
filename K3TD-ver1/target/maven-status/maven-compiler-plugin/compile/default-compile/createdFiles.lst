@@ -64,6 +64,11 @@ ui\ThongKeNhanVienPage$3.class
 ui\TrangChu$5.class
 sampleUi\TimTheoMaNhanVien.class
 components\ResizeContent.class
+<<<<<<< HEAD
+=======
+ui\DangNhap.class
+ui\BanHangPage$20.class
+>>>>>>> 55b662f38b334190cd62405184eba138004322aa
 ui\RootFrame$28.class
 ui\ThongKeHangHoaPage$1.class
 ui\PhieuTraHangPage$tuyChon.class

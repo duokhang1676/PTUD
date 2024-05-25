@@ -1,24 +1,31 @@
-package sampleUi.tuyChonBanHang;
+package components;
 
 import java.awt.Component;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
 public class TableActionCellEditor extends DefaultCellEditor{
-	TableActionEvent event;
+
+	private TableActionEvent event;
+
 	public TableActionCellEditor(TableActionEvent event) {
 		super(new JCheckBox());
-		this.event = event;
-
+		// TODO Auto-generated constructor stub
+		this.event =  event;
 	}
-	
+
+
+
 	@Override
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-		PanelTuyChon action = new PanelTuyChon();
+		PanelAction action = new PanelAction();
 		action.initEvent(event, row);
 		action.setBackground(table.getSelectionBackground());
 		return action;
 	}
+	
+	
 }

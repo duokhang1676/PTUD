@@ -101,6 +101,33 @@ public class HangHoaDao {
 		}
 		return null;
 	}
+//Đang làm	
+	public HangHoa timHangHoaTheoMaVachVaMaHH(String ma) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		try {
+			String sql = "select top 1 * from DonViTinh \r\n"
+					+ "where DonViTinh.MaVach = ? or MaHangHoa = ?\r\n"
+					+ "ORDER BY QuyDoi\r\n"
+					+ "ASC";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, ma);
+			stmt.setString(2, ma);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				String maHH = rs.getString("MaHangHoa");
+				HangHoa hangHoa = timHangHoaTheoMa(maHH);
+				return hangHoa;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
 	public List<HangHoa> getHangHoaHetHang() {
 		List<HangHoa> dsHangHoa = new ArrayList<>();
 		ConnectDB.getInstance();
@@ -286,6 +313,25 @@ public class HangHoaDao {
 			stmt.setInt(13, hh.getSoLuongCanhBao());
 			stmt.setString(14, hh.getTrangThaiHangHoa().toString());
 			
+			stmt.executeUpdate();
+			stmt.close();
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean capNhatSoLuongHangHoa(HangHoa hangHoa) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection(); 
+		PreparedStatement stmt = null;			
+		try {
+			String sql = "update HangHoa set SoLuongDinhMuc = ? where HangHoa.MaHangHoa = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, hangHoa.getSoLuongDinhMuc());
+			stmt.setString(2, hangHoa.getMaHangHoa());
 			stmt.executeUpdate();
 			stmt.close();
 			return true;
