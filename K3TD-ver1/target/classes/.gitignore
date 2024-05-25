@@ -1,13 +1,7 @@
-<<<<<<< HEAD
-/entities/
-/ui/
-=======
-/META-INF/
->>>>>>> 55b662f38b334190cd62405184eba138004322aa
 /components/
-/ui/
 /dao/
-/sampleUi/
 /db/
+/entities/
 /printer/
-/icon/
+/sampleUi/
+/ui/

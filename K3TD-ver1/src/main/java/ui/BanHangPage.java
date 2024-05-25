@@ -707,17 +707,10 @@ public class BanHangPage extends javax.swing.JPanel {
         	updateKhachHang(khachHang);
     	}
     	else {
-    		//Tạo khách vãng lai
-    		int min = 1; // Giá trị tối thiểu
-    		int max = 1000; // Giá trị tối đa
-    		int randomNum = min + (int) (Math.random() * (max - min));
-    		
-        	KhachHang khachHangVL = new KhachHang("", "Khách vãng lai " + randomNum, null, false, "XXXXXXXXXX", 0, null, null, null);
-        	khachHangDao.taoKhachVangLai(khachHangVL);
-        	KhachHang khachVangLai = khachHangDao.layKhachVangLaiTheoTen(khachHangVL.getTenKhachHang());
+  
         	//Tạo đối tượng hóa đơn
     		try {
-    			hd = new HoaDon(GeneratePK.getMaHD(), now, nhanVien, khachVangLai, tienKhachDua, diemQuyDoi,ghiChu, ca,TrangThaiHoaDon.HOAN_THANH,tienPhaiTra);
+    			hd = new HoaDon(GeneratePK.getMaHD(), now, nhanVien, null, tienKhachDua, diemQuyDoi,ghiChu, ca,TrangThaiHoaDon.HOAN_THANH,tienPhaiTra);
     			PdfWriterExample.writePdf(tableModel, hd);
     		} catch (FileNotFoundException e) {
     			// TODO Auto-generated catch block
@@ -899,17 +892,10 @@ public class BanHangPage extends javax.swing.JPanel {
         	updateKhachHang(khachHang);
     	}
     	else {
-    		//Tạo khách vãng lai
-    		int min = 1; // Giá trị tối thiểu
-    		int max = 1000; // Giá trị tối đa
-    		int randomNum = min + (int) (Math.random() * (max - min));
     		
-        	KhachHang khachHangVL = new KhachHang("", "Khách vãng lai " + randomNum, null, false, "XXXXXXXXXX", 0, null, null, null);
-        	khachHangDao.taoKhachVangLai(khachHangVL);
-        	KhachHang khachVangLai = khachHangDao.layKhachVangLaiTheoTen(khachHangVL.getTenKhachHang());
         	//Tạo đối tượng hóa đơn
     		try {
-    			hd = new HoaDon(GeneratePK.getMaHD(), now, nhanVien, khachVangLai, tienKhachDua, diemQuyDoi,ghiChu, ca,TrangThaiHoaDon.THEM_TAM,tienPhaiTra);
+    			hd = new HoaDon(GeneratePK.getMaHD(), now, nhanVien, null, tienKhachDua, diemQuyDoi,ghiChu, ca,TrangThaiHoaDon.THEM_TAM,tienPhaiTra);
     		} catch (FileNotFoundException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();

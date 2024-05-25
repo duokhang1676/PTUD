@@ -5,6 +5,9 @@
 package dao;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.table.DefaultTableModel;
 
 import entities.HangHoa;
 import entities.KhachHang;
@@ -17,6 +20,8 @@ import java.sql.Date;
 
 import db.ConnectDB;
 import entities.TrangThaiKhachHang;
+import entities.TrangThaiNhanVien;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -73,42 +78,7 @@ public class KhachHang_DAO {
 		}
 		return null;
     }
-    public ArrayList<KhachHang> docTuBang(){
-        try {
-            Connection con = ConnectDB.getInstance().getConnection();
-            String sql = "Select * from KhachHang";
-            Statement statement = con.createStatement();
-  
-            // thuc thi cau lenh
-            ResultSet rs = statement.executeQuery(sql);
-            while(rs.next()){
-                String ma = rs.getString(1);
-                String ten =rs.getString(2);
-                
-   
-                LocalDate ngaySinh1 = rs.getDate(3).toLocalDate();
-                boolean gioitinh = rs.getBoolean(4);
-                String soDienThoai = rs.getString(5);
-                int diemThuong = rs.getInt(6);
-                
-//                LocalDate ngayTao0 = LocalDate.parse(rs.getString("NgayTa    o"),formatter);
-                LocalDate ngayTao = rs.getDate(7).toLocalDate();
-                
-                String ghiChu = rs.getString(8);
-                
-                String trangThaiKhachHang2 = rs.getString(9);
-                TrangThaiKhachHang trangthaiKhachHang = trangthaihoatdong(trangThaiKhachHang2); ;
-     
-               KhachHang kh = new KhachHang(ma, ten, ngaySinh1, gioitinh, soDienThoai, diemThuong, ngayTao, ghiChu, trangthaiKhachHang);
-                dsKhachHang.add(kh);
-            }
-     
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return dsKhachHang;
 
-    }
 
     
     
@@ -148,56 +118,7 @@ public class KhachHang_DAO {
         }
         return n >0;
     }
-    
-    public boolean taoKhachVangLai(KhachHang kh){
-        Connection con  = ConnectDB.getInstance().getConnection();
-        PreparedStatement stmt = null;
-        int n =0;
-        try {
-            stmt = con.prepareStatement("insert into KhachHang (TenKhachHang, NgaySinh, GioiTinh, SoDienThoai, DiemThuong, NgayTao, GhiChu, TrangThai) values(?,?,?,?,?,?,?,?)");
-            stmt.setString(1,kh.getTenKhachHang());
-            stmt.setDate(2, null);
-            stmt.setBoolean(3, kh.isGioiTinh());
-            stmt.setString(4,kh.getSoDienThoai());
-            stmt.setInt(5, kh.getDiemThuong());
-            stmt.setDate(6, null);
-            stmt.setString(7, kh.getGhiChu());
-            stmt.setString(8, null);
-            n =stmt.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return n >0;
-    }
-    
-    public KhachHang layKhachVangLaiTheoTen(String tenKH) {
-    	ConnectDB.getInstance();
-		Connection con = ConnectDB.getConnection();
-		PreparedStatement pst = null;
-		try {
-			String sql = "SELECT * FROM KhachHang WHERE KhachHang.TenKhachHang LIKE ?";
-			pst = con.prepareStatement(sql);
-			pst.setString(1, tenKH);
-			ResultSet rs = pst.executeQuery();
-			while (rs.next()) {
-				String maKH = rs.getString(1);
-				String ten = rs.getString(2);
-				LocalDate ngaySinh = null;
-				boolean gioiTinh = rs.getBoolean(4);
-				String soDienThoai = rs.getString(5);
-				int diem = rs.getInt(6);
-				LocalDate ngayTao = null;
-				String ghiChu = null;
-				TrangThaiKhachHang trangThaiKH = null;			
-				KhachHang khach= new KhachHang(maKH, ten, ngaySinh, gioiTinh, soDienThoai, diem, ngayTao, ghiChu, trangThaiKH);
-				return khach;
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
+
     
     public KhachHang layKhachHangTheoSDT(String sdt) {
     	ConnectDB.getInstance();
@@ -241,10 +162,143 @@ public class KhachHang_DAO {
 			stmt.executeUpdate();
 			stmt.close();
 			return true;
-		} catch (Exception e) {
+		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 		return false;
-	}
+    }
+    public ArrayList<ArrayList<Object>> timKiem_tuKhoa_TrangThai(String tuKhoa, String trangThai){
+    	ArrayList<ArrayList<Object>> dsTamThoi = new ArrayList<>();
+    	ArrayList<Object> doituong = new ArrayList<>();
+		String Change_Value__TrangThai = trangThai.equals("Đang hoạt động") ? "DANG_HOAT_DONG" : "NGUNG_HOAT_DONG";
+		try {
+			Connection con = ConnectDB.getInstance().getConnection();
+			String sql;
+			PreparedStatement stmt;
+			if (tuKhoa.trim().isEmpty() ) {
+				if (trangThai.equalsIgnoreCase("Tất cả")) {
+					sql ="SELECT dbo.KhachHang.MaKhachHang,dbo.KhachHang.TenKhachHang,KhachHang.SoDienThoai,KhachHang.GhiChu,KhachHang.TrangThai,Sum(HoaDon.ThanhTien) AS tongtien FROM KhachHang JOIN HoaDon ON KhachHang.MaKhachHang = HoaDon.MaKhachHang\r\n"
+							+ "Group by KhachHang.MaKhachHang, dbo.KhachHang.TenKhachHang, KhachHang.SoDienThoai,KhachHang.GhiChu,KhachHang.TrangThai";
+					stmt =con.prepareStatement(sql);
+				
+				}
+				else {
+					sql = "SELECT dbo.KhachHang.MaKhachHang,dbo.KhachHang.TenKhachHang,KhachHang.SoDienThoai,KhachHang.GhiChu,KhachHang.TrangThai,Sum(HoaDon.ThanhTien) AS tongtien FROM KhachHang JOIN HoaDon ON KhachHang.MaKhachHang = HoaDon.MaKhachHang\r\n"
+							+ "WHERE dbo.KhachHang.TrangThai = '"+Change_Value__TrangThai+"' \r\n"
+							+ "Group by KhachHang.MaKhachHang, dbo.KhachHang.TenKhachHang, KhachHang.SoDienThoai,KhachHang.GhiChu,KhachHang.TrangThai";
+					stmt = con.prepareStatement(sql);
+				}	
+			}
+			else {
+				if (trangThai.equalsIgnoreCase("Tất cả")) {
+					sql = "SELECT dbo.KhachHang.MaKhachHang,\r\n"
+							+ "dbo.KhachHang.TenKhachHang,\r\n"
+							+ "KhachHang.SoDienThoai,KhachHang.GhiChu,\r\n"
+							+ "KhachHang.TrangThai,\r\n"
+							+ "Sum(HoaDon.ThanhTien) AS tien \r\n"
+							+ "FROM KhachHang JOIN HoaDon ON KhachHang.MaKhachHang = HoaDon.MaKhachHang\r\n"
+							+ "WHERE dbo.KhachHang.MaKhachHang LIKE ? OR\r\n"
+							+ "dbo.KhachHang.TenKhachHang LIKE ?  OR\r\n"
+							+ "dbo.KhachHang.SoDienThoai LIKE ? OR\r\n"
+							+ "dbo.KhachHang.GhiChu LIKE ? \r\n"
+							+ "Group by KhachHang.MaKhachHang, dbo.KhachHang.TenKhachHang, KhachHang.SoDienThoai,KhachHang.GhiChu,KhachHang.TrangThai\r\n"
+							+ "";
+					stmt = con.prepareStatement(sql);
+		            stmt.setString(1, "%" + tuKhoa + "%");
+		            stmt.setString(2, "%" + tuKhoa + "%");
+		            stmt.setString(3, "%" + tuKhoa + "%");
+		            stmt.setString(4, "%" + tuKhoa + "%");
+				}
+				else {
+					sql = "\r\n"
+							+ "SELECT dbo.KhachHang.MaKhachHang,\r\n"
+							+ "dbo.KhachHang.TenKhachHang,\r\n"
+							+ "KhachHang.SoDienThoai,KhachHang.GhiChu,\r\n"
+							+ "KhachHang.TrangThai,\r\n"
+							+ "Sum(HoaDon.ThanhTien) AS tien \r\n"
+							+ "FROM KhachHang JOIN HoaDon ON KhachHang.MaKhachHang = HoaDon.MaKhachHang\r\n"
+							+ "WHERE (dbo.KhachHang.MaKhachHang LIKE ? OR\r\n"
+							+ "dbo.KhachHang.TenKhachHang LIKE ?  OR\r\n"
+							+ "dbo.KhachHang.SoDienThoai LIKE ? OR\r\n"
+							+ "dbo.KhachHang.GhiChu LIKE ? ) AND \r\n"
+							+ "dbo.KhachHang.TrangThai = ? \r\n"
+							+ "Group by KhachHang.MaKhachHang, dbo.KhachHang.TenKhachHang, KhachHang.SoDienThoai,KhachHang.GhiChu,KhachHang.TrangThai\r\n"
+							+ "";
+					stmt = con.prepareStatement(sql);
+		            stmt.setString(1, "%" + tuKhoa + "%");
+		            stmt.setString(2, "%" + tuKhoa + "%");
+		            stmt.setString(3, "%" + tuKhoa + "%");
+		            stmt.setString(4, "%" + tuKhoa + "%");
+		            stmt.setString(5, Change_Value__TrangThai);
+				}
+			}
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()){
+				String ma = rs.getString("MaKhachHang");
+				String ten  = rs.getString("TenKhachHang");
+				String sdt = rs.getString("SoDienThoai");
+				String ghiChu = rs.getString("GhiChu");
+				double tongTien = rs.getFloat(6);
+				TrangThaiKhachHang ttKh = rs.getString("TrangThai").equals("DANG_HOAT_DONG") ? TrangThaiKhachHang.DANG_HOAT_DONG : TrangThaiKhachHang.NGUNG_HOAT_DONG;
+				doituong.add(ma);
+				doituong.add(ten);
+				doituong.add(tongTien);
+				doituong.add(sdt);
+				doituong.add(ghiChu);
+				doituong.add(ttKh);
+				dsTamThoi.add(doituong);
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsTamThoi;
+    }
+    
+    
+    public void loadDataNV(DefaultTableModel table_model) {
+  		// TODO Auto-generated method stub
+      	int n = 0;
+          String sql = "SELECT dbo.KhachHang.MaKhachHang,dbo.KhachHang.TenKhachHang,KhachHang.SoDienThoai,KhachHang.GhiChu,KhachHang.TrangThai,Sum(HoaDon.ThanhTien) AS tongtien FROM KhachHang JOIN HoaDon ON KhachHang.MaKhachHang = HoaDon.MaKhachHang\r\n"
+          		+ "Group by KhachHang.MaKhachHang, dbo.KhachHang.TenKhachHang, KhachHang.SoDienThoai,KhachHang.GhiChu,KhachHang.TrangThai\r\n"
+          		+ "  ";
+          table_model.setRowCount(0);
+              try {
+              Connection conn = ConnectDB.getInstance().getConnection();
+              PreparedStatement stmt = null;
+              stmt  =conn.prepareStatement(sql);
+              ResultSet rs = stmt.executeQuery();
+              
+//              ResultSetMetaData rsmd = rs.getMetaData();
+//              int columnCount = rsmd.getColumnCount(); // kiem tra ten cot
+//              for (int i = 1; i <= columnCount; i++) {
+//              System.out.println(rsmd.getColumnName(i));
+//              
+  //}
+              int n1  = 1 ;
+                  while (rs.next()) {
+                      String ma =rs.getString("MaKhachHang"); 
+                      String ten = rs.getString("TenKhachHang"); 
+                      String sodienThoai = rs.getString("SoDienThoai"); 
+                      String ghichu = rs.getString("GhiChu");
+                      String trangthai = rs.getString("TrangThai");
+                      double TongTien = rs.getDouble("tongtien");
+                      table_model.addRow(new Object[]{
+                          n1,
+                          ma,
+                          ten,   
+                          TongTien,
+                          sodienThoai,
+                          ghichu,
+                          trangthai.equals(TrangThaiNhanVien.DANG_HOAT_DONG.toString()) ? " Đang hoạt động" : "Ngừng hoạt động"
+                      });
+                      n1++;
+                  }
+              } catch (Exception e) {
+                  e.printStackTrace();
+              }
+          
+  }
 }
