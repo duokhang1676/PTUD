@@ -55,7 +55,6 @@ public class TaiKhoanPage extends javax.swing.JPanel {
         btnDangXuat = new javax.swing.JButton();
         bntDoiMK = new javax.swing.JButton();
         btnKetCa1 = new javax.swing.JButton();
-        btnKetCa = new javax.swing.JButton();
         pnlHoTen1 = new javax.swing.JPanel();
         lblHoTen1 = new javax.swing.JLabel();
         txtHoTen1 = new javax.swing.JTextField();
@@ -73,11 +72,11 @@ public class TaiKhoanPage extends javax.swing.JPanel {
         pnlAvatar.setLayout(pnlAvatarLayout);
         pnlAvatarLayout.setHorizontalGroup(
             pnlAvatarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 592, Short.MAX_VALUE)
+            .addGap(0, 595, Short.MAX_VALUE)
         );
         pnlAvatarLayout.setVerticalGroup(
             pnlAvatarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 125, Short.MAX_VALUE)
+            .addGap(0, 127, Short.MAX_VALUE)
         );
 
         pnlHoTen.setBackground(new java.awt.Color(193, 219, 208));
@@ -126,8 +125,8 @@ public class TaiKhoanPage extends javax.swing.JPanel {
             }
         });
 
-        jRadioButton1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jRadioButton1.setText("Nữ");
+        jRadioButton1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButton1ActionPerformed(evt);
@@ -137,8 +136,8 @@ public class TaiKhoanPage extends javax.swing.JPanel {
         lblGioiTinh.setText("Giới tính");
         lblGioiTinh.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
-        jRadioButton2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jRadioButton2.setText("Nam");
+        jRadioButton2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButton2ActionPerformed(evt);
@@ -190,8 +189,8 @@ public class TaiKhoanPage extends javax.swing.JPanel {
         lblNgaySinh.setText("Ngày sinh");
         lblNgaySinh.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
-        lblNgaySinh1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblNgaySinh1.setText("Ngày tạo tài khoản");
+        lblNgaySinh1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout pnlNgaySinhLayout = new javax.swing.GroupLayout(pnlNgaySinh);
         pnlNgaySinh.setLayout(pnlNgaySinhLayout);
@@ -290,19 +289,11 @@ public class TaiKhoanPage extends javax.swing.JPanel {
             }
         });
 
-        btnKetCa1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnKetCa1.setText("Lưu");
+        btnKetCa1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         btnKetCa1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnKetCa1ActionPerformed(evt);
-            }
-        });
-
-        btnKetCa.setText("Kết ca");
-        btnKetCa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        btnKetCa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKetCaActionPerformed(evt);
             }
         });
 
@@ -315,11 +306,9 @@ public class TaiKhoanPage extends javax.swing.JPanel {
                 .addGroup(pnlButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnDangXuat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlButtonLayout.createSequentialGroup()
-                        .addComponent(bntDoiMK, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(64, 64, 64)
-                        .addComponent(btnKetCa, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                        .addComponent(btnKetCa1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(bntDoiMK, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                        .addComponent(btnKetCa1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         pnlButtonLayout.setVerticalGroup(
@@ -328,8 +317,7 @@ public class TaiKhoanPage extends javax.swing.JPanel {
                 .addContainerGap(12, Short.MAX_VALUE)
                 .addGroup(pnlButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bntDoiMK, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnKetCa1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnKetCa, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnKetCa1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnDangXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -337,8 +325,8 @@ public class TaiKhoanPage extends javax.swing.JPanel {
         pnlHoTen1.setBackground(new java.awt.Color(193, 219, 208));
         pnlHoTen1.setPreferredSize(new java.awt.Dimension(500, 100));
 
-        lblHoTen1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblHoTen1.setText("Mã nhân viên");
+        lblHoTen1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
         txtHoTen1.setEditable(false);
         txtHoTen1.addActionListener(new java.awt.event.ActionListener() {
@@ -437,11 +425,6 @@ public class TaiKhoanPage extends javax.swing.JPanel {
     	AddContent.addContent(new DoiMatKhauPage());
     }//GEN-LAST:event_bntDoiMKActionPerformed
 
-    private void btnKetCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKetCaActionPerformed
-        // TODO add your handling code here:
-    	AddContent.addContent(new KetCaPage());
-    }//GEN-LAST:event_btnKetCaActionPerformed
-
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton2ActionPerformed
@@ -462,7 +445,6 @@ public class TaiKhoanPage extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntDoiMK;
     private javax.swing.JButton btnDangXuat;
-    private javax.swing.JButton btnKetCa;
     private javax.swing.JButton btnKetCa1;
     private javax.swing.JPanel content;
     private com.github.lgooddatepicker.components.DatePicker datePicker1;

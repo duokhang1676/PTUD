@@ -105,26 +105,30 @@ public class HoaDonDao {
 		return dsHoaDon;
 	}
 	
-	public boolean addHoaDon(HoaDon hd, double tongTien) {
+	public boolean addHoaDon(HoaDon hd, double tongTien, double tienThua) {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection(); 
 		PreparedStatement stmt = null;
-		String sql = "insert into HoaDon (ThoiGianLapHoaDon, MaNhanVien, MaKhachHang, TienKhachTra, DiemQuyDoi, GhiChu, MaCa, TrangThai, TongTien, MaHoaDon) "
-				+ "values (?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into HoaDon (MaHoaDon, ThoiGianLapHoaDon, MaNhanVien, MaKhachHang, TienKhachTra, DiemQuyDoi, TongTien, TienThua, GhiChu, MaCa, TrangThai, ThanhTien) "
+				+ "values (?,?,?,?,?,?,?,?,?,?,?,?)";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
 		try {
 			stmt = con.prepareStatement(sql);
 			
-			stmt.setDate(1, Date.valueOf(hd.getThoiGianLapHoaDon().toLocalDate()));
-			stmt.setString(2, hd.getNhanVien().getMaNhanVien());
-			stmt.setString(3, hd.getKhachHang().getMaKhachHang());
-			stmt.setDouble(4, hd.getTienKhachTra());
-			stmt.setInt(5, hd.getDiemQuyDoi());
-			stmt.setString(6, hd.getGhiChu());
-			stmt.setString(7, hd.getCa().getMaCa());
-			stmt.setString(8, hd.getTrangThaiHoaDon().toString());
-			stmt.setDouble(9, tongTien);
-			stmt.setString(10, hd.getMaHoaDon());
-			
+			stmt.setString(1, hd.getMaHoaDon());
+			stmt.setDate(2, Date.valueOf(hd.getThoiGianLapHoaDon().toLocalDate()));
+//			stmt.setString(3, hd.getNhanVien().getMaNhanVien());
+			stmt.setString(3, "NV00003");
+			stmt.setString(4, hd.getKhachHang().getMaKhachHang());
+			stmt.setDouble(5, hd.getTienKhachTra());
+			stmt.setInt(6, hd.getDiemQuyDoi());
+			stmt.setDouble(7, tongTien);
+			stmt.setDouble(8, tienThua);
+			stmt.setString(9, hd.getGhiChu());
+			stmt.setString(10, hd.getCa().getMaCa());
+			stmt.setString(11, hd.getTrangThaiHoaDon().toString());
+			stmt.setDouble(12, hd.getTongTien());
+
 			stmt.executeUpdate();
 			stmt.close();
 			return true;

@@ -5,28 +5,32 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import db.ConnectDB;
+import entities.Ca;
 import entities.ChiTietHoaDon;
 import entities.DonViTinh;
 import entities.HangHoa;
+import entities.NhanVien;
 import entities.TrangThaiDonViTinh;
 
 public class ChiTietHoaDonDao {
-	public boolean addChiTietHD(ChiTietHoaDon ct) {
+	public boolean addChiTietHD(ChiTietHoaDon ct, double thanhTien) {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection(); 
 		PreparedStatement stmt = null;
-		String sql = "insert into ChiTietHoaDon (MaHoaDon, SoLuong, DonGia, MaDonViTinh) values(?,?,?,?,?)";
+		String sql = "insert into ChiTietHoaDon (MaHoaDon, MaDonViTinh, SoLuong, DonGia, ThanhTien) values(?,?,?,?,?)";
 		try {
 			stmt = con.prepareStatement(sql);
 			
 			stmt.setString(1, ct.getHoaDon().getMaHoaDon());
-			stmt.setInt(2, ct.getSoLuong());
-			stmt.setDouble(3, ct.getDonGia());
-			stmt.setInt(4, ct.getDonViTinh().getMaDonViTinh());
+			stmt.setInt(2, ct.getDonViTinh().getMaDonViTinh());
+			stmt.setInt(3, ct.getSoLuong());
+			stmt.setDouble(4, ct.getDonGia());
+			stmt.setDouble(5, thanhTien);
 			
 			stmt.executeUpdate();
 			stmt.close();
@@ -78,4 +82,6 @@ public class ChiTietHoaDonDao {
 			return null;
 		}
 	}
+	
+
 }

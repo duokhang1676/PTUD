@@ -76,6 +76,42 @@ public class DonViTinhDao {
 		}
 		
 	}
+	
+	//Lấy đơn vị tính theo mã hàng hóa vừa mới tìm được
+	public DonViTinh layDVTTheoMa(String ma) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		try {
+			String sql = "select top 1 * from DonViTinh \r\n"
+					+ "where DonViTinh.MaVach = ? or MaHangHoa = ?\r\n"
+					+ "ORDER BY QuyDoi\r\n"
+					+ "ASC";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, ma);
+			stmt.setString(2, ma);
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			int maDVT = rs.getInt("MaDonViTinh");	
+			String tenDVT = rs.getString("TenDonViTinh");
+			String maHH = rs.getString("MaHangHoa");
+			HangHoa hh = new HangHoaDao().timHangHoaTheoMa(maHH);
+			int quyDoi = rs.getInt("QuyDoi");
+			Double giaBan = rs.getDouble("GiaBan");
+			String maVach = rs.getString("MaVach");
+				
+			String trangThaiStr = rs.getString("TrangThaiDonViTinh");
+			TrangThaiDonViTinh trangThai = TrangThaiDonViTinh.valueOf(trangThaiStr);
+				
+			DonViTinh dvt = new DonViTinh(maDVT, tenDVT, hh, quyDoi, giaBan, maVach, trangThai);
+			return dvt;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public DonViTinh timDVTTheoMa(int ma) {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
@@ -202,40 +238,8 @@ public class DonViTinhDao {
 		return null;
 	}
 	
-	//Lấy đơn vị tính theo mã hàng hóa vừa mới tìm được
-		public DonViTinh layDVTTheoMa(String ma) {
-			ConnectDB.getInstance();
-			Connection con = ConnectDB.getConnection();
-			PreparedStatement stmt = null;
-			try {
-				String sql = "select top 1 * from DonViTinh \r\n"
-						+ "where DonViTinh.MaVach = ? or MaHangHoa = ?\r\n"
-						+ "ORDER BY QuyDoi\r\n"
-						+ "ASC";
-				stmt = con.prepareStatement(sql);
-				stmt.setString(1, ma);
-				stmt.setString(2, ma);
-				ResultSet rs = stmt.executeQuery();
-				rs.next();
-				int maDVT = rs.getInt("MaDonViTinh");	
-				String tenDVT = rs.getString("TenDonViTinh");
-				String maHH = rs.getString("MaHangHoa");
-				HangHoa hh = new HangHoaDao().timHangHoaTheoMa(maHH);
-				int quyDoi = rs.getInt("QuyDoi");
-				Double giaBan = rs.getDouble("GiaBan");
-				String maVach = rs.getString("MaVach");
-					
-				String trangThaiStr = rs.getString("TrangThaiDonViTinh");
-				TrangThaiDonViTinh trangThai = TrangThaiDonViTinh.valueOf(trangThaiStr);
-					
-				DonViTinh dvt = new DonViTinh(maDVT, tenDVT, hh, quyDoi, giaBan, maVach, trangThai);
-				return dvt;
-			} catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
-			}
-			return null;
-		}
+	
+		
 		
 		public DonViTinh layDVTTheoTenVaMaHangHoa(String maHangHoa, String tenDonVi) {
 			ConnectDB.getInstance();

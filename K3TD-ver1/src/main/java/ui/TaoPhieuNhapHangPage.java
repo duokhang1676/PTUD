@@ -21,8 +21,6 @@ import entities.LoHang;
 import entities.NhaCungCap;
 import entities.PhieuNhapHang;
 import entities.TrangThaiPhieuNhapHang;
-import sampleUi.tuyChonBanHang.TableActionEvent;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;

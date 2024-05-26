@@ -4,11 +4,6 @@
  */
 package ui;
 
-import components.AddContent;
-import components.ColorSamples;
-import components.ResizeContent;
-import components.StatusMenu;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,6 +14,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import components.AddContent;
+import components.ColorSample;
+import components.StatusMenu;
 
 /**
  *
@@ -73,6 +72,7 @@ public class RootFrame extends javax.swing.JFrame {
         btnDoiTac = new javax.swing.JButton();
         btnNhanSu = new javax.swing.JButton();
         btnThongKe = new javax.swing.JButton();
+        btnKetCa = new javax.swing.JButton();
         pnlBody = new javax.swing.JPanel();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         pnlContent = new javax.swing.JPanel();
@@ -183,7 +183,7 @@ public class RootFrame extends javax.swing.JFrame {
 
         btnTrangChu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-overview-32.png"))); // NOI18N
         btnTrangChu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-overview-32.png"))); // NOI18N
-        btnTrangChu.setBackground(ColorSamples.gb);
+        btnTrangChu.setBackground(ColorSample.gb);
         btnTrangChu.setText("Trang chủ");
         btnTrangChu.setBorderPainted(false);
         btnTrangChu.setPreferredSize(new java.awt.Dimension(150, 50));
@@ -327,6 +327,26 @@ public class RootFrame extends javax.swing.JFrame {
             }
         });
         pnlHeaderMenu.add(btnThongKe);
+
+        btnKetCa.setBackground(new java.awt.Color(193, 219, 208,0));
+        btnKetCa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-member-32.png"))); // NOI18N
+        btnKetCa.setText("Kết ca");
+        btnKetCa.setBorderPainted(false);
+        btnKetCa.setPreferredSize(new java.awt.Dimension(150, 50));
+        btnKetCa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnKetCaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnKetCaMouseExited(evt);
+            }
+        });
+        btnKetCa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKetCaActionPerformed(evt);
+            }
+        });
+        pnlHeaderMenu.add(btnKetCa);
 
         javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
         pnlHeader.setLayout(pnlHeaderLayout);
@@ -724,7 +744,7 @@ public class RootFrame extends javax.swing.JFrame {
     private void btnCaLamViecActionPerformed(java.awt.event.ActionEvent evt) {
     	hideAllDropMenu();
         pnlContent.removeAll();
-    	
+    	AddContent.addContent(new CaLamViecPage());
     	pnlContent.revalidate();
         pnlContent.repaint();
     }     
@@ -818,7 +838,7 @@ public class RootFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         hideAllDropMenu();
         pnlContent.removeAll();
-
+        AddContent.addContent(new PhieuTraHangPage());
     	pnlContent.revalidate();
         pnlContent.repaint();
     }//GEN-LAST:event_btnTraHangActionPerformed
@@ -828,11 +848,7 @@ public class RootFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnHangHoaActionPerformed
 
     private void btnDonThuocMauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDonThuocMauActionPerformed
-        hideAllDropMenu();
-        pnlContent.removeAll();
-    	
-    	pnlContent.revalidate();
-        pnlContent.repaint();
+        AddContent.addContent(new DonThuocMauPage());
     }//GEN-LAST:event_btnDonThuocMauActionPerformed
 
     private void btnNhapHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhapHangActionPerformed
@@ -857,59 +873,59 @@ public class RootFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_lblUserMouseExited
     
     private void btnTrangChuMouseEntered(java.awt.event.MouseEvent evt){
-        btnTrangChu.setBackground(ColorSamples.gbHover);
+        btnTrangChu.setBackground(ColorSample.gbHover);
     }
     
     private void btnTrangChuMouseExited(java.awt.event.MouseEvent evt){
-        btnTrangChu.setBackground(ColorSamples.gb);
+        btnTrangChu.setBackground(ColorSample.gb);
     }
     
     private void btnBanHangMouseEntered(java.awt.event.MouseEvent evt){
-        btnBanHang.setBackground(ColorSamples.gbHover);
+        btnBanHang.setBackground(ColorSample.gbHover);
     }
     
     private void btnBanHangMouseExited(java.awt.event.MouseEvent evt){
-        btnBanHang.setBackground(ColorSamples.gb);
+        btnBanHang.setBackground(ColorSample.gb);
     }
     
     private void btnQLDonHangMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLDonHangMouseEntered
-        btnQLDonHang.setBackground(ColorSamples.gbHover);
+        btnQLDonHang.setBackground(ColorSample.gbHover);
     }//GEN-LAST:event_btnQLDonHangMouseEntered
 
     private void btnQLDonHangMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLDonHangMouseExited
-        btnQLDonHang.setBackground(ColorSamples.gb);
+        btnQLDonHang.setBackground(ColorSample.gb);
     }//GEN-LAST:event_btnQLDonHangMouseExited
 
     private void btnQLHangHoaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLHangHoaMouseEntered
-         btnQLHangHoa.setBackground(ColorSamples.gbHover);
+         btnQLHangHoa.setBackground(ColorSample.gbHover);
     }//GEN-LAST:event_btnQLHangHoaMouseEntered
 
     private void btnQLHangHoaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQLHangHoaMouseExited
-         btnQLHangHoa.setBackground(ColorSamples.gb);
+         btnQLHangHoa.setBackground(ColorSample.gb);
     }//GEN-LAST:event_btnQLHangHoaMouseExited
 
     private void btnDoiTacMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDoiTacMouseEntered
-        btnDoiTac.setBackground(ColorSamples.gbHover);
+        btnDoiTac.setBackground(ColorSample.gbHover);
     }//GEN-LAST:event_btnDoiTacMouseEntered
 
     private void btnDoiTacMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDoiTacMouseExited
-        btnDoiTac.setBackground(ColorSamples.gb);
+        btnDoiTac.setBackground(ColorSample.gb);
     }//GEN-LAST:event_btnDoiTacMouseExited
 
     private void btnNhanSuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNhanSuMouseEntered
-        btnNhanSu.setBackground(ColorSamples.gbHover);
+        btnNhanSu.setBackground(ColorSample.gbHover);
     }//GEN-LAST:event_btnNhanSuMouseEntered
 
     private void btnNhanSuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNhanSuMouseExited
-        btnNhanSu.setBackground(ColorSamples.gb);
+        btnNhanSu.setBackground(ColorSample.gb);
     }//GEN-LAST:event_btnNhanSuMouseExited
 
     private void btnThongKeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThongKeMouseEntered
-       btnThongKe.setBackground(ColorSamples.gbHover);
+       btnThongKe.setBackground(ColorSample.gbHover);
     }//GEN-LAST:event_btnThongKeMouseEntered
 
     private void btnThongKeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThongKeMouseExited
-        btnThongKe.setBackground(ColorSamples.gb);
+        btnThongKe.setBackground(ColorSample.gb);
     }//GEN-LAST:event_btnThongKeMouseExited
 
     private void btnTrangChuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTrangChuMouseClicked
@@ -961,13 +977,28 @@ public class RootFrame extends javax.swing.JFrame {
 
     private void btnTheoNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTheoNhanVienActionPerformed
         // TODO add your handling code here:
-        AddContent.addContent(new ThongKeNhanVien());
+        AddContent.addContent(new ThongKeNhanVienPage());
     }//GEN-LAST:event_btnTheoNhanVienActionPerformed
 
     private void btnTheoKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTheoKhachHangActionPerformed
         // TODO add your handling code here:
-        AddContent.addContent(new ThongKeKhachHang());
+        AddContent.addContent(new ThongKeKhachHangPage());
     }//GEN-LAST:event_btnTheoKhachHangActionPerformed
+
+    private void btnKetCaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnKetCaMouseEntered
+        // TODO add your handling code here:
+         btnKetCa.setBackground(ColorSample.gbHover);
+    }//GEN-LAST:event_btnKetCaMouseEntered
+
+    private void btnKetCaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnKetCaMouseExited
+        // TODO add your handling code here:
+        btnKetCa.setBackground(ColorSample.gb);
+    }//GEN-LAST:event_btnKetCaMouseExited
+
+    private void btnKetCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKetCaActionPerformed
+        // TODO add your handling code here:
+        AddContent.addContent(new KetCaPage());
+    }//GEN-LAST:event_btnKetCaActionPerformed
     
     private void setFontAll(Font font){
         lblTienIch.setFont(font);
@@ -1043,6 +1074,7 @@ public class RootFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnDonThuocMau;
     private javax.swing.JButton btnHangHoa;
     private javax.swing.JButton btnHoaDon;
+    private javax.swing.JButton btnKetCa;
     private javax.swing.JButton btnKhachHang;
     private javax.swing.JButton btnNhaCungCap;
     private javax.swing.JButton btnNhanSu;
