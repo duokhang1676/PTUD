@@ -8,6 +8,7 @@ import java.util.EventObject;
 import java.util.List;
 
 import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -19,8 +20,10 @@ import dao.NhomHangDao;
 import entities.DonViTinh;
 import entities.LoaiHang;
 import entities.NhomHang;
+import entities.TrangThaiDonViTinh;
 import entities.TrangThaiHangHoa;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -41,6 +44,7 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
 
     private NhomHangDao nhomHang_dao;
     private HangHoaDao hangHoa_dao;
+    private DonViTinhDao donViTinh_dao;
     private DefaultTableModel model_hangHoa;
     private JTable tbl_hangHoa;
 	/**
@@ -71,8 +75,9 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
 			}else {
 				loaiHang = "Khác";
 			}
+			//"STT","Mã hàng hóa", "Tên hàng hóa", "Loại hàng",  "Quy cách đóng gói","Số lượng","Thành tiền", "Trạng thái"};
 			model_hangHoa.addRow(new Object[] {stt, hh.getMaHangHoa(), hh.getTenHangHoa(),
-					loaiHang, hh.getQuyCachDongGoi()});
+					loaiHang, hh.getQuyCachDongGoi(), hh.getSoLuongDinhMuc(), 0, hh.getTrangThaiHangHoa().equals(TrangThaiHangHoa.DANG_BAN)?"Đang bán":"Ngừng bán"});
 			
 //			if (hh.getTrangThaiHangHoa().equals("NGUNG_BAN")) {
 //				model_hangHoa.removeRow(count);
@@ -163,8 +168,18 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
         });
 
         txt_timKiem.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        txt_timKiem.setForeground(new java.awt.Color(204, 204, 204));
+        txt_timKiem.setText("Tìm kiếm theo mã hàng, tên hàng");
         txt_timKiem.setToolTipText("Tìm kiếm theo mã, tên hàng hóa, hoạt chất");
         txt_timKiem.setPreferredSize(new java.awt.Dimension(200, 26));
+        txt_timKiem.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txt_timKiemFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_timKiemFocusLost(evt);
+            }
+        });
         txt_timKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_timKiemActionPerformed(evt);
@@ -291,10 +306,11 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
     private void btn_timKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timKiemActionPerformed
         // TODO add your handling code here:
     	String maTen = txt_timKiem.getText().trim();
+    	System.out.println(maTen);
     	String trangThaiHH = cb_trangThai.getSelectedItem().toString().trim();
     	String loaiHang = cb_loaiHang.getSelectedItem().toString().trim();
     	String nhomHang = cb_nhomHang.getSelectedItem().toString().trim();
-    	System.out.println(maTen + " " + trangThaiHH + " " + loaiHang + " " + nhomHang);
+//    	System.out.println(maTen + " " + trangThaiHH + " " + loaiHang + " " + nhomHang);
     	if (maTen.isEmpty()) {
 			showMessage("Nhập thông tin cần tìm!");
 			loadDataTable();
@@ -308,16 +324,19 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
 //				showMessage("K thay");
 //			}
 			entities.HangHoa hh = hangHoa_dao.timHangHoa(maTen, loaiHang, nhomHang, trangThaiHH);
+			
 			if (hh == null) {
-				showMessage("Khong tim thay");
+				showMessage("Không tìm thấy!");
 				txt_timKiem.requestFocus();
 		    	txt_timKiem.selectAll();
 		    	loadDataTable();
 				return;
 			}
+			
+			System.out.println(hh.toString());
 			model_hangHoa.setNumRows(0);
-			model_hangHoa.addRow(new Object[] {hh.getMaHangHoa(), hh.getTenHangHoa(), hh.getLoaiHang(), hh.getNuocSanXuat(),
-					hh.getHoatChatChinh(), hh.getQuyCachDongGoi()});
+			model_hangHoa.addRow(new Object[] {1, hh.getMaHangHoa(), hh.getTenHangHoa(),
+					loaiHang, hh.getQuyCachDongGoi(), hh.getSoLuongDinhMuc(), 0, hh.getTrangThaiHangHoa().equals(TrangThaiHangHoa.DANG_BAN)?"Đang bán":"Ngừng bán"});
 		}
     	txt_timKiem.requestFocus();
     	txt_timKiem.selectAll();
@@ -325,6 +344,41 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
 
     private void txt_timKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_timKiemActionPerformed
         // TODO add your handling code here:
+    	String maTen = txt_timKiem.getText().trim();
+    	System.out.println(maTen);
+    	String trangThaiHH = cb_trangThai.getSelectedItem().toString().trim();
+    	String loaiHang = cb_loaiHang.getSelectedItem().toString().trim();
+    	String nhomHang = cb_nhomHang.getSelectedItem().toString().trim();
+//    	System.out.println(maTen + " " + trangThaiHH + " " + loaiHang + " " + nhomHang);
+    	if (maTen.isEmpty()) {
+			showMessage("Nhập thông tin cần tìm!");
+			loadDataTable();
+		}else {
+//			List<entities.HangHoa> dsHangHoas = hangHoa_dao.timHangHoa(maTen, loaiHang, nhomHang, trangThaiHH);
+//			for (entities.HangHoa hh : dsHangHoas) {
+//				model_hangHoa.setNumRows(0);
+//				model_hangHoa.addRow(new Object[] {hh.getMaHangHoa(), hh.getTenHangHoa()});
+//			}
+//			if (dsHangHoas.isEmpty()) {
+//				showMessage("K thay");
+//			}
+			entities.HangHoa hh = hangHoa_dao.timHangHoa(maTen, loaiHang, nhomHang, trangThaiHH);
+			
+			if (hh == null) {
+				showMessage("Không tìm thấy!");
+				txt_timKiem.requestFocus();
+		    	txt_timKiem.selectAll();
+		    	loadDataTable();
+				return;
+			}
+			
+			System.out.println(hh.toString());
+			model_hangHoa.setNumRows(0);
+			model_hangHoa.addRow(new Object[] {1, hh.getMaHangHoa(), hh.getTenHangHoa(),
+					loaiHang, hh.getQuyCachDongGoi(), hh.getSoLuongDinhMuc(), 0, hh.getTrangThaiHangHoa().equals(TrangThaiHangHoa.DANG_BAN)?"Đang bán":"Ngừng bán"});
+		}
+    	txt_timKiem.requestFocus();
+    	txt_timKiem.selectAll();
     }//GEN-LAST:event_txt_timKiemActionPerformed
 
 
@@ -340,6 +394,18 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
         // TODO add your handling code here:
     	AddContent.addContent(new TaoHangHoaPage());
     }//GEN-LAST:event_btn_themHHActionPerformed
+
+    private void txt_timKiemFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_timKiemFocusGained
+        // TODO add your handling code here:
+    	txt_timKiem.setText("");
+    	txt_timKiem.setForeground(Color.black);
+    }//GEN-LAST:event_txt_timKiemFocusGained
+
+    private void txt_timKiemFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_timKiemFocusLost
+        // TODO add your handling code here:
+//    	txt_timKiem.setText("Tìm kiếm theo mã hàng, tên hàng");
+    	txt_timKiem.setForeground(new Color(204,204,204));
+    }//GEN-LAST:event_txt_timKiemFocusLost
 
     /**
      * @param args the command line arguments
@@ -392,7 +458,6 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField txt_timKiem;
-	private DonViTinhDao donViTinh_dao;
     // End of variables declaration//GEN-END:variables
 
     private void addTableHangHoa() {
@@ -444,7 +509,7 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getClickCount() == 2) {
-			AddContent.addContent(new TaoHangHoaPage());
+			AddContent.addContent(new XemThongTinHangHoaPage());
 	    	
 			donViTinh_dao = new DonViTinhDao();
 	    	int row = tbl_hangHoa.getSelectedRow();
@@ -453,38 +518,68 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
 	    	entities.HangHoa hangHoa = hangHoa_dao.timHangHoaTheoMa(maHH);
 	    	List<DonViTinh> dsDVT = donViTinh_dao.timDVTTheoMaHH(maHH);
 	    	
-	    	TaoHangHoaPage.txt_maHangHoa.setText(hangHoa.getMaHangHoa());
-	    	TaoHangHoaPage.txt_tenHangHoa1.setText(hangHoa.getTenHangHoa());
+	    	XemThongTinHangHoaPage.txt_maHangHoa.setText(hangHoa.getMaHangHoa());
+	    	XemThongTinHangHoaPage.txt_tenHangHoa1.setText(hangHoa.getTenHangHoa());
 	    	//TaoHangHoaPage.txt_maVach.setText(hangHoa.getMaVach());
-	    	TaoHangHoaPage.cb_loaiHangHoa.setSelectedItem(hangHoa.getLoaiHang());
+	    	XemThongTinHangHoaPage.cb_loaiHangHoa.setSelectedItem(hangHoa.getLoaiHang());
 	    	
-	    	TaoHangHoaPage.cb_nhomHangHoa.setSelectedItem(hangHoa.getNhomHang().getTenNhomHang());
+	    	XemThongTinHangHoaPage.cb_nhomHangHoa.setSelectedItem(hangHoa.getNhomHang().getTenNhomHang());
 	    	
-	    	TaoHangHoaPage.txt_soDangKy.setText(hangHoa.getSoDangKy());
-	    	TaoHangHoaPage.txt_soLuongDinhMuc1.setText(String.valueOf(hangHoa.getSoLuongDinhMuc()));
-	    	TaoHangHoaPage.txt_soLuongCanhBao.setText(String.valueOf(hangHoa.getSoLuongCanhBao()));
-	    	TaoHangHoaPage.txt_HoatChat.setText(hangHoa.getHoatChatChinh());
-	    	TaoHangHoaPage.txt_hamLuong.setText(hangHoa.getHamLuong());
-	    	TaoHangHoaPage.txt_quyCach.setText(hangHoa.getQuyCachDongGoi());
-	    	TaoHangHoaPage.txt_nuocSX.setText(hangHoa.getNuocSanXuat());
-	    	TaoHangHoaPage.txt_hangSanXuat.setText(hangHoa.getHangSanXuat());
-	    	TaoHangHoaPage.txt_moTa.setText(hangHoa.getMoTa());
-	    	TaoHangHoaPage.txt_vat.setText(String.valueOf(hangHoa.getThue()));
-	    	TaoHangHoaPage.cb_trangThai.setSelectedItem(hangHoa.getTrangThaiHangHoa().equals(TrangThaiHangHoa.DANG_BAN)?"Đang bán":"Ngừng bán");
+	    	XemThongTinHangHoaPage.txt_soDangKy.setText(hangHoa.getSoDangKy());
+	    	XemThongTinHangHoaPage.txt_soLuongDinhMuc1.setText(String.valueOf(hangHoa.getSoLuongDinhMuc()));
+	    	XemThongTinHangHoaPage.txt_soLuongCanhBao.setText(String.valueOf(hangHoa.getSoLuongCanhBao()));
+	    	XemThongTinHangHoaPage.txt_HoatChat.setText(hangHoa.getHoatChatChinh());
+	    	XemThongTinHangHoaPage.txt_hamLuong.setText(hangHoa.getHamLuong());
+	    	XemThongTinHangHoaPage.txt_quyCach.setText(hangHoa.getQuyCachDongGoi());
+	    	XemThongTinHangHoaPage.txt_nuocSX.setText(hangHoa.getNuocSanXuat());
+	    	XemThongTinHangHoaPage.txt_hangSanXuat.setText(hangHoa.getHangSanXuat());
+	    	XemThongTinHangHoaPage.txt_moTa.setText(hangHoa.getMoTa());
+	    	XemThongTinHangHoaPage.txt_vat.setText(String.valueOf(hangHoa.getThue()));
+	    	XemThongTinHangHoaPage.cb_trangThai.setSelectedItem(hangHoa.getTrangThaiHangHoa().equals(TrangThaiHangHoa.DANG_BAN)?"Đang bán":"Ngừng bán");
 	    	
-//	    	for (DonViTinh dvt : dsDVT) {
-//	    		int i = 0;
-//	    		TaoHangHoa.model_DVT.setValueAt(i+1, i, 0);
-//				TaoHangHoa.model_DVT.setValueAt(dvt.getTenDonViTinh(), i, 1);
-//				TaoHangHoa.model_DVT.setValueAt(dvt.getQuyDoi(), i, 2);
-//				TaoHangHoa.model_DVT.setValueAt(dvt.getGiaBan(), i, 3);
-//				
-//				
-//				i++;
-//			}
+	    	
+	    	int rowCount = XemThongTinHangHoaPage.model_DVT.getRowCount();
+	    	if (rowCount > 0) {
+				XemThongTinHangHoaPage.model_DVT.removeRow(rowCount - 1);
+			}
+	    	int i = 0;
+	    	for (DonViTinh dvt : dsDVT) {
+//	    		XemThongTinHangHoaPage.model_DVT.setRowCount(0);
+	    		String tenDVT = dvt.getTenDonViTinh();
+	    		if (isItemExistInComboBox(XemThongTinHangHoaPage.cb_tenDVT , tenDVT)) {
+	    			XemThongTinHangHoaPage.cb_tenDVT.setSelectedItem(tenDVT);
+				}else {
+					XemThongTinHangHoaPage.cb_tenDVT.addItem(tenDVT);
+					XemThongTinHangHoaPage.cb_tenDVT.setSelectedItem(tenDVT);
+				}
+	    		
+	    		String quyDoi = String.valueOf(dvt.getQuyDoi());
+	    		String giaBan = String.valueOf(dvt.getGiaBan());
+	    		String maVach = dvt.getMaVach();
+	    		String dangBan = dvt.getTrangThaiDonViTinh().equals(TrangThaiDonViTinh.DANG_BAN)?"Đang bán":"Tạm ngưng";
+	    		
+	    		Object[] emptyRow = {i+1,tenDVT, quyDoi, giaBan,maVach,dangBan};
+	    		
+	    		XemThongTinHangHoaPage.model_DVT.addRow(emptyRow);
+	    		
+	    		System.out.println(i);
+				i++;
+			}
+	    	
+//	    	System.out.println(dsDVT);
 	    	
 		}
 		
+	}
+
+	private boolean isItemExistInComboBox(JComboBox<Object> cb_tenDVT, String tenDVT) {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < XemThongTinHangHoaPage.cb_tenDVT.getItemCount(); i++) {
+	        if (XemThongTinHangHoaPage.cb_tenDVT.getItemAt(i).equals(tenDVT)) {
+	            return true;
+	        }
+	    }
+	    return false;
 	}
 
 	@Override

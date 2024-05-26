@@ -6,16 +6,23 @@ package ui;
 
 import components.AddContent;
 import components.ResizeContent;
+import dao.ChiTietPhieuNhapHangDao;
 import dao.PhieuNhapHangDao;
+import entities.ChiTietPhieuNhapHang;
 import entities.PhieuNhapHang;
 import entities.TrangThaiPhieuNhapHang;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.time.LocalDate;
 import java.util.EventObject;
 import java.util.List;
 
 import javax.swing.DefaultCellEditor;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -30,9 +37,10 @@ import javax.swing.table.TableColumnModel;
  */
 public class NhapHangPage extends javax.swing.JPanel {
 
-    private DefaultTableModel model_phieuNhap;
-	private JTable tbl_phieuNhap;
-	private PhieuNhapHangDao phieuNH_dao;
+	protected static DefaultTableModel model_phieuNhap;
+	protected static JTable tbl_phieuNhap;
+	private PhieuNhapHangDao phieuNH_dao = new PhieuNhapHangDao();
+	private ChiTietPhieuNhapHangDao chiTietPNH_dao = new ChiTietPhieuNhapHangDao();
 	/**
      * Creates new form XuatTra
      */
@@ -46,7 +54,7 @@ public class NhapHangPage extends javax.swing.JPanel {
     private void loadDataPNH() {
 		// TODO Auto-generated method stub
 		int stt = 1;
-		phieuNH_dao = new PhieuNhapHangDao();
+		
 		model_phieuNhap.setRowCount(0);
 		List<PhieuNhapHang> dsPNH = phieuNH_dao.getAllDataPNH();
 		for (PhieuNhapHang p : dsPNH) {
@@ -83,6 +91,84 @@ public class NhapHangPage extends javax.swing.JPanel {
 		setCellEditable();
         jPanel1.add(js_tableHangHoa, BorderLayout.CENTER);
         
+        tbl_phieuNhap.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				if (e.getClickCount() == 2) {
+					AddContent.addContent(new XemPhieuNhapHangPage());
+					int selectedRow = tbl_phieuNhap.getSelectedRow();
+					String ma = model_phieuNhap.getValueAt(selectedRow, 1).toString();
+					System.out.println(ma);
+					PhieuNhapHang pnh = phieuNH_dao.getPNHTheoMa(ma);
+					System.out.println(pnh.toString());
+			    	List<ChiTietPhieuNhapHang> dsChiTiet= chiTietPNH_dao.getChiTietPNH(ma);
+			    	System.out.println(dsChiTiet);
+			    	
+			    	XemPhieuNhapHangPage.txt_maPhieuNhap.setText(pnh.getMaPhieu());
+			    	XemPhieuNhapHangPage.dTP_phieuNhap.setDateTimePermissive(pnh.getThoiGianTao());
+			    	XemPhieuNhapHangPage.txt_maHoaDon.setText(pnh.getMaHoaDonNCC());
+			    	XemPhieuNhapHangPage.cb_NCC.setSelectedItem(pnh.getNhaCungCap().getTenNhaCungCap());
+			    	
+			    	XemPhieuNhapHangPage.txt_ghiChu.setText(pnh.getGhiChu());
+			    	
+			    	XemPhieuNhapHangPage.model_HH.setRowCount(0);
+			    	int stt = 1;
+			    	
+			    	for (ChiTietPhieuNhapHang ct : dsChiTiet) {
+			    		double giaChietKhau = (((ct.getChietKhau()*ct.getLoHang().getGiaNhap())/100)*ct.getSoLuong());
+			            double giaBan = (ct.getSoLuong()*ct.getLoHang().getGiaNhap())-giaChietKhau;
+			            
+			            
+			            XemPhieuNhapHangPage.model_HH.addRow(new Object[] {stt, ct.getDonViTinh().getHangHoa().getMaHangHoa(),ct.getDonViTinh().getHangHoa().getTenHangHoa() ,ct.getLoHang().getSoLo(), ct.getLoHang().getNgaySanXuat(),
+								ct.getLoHang().getHanSuDung(), ct.getDonViTinh().getTenDonViTinh(), ct.getSoLuong(), ct.getLoHang().getGiaNhap(),ct.getLoHang().getHangHoa().getThue(), ct.getChietKhau(), giaBan});
+					}
+			    	
+			    	double tongGiamGia = 0;
+			        double tongTienHang = 0;
+			        double tongThanhTien = 0;
+			        double tienNhap = 0;
+			        double soLuong = 0;
+			        for (int i = 0; i < XemPhieuNhapHangPage.model_HH.getRowCount(); i++) {
+			            tienNhap = Double.parseDouble(XemPhieuNhapHangPage.model_HH.getValueAt(i, 8).toString());
+			            soLuong = Double.parseDouble(XemPhieuNhapHangPage.model_HH.getValueAt(i, 7).toString());
+			            
+			            tongTienHang += tienNhap*soLuong;
+			            tongThanhTien += Double.parseDouble(XemPhieuNhapHangPage.model_HH.getValueAt(i, 11).toString());
+			            tongGiamGia =  tongTienHang - tongThanhTien;
+			            
+			        }
+			        XemPhieuNhapHangPage.txt_tongTienNhap.setText(Double.toString(tongTienHang));
+			        XemPhieuNhapHangPage.txt_tongThanhTien.setText(Double.toString(tongThanhTien));
+			        XemPhieuNhapHangPage.txt_chietKhau.setText(Double.toString(tongGiamGia));
+				}
+			}
+		});
         
 	}
     public void setCellEditable() {
@@ -107,15 +193,15 @@ public class NhapHangPage extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txt_timKiemTheoNCC = new javax.swing.JTextField();
+        btn_timKiem = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
-        datePicker2 = new com.github.lgooddatepicker.components.DatePicker();
-        jTextField3 = new javax.swing.JTextField();
+        dp_dateFrom = new com.github.lgooddatepicker.components.DatePicker();
+        dp_dateTo = new com.github.lgooddatepicker.components.DatePicker();
+        txt_timKiemTheoMa = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
@@ -128,22 +214,30 @@ public class NhapHangPage extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(2013, 130));
 
-        jTextField2.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jTextField2.setText("Tìm kiếm theo nhà cung cấp");
-        jTextField2.setForeground(new java.awt.Color(204, 204, 204));
-        jTextField2.setPreferredSize(new java.awt.Dimension(200, 26));
-        jTextField2.setToolTipText("");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txt_timKiemTheoNCC.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        txt_timKiemTheoNCC.setText("Tìm kiếm theo nhà cung cấp");
+        txt_timKiemTheoNCC.setForeground(new java.awt.Color(204, 204, 204));
+        txt_timKiemTheoNCC.setPreferredSize(new java.awt.Dimension(200, 26));
+        txt_timKiemTheoNCC.setToolTipText("");
+        txt_timKiemTheoNCC.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txt_timKiemTheoNCCFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_timKiemTheoNCCFocusLost(evt);
+            }
+        });
+        txt_timKiemTheoNCC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txt_timKiemTheoNCCActionPerformed(evt);
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-search-16.png"))); // NOI18N
-        jButton1.setText("Tìm kiếm");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_timKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-search-16.png"))); // NOI18N
+        btn_timKiem.setText("Tìm kiếm");
+        btn_timKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_timKiemActionPerformed(evt);
             }
         });
 
@@ -159,18 +253,26 @@ public class NhapHangPage extends javax.swing.JPanel {
         jLabel6.setText("Tìm kiếm theo nhà cung cấp");
         jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
 
-        datePicker1.setMinimumSize(new java.awt.Dimension(200, 21));
+        dp_dateFrom.setMinimumSize(new java.awt.Dimension(200, 21));
 
-        datePicker2.setMinimumSize(new java.awt.Dimension(200, 21));
+        dp_dateTo.setMinimumSize(new java.awt.Dimension(200, 21));
 
-        jTextField3.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jTextField3.setText("Tìm kiếm theo mã phiếu");
-        jTextField3.setForeground(new java.awt.Color(204, 204, 204));
-        jTextField3.setPreferredSize(new java.awt.Dimension(200, 26));
-        jTextField3.setToolTipText("");
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        txt_timKiemTheoMa.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        txt_timKiemTheoMa.setText("Tìm kiếm theo mã phiếu");
+        txt_timKiemTheoMa.setForeground(new java.awt.Color(204, 204, 204));
+        txt_timKiemTheoMa.setPreferredSize(new java.awt.Dimension(200, 26));
+        txt_timKiemTheoMa.setToolTipText("");
+        txt_timKiemTheoMa.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txt_timKiemTheoMaFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txt_timKiemTheoMaFocusLost(evt);
+            }
+        });
+        txt_timKiemTheoMa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                txt_timKiemTheoMaActionPerformed(evt);
             }
         });
 
@@ -215,23 +317,23 @@ public class NhapHangPage extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dp_dateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(100, 100, 100)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(datePicker2, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dp_dateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(100, 100, 100)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_timKiemTheoMa, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(75, 75, 75)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_timKiemTheoNCC, javax.swing.GroupLayout.PREFERRED_SIZE, 373, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(btn_timKiem)))
                 .addGap(409, 409, 409))
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -247,14 +349,18 @@ public class NhapHangPage extends javax.swing.JPanel {
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_timKiemTheoNCC, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(datePicker2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(dp_dateFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dp_dateTo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_timKiemTheoMa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_timKiem)))
                 .addGap(848, 848, 848))
         );
+
+        LocalDate currentDate = LocalDate.now();
+        dp_dateFrom.setDate(currentDate);
+        dp_dateTo.setDate(currentDate);
 
         add(jPanel2, java.awt.BorderLayout.NORTH);
 
@@ -273,22 +379,132 @@ public class NhapHangPage extends javax.swing.JPanel {
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_timKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timKiemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    	String ma = txt_timKiemTheoNCC.getText();
+    	LocalDate dateFrom = dp_dateFrom.getDate();
+    	LocalDate dateTo = dp_dateTo.getDate();
+    	
+    	System.out.println(dateFrom);
+    	if (dateFrom == null && dateTo == null) {
+        	dateFrom = LocalDate.now();
+        	dateTo = LocalDate.now();
+		}else if(dateTo == null){
+			dateTo = dateFrom;
+		}
+    	else {
+    		dateFrom = dateTo;
+    	}
+    	
+    	if (ma.isEmpty()) {
+    		loadDataPNH();
+			showMessage("Nhập thông tin cần tìm!");
+		}else {
+			List<PhieuNhapHang> dsPNH = phieuNH_dao.getPNHTheoTenNCCVaTheoNgay(ma, dateFrom, dateTo);
+			int stt = 1;
+			model_phieuNhap.setRowCount(0);
+			for (PhieuNhapHang p : dsPNH) {
+				
+	    		model_phieuNhap.addRow(new Object[] {stt, p.getMaPhieu(), p.getThoiGianTao(), p.getNhaCungCap().getTenNhaCungCap(),
+	    				10000, p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuNhapHang.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
+	    		
+	    		stt++;
+			}
+		}
+    }//GEN-LAST:event_btn_timKiemActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txt_timKiemTheoNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_timKiemTheoNCCActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    	String ma = txt_timKiemTheoNCC.getText();
+    	LocalDate dateFrom = dp_dateFrom.getDate();
+    	LocalDate dateTo = dp_dateTo.getDate();
+    	
+    	System.out.println(dateFrom);
+    	if (dateFrom == null && dateTo == null) {
+        	dateFrom = LocalDate.now();
+        	dateTo = LocalDate.now();
+		}else if(dateTo == null){
+			dateTo = dateFrom;
+		}
+    	else {
+    		dateFrom = dateTo;
+    	}
+    	
+    	if (ma.isEmpty()) {
+    		loadDataPNH();
+			showMessage("Nhập thông tin cần tìm!");
+		}else {
+			List<PhieuNhapHang> dsPNH = phieuNH_dao.getPNHTheoTenNCCVaTheoNgay(ma, dateFrom, dateTo);
+			int stt = 1;
+			model_phieuNhap.setRowCount(0);
+			for (PhieuNhapHang p : dsPNH) {
+				
+	    		model_phieuNhap.addRow(new Object[] {stt, p.getMaPhieu(), p.getThoiGianTao(), p.getNhaCungCap().getTenNhaCungCap(),
+	    				10000, p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuNhapHang.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
+	    		
+	    		stt++;
+			}
+		}
+    	
+    	
+    	
+    	txt_timKiemTheoNCC.selectAll();
+    	txt_timKiemTheoNCC.requestFocus();
+    }//GEN-LAST:event_txt_timKiemTheoNCCActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void txt_timKiemTheoMaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_timKiemTheoMaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    	
+    	if (txt_timKiemTheoMa.getText().isEmpty()) {
+			showMessage("Nhập thông tin cần tìm!");
+		}else {
+			PhieuNhapHang p = phieuNH_dao.getPNHTheoMa(txt_timKiemTheoMa.getText());
+			
+	    	if (p != null) {
+	    		model_phieuNhap.setRowCount(0);
+	    		model_phieuNhap.addRow(new Object[] {1, p.getMaPhieu(), p.getThoiGianTao(), p.getNhaCungCap().getTenNhaCungCap(),
+	    				10000, p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuNhapHang.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
+			}else {
+				showMessage("Không tìm thấy!");
+			}
+		}
+    	
+    	
+    	
+    	txt_timKiemTheoMa.selectAll();
+    	txt_timKiemTheoMa.requestFocus();
+    }//GEN-LAST:event_txt_timKiemTheoMaActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    
+
+	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         AddContent.addContent(new TaoPhieuNhapHangPage());
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txt_timKiemTheoMaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_timKiemTheoMaFocusLost
+        // TODO add your handling code here:
+    	txt_timKiemTheoMa.setText("Tìm kiếm theo mã phiếu");
+    	txt_timKiemTheoMa.setForeground(new Color(204,204,204));
+    }//GEN-LAST:event_txt_timKiemTheoMaFocusLost
+
+    private void txt_timKiemTheoMaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_timKiemTheoMaFocusGained
+        // TODO add your handling code here:
+    	txt_timKiemTheoMa.setText("");
+    	txt_timKiemTheoMa.setForeground(Color.black);
+    }//GEN-LAST:event_txt_timKiemTheoMaFocusGained
+
+    private void txt_timKiemTheoNCCFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_timKiemTheoNCCFocusGained
+        // TODO add your handling code here:
+    	txt_timKiemTheoNCC.setText("");
+    	txt_timKiemTheoNCC.setForeground(Color.black);
+    }//GEN-LAST:event_txt_timKiemTheoNCCFocusGained
+
+    private void txt_timKiemTheoNCCFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_timKiemTheoNCCFocusLost
+        // TODO add your handling code here:
+    	txt_timKiemTheoNCC.setText("Tìm kiếm theo nhà cung cấp");
+    	txt_timKiemTheoNCC.setForeground(new Color(204,204,204));
+    }//GEN-LAST:event_txt_timKiemTheoNCCFocusLost
 
     /**
      * @param args the command line arguments
@@ -325,10 +541,14 @@ public class NhapHangPage extends javax.swing.JPanel {
         });
     }
   
+    private void showMessage(String string) {
+		// TODO Auto-generated method stub
+		JOptionPane.showMessageDialog(this, string);
+	}
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.github.lgooddatepicker.components.DatePicker datePicker1;
-    private com.github.lgooddatepicker.components.DatePicker datePicker2;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btn_timKiem;
+    private com.github.lgooddatepicker.components.DatePicker dp_dateFrom;
+    private com.github.lgooddatepicker.components.DatePicker dp_dateTo;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -340,7 +560,7 @@ public class NhapHangPage extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField txt_timKiemTheoMa;
+    private javax.swing.JTextField txt_timKiemTheoNCC;
     // End of variables declaration//GEN-END:variables
 }

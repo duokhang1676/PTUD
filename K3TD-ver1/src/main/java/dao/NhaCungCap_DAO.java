@@ -101,4 +101,32 @@ public class NhaCungCap_DAO {
          }
          return dsNhaCungCap;
      }
+     public NhaCungCap timNhaCCTheoTen(String tenNCC) {
+    	ConnectDB.getInstance();
+ 		Connection con = ConnectDB.getConnection();
+ 		PreparedStatement stmt = null;
+ 		try {
+			String sql = "Select * from NhaCungCap where TenNhaCungCap = ? or MaNhaCungCap = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, tenNCC);
+			stmt.setString(2, tenNCC);
+			
+			ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                String ma = rs.getString(1);
+                String ten = rs.getString(2);
+                String sdt = rs.getString(3);
+                String diachi = rs.getString(4);
+                String email = rs.getString(5);
+                String ghichu = rs.getString(6);
+                TrangThaiNCC ttNCC = trangThaiHoatDong(rs.getString(7));
+                NhaCungCap nCC = new NhaCungCap(ma, ten, sdt, diachi, email, ghichu, ttNCC);
+                return nCC;
+            }
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
