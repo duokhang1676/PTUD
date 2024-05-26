@@ -110,16 +110,65 @@ public class DonThuocMauDao {
 				ChiTietDonThuocMau ct = new ChiTietDonThuocMau(donThuocMau, lieuDung, soLuong, dvt);
 				
 				dsChiTietDonThuocMau.add(ct);
-				return dsChiTietDonThuocMau;
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-    	return null;
+//    	System.out.println(dsChiTietDonThuocMau);
+    	return dsChiTietDonThuocMau;
     }
-    
-    
-    
+    public boolean xoaChiTietDonThuocMau ( String maDonThuocMau , int MaDonViTinh) {
+    	Connection con  = ConnectDB.getInstance().getConnection();
+    	String sql = "DELETE FROM dbo.ChiTietDonThuocMau WHERE MaDonThuocMau = '"+maDonThuocMau+"'  AND MaDonViTinh = ? " ;
+    	DonThuocMauDao dtm_dao = new DonThuocMauDao();
+    	PreparedStatement stmt  = null;
+    	int n = 0;
+    	try {
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, MaDonViTinh);
+			n = stmt.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+    	return n >0;
+    }
+    public boolean getONEChiTietDonThuocMau ( String maDonThuocMau , int MaDonViTinh) {
+    	Connection con  = ConnectDB.getInstance().getConnection();
+    	String sql = "SELECT * FROM dbo.ChiTietDonThuocMau WHERE MaDonThuocMau = ?  AND MaDonViTinh = ? " ;
+    	DonThuocMauDao dtm_dao = new DonThuocMauDao();
+    	PreparedStatement stmt  = null;
+    	int n = 0;
+    	try {
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, maDonThuocMau);
+			stmt.setInt(2, MaDonViTinh);
+			n = stmt.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+    	return n >0;
+    }
+    public boolean updateDonThuocMau(DonThuocMau dtm) {
+    	int n =0;
+    	Connection con = ConnectDB.getInstance().getConnection();
+    	String sql = "UPDATE DonThuocMau SET TenDonThuocMau = ? , NgayBatDauApDung = ?, GhiChu = ? , TrangThai = ?  ";
+    	PreparedStatement stmt = null;
+    	try {
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, dtm.getTenDonThuocMau());
+			stmt.setDate(2, Date.valueOf(dtm.getNgayBatDauApDung()));
+			stmt.setString(3, dtm.getGhiChu());
+			stmt.setString(4, dtm.getTrangThaiDonThuocMau().toString());
+			n = stmt.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+    	return n > 0;
+    			
+    }
 }
 

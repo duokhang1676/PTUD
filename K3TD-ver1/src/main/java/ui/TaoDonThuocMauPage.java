@@ -12,17 +12,22 @@ import java.util.EventObject;
 import java.util.List;
 
 import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
 
 import components.AddContent;
 import components.*;
 import dao.DonThuocMauDao;
+import dao.DonViTinhDao;
 import dao.NhaCungCap_DAO;
 import entities.*;
 import java.sql.SQLException;
@@ -54,7 +59,7 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
         }
         ResizeContent.resizeContent(this);
         jPanel1.add(jscp_donThuocMau(),BorderLayout.CENTER);
-
+        setTable();
         
     }
 
@@ -347,7 +352,7 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
 
     private void btn_TimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimActionPerformed
         // TODO add your handling code here:
-        
+        loadData();
     }//GEN-LAST:event_btn_TimActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -403,15 +408,18 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
     protected static javax.swing.JTextArea txt_ghiChu;
     private javax.swing.JTextField txt_tim;
     // End of variables declaration//GEN-END:variables
+	private JComboBox cb_dvt;
     
    
     private JScrollPane jscp_donThuocMau(){
-        String[] colNames = {"STT ","Mã hàng hoá","Tên hàng hoá ","đơn vị tính","số lượng", "liều dùng"};
+        String[] colNames = {"STT ","Mã hàng hoá","Tên hàng hoá ","Đơn vị tính","Số Lượng", "Liều Dùng","Xoá"};
      
         table_model2 = new DefaultTableModel(colNames, 0);
         pnl_Scroll = new JScrollPane(jtable_DonThuocMau =new JTable(table_model2));
         jtable_DonThuocMau.addMouseListener(this);
-        setCellEditable();
+//        setCellEditable();
+    	cb_dvt = new JComboBox<>();
+        jtable_DonThuocMau.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(cb_dvt));
         return pnl_Scroll;
     }
     public void setCellEditable() {
@@ -425,7 +433,24 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
 				});
 			}
 	}
-
+    
+    
+    private static int  n = 0;
+    
+    private  void loadData () {
+    	table_model2.setRowCount(0);
+    	DonViTinhDao dvt_DAO =new DonViTinhDao();
+    	String ma = txt_tim.getText();
+    	DonViTinh   hanghoa  =  dvt_DAO.layDVTTheoMa(ma);
+    	n++;
+    	table_model2.addRow(new Object [] {
+    			n,
+    			hanghoa.getHangHoa().getMaHangHoa(),
+    			hanghoa.getHangHoa().getTenHangHoa(),
+    			hanghoa.getTenDonViTinh(),
+    			
+    	});
+    }
     private DonThuocMau revert_DonThuocMau() {
     	String tenDonThuoc= txt_Ten.getText();
     	LocalDate ngayBatDauApDung = date_ngayApdung.getDate();
@@ -466,11 +491,6 @@ public void mouseClicked(MouseEvent e) {
         }
 }
 
-
-
-
-
-
 @Override
 public void mousePressed(MouseEvent e) {
 	// TODO Auto-generated method stub
@@ -493,4 +513,41 @@ public void mouseExited(MouseEvent e) {
 	// TODO Auto-generated method stub
 	
 }
+private void setTable() {
+	TableColumn column = jtable_DonThuocMau.getColumnModel().getColumn(4);
+    column.setCellEditor(new SpinnerEditor());
+    TableActionEvent event = new TableActionEvent() {
+		@Override
+		public void onDelete(int row) {
+			if(jtable_DonThuocMau.isEditing()) {
+				jtable_DonThuocMau.getCellEditor().stopCellEditing();
+			}
+			DefaultTableModel model = (DefaultTableModel)jtable_DonThuocMau.getModel();
+			model.removeRow(row);
+			reload();
+		}	
+	};
+	jtable_DonThuocMau.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditor(event));
+	jtable_DonThuocMau.getColumnModel().getColumn(6).setCellRenderer(new ButtonRender());
+    
+	table_model2.addTableModelListener(new TableModelListener() {
+        @Override
+        public void tableChanged(TableModelEvent e) {//Bắt sự kiện thay đổi số lượng trên jtable
+            if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == 6) {
+            	int row = jtable_DonThuocMau.getSelectedRow();
+            	if(row==-1)return; //Trường hợp sl thay đổi khi thêm mới 
+               reload();
+            }
+        }	
+    });
+}
+
+private void reload() {
+	// TODO Auto-generated method stub
+	
+}
+
+
+
+
 }
