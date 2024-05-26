@@ -38,7 +38,7 @@ public class HoaDonPage extends javax.swing.JPanel {
         initComponents();
        
         addTableHoaDon();
-        loadDataTableHD();
+       // loadDataTableHD();
     }
 
     private void loadDataTableHD() {

@@ -39,7 +39,20 @@ public class FormatJtable {
 			
 		}
 	}
-	
+	public static void setCellEditableForTH(JTable tb) {
+		for (int i = 0; i < tb.getColumnCount(); i++) {
+			if(i!=6&&i!=9) {
+				tb.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(new JTextField()) {
+					@Override
+					public boolean isCellEditable(EventObject e) {
+						// Trả về false để ngăn chặn chỉnh sửa trực tiếp
+						return false;
+					}
+				});
+			}
+			
+		}
+	}
 	
 	public static void setFontJtable(JTable tb) {
 		JTableHeader tableHeader = tb.getTableHeader();

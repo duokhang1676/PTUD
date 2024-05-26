@@ -2,12 +2,18 @@ package components;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Formater {
 	public static String decimalFormat(double number) {
 		DecimalFormat decimalFormat = new DecimalFormat("#,###");
         String formattedNumber = decimalFormat.format(number);
         return formattedNumber;
+	}
+	public static String dateTimeFormater(LocalDateTime time) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd - HH:mm:ss");
+		return time.format(formatter);
 	}
     public static double roundToNearest500(double number) {
         // Chia số ban đầu cho 500

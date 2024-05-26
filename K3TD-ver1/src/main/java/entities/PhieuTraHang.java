@@ -8,16 +8,20 @@ public class PhieuTraHang {
 	private HoaDon hoaDon;
 	private String ghiChu;
 	private Ca ca;
+	private NhanVien nhanVien;
 	private double tongTien;
 	private TrangThaiPhieuTraHang trangThai;
-	public PhieuTraHang(String maPhieu, LocalDateTime thoiGianTao, HoaDon hoaDon, String ghiChu, Ca ca, double tongTien,
-			TrangThaiPhieuTraHang trangThai) {
+	
+	
+	public PhieuTraHang(String maPhieu, LocalDateTime thoiGianTao, HoaDon hoaDon, String ghiChu, Ca ca,
+			NhanVien nhanVien, double tongTien, TrangThaiPhieuTraHang trangThai) {
 		super();
 		this.maPhieu = maPhieu;
 		this.thoiGianTao = thoiGianTao;
 		this.hoaDon = hoaDon;
 		this.ghiChu = ghiChu;
 		this.ca = ca;
+		this.nhanVien = nhanVien;
 		this.tongTien = tongTien;
 		this.trangThai = trangThai;
 	}
@@ -66,10 +70,20 @@ public class PhieuTraHang {
 	public void setTrangThai(TrangThaiPhieuTraHang trangThai) {
 		this.trangThai = trangThai;
 	}
+	
+	public NhanVien getNhanVien() {
+		return nhanVien;
+	}
+	public void setNhanVien(NhanVien nhanVien) {
+		this.nhanVien = nhanVien;
+	}
 	@Override
 	public String toString() {
 		return "PhieuTraHang [maPhieu=" + maPhieu + ", thoiGianTao=" + thoiGianTao + ", hoaDon=" + hoaDon + ", ghiChu="
-				+ ghiChu + ", ca=" + ca + ", tongTien=" + tongTien + ", trangThai=" + trangThai + "]";
+				+ ghiChu + ", ca=" + ca + ", nhanVien=" + nhanVien + ", tongTien=" + tongTien + ", trangThai="
+				+ trangThai + "]";
 	}
+	
+	
 	
 }

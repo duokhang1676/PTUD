@@ -47,7 +47,7 @@ public class RootFrame extends javax.swing.JFrame {
 //        jPanelHeader.setPreferredSize(new Dimension(1400,60));
 //        jPanelMenu.setPreferredSize(new Dimension((int)screenSize.getWidth(),70));
 //        
-        System.out.println(screenSize);
+//        System.out.println(screenSize);
     }
     /**
      * This method is called from within the constructor to initialize the form.

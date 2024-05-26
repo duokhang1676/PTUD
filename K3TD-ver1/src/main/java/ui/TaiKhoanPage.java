@@ -33,6 +33,7 @@ public class TaiKhoanPage extends javax.swing.JPanel {
 
         content = new javax.swing.JPanel();
         pnlAvatar = new javax.swing.JPanel();
+        jl_userIcon = new javax.swing.JLabel();
         pnlHoTen = new javax.swing.JPanel();
         lblHoTen = new javax.swing.JLabel();
         txtHoTen = new javax.swing.JTextField();
@@ -68,15 +69,23 @@ public class TaiKhoanPage extends javax.swing.JPanel {
         pnlAvatar.setAlignmentY(0.0F);
         pnlAvatar.setBackground(new java.awt.Color(193, 219, 208));
 
+        jl_userIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-user-100.png"))); // NOI18N
+
         javax.swing.GroupLayout pnlAvatarLayout = new javax.swing.GroupLayout(pnlAvatar);
         pnlAvatar.setLayout(pnlAvatarLayout);
         pnlAvatarLayout.setHorizontalGroup(
             pnlAvatarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 595, Short.MAX_VALUE)
+            .addGroup(pnlAvatarLayout.createSequentialGroup()
+                .addGap(249, 249, 249)
+                .addComponent(jl_userIcon)
+                .addContainerGap(309, Short.MAX_VALUE))
         );
         pnlAvatarLayout.setVerticalGroup(
             pnlAvatarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 127, Short.MAX_VALUE)
+            .addGroup(pnlAvatarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jl_userIcon)
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pnlHoTen.setBackground(new java.awt.Color(193, 219, 208));
@@ -451,6 +460,7 @@ public class TaiKhoanPage extends javax.swing.JPanel {
     private com.github.lgooddatepicker.components.DatePicker datePicker2;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JLabel jl_userIcon;
     private javax.swing.JLabel lblChucVu;
     private javax.swing.JLabel lblGioiTinh;
     private javax.swing.JLabel lblHoTen;

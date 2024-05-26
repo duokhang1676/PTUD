@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import entities.NhaCungCap;
 import entities.TrangThaiNCC;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -130,6 +131,29 @@ public class NhaCungCap_DAO {
 		}
     	return dsNhaCungCap4;
     }
-     
+      public NhaCungCap getNCCByMa(String maNCC){
+          try {
+              Connection con = ConnectDB.getInstance().getConnection();
+              String sql = "SELECT * FROM NhaCungCap where manhacungcap = ?";
+              PreparedStatement stmt = null;
+  			stmt = con.prepareStatement(sql);
+  			stmt.setString(1,maNCC);
+  			ResultSet rs = stmt.executeQuery();
+              while (rs.next()){
+                  String ten = rs.getString("TenNhaCungCap");
+                  String soDienThoai = rs.getString("SoDienThoai");
+                  String diaChi = rs.getString("DiaChi");
+                  String eMail  = rs.getString("Email");
+                  String ghiChu = rs.getString("GhiChu");
+                  TrangThaiNCC ttNCC = trangThaiHoatDong(rs.getString("TrangThai"));
+                  NhaCungCap nhaCC = new NhaCungCap(maNCC, ten, soDienThoai, diaChi, eMail, ghiChu, ttNCC);
+                  return nhaCC;
+          
+              }
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
+          return null;
+      }
      
 }

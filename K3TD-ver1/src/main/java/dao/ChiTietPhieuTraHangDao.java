@@ -9,9 +9,37 @@ import java.util.List;
 
 import db.ConnectDB;
 import entities.ChiTietHoaDon;
+import entities.ChiTietPhieuTraHang;
 import entities.DonViTinh;
+import entities.PhieuTraHang;
 
 public class ChiTietPhieuTraHangDao {
+	public boolean addPhieuTraHang(ChiTietPhieuTraHang chiTietPhieuTraHang) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection(); 
+		PreparedStatement stmt = null;
+		String sql = "insert into ChiTietPhieuTraHang (maphieutrahang, soluongtra, dongia, madonvitinh, lydotra, solo,thanhtien)"
+				+ "values (?,?,?,?,?,?,?)";
+		try {
+			stmt = con.prepareStatement(sql);
+			
+			stmt.setString(1, chiTietPhieuTraHang.getPhieuTraHang().getMaPhieu());
+			stmt.setInt(2, chiTietPhieuTraHang.getSoLuongTra());
+			stmt.setDouble(3, chiTietPhieuTraHang.getDonGia());
+			stmt.setInt(4, chiTietPhieuTraHang.getDonViTinh().getMaDonViTinh());
+			stmt.setString(5, chiTietPhieuTraHang.getLyDoTra());
+			stmt.setString(6, chiTietPhieuTraHang.getLoHang().getSoLo());
+			stmt.setDouble(7, chiTietPhieuTraHang.tinhThanhTien());
+			
+			stmt.executeUpdate();
+			stmt.close();
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
 	public List<ChiTietHoaDon> getDSDonViTinh(LocalDate from, LocalDate to){
 		List<ChiTietHoaDon> dsDVT = new ArrayList<>();
 		ConnectDB.getInstance();

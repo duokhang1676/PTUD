@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import db.ConnectDB;
+import entities.Ca;
 import entities.HoaDon;
 import entities.KhachHang;
 import entities.NhaCungCap;
@@ -20,11 +21,80 @@ import entities.PhieuNhapHang;
 import entities.PhieuTraHang;
 import entities.PhieuXuatTra;
 import entities.TrangThaiPhieuNhapHang;
+import entities.TrangThaiPhieuTraHang;
 import entities.TrangThaiPhieuXuatTra;
 
 public class PhieuTraHangDao {
 	public PhieuTraHangDao() {
 		// TODO Auto-generated constructor stub
+	}
+	public PhieuTraHang getPhieuTraHangByMa(String ma) {
+		try {
+			db.ConnectDB.getInstance();
+			Connection con = db.ConnectDB.getConnection();
+			String sql = "Select * from phieutrahang where maphieutrahang = ? or mahoadon = ?";
+			PreparedStatement stmt = null;
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, ma);
+			stmt.setString(2, ma);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				String maPhieu = rs.getString("maphieutrahang");
+				String tgString = rs.getString("thoigiantao");
+				// Định dạng mẫu để phân tích
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+                
+                // Chuyển chuỗi thành đối tượng LocalDateTime
+                LocalDateTime thoiGianTao = LocalDateTime.parse(tgString, formatter);
+				HoaDon hd = new HoaDonDao().getHDbyMa(rs.getString("mahoadon"));
+				String ghiChu = rs.getString("ghichu");
+				Ca ca = new Ca_DAO().getCaByMaCa(rs.getString("maca"));
+				NhanVien nv = new NhanVien_DAO().getNVbyMa(rs.getString("manhanvien"));
+				double tongTien = rs.getDouble("tongtien");
+				TrangThaiPhieuTraHang tt = TrangThaiPhieuTraHang.valueOf(rs.getString("trangthai"));
+				PhieuTraHang phieuTraHang = new PhieuTraHang(maPhieu, thoiGianTao, hd, ghiChu, ca, nv, tongTien, tt);
+				return phieuTraHang;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public List<PhieuTraHang> getDSPhieuTraHangFromTo(LocalDate from, LocalDate to, TrangThaiPhieuTraHang tt) {
+		try {
+			List<PhieuTraHang> dsPhieuTraHang = new ArrayList<>();
+			db.ConnectDB.getInstance();
+			Connection con = db.ConnectDB.getConnection();
+			String sql = "Select * from phieutrahang where CAST(ThoiGianTao AS DATE) BETWEEN ? AND ? AND TrangThai = ?";
+			PreparedStatement stmt = null;
+			stmt = con.prepareStatement(sql);
+			stmt.setDate(1, Date.valueOf(from));
+			stmt.setDate(2, Date.valueOf(to));
+			stmt.setString(3, tt.toString());
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				String maPhieu = rs.getString("maphieutrahang");
+				String tgString = rs.getString("thoigiantao");
+				// Định dạng mẫu để phân tích
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+                
+                // Chuyển chuỗi thành đối tượng LocalDateTime
+                LocalDateTime thoiGianTao = LocalDateTime.parse(tgString, formatter);
+				HoaDon hd = new HoaDonDao().getHDbyMa(rs.getString("mahoadon"));
+				String ghiChu = rs.getString("ghichu");
+				Ca ca = new Ca_DAO().getCaByMaCa(rs.getString("maca"));
+				NhanVien nv = new NhanVien_DAO().getNVbyMa(rs.getString("manhanvien"));
+				double tongTien = rs.getDouble("tongtien");
+				TrangThaiPhieuTraHang trangThai = TrangThaiPhieuTraHang.valueOf(rs.getString("trangthai"));
+				PhieuTraHang phieuTraHang = new PhieuTraHang(maPhieu, thoiGianTao, hd, ghiChu, ca, nv, tongTien, trangThai);
+				dsPhieuTraHang.add(phieuTraHang);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return null;
 	}
 	public double getTongTienHoaDonTraTrongKhoang(LocalDate from, LocalDate to) {
 		double tongTien = 0;
@@ -154,5 +224,32 @@ public class PhieuTraHangDao {
 			return null;
 		}
 		return dsHD;
+	}
+	public boolean addPhieuTraHang(PhieuTraHang phieuTraHang) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection(); 
+		PreparedStatement stmt = null;
+		String sql = "insert into PhieuTraHang (maphieutrahang, mahoadon, ghichu, maca,manhanvien, TongTien) "
+				+ "values (?,?,?,?,?,?)";
+		try {
+			stmt = con.prepareStatement(sql);
+			
+			stmt.setString(1, phieuTraHang.getMaPhieu());
+			stmt.setString(2, phieuTraHang.getHoaDon().getMaHoaDon());
+			stmt.setString(3, phieuTraHang.getGhiChu());
+			if(phieuTraHang.getCa()!=null)
+				stmt.setString(4, phieuTraHang.getCa().getMaCa());
+			else
+				stmt.setString(4, null);
+			stmt.setString(5, phieuTraHang.getNhanVien().getMaNhanVien());
+			stmt.setDouble(6, phieuTraHang.getTongTien());
+			stmt.executeUpdate();
+			stmt.close();
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

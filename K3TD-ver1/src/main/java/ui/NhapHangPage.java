@@ -4,8 +4,6 @@
  */
 package ui;
 
-import components.AddContent;
-import components.ResizeContent;
 import dao.PhieuNhapHangDao;
 import entities.PhieuNhapHang;
 import entities.TrangThaiPhieuNhapHang;
@@ -23,6 +21,9 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
+
+import components.AddContent;
+import components.ResizeContent;
 
 /**
  *

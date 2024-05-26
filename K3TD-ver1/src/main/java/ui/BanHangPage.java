@@ -4,16 +4,6 @@
  */
 package ui;
 
-import components.AddContent;
-import components.ButtonRender;
-import components.FormatJtable;
-import components.Formater;
-import components.GeneratePK;
-import components.LoginInfo;
-import components.ResizeContent;
-import components.SpinnerEditor;
-import components.TableActionCellEditor;
-import components.TableActionEvent;
 import dao.Ca_DAO;
 import dao.ChiTietHoaDonDao;
 import dao.DonThuocMau_DAO;
@@ -76,6 +66,17 @@ import javax.swing.text.PlainDocument;
 import javax.swing.text.DocumentFilter.FilterBypass;
 
 import org.json.simple.parser.ParseException;
+
+import components.AddContent;
+import components.ButtonRender;
+import components.FormatJtable;
+import components.Formater;
+import components.GeneratePK;
+import components.LoginInfo;
+import components.ResizeContent;
+import components.SpinnerEditor;
+import components.TableActionCellEditor;
+import components.TableActionEvent;
 
 /**
  *

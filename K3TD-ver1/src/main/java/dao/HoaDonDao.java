@@ -111,7 +111,7 @@ public class HoaDonDao {
 		PreparedStatement stmt = null;
 		String sql = "insert into HoaDon (MaHoaDon, ThoiGianLapHoaDon, MaNhanVien, MaKhachHang, TienKhachTra, DiemQuyDoi, TongTien, TienThua, GhiChu, MaCa, TrangThai, ThanhTien) "
 				+ "values (?,?,?,?,?,?,?,?,?,?,?,?)";
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		try {
 			stmt = con.prepareStatement(sql);
 			
@@ -226,26 +226,27 @@ public class HoaDonDao {
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, ma);
 			ResultSet rs = stmt.executeQuery();
-			rs.next();
-			String maHD = rs.getString("MaHoaDon");
-			LocalDate tg = rs.getDate("ThoiGianLapHoaDon").toLocalDate();
-			LocalDateTime thoiGianLap = tg.atStartOfDay();
-			NhanVien nv = new NhanVien_DAO().getNVbyMa(rs.getString("MaNhanVien"));
-			
-			KhachHang kh = null;
-			if(rs.getString("MaKhachHang")!=null)
-				kh = new KhachHang_DAO().getKHbyMa(rs.getString("MaKhachHang"));
-			double tienKhachTra = rs.getDouble("TienKhachTra");
-			int diemQuyDoi = rs.getInt("DiemQuyDoi");
-			double tongTien = rs.getDouble("TongTien");
-			double tienThua = rs.getDouble("TienThua");
-			String ghiChu = rs.getString("GhiChu");
-			Ca ca = new Ca(rs.getString("MaCa"));
-			String trangThaiStr = rs.getString("TrangThai");
-			TrangThaiHoaDon trangThai = TrangThaiHoaDon.valueOf(trangThaiStr);
+			while(rs.next()) {
+				String maHD = rs.getString("MaHoaDon");
+				LocalDate tg = rs.getDate("ThoiGianLapHoaDon").toLocalDate();
+				LocalDateTime thoiGianLap = tg.atStartOfDay();
+				NhanVien nv = new NhanVien_DAO().getNVbyMa(rs.getString("MaNhanVien"));
 				
-			HoaDon hd = new HoaDon(maHD, thoiGianLap, nv, kh, tienKhachTra, diemQuyDoi, ghiChu, ca, trangThai, tongTien);
-			return hd;
+				KhachHang kh = null;
+				if(rs.getString("MaKhachHang")!=null)
+					kh = new KhachHang_DAO().getKHbyMa(rs.getString("MaKhachHang"));
+				double tienKhachTra = rs.getDouble("TienKhachTra");
+				int diemQuyDoi = rs.getInt("DiemQuyDoi");
+				double tongTien = rs.getDouble("TongTien");
+				double tienThua = rs.getDouble("TienThua");
+				String ghiChu = rs.getString("GhiChu");
+				Ca ca = new Ca(rs.getString("MaCa"));
+				String trangThaiStr = rs.getString("TrangThai");
+				TrangThaiHoaDon trangThai = TrangThaiHoaDon.valueOf(trangThaiStr);
+					
+				HoaDon hd = new HoaDon(maHD, thoiGianLap, nv, kh, tienKhachTra, diemQuyDoi, ghiChu, ca, trangThai, tongTien);
+				return hd;
+			}
 		
 		} catch (Exception e) {
 			// TODO: handle exception

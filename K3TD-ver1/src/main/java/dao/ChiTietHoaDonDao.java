@@ -7,13 +7,16 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import db.ConnectDB;
 import entities.Ca;
 import entities.ChiTietHoaDon;
 import entities.DonViTinh;
 import entities.HangHoa;
+import entities.LoHang;
 import entities.NhanVien;
 import entities.TrangThaiDonViTinh;
 
@@ -82,6 +85,54 @@ public class ChiTietHoaDonDao {
 			return null;
 		}
 	}
-	
+	public Map<LoHang, Integer> getDSLoHangByCTHD(int maDVT, String maHD){
+		Map<LoHang, Integer> dsLoHang = new HashMap<>();
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		try {
+			String sql = "select * from chitiethoadon_lohang where mahoadon = ? and madonvitinh = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, maHD);
+			stmt.setInt(2, maDVT);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				LoHang loHang = new LoHangDao().getLoHangBySoLo(rs.getString("solo"));
+				int soLuong = rs.getInt("soluong");
+				dsLoHang.put(loHang, soLuong);
+			}
+			return dsLoHang;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+	}
+	public List<ChiTietHoaDon> getDSCTHDbyMaHD(String maHD){
+		List<ChiTietHoaDon> dsCTHD = new ArrayList<>();
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		try {
+			String sql = "select * from chitiethoadon where mahoadon = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, maHD);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				DonViTinh dvt = new DonViTinhDao().timDVTTheoMa(rs.getInt("madonvitinh"));
+				int soLuong = rs.getInt("soluong");
+				double donGia = rs.getDouble("dongia");
+				double thanhTien = rs.getDouble("thanhtien");
+				Map<LoHang, Integer> dsLoHang = getDSLoHangByCTHD(dvt.getMaDonViTinh(), maHD);
+				ChiTietHoaDon cthd = new ChiTietHoaDon(null, soLuong, donGia, dvt, dsLoHang);
+				dsCTHD.add(cthd);
+			}
+			return dsCTHD;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 }
