@@ -58,6 +58,7 @@ public class PdfWriterExample {
             Paragraph p12 = new Paragraph("Ngày:",fontContent);
             p12.add(Chunk.TABBING);
 
+            //Cần chỉnh lại chỗ này
             LocalDateTime now = LocalDateTime.now();
             
             // Định dạng thời gian

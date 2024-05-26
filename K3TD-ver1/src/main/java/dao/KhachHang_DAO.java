@@ -16,12 +16,15 @@ import entities.NhomHang;
 import entities.TrangThaiHangHoa;
 
 import java.sql.Connection;
+import java.sql.Date;
+
 import db.ConnectDB;
 import entities.TrangThaiKhachHang;
 import entities.TrangThaiNhanVien;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -115,6 +118,56 @@ public class KhachHang_DAO {
         }
         return n >0;
     }
+
+    
+    public KhachHang layKhachHangTheoSDT(String sdt) {
+    	ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement pst = null;
+		try {
+			String sql = "SELECT * FROM KhachHang WHERE KhachHang.SoDienThoai LIKE ?";
+			pst = con.prepareStatement(sql);
+			pst.setString(1, sdt);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				String maKH = rs.getString(1);
+				String tenKH = rs.getString(2);
+				LocalDate ngaySinh = rs.getDate(3).toLocalDate();
+				boolean gioiTinh = rs.getBoolean(4);
+				String soDienThoai = rs.getString(5);
+				int diem = rs.getInt(6);
+				LocalDate ngayTao = rs.getDate(7).toLocalDate();
+				String ghiChu = rs.getString(8);
+				String trangThai = rs.getString(9);
+				TrangThaiKhachHang trangThaiKH = trangthaihoatdong(trangThai);			
+				KhachHang khach= new KhachHang(maKH, tenKH, ngaySinh, gioiTinh, soDienThoai, diem, ngayTao, ghiChu, trangThaiKH);
+				return khach;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+    
+    public boolean capNhatDiemKhachHang(KhachHang khachHang) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection(); 
+		PreparedStatement stmt = null;			
+		try {
+			String sql = "update KhachHang set DiemThuong = ? where KhachHang.MaKhachHang = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, khachHang.getDiemThuong());
+			stmt.setString(2, khachHang.getMaKhachHang());
+			stmt.executeUpdate();
+			stmt.close();
+			return true;
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+    }
     public ArrayList<ArrayList<Object>> timKiem_tuKhoa_TrangThai(String tuKhoa, String trangThai){
     	ArrayList<ArrayList<Object>> dsTamThoi = new ArrayList<>();
     	ArrayList<Object> doituong = new ArrayList<>();
@@ -196,6 +249,7 @@ public class KhachHang_DAO {
 				doituong.add(ttKh);
 				dsTamThoi.add(doituong);
 			}
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -247,8 +301,4 @@ public class KhachHang_DAO {
               }
           
   }
-   
-    
-    
-    
 }

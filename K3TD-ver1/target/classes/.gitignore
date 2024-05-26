@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 /ui/
 /META-INF/
+=======
+/components/
+>>>>>>> DuongKhang
 /dao/
 /components/
 /entities/
 /printer/
 /sampleUi/
+<<<<<<< HEAD
 /db/
+=======
+/ui/
+>>>>>>> DuongKhang

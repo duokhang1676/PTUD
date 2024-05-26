@@ -3,6 +3,7 @@ package components;
 import javax.swing.JPanel;
 
 import ui.BanHangPage;
+import ui.TaoPhieuTraHangPage;
 import ui.BanHangPage;
 
 public class PnlBanHang {
@@ -13,4 +14,5 @@ public class PnlBanHang {
 	public static BanHangPage bh5 = new BanHangPage();
 	public static BanHangPage bh6 = new BanHangPage();
 	public static int current = 1;
+	public static TaoPhieuTraHangPage th = new TaoPhieuTraHangPage();
 }
