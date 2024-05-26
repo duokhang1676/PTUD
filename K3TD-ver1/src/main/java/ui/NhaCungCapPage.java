@@ -516,6 +516,7 @@ public class NhaCungCapPage extends javax.swing.JPanel {
     private void luu() {
         entities.NhaCungCap ncc2 = revert_NhaCungCap();
     	nhaCC_dao.create(ncc2);
+    	loadDataNCC();
     }
     private void timTheoTuKhoa_TrangThai() {
     	NhaCungCap_DAO ds = new NhaCungCap_DAO();

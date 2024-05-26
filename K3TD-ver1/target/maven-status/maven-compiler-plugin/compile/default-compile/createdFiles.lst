@@ -11,7 +11,6 @@ ui\RootFrame$13.class
 ui\TaoHangHoaPage$17.class
 ui\TaoPhieuXuatTraPage$6.class
 dao\DonViTinhDao.class
-ui\DonThuocMauPage$1.class
 ui\RootFrame$19.class
 ui\RootFrame$20.class
 ui\TrangChu$2.class
@@ -30,7 +29,6 @@ ui\TaiKhoanPage$6.class
 ui\NhapHangPage$3.class
 ui\TaoHangHoaPage$16.class
 ui\ChiTietDonThuocMauPage$1.class
-ui\ChiTietDonThuocMauPage.class
 ui\HangHoaPage$6.class
 ui\TaoPhieuXuatTraPage$7.class
 ui\NhanVienPage$5.class
@@ -156,12 +154,10 @@ ui\RootFrame$8.class
 ui\TaoHangHoaPage$5.class
 ui\RootFrame$17.class
 ui\BanHangPage$6.class
-ui\DonThuocMauPage$3.class
 ui\TaoHangHoaPage$15.class
 ui\TrangChu$6.class
 ui\DoiMatKhauPage$1.class
 ui\BanHangPage.class
-ui\DonThuocMauPage.class
 ui\RootFrame$3.class
 ui\ThongKeKhachHang$3.class
 ui\DangNhap$4.class

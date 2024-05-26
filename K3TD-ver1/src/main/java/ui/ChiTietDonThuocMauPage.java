@@ -8,6 +8,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.List;
 
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -16,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import components.*;
+import dao.DonViTinhDao;
 import dao.NhaCungCap_DAO;
 import entities.*;
 /**
@@ -25,8 +27,8 @@ import entities.*;
 public class ChiTietDonThuocMauPage extends javax.swing.JPanel {
 
  private static javax.swing.table.DefaultTableModel table_model;   
-    private DefaultTableModel table_model2;
-
+    protected static DefaultTableModel table_model2;
+    private DonViTinhDao dvt_DAO;
 	
 	/**
      * Creates new form DonThuocMau_httk
@@ -75,7 +77,7 @@ public class ChiTietDonThuocMauPage extends javax.swing.JPanel {
         txt_tim = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table_Jtable = new javax.swing.JTable();
 
         setPreferredSize(new java.awt.Dimension(1920, 840));
         setLayout(new java.awt.BorderLayout());
@@ -320,8 +322,8 @@ public class ChiTietDonThuocMauPage extends javax.swing.JPanel {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Danh sách dữ liệu"));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jTable1.setModel(table_model2);
-        jScrollPane1.setViewportView(jTable1);
+        table_Jtable.setModel(table_model2);
+        jScrollPane1.setViewportView(table_Jtable);
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -378,17 +380,18 @@ public class ChiTietDonThuocMauPage extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlFooter;
     private javax.swing.JPanel pnlForm;
     private javax.swing.JPanel pnlHeader;
     private javax.swing.JPanel pnlNorth;
     private javax.swing.JPanel pnl_left;
+    private javax.swing.JTable table_Jtable;
     public static javax.swing.JTextField txt_Ma;
     protected static javax.swing.JTextField txt_Ten;
     protected static javax.swing.JTextArea txt_ghiChu;
     private javax.swing.JTextField txt_tim;
+	protected static JTable table_hanghoa;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {
   	  JFrame rs = new JFrame();
@@ -396,8 +399,15 @@ public class ChiTietDonThuocMauPage extends javax.swing.JPanel {
   	  rs.setVisible(true);
   }
     private DefaultTableModel table_Model(){
-        String[] colNames = {"Mã hàng hoá ","Tên hàng hoá","Liều dùng","Số lượng" , "Đơn vị tính"};
+        String[] colNames = {"STT","Mã hàng hoá ","Tên hàng hoá","Liều dùng","Số lượng" , "Đơn vị tính","Huỷ"};
         table_model2 = new DefaultTableModel(colNames, 0);
+        table_hanghoa = new JTable(table_model2);
+//        cb_DonViTinh = new JComboBox<>();
+        dvt_DAO = new DonViTinhDao();
         return  table_model2;
     }
+    
+
+//    tbl_DVT.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(cb_tenDVT));
+
 }

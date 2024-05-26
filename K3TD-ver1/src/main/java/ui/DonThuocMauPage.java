@@ -12,6 +12,7 @@ import java.util.EventObject;
 import java.util.List;
 
 import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -23,6 +24,7 @@ import javax.swing.table.JTableHeader;
 import components.AddContent;
 import components.*;
 import dao.DonThuocMauDao;
+import dao.DonViTinhDao;
 import dao.NhaCungCap_DAO;
 import entities.*;
 import java.sql.SQLException;
@@ -39,7 +41,8 @@ public class DonThuocMauPage extends javax.swing.JPanel implements MouseListener
     private DefaultTableModel table_model2;
     private JScrollPane pnl_Scroll;
     private JTable jtable_DonThuocMau;
-
+    private DonThuocMauDao dvt_DAO ;
+    private DonViTinhDao donViTinh_dao = new DonViTinhDao();
 	
 	/**
      * Creates new form DonThuocMau_httk
@@ -189,6 +192,8 @@ public class DonThuocMauPage extends javax.swing.JPanel implements MouseListener
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlNorth;
     private javax.swing.JTextField txt_tim;
+	private List<ChiTietDonThuocMau> DonThuoc_DAO;
+	private JComboBox cb_dvt;
     // End of variables declaration//GEN-END:variables
     
    
@@ -259,6 +264,18 @@ private void getDoiTuong() {
     ChiTietDonThuocMauPage.date_ngayApdung.setDate(ngayapdung);
     ChiTietDonThuocMauPage.cbo_trangThai.setSelectedItem(tt1.equals(TrangThaiDonThuocMau.DANG_BAN ) ? "Đang bán" : "Ngừng bán" );
     
+    List<ChiTietDonThuocMau> dsChiTietDonThuocMau = DonThuoc_DAO.getChiTietDonThuocMau(maDonThuocmau);
+    ChiTietDonThuocMauPage.table_model2.setRowCount(0);
+    int stt = 1;
+    for (ChiTietDonThuocMau ct : dsChiTietDonThuocMau) {
+    	//"STT","Mã hàng hoá ","Tên hàng hoá","Liều dùng","Số lượng" , "Đơn vị tính","Huỷ"
+    	cb_dvt = new JComboBox<>();
+    	List<DonViTinh> dsDVT = donViTinh_dao.timDVTTheoMaHH(ct.getDonViTinh().getHangHoa().getMaHangHoa());
+    	dsDVT.forEach(d->cb_dvt.addItem(d.getTenDonViTinh()));
+    	ChiTietDonThuocMauPage.table_hanghoa.getColumnModel().getColumn(5).setCellEditor(new DefaultCellEditor(cb_dvt));
+    	ChiTietDonThuocMauPage.table_model2.addRow(new Object[] {stt, ct.getDonViTinh().getHangHoa().getMaHangHoa(), ct.getDonViTinh().getHangHoa().getTenHangHoa(),
+    			ct.getLieuDung(), ct.getSoLuong()});
+	}
 }
 
 @Override

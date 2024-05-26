@@ -39,7 +39,8 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
     private DefaultTableModel table_model2;
     private JScrollPane pnl_Scroll;
     private JTable jtable_DonThuocMau;
-
+    private DonThuocMauDao dtm_DAO;
+    
 	
 	/**
      * Creates new form DonThuocMau_httk
@@ -369,7 +370,7 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
 
     private void btn_LuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LuuActionPerformed
         // TODO add your handling code here:
-
+    	luu();
     }//GEN-LAST:event_btn_LuuActionPerformed
 
 
@@ -411,7 +412,6 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
         pnl_Scroll = new JScrollPane(jtable_DonThuocMau =new JTable(table_model2));
         jtable_DonThuocMau.addMouseListener(this);
         setCellEditable();
-        loadDATA_DonThuocMau(table_model2);
         return pnl_Scroll;
     }
     public void setCellEditable() {
@@ -425,60 +425,43 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
 				});
 			}
 	}
-  private void loadDATA_DonThuocMau(DefaultTableModel model ) {
-	  table_model2.setRowCount(0);
-	  DonThuocMauDao donthuoc_DAO = new DonThuocMauDao();
-	  List<DonThuocMau> list = donthuoc_DAO.getDonThuocMau();
-	  for (DonThuocMau donThuocMau : list) {
-		String [] rowdata = {
-			donThuocMau.getMaDonThuocMau(),
-			donThuocMau.getTenDonThuocMau(),
-			donThuocMau.getNgayBatDauApDung().toString(),
-			donThuocMau.getTrangThaiDonThuocMau().toString()
-		};
-		model.addRow(rowdata);
-	}
-  }
+
+    private DonThuocMau revert_DonThuocMau() {
+    	String tenDonThuoc= txt_Ten.getText();
+    	LocalDate ngayBatDauApDung = date_ngayApdung.getDate();
+    	String ghiChu = txt_ghiChu.getText();
+    	TrangThaiDonThuocMau tt = cbo_trangThai.getSelectedItem().toString().equals("Đang bán") ? TrangThaiDonThuocMau.DANG_BAN: TrangThaiDonThuocMau.TAM_DUNG;
+    	DonThuocMau dtm1 = new DonThuocMau(tenDonThuoc, tenDonThuoc, ngayBatDauApDung, ghiChu, tt);
+//    	System.out.println(dtm1);
+    	return dtm1;
+    }
+    private void luu() {
+    	dtm_DAO = new DonThuocMauDao();
+    	DonThuocMau dtm4 = revert_DonThuocMau();
+    	if (dtm_DAO.CreateDonThuocMau(dtm4)) {
+    		JOptionPane.showMessageDialog(null, "Thêm thành công");			
+		}
+    	else {
+    		JOptionPane.showMessageDialog(null, "Thêm thất bại");			    		
+    	}
+    }
+    
+    
+    
+    
+    
   public static void main(String[] args) {
 	  JFrame rs = new JFrame();
 	  rs.add(new TaoDonThuocMauPage());
 	  rs.setVisible(true);
 }
 
-  
-private void getDoiTuong() {
-	loadDATA_DonThuocMau(table_model2);
-    int r = jtable_DonThuocMau.getSelectedRowCount();
-    String ma = jtable_DonThuocMau.getValueAt(r, 0).toString();
-    DonThuocMauDao DonThuoc_DAO = new DonThuocMauDao();
-   DonThuocMau donthuocMau = DonThuoc_DAO.getDonThuocMau_theoMa(ma);
-    
-    System.out.println(donthuocMau);
-    String maDonThuocmau = donthuocMau.getMaDonThuocMau();
-    String tenDonThuocMau = donthuocMau.getTenDonThuocMau();
-    LocalDate ngayapdung = donthuocMau.getNgayBatDauApDung();
-    String ghiChu = donthuocMau.getGhiChu();
-    TrangThaiDonThuocMau tt1 = donthuocMau.getTrangThaiDonThuocMau();
-    
-//    String ngayDateString = (String) jtable_DonThuocMau.getValueAt(r, 2);
-//    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d");
-//    LocalDate ngayDate = LocalDate.parse(ngayDateString, formatter);
-    
-    AddContent.addContent(new ChiTietDonThuocMauPage());
-    ChiTietDonThuocMauPage.txt_Ma.setText(maDonThuocmau);
-    ChiTietDonThuocMauPage.txt_Ten.setText(tenDonThuocMau);
-    ChiTietDonThuocMauPage.txt_ghiChu.setText(ghiChu);
-    ChiTietDonThuocMauPage.date_ngayApdung.setDate(ngayapdung);
-    ChiTietDonThuocMauPage.cbo_trangThai.setSelectedItem(tt1.equals(TrangThaiDonThuocMau.DANG_BAN ) ? "Đang bán" : "Ngừng bán" );
-    
-}
 
 @Override
 public void mouseClicked(MouseEvent e) {
 	// TODO Auto-generated method stub
 	if (e.getClickCount() == 2) { // Kiểm tra nếu là nhấp đúp chuột
 //		AddContent.addContent(new ChiTietDonThuocMauPage());
-		getDoiTuong();
 		
         }
 }

@@ -1,9 +1,8 @@
-/icon/
-/sampleUi/
 /ui/
-/components/
+/META-INF/
 /dao/
-/db/
+/components/
 /entities/
 /printer/
-/META-INF/
+/sampleUi/
+/db/

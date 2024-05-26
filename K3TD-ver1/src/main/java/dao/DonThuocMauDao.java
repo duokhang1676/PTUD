@@ -6,9 +6,14 @@ package dao;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
+
 import db.*;
+import entities.ChiTietDonThuocMau;
 import entities.DonThuocMau;
+import entities.DonViTinh;
 import entities.TrangThaiDonThuocMau;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -68,5 +73,53 @@ public class DonThuocMauDao {
         }
         return donthuocmau;
     }
+    public boolean CreateDonThuocMau(DonThuocMau dtm){
+        PreparedStatement stmt = null;
+        int n = 0;
+        Connection con = ConnectDB.getInstance().getConnection();
+        try {
+            String sql = "INSERT INTO DonThuocMau(TenDonThuocMau,NgayBatDauApDung,GhiChu,TrangThai) VALUES (?,?,?,?)";
+            stmt =con.prepareStatement(sql);
+            stmt.setString(1, dtm.getTenDonThuocMau());
+            stmt.setDate(2, Date.valueOf(dtm.getNgayBatDauApDung()));
+            stmt.setString(3, dtm.getGhiChu());
+            stmt.setString(4, dtm.getTrangThaiDonThuocMau().toString());
+             n = stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            return n > 0;
+    }
+    public List<ChiTietDonThuocMau> getChiTietDonThuocMau(String maDonThuocMau){
+    	List<ChiTietDonThuocMau> dsChiTietDonThuocMau = new ArrayList<>();
+    	PreparedStatement stmt = null;
+    	Connection  con = ConnectDB.getInstance().getConnection(); 
+    	String sql = "SELECT * FROM dbo.ChiTietDonThuocMau \r\n"
+    			+ "Where dbo.ChiTietDonThuocMau.MaDonThuocMau =  ? ";
+    	DonThuocMauDao dtm_dao = new DonThuocMauDao();
+    	DonViTinhDao dvt_dao = new DonViTinhDao();
+    	try {
+    		stmt = con.prepareStatement(sql);
+    		stmt.setString(1, maDonThuocMau);
+    		ResultSet rs = stmt.executeQuery();
+    		while (rs.next()) {
+				DonThuocMau donThuocMau = dtm_dao.getDonThuocMau_theoMa(rs.getString("MaDonThuocMau"));
+				String lieuDung = rs.getString("LieuDung");
+				int soLuong = rs.getInt("SoLuong");
+				DonViTinh dvt = dvt_dao.timDVTTheoMa(rs.getInt("MaDonViTinh"));
+				ChiTietDonThuocMau ct = new ChiTietDonThuocMau(donThuocMau, lieuDung, soLuong, dvt);
+				
+				dsChiTietDonThuocMau.add(ct);
+				return dsChiTietDonThuocMau;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+    	return null;
+    }
+    
+    
+    
 }
 
