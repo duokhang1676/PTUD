@@ -5,8 +5,6 @@ int row = tbl_HH.getSelectedRow();
  */
 package ui;
 
-import components.AddContent;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -30,6 +28,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
+import components.AddContent;
 import components.ButtonColumnUtil;
 import components.ButtonRender;
 import components.FormatJtable;

@@ -11,9 +11,25 @@ public class Ca {
 	private double tongTien;
 	private double tongTienThucTe;
 	private String ghiChu;
+	private boolean trangThai;
 	public Ca() {
 		super();
 	}
+	
+	public Ca(String maCa, String tenCa, NhanVien nhanVien, LocalDateTime thoiGianVaoCa, LocalDateTime thoiGianKetCa,
+			double tongTien, double tongTienThucTe, String ghiChu, boolean trangThai) {
+		super();
+		this.maCa = maCa;
+		this.tenCa = tenCa;
+		this.nhanVien = nhanVien;
+		this.thoiGianVaoCa = thoiGianVaoCa;
+		this.thoiGianKetCa = thoiGianKetCa;
+		this.tongTien = tongTien;
+		this.tongTienThucTe = tongTienThucTe;
+		this.ghiChu = ghiChu;
+		this.trangThai = trangThai;
+	}
+
 	public Ca(String maCa, String tenCa, NhanVien nhanVien, LocalDateTime thoiGianVaoCa, LocalDateTime thoiGianKetCa,
 			double tongTien, double tongTienThucTe, String ghiChu) {
 		super();
@@ -78,13 +94,24 @@ public class Ca {
 	public void setGhiChu(String ghiChu) {
 		this.ghiChu = ghiChu;
 	}
+	
+	public boolean isTrangThai() {
+		return trangThai;
+	}
+
+	public void setTrangThai(boolean trangThai) {
+		this.trangThai = trangThai;
+	}
+
+	
+	
 	@Override
 	public String toString() {
 		return "Ca [maCa=" + maCa + ", tenCa=" + tenCa + ", nhanVien=" + nhanVien + ", thoiGianVaoCa=" + thoiGianVaoCa
 				+ ", thoiGianKetCa=" + thoiGianKetCa + ", tongTien=" + tongTien + ", tongTienThucTe=" + tongTienThucTe
-				+ ", ghiChu=" + ghiChu + "]";
+				+ ", ghiChu=" + ghiChu + ", trangThai=" + trangThai + "]";
 	}
-	
+
 	public double tinhTienChenhLech() {
 		return Math.abs(tongTien-tongTienThucTe);
 	}

@@ -54,6 +54,8 @@ import javax.swing.table.TableColumn;
 
 import com.github.lgooddatepicker.components.DatePicker;
 
+import components.ResizeContent;
+
 /**
  *
  * @author ACER

@@ -40,6 +40,9 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
+import components.AddContent;
+import components.StatusMenu;
+
 /**
  *
  * @author LENOVO

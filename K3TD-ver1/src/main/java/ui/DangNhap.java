@@ -107,10 +107,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ui;
-import components.LoginInfo;
 import db.ConnectDB;
+import entities.Ca;
+import entities.ChucVuNhanVien;
+import entities.NhanVien;
 
 import java.awt.Image;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.time.LocalDateTime;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -121,6 +127,10 @@ import java.util.concurrent.TimeoutException;
 import javax.swing.ImageIcon;
 import java.awt.*;
 import javax.swing.JFrame;
+
+import components.LoginInfo;
+import dao.Ca_DAO;
+import dao.NhanVien_DAO;
 
 /**
  *
@@ -134,7 +144,9 @@ public class DangNhap extends javax.swing.JFrame {
     public DangNhap() {
         initComponents();
         setLocationRelativeTo(null);
-//        myModifyCode();
+        txt_taiKhoan.setText("NV00001");
+        txtMatKhau.setText("0000");
+        connectionDB(false);//parameter true dung clound db false dung local db
     }
 
     /**
@@ -149,16 +161,17 @@ public class DangNhap extends javax.swing.JFrame {
         jP_main = new javax.swing.JPanel();
         jP_logo = new javax.swing.JPanel();
         jL_logo = new javax.swing.JLabel();
-        jP_wel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jP_loginArea = new javax.swing.JPanel();
-        txt_matKhau = new javax.swing.JTextField();
         jL_matKhau = new javax.swing.JLabel();
         jL_taiKhoan = new javax.swing.JLabel();
         txt_taiKhoan = new javax.swing.JTextField();
         btn_thoat = new javax.swing.JButton();
         btn_dangNhap = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        txtMatKhau = new javax.swing.JPasswordField();
+        jP_wel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jlbThongBao = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
@@ -178,39 +191,8 @@ public class DangNhap extends javax.swing.JFrame {
         jP_logo.add(jL_logo);
         jL_logo.setBounds(110, 10, 760, 220);
 
-        jP_wel.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel1.setFont(new java.awt.Font("Tempus Sans ITC", 1, 36)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Welcome!");
-
-        javax.swing.GroupLayout jP_welLayout = new javax.swing.GroupLayout(jP_wel);
-        jP_wel.setLayout(jP_welLayout);
-        jP_welLayout.setHorizontalGroup(
-            jP_welLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_welLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(412, 412, 412))
-        );
-        jP_welLayout.setVerticalGroup(
-            jP_welLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jP_welLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         jP_loginArea.setBackground(new java.awt.Color(255, 255, 255));
         jP_loginArea.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txt_matKhau.setToolTipText("Mật khẩu ...");
-        txt_matKhau.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_matKhauActionPerformed(evt);
-            }
-        });
-        jP_loginArea.add(txt_matKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 500, 50));
 
         jL_matKhau.setFont(new java.awt.Font("Sitka Text", 1, 24)); // NOI18N
         jL_matKhau.setText("Mật khẩu: ");
@@ -220,6 +202,7 @@ public class DangNhap extends javax.swing.JFrame {
         jL_taiKhoan.setText("Tài khoản: ");
         jP_loginArea.add(jL_taiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, -1));
 
+        txt_taiKhoan.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         txt_taiKhoan.setToolTipText("Mã nhân viên");
         txt_taiKhoan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -258,21 +241,63 @@ public class DangNhap extends javax.swing.JFrame {
         jLabel2.setText("* By Nhom_02 PhatTrienUngDung DHKHMT17CTT");
         jP_loginArea.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 340, -1, -1));
 
+        txtMatKhau.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        txtMatKhau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMatKhauActionPerformed(evt);
+            }
+        });
+        jP_loginArea.add(txtMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 500, 50));
+
+        jP_wel.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setFont(new java.awt.Font("Tempus Sans ITC", 1, 36)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Welcome!");
+
+        jlbThongBao.setFont(new java.awt.Font("Times New Roman", 2, 16)); // NOI18N
+        jlbThongBao.setForeground(new java.awt.Color(255, 0, 0));
+        jlbThongBao.setText(" ");
+
+        javax.swing.GroupLayout jP_welLayout = new javax.swing.GroupLayout(jP_wel);
+        jP_wel.setLayout(jP_welLayout);
+        jP_welLayout.setHorizontalGroup(
+            jP_welLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jP_welLayout.createSequentialGroup()
+                .addGap(414, 414, 414)
+                .addGroup(jP_welLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlbThongBao, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jP_welLayout.setVerticalGroup(
+            jP_welLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jP_welLayout.createSequentialGroup()
+                .addContainerGap(34, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlbThongBao, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jP_mainLayout = new javax.swing.GroupLayout(jP_main);
         jP_main.setLayout(jP_mainLayout);
         jP_mainLayout.setHorizontalGroup(
             jP_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jP_logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jP_wel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jP_loginArea, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+            .addGroup(jP_mainLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jP_wel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jP_mainLayout.setVerticalGroup(
             jP_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jP_mainLayout.createSequentialGroup()
-                .addComponent(jP_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jP_logo, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addComponent(jP_wel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jP_loginArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -290,32 +315,43 @@ public class DangNhap extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_matKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_matKhauActionPerformed
+    private void txtMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatKhauActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_matKhauActionPerformed
+        dangNhap();
+    }//GEN-LAST:event_txtMatKhauActionPerformed
 
-    private void txt_taiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_taiKhoanActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_taiKhoanActionPerformed
-
+    private void btn_dangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dangNhapActionPerformed
+        // TODO add your handling code here
+        dangNhap();
+    }//GEN-LAST:event_btn_dangNhapActionPerformed
+    private void dangNhap() {
+    	if(!KiemTraDangNhap())
+            return;
+            if(LoginInfo.nhanVien.getChucVu().equals(ChucVuNhanVien.NHAN_VIEN)) {
+            	java.util.List<Ca> dsCa  = new Ca_DAO().getCaByNV(LoginInfo.nhanVien.getMaNhanVien(), false, "Tất cả");
+            	if(dsCa.size()==0) {
+        			Ca ca = new Ca_DAO().taoCa(LoginInfo.nhanVien);
+        			LoginInfo.ca = ca;
+            	}else {
+            		LoginInfo.ca = dsCa.get(0);
+            	}
+    		}
+            this.setVisible(false);
+            RootFrame rf =  new RootFrame();
+            LoginInfo.addRootframe(rf);
+            rf.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            rf.setVisible(true);
+    }
     private void btn_thoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_thoatActionPerformed
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_btn_thoatActionPerformed
 
-    private void btn_dangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_dangNhapActionPerformed
-        // TODO add your handling code here
-    	if(!KiemTraDangNhap())
-    		return;
-    	ConnectionDB(false);//parameter true dung clound db false dung local db
-        this.setVisible(false);
-        RootFrame rf =  new RootFrame();
-        LoginInfo.addRootframe(rf);
-        rf.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        rf.setVisible(true);
-    }//GEN-LAST:event_btn_dangNhapActionPerformed
+    private void txt_taiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_taiKhoanActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_taiKhoanActionPerformed
     
-    private void ConnectionDB(boolean useSocialv2) {
+    private void connectionDB(boolean useSocialv2) {
     	if(!useSocialv2) {
     		try {
         		ConnectDB.getInstance().connect();
@@ -357,8 +393,24 @@ public class DangNhap extends javax.swing.JFrame {
 	}
 
 	private boolean KiemTraDangNhap() {
+		NhanVien nhanVien = null;
+		nhanVien = new NhanVien_DAO().getNVbyMa(txt_taiKhoan.getText());
+		if(nhanVien!=null) {
+			if(nhanVien.getMatKhau().equalsIgnoreCase(txtMatKhau.getText())) {
+				LoginInfo.setNV(nhanVien);
+				return true;
+			}else {
+				jlbThongBao.setText("Mật khẩu không đúng!");
+				txtMatKhau.requestFocus();
+				return false;
+			}
+				
+		}else {
+			jlbThongBao.setText("Tài khoản không tồn tại!");
+			txt_taiKhoan.requestFocus();
+			return false;
+		}
 		
-		return true;
 	}
 
 	/**
@@ -412,7 +464,8 @@ public class DangNhap extends javax.swing.JFrame {
     private javax.swing.JPanel jP_logo;
     private javax.swing.JPanel jP_main;
     private javax.swing.JPanel jP_wel;
-    private javax.swing.JTextField txt_matKhau;
+    private javax.swing.JLabel jlbThongBao;
+    private javax.swing.JPasswordField txtMatKhau;
     private javax.swing.JTextField txt_taiKhoan;
     // End of variables declaration//GEN-END:variables
 

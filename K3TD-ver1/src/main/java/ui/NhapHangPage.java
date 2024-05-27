@@ -33,6 +33,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
+import components.AddContent;
+import components.ResizeContent;
+
 /**
  *
  * @author LENOVO

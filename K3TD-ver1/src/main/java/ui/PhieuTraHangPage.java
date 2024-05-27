@@ -4,11 +4,12 @@
  */
 package ui;
 
-import components.AddContent;
-import components.PnlBanHang;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.EventObject;
 import java.util.List;
 
@@ -21,9 +22,15 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-
+import components.AddContent;
+import components.FormatJtable;
+import components.Formater;
+import components.PnlBanHang;
 import dao.HoaDonDao;
+import dao.PhieuTraHangDao;
+import entities.PhieuTraHang;
 import entities.TrangThaiHoaDon;
+import entities.TrangThaiPhieuTraHang;
 
 /**
  *
@@ -31,65 +38,114 @@ import entities.TrangThaiHoaDon;
  */
 public class PhieuTraHangPage extends javax.swing.JPanel {
 
-    private DefaultTableModel model_hoaDon;
-	private JTable tbl_hoaDon;
+    private DefaultTableModel model;
+	private JTable table;
 	private HoaDonDao hoaDon_dao;
 	/**
      * Creates new form NewJPanel
      */
     public PhieuTraHangPage() {
         initComponents();
-       
+        config();
         addTableHoaDon();
-        loadDataTableHD();
+        loadDataTablePTH(false);
     }
 
-    private void loadDataTableHD() {
+    private void config() {
 		// TODO Auto-generated method stub
-    	int stt = 1;
-    	int count = 0;
-		hoaDon_dao = new HoaDonDao();
-		List<entities.HoaDon> dsHoaDon = hoaDon_dao.getAllHoaDon();
-		model_hoaDon.setNumRows(0);
-		for (entities.HoaDon hd : dsHoaDon) {
-			model_hoaDon.addRow(new Object[] {stt, hd.getMaHoaDon(), hd.getKhachHang().getTenKhachHang(), hd.getNhanVien().getTenNhanVien(),
-					hd.getThoiGianLapHoaDon(), 1000, hd.getTrangThaiHoaDon().equals(TrangThaiHoaDon.HOAN_THANH)?"Hoàn thành":"Đã hủy", hd.getGhiChu()});
-			
-			stt++;
-		}
-		txtTongSoHoaDonTra.setText("("+String.valueOf(count)+")");
+    	dpTuNgay.setDate(LocalDate.now());
+		dpDenNgay.setDate(LocalDate.now());
+	}
+
+	private void loadDataTablePTH(boolean byMa) {
+		// TODO Auto-generated method stub
+		model.setRowCount(0);
+    	if(byMa) {
+    		dsPhieuTraHang = new PhieuTraHangDao().getPhieuTraHangByMa(txtTimTheoMa.getText());
+    	}else {
+    		LocalDate tuNgay = LocalDate.of(2024, 1, 1);
+        	LocalDate denNgay = LocalDate.now();
+        	try {
+    			dpTuNgay.getDate();
+    			dpDenNgay.getDate();
+    		} catch (Exception e) {
+    			// TODO: handle exception
+    			return;
+    		}
+        	if(dpTuNgay.getDate()!=null)
+        		tuNgay = dpTuNgay.getDate();
+        	if(dpDenNgay.getDate()!=null)
+        		denNgay = dpDenNgay.getDate();
+        	dsPhieuTraHang = new PhieuTraHangDao().getDSPhieuTraHangFromTo(tuNgay, denNgay, cbTrangThai.getSelectedIndex()==0?TrangThaiPhieuTraHang.HOAN_THANH:TrangThaiPhieuTraHang.DA_HUY);
+    	}
+    	
+    	if(dsPhieuTraHang!=null) {
+    		int stt = 1;
+    		for (PhieuTraHang phieuTraHang : dsPhieuTraHang) {
+    			model.addRow(new Object[] {stt++,phieuTraHang.getMaPhieu(),phieuTraHang.getHoaDon().getMaHoaDon(),
+    					phieuTraHang.getNhanVien().getMaNhanVien(),phieuTraHang.getHoaDon().getKhachHang().getTenKhachHang(),
+    					Formater.dateTimeFormater(phieuTraHang.getThoiGianTao()),phieuTraHang.getTongTien(),phieuTraHang.getGhiChu(),phieuTraHang.getTrangThai()==TrangThaiPhieuTraHang.HOAN_THANH?"Hoàn thành":"Đã hủy"});
+    		}
+    		
+    		if(byMa) {
+    			txtTimTheoMa.setText("");
+        		txtTimTheoMa.requestFocus();
+    			}
+    		}else {
+    			if(byMa) {
+    				txtTimTheoMa.selectAll();
+    				txtTimTheoMa.requestFocus();
+    			}
+    	}
+    	txtTongSoHoaDonTra.setText(model.getRowCount()+"");
+    	
 	}
 
 	private void addTableHoaDon() {
 		// TODO Auto-generated method stub
-String[] colNames = {"STT","Mã hóa đơn", "Khách hàng", "Nhân viên bán hàng",  "Thời gian bán hàng","Tổng tiền", "Trạng thái", "Ghi chú"};
+		String[] colNames = {"STT","Mã phiếu trả", "Mã hóa đơn", "Nhân viên",  "Khách hàng","Thời gian tạo", "Tổng tiền", "Ghi chú","Trạng thái"};
         
-        model_hoaDon = new DefaultTableModel(colNames, 0);
-        tbl_hoaDon = new JTable(model_hoaDon);
-        JScrollPane js_tableHangHoa = new JScrollPane(tbl_hoaDon);
+        model = new DefaultTableModel(colNames, 0);
+        table = new JTable(model);
+        JScrollPane js_tableHangHoa = new JScrollPane(table);
         
-        if (tbl_hoaDon.getColumnModel().getColumnCount() > 0) {
-        	tbl_hoaDon.getColumnModel().getColumn(0).setResizable(false);
-        	tbl_hoaDon.getColumnModel().getColumn(1).setResizable(false);
-        	tbl_hoaDon.getColumnModel().getColumn(2).setResizable(false);
-        	tbl_hoaDon.getColumnModel().getColumn(3).setResizable(false);
-        	tbl_hoaDon.getColumnModel().getColumn(4).setResizable(false);
-        	tbl_hoaDon.getColumnModel().getColumn(5).setResizable(false);
-        	tbl_hoaDon.getColumnModel().getColumn(6).setResizable(false);
-        	tbl_hoaDon.getColumnModel().getColumn(7).setResizable(false);
+        if (table.getColumnModel().getColumnCount() > 0) {
+        	table.getColumnModel().getColumn(0).setResizable(false);
+        	table.getColumnModel().getColumn(0).setPreferredWidth(5);
+        	table.getColumnModel().getColumn(1).setResizable(false);
+        	table.getColumnModel().getColumn(2).setResizable(false);
+        	table.getColumnModel().getColumn(3).setResizable(false);
+        	table.getColumnModel().getColumn(4).setResizable(false);
+        	table.getColumnModel().getColumn(5).setResizable(false);
+        	table.getColumnModel().getColumn(6).setResizable(false);
+        	table.getColumnModel().getColumn(7).setResizable(false);
+        	table.getColumnModel().getColumn(8).setResizable(false);
         }
         
-        JTableHeader headerTable =  tbl_hoaDon.getTableHeader();
+        JTableHeader headerTable =  table.getTableHeader();
 		headerTable.setPreferredSize(new Dimension(headerTable.getPreferredSize().width, 40));
-		tbl_hoaDon.setRowHeight(40);
+		table.setRowHeight(40);
 		setCellEditable();
+		FormatJtable.setFontJtable(table);
         pnlContain.add(js_tableHangHoa, BorderLayout.CENTER);
         
+        table.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		// TODO Auto-generated method stub
+        		super.mouseClicked(e);
+        		if(e.getClickCount()>=2) {
+        			phieuTraHang = dsPhieuTraHang.get(table.getSelectedRow());
+        			AddContent.addContent(new ChiTietPhieuTraHangPage());
+        		}
+        		
+        	}
+		});
         
 	}
     public void setCellEditable() {
-		for (int i = 0; i < tbl_hoaDon.getColumnCount(); i++) {
-			tbl_hoaDon.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(new JTextField()) {
+		for (int i = 0; i < table.getColumnCount(); i++) {
+			table.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(new JTextField()) {
 					@Override
 					public boolean isCellEditable(EventObject e) {
 						// Trả về false để ngăn chặn chỉnh sửa trực tiếp
@@ -117,10 +173,10 @@ String[] colNames = {"STT","Mã hóa đơn", "Khách hàng", "Nhân viên bán h
         lblTuNgay = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         lblDenNgay = new javax.swing.JLabel();
-        dbDenNgay = new com.github.lgooddatepicker.components.DatePicker();
+        dpDenNgay = new com.github.lgooddatepicker.components.DatePicker();
         jPanel6 = new javax.swing.JPanel();
         lblTuKhoa = new javax.swing.JLabel();
-        timTheoTuKhoa1 = new sampleUi.TimTheoTuKhoa();
+        txtTimTheoMa = new sampleUi.TimTheoTuKhoa();
         jPanel7 = new javax.swing.JPanel();
         lblTrangThai = new javax.swing.JLabel();
         cbTrangThai = new javax.swing.JComboBox<>();
@@ -148,6 +204,11 @@ String[] colNames = {"STT","Mã hóa đơn", "Khách hàng", "Nhân viên bán h
         cbLocTheoThoiGian.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hôm nay", "Hôm qua", "7 ngày trước", "Tháng này", "Tháng trước", "Năm này", "Năm trước", "Tất cả" }));
         cbLocTheoThoiGian.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         cbLocTheoThoiGian.setPreferredSize(new java.awt.Dimension(115, 25));
+        cbLocTheoThoiGian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbLocTheoThoiGianActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -206,7 +267,7 @@ String[] colNames = {"STT","Mã hóa đơn", "Khách hàng", "Nhân viên bán h
         lblDenNgay.setText("Đến ngày");
         lblDenNgay.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
-        dbDenNgay.setPreferredSize(new java.awt.Dimension(143, 25));
+        dpDenNgay.setPreferredSize(new java.awt.Dimension(143, 25));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -215,7 +276,7 @@ String[] colNames = {"STT","Mã hóa đơn", "Khách hàng", "Nhân viên bán h
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblDenNgay)
-                    .addComponent(dbDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dpDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 9, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -224,7 +285,7 @@ String[] colNames = {"STT","Mã hóa đơn", "Khách hàng", "Nhân viên bán h
                 .addContainerGap(24, Short.MAX_VALUE)
                 .addComponent(lblDenNgay)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dbDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dpDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
 
@@ -236,7 +297,12 @@ String[] colNames = {"STT","Mã hóa đơn", "Khách hàng", "Nhân viên bán h
         lblTuKhoa.setText("Từ khoá tìm kiếm");
         lblTuKhoa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
-        timTheoTuKhoa1.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
+        txtTimTheoMa.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
+        txtTimTheoMa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTimTheoMaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -244,7 +310,7 @@ String[] colNames = {"STT","Mã hóa đơn", "Khách hàng", "Nhân viên bán h
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(timTheoTuKhoa1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTimTheoMa, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTuKhoa))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -254,7 +320,7 @@ String[] colNames = {"STT","Mã hóa đơn", "Khách hàng", "Nhân viên bán h
                 .addGap(23, 23, 23)
                 .addComponent(lblTuKhoa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(timTheoTuKhoa1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTimTheoMa, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -301,6 +367,11 @@ String[] colNames = {"STT","Mã hóa đơn", "Khách hàng", "Nhân viên bán h
         btnTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-find-24.png"))); // NOI18N
         btnTimKiem.setText("Tìm kiếm");
         btnTimKiem.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -368,8 +439,8 @@ String[] colNames = {"STT","Mã hóa đơn", "Khách hàng", "Nhân viên bán h
         pnlContainHeader.add(lblTongHoaDonTra);
 
         txtTongSoHoaDonTra.setEditable(false);
-        txtTongSoHoaDonTra.setEnabled(false);
         txtTongSoHoaDonTra.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        txtTongSoHoaDonTra.setEnabled(false);
         txtTongSoHoaDonTra.setPreferredSize(new java.awt.Dimension(100, 23));
         pnlContainHeader.add(txtTongSoHoaDonTra);
 
@@ -413,13 +484,77 @@ String[] colNames = {"STT","Mã hóa đơn", "Khách hàng", "Nhân viên bán h
         AddContent.addContent(PnlBanHang.th);
     }//GEN-LAST:event_btnTaoPhieuTraHangActionPerformed
 
+    private void cbLocTheoThoiGianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbLocTheoThoiGianActionPerformed
+        // TODO add your handling code here:
+    	int i = cbLocTheoThoiGian.getSelectedIndex();
+    	LocalDate now = LocalDate.now();
+    	// Lấy ngày đầu tháng
+        LocalDate firstDayOfMonth = now.with(TemporalAdjusters.firstDayOfMonth());
+        // Lấy ngày bắt đầu của tháng trước
+        LocalDate firstDayOfLastMonth = now.minusMonths(1).with(TemporalAdjusters.firstDayOfMonth());
+        // Lấy ngày kết thúc của tháng trước
+        LocalDate lastDayOfLastMonth = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
+     // Lấy ngày bắt đầu của năm trước
+        LocalDate firstDayOfLastYear = now.minusYears(1).with(TemporalAdjusters.firstDayOfYear());
+        // Lấy ngày kết thúc của năm trước
+        LocalDate lastDayOfLastYear = now.minusYears(1).with(TemporalAdjusters.lastDayOfYear());
+     // Lấy ngày bắt đầu của năm nay
+        LocalDate firstDayOfYear = now.with(TemporalAdjusters.firstDayOfYear());
+        
+    	if(i==0) {
+    		dpTuNgay.setDate(now);
+    		dpDenNgay.setDate(now);
+    	}else if(i==1) {
+    		dpTuNgay.setDate(now.minusDays(1));
+    		dpDenNgay.setDate(now.minusDays(1));
+    	}else if(i==2) {
+    		dpTuNgay.setDate(now.minusDays(7));
+    		dpDenNgay.setDate(now);
+    	}else if(i==3) {
+    		dpTuNgay.setDate(firstDayOfMonth);
+    		dpDenNgay.setDate(now);
+    	}else if(i==4) {
+    		dpTuNgay.setDate(firstDayOfLastMonth);
+    		dpDenNgay.setDate(lastDayOfLastMonth);
+    	}else if(i==5) {
+    		dpTuNgay.setDate(firstDayOfYear);
+    		dpDenNgay.setDate(now);
+    	}else if(i==6) {
+    		dpTuNgay.setDate(firstDayOfLastYear);
+    		dpDenNgay.setDate(lastDayOfLastYear);
+    	}else {
+    		dpTuNgay.setText("");
+    		dpDenNgay.setText("");
+    	}
+    }//GEN-LAST:event_cbLocTheoThoiGianActionPerformed
+    
+    private void txtTimTheoMaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimTheoMaActionPerformed
+        // TODO add your handling code here:
+    	if(txtTimTheoMa.getText().isEmpty())
+    		return;
+    	else {
+    		loadDataTablePTH(true);
+    			
+    	}
+    }//GEN-LAST:event_txtTimTheoMaActionPerformed
 
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        // TODO add your handling code here:
+    	if(txtTimTheoMa.getText().isEmpty())
+    		loadDataTablePTH(false);
+    	else {
+    		loadDataTablePTH(true);
+    	}
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+  
+	public static PhieuTraHang phieuTraHang;
+    private List<PhieuTraHang> dsPhieuTraHang;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTaoPhieuTraHang;
     private javax.swing.JButton btnTimKiem;
     private javax.swing.JComboBox<String> cbLocTheoThoiGian;
     private javax.swing.JComboBox<String> cbTrangThai;
-    private com.github.lgooddatepicker.components.DatePicker dbDenNgay;
+    private com.github.lgooddatepicker.components.DatePicker dpDenNgay;
     private com.github.lgooddatepicker.components.DatePicker dpTuNgay;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -438,7 +573,7 @@ String[] colNames = {"STT","Mã hóa đơn", "Khách hàng", "Nhân viên bán h
     private javax.swing.JPanel pnlContain;
     private javax.swing.JPanel pnlContainHeader;
     private javax.swing.JPanel pnlHeader;
-    private sampleUi.TimTheoTuKhoa timTheoTuKhoa1;
+    private sampleUi.TimTheoTuKhoa txtTimTheoMa;
     private javax.swing.JTextField txtTongSoHoaDonTra;
     // End of variables declaration//GEN-END:variables
 }

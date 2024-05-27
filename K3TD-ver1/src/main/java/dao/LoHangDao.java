@@ -183,9 +183,35 @@ public class LoHangDao {
             }
 		} catch (Exception e) {
 			// TODO: handle exception
+		}
+		return null;
+	}
+	public LoHang getLoHangBySoLo(String soLo){
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		try {
+			String sql = "select * from LoHang\r\n"
+					+ "where solo = ?";
+			PreparedStatement stmt = null;
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, soLo);
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			HangHoa hangHoa = new HangHoaDao().timHangHoaTheoMa(rs.getString("MaHangHoa"));
+			int soLuong = rs.getInt("SoLuong");
+			LocalDate ngaySanXuat = rs.getDate("ngaysanxuat").toLocalDate();
+			LocalDate hanSuDung = rs.getDate("HanSuDung").toLocalDate();
+			double giaNhap = rs.getDouble("gianhap");
+			NhaCungCap ncc = new NhaCungCap_DAO().getNCCByMa(rs.getString("manhacungcap"));
+				
+			LoHang loHang = new LoHang(soLo, hangHoa, soLuong, ngaySanXuat, hanSuDung, giaNhap, ncc);
+				
+			return loHang;
+		} catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return dsLH;
+		return null;
 	}
 	
 	public boolean updateSoLuong(int soLuong, String soLo) {
@@ -234,5 +260,6 @@ public class LoHangDao {
 			e.printStackTrace();
 		}
 		return dsLoHang;
+		
 	}
 }
