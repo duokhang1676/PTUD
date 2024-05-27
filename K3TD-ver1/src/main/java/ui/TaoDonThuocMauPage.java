@@ -10,10 +10,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.EventObject;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -438,8 +441,8 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
         
         jtable_DonThuocMau.addMouseListener(this);
 //        setCellEditable();
-    	cb_dvt = new JComboBox<>();
-        jtable_DonThuocMau.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(cb_dvt));
+        
+
         
         
         
@@ -467,6 +470,15 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
     	dvt_DAO =new DonViTinhDao();
     	String ma = txt_tim.getText();
     	DonViTinh   hanghoa  =  dvt_DAO.layDVTTheoMa(ma);
+    
+    	Set<String> GiaTriKhacNhau  = new HashSet<>(); 
+    	List<DonViTinh> listDOnViTInh = dvt_DAO.timDVTTheoMaHH(ma);
+    	for (DonViTinh donViTinh : listDOnViTInh) {
+			GiaTriKhacNhau.add(donViTinh.getTenDonViTinh());
+		}
+    	DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>(GiaTriKhacNhau.toArray(new String [0]));
+    	cb_dvt = new JComboBox<>(model);
+        jtable_DonThuocMau.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(cb_dvt));
     	if (hanghoa != null ) {
         	n++;
         	table_model2.addRow(new Object [] {
@@ -477,6 +489,7 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
         			1
         	});
 		}
+    	
     	else {
     		JOptionPane.showMessageDialog(null, "Không có giá trị");
     	}
