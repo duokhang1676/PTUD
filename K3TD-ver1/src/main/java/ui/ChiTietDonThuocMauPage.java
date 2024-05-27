@@ -165,6 +165,7 @@ public class ChiTietDonThuocMauPage extends javax.swing.JPanel {
         txt_ghiChu.setRows(5);
         jScrollPane2.setViewportView(txt_ghiChu);
 
+        date_ngayApdung.setEnabled(false);
         date_ngayApdung.setPreferredSize(new java.awt.Dimension(143, 35));
 
         jLabel1.setText("Trạng thái");

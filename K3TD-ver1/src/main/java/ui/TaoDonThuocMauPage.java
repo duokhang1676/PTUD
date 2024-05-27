@@ -8,7 +8,9 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.EventObject;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.DefaultCellEditor;
@@ -23,6 +25,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import components.AddContent;
 import components.*;
@@ -409,6 +412,7 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
     private javax.swing.JTextField txt_tim;
     // End of variables declaration//GEN-END:variables
 	private JComboBox cb_dvt;
+	private DonViTinhDao dvt_DAO;
     
    
     private JScrollPane jscp_donThuocMau(){
@@ -416,10 +420,32 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
      
         table_model2 = new DefaultTableModel(colNames, 0);
         pnl_Scroll = new JScrollPane(jtable_DonThuocMau =new JTable(table_model2));
+        
+        if (jtable_DonThuocMau.getColumnModel().getColumnCount() > 0) {
+        	jtable_DonThuocMau.getColumnModel().getColumn(0).setResizable(false);
+        	jtable_DonThuocMau.getColumnModel().getColumn(1).setResizable(false);
+        	jtable_DonThuocMau.getColumnModel().getColumn(2).setResizable(false);
+        	jtable_DonThuocMau.getColumnModel().getColumn(3).setResizable(false);
+        	jtable_DonThuocMau.getColumnModel().getColumn(4).setResizable(false);
+        	jtable_DonThuocMau.getColumnModel().getColumn(5).setResizable(false);
+        	jtable_DonThuocMau.getColumnModel().getColumn(6).setResizable(false);
+        }
+        
+        JTableHeader headerTable =  jtable_DonThuocMau.getTableHeader();
+		headerTable.setPreferredSize(new Dimension(headerTable.getPreferredSize().width, 40));
+		jtable_DonThuocMau.setRowHeight(40);
+		TableColumnModel tb_col = jtable_DonThuocMau.getColumnModel();
+        
         jtable_DonThuocMau.addMouseListener(this);
 //        setCellEditable();
     	cb_dvt = new JComboBox<>();
         jtable_DonThuocMau.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(cb_dvt));
+        
+        
+        
+        
+        
+        
         return pnl_Scroll;
     }
     public void setCellEditable() {
@@ -438,22 +464,26 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
     private static int  n = 0;
     
     private  void loadData () {
-    	table_model2.setRowCount(0);
-    	DonViTinhDao dvt_DAO =new DonViTinhDao();
+    	dvt_DAO =new DonViTinhDao();
     	String ma = txt_tim.getText();
     	DonViTinh   hanghoa  =  dvt_DAO.layDVTTheoMa(ma);
-    	n++;
-    	table_model2.addRow(new Object [] {
-    			n,
-    			hanghoa.getHangHoa().getMaHangHoa(),
-    			hanghoa.getHangHoa().getTenHangHoa(),
-    			hanghoa.getTenDonViTinh(),
-    			
-    	});
+    	if (hanghoa != null ) {
+        	n++;
+        	table_model2.addRow(new Object [] {
+        			n,
+        			hanghoa.getHangHoa().getMaHangHoa(),
+        			hanghoa.getHangHoa().getTenHangHoa(),
+        			hanghoa.getTenDonViTinh(),
+        			1
+        	});
+		}
+    	else {
+    		JOptionPane.showMessageDialog(null, "Không có giá trị");
+    	}
     }
     private DonThuocMau revert_DonThuocMau() {
-    	String tenDonThuoc= txt_Ten.getText();
-    	LocalDate ngayBatDauApDung = date_ngayApdung.getDate();
+    	String tenDonThuoc= txt_Ten.getText().trim().equals("") ? "Chưa xác định": txt_Ten.getText();
+    	LocalDate ngayBatDauApDung = LocalDate.now();
     	String ghiChu = txt_ghiChu.getText();
     	TrangThaiDonThuocMau tt = cbo_trangThai.getSelectedItem().toString().equals("Đang bán") ? TrangThaiDonThuocMau.DANG_BAN: TrangThaiDonThuocMau.TAM_DUNG;
     	DonThuocMau dtm1 = new DonThuocMau(tenDonThuoc, tenDonThuoc, ngayBatDauApDung, ghiChu, tt);
@@ -462,9 +492,39 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
     }
     private void luu() {
     	dtm_DAO = new DonThuocMauDao();
+    	dvt_DAO = new DonViTinhDao();
     	DonThuocMau dtm4 = revert_DonThuocMau();
+    	
+    	
+//    	String ma =	dtm_DAO.getmaDonThuocMauGanDayNhat();
+//    	System.out.println(ma);
+    	 	
     	if (dtm_DAO.CreateDonThuocMau(dtm4)) {
+        	DonThuocMau dtmGanDay = dtm_DAO.getDonThuocMauGanDayNhat();
+//        	System.out.println(dtmGanDay);     	
+        	int r = jtable_DonThuocMau.getRowCount();
+//        	System.out.println(r);     		
+        	List<ChiTietDonThuocMau> listChiTietDonThuocMau = new ArrayList<ChiTietDonThuocMau>();
+        	for(int i =0;i<r ; i++) {
+        		String maHanghoa1 = jtable_DonThuocMau.getValueAt(i, 1).toString();
+//        		System.out.println(maHanghoa1);
+        		String tenHangHoa1 = jtable_DonThuocMau.getValueAt(i, 2).toString();
+//        		System.out.println(tenHangHoa1);
+        		String tenDonViTinh = jtable_DonThuocMau.getValueAt(i, 3).toString();
+        		DonViTinh dvt = dvt_DAO.layDVTTheoTenVaMaHangHoa(maHanghoa1, tenDonViTinh);
+//        		System.out.println(dvt);
+        		int soLuong = Integer.parseInt(jtable_DonThuocMau.getValueAt(i, 4).toString());
+//        		System.out.println(soLuong);
+        		String lieuDung = jtable_DonThuocMau.getValueAt(i, 5) == null ? "Chưa xác định" : jtable_DonThuocMau.getValueAt(i, 5).toString()  ;
+//        		System.out.println(lieuDung);
+//        		System.out.println(new ChiTietDonThuocMau(dtmGanDay, lieuDung, soLuong, dvt));
+        		listChiTietDonThuocMau.add(new ChiTietDonThuocMau(dtmGanDay, lieuDung, soLuong, dvt));
+        	}
+        	for (ChiTietDonThuocMau chiTietDonThuocMau : listChiTietDonThuocMau) {
+    			dtm_DAO.createChiTietDonThuocMau(chiTietDonThuocMau);
+    		}
     		JOptionPane.showMessageDialog(null, "Thêm thành công");			
+    		refresh();
 		}
     	else {
     		JOptionPane.showMessageDialog(null, "Thêm thất bại");			    		
@@ -547,7 +607,14 @@ private void reload() {
 	
 }
 
-
+private void refresh() {
+	txt_ghiChu.setText("");
+	txt_Ten.setText("");
+	date_ngayApdung.setDate(LocalDate.now());
+	cbo_trangThai.setSelectedItem("Đang bán");
+	table_model2.setRowCount(0);
+//	table_model2.fireTableDataChanged();
+}
 
 
 }
