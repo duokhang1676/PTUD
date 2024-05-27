@@ -189,9 +189,9 @@ public class BanHangPage extends javax.swing.JPanel {
 
         cbChonDonThuocMau.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         cbChonDonThuocMau.setToolTipText("");
-        cbChonDonThuocMau.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbChonDonThuocMauItemStateChanged(evt);
+        cbChonDonThuocMau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbChonDonThuocMauActionPerformed(evt);
             }
         });
 
@@ -1127,13 +1127,10 @@ public class BanHangPage extends javax.swing.JPanel {
 		}
     }//GEN-LAST:event_ckBBanTheoDonItemStateChanged
 
-    private void cbChonDonThuocMauItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbChonDonThuocMauItemStateChanged
+    private void cbChonDonThuocMauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbChonDonThuocMauActionPerformed
         // TODO add your handling code here:
-    	if (evt.getSource() == cbChonDonThuocMau) {
-			themDonThuocMauVaoChiTietHD(cbChonDonThuocMau.getSelectedIndex());
-		}
-
-    }//GEN-LAST:event_cbChonDonThuocMauItemStateChanged
+    	themDonThuocMauVaoChiTietHD(cbChonDonThuocMau.getSelectedIndex());
+    }//GEN-LAST:event_cbChonDonThuocMauActionPerformed
     
     private void themDonThuocMauVaoChiTietHD(int viTri) {
     	List<DonThuocMau> dsDTM = donThuocMauDao.getDonThuocMau();
