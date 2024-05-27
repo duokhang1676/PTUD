@@ -271,13 +271,14 @@ public class DonViTinhDao {
 			return null;
 		}
 
-		public boolean updateDVT(DonViTinh dvt, int maDVT) {
+		public boolean updateDVT(DonViTinh dvt, String mahh, String tenDVT) {
 			ConnectDB.getInstance();
 			Connection con = ConnectDB.getConnection(); 
 			PreparedStatement stmt = null;
-			String sql = "update DonViTinh"
-					+ "TenDonViTinh = ?, QuyDoi = ?, GiaBan = ?, TrangThaiDonViTinh = ?, MaVach = ?"
-					+ "where = ?";
+			String sql = "UPDATE DonViTinh SET "
+			           + "TenDonViTinh = ?, QuyDoi = ?, GiaBan = ?, TrangThaiDonViTinh = ?, MaVach = ? "
+			           + "WHERE MaHangHoa = ? AND TenDonViTinh = ?";
+
 			try {
 				stmt = con.prepareStatement(sql);
 				
@@ -287,7 +288,8 @@ public class DonViTinhDao {
 				stmt.setString(4, dvt.getTrangThaiDonViTinh().toString());
 				stmt.setString(5, dvt.getMaVach());
 				
-				stmt.setInt(6, maDVT);
+				stmt.setString(6, mahh);
+				stmt.setString(7, tenDVT);
 				
 				stmt.executeUpdate();
 				stmt.close();

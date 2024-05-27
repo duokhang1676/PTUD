@@ -82,6 +82,9 @@
               <Dimension value="[400, 35]"/>
             </Property>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="LocalDate currentDate = LocalDate.now();&#xa;LocalTime currentTime = LocalTime.now();&#xa;LocalDateTime currentDateTime = LocalDateTime.now();&#xa;&#xa;dTP_phieuNhap.setDateTimePermissive(currentDateTime);"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="280" y="40" width="300" height="-1"/>

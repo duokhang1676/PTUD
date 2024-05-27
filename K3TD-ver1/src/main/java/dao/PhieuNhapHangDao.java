@@ -57,7 +57,7 @@ public class PhieuNhapHangDao {
 		return dsPNH;
 	}
 	
-	public PhieuNhapHang createPNH(PhieuNhapHang pnh, double thanhTien) {
+	public PhieuNhapHang createPNH(PhieuNhapHang pnh) {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection(); 
 		PreparedStatement stmt = null;
@@ -73,7 +73,7 @@ public class PhieuNhapHangDao {
 			stmt.setString(4, pnh.getNhaCungCap().getMaNhaCungCap());
 			stmt.setDouble(5, pnh.getTongGiamGia());
 			stmt.setDouble(6, pnh.getTongTienHang());
-			stmt.setDouble(7, thanhTien);
+			stmt.setDouble(7, pnh.tinhThanhTien());
 			stmt.setString(8, pnh.getTrangThai().toString());
 			
 			ResultSet rs = stmt.executeQuery();

@@ -5,9 +5,15 @@
 package ui;
 
 import components.AddContent;
+import components.ButtonRender;
+import components.ComboboxCellEditor;
 import components.DatePickerEditor;
 import components.DatePickerRenderer;
+import components.FormatJtable;
 import components.ResizeContent;
+import components.SpinnerEditor;
+import components.TableActionCellEditor;
+import components.TableActionEvent;
 import dao.ChiTietPhieuNhapHangDao;
 import dao.DonViTinhDao;
 import dao.HangHoaDao;
@@ -25,10 +31,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultCellEditor;
@@ -60,7 +69,8 @@ public class TaoPhieuNhapHangPage extends javax.swing.JPanel {
 	protected static JTable tbl_HH;
 	protected static DefaultTableModel model_HH;
 	private DatePicker datePicker;
-	private JComboBox<Object> cb_tenDVT;
+	private JComboBox cb_tenDVT;
+	
 	/**
      * Creates new form NhapHang
      */
@@ -68,53 +78,52 @@ public class TaoPhieuNhapHangPage extends javax.swing.JPanel {
         initComponents();
         new ResizeContent().resizeContent(this);
         addNhapHangTable();
+        setTable();
         loadDataNCC();
         loadPhieuNhapHang();
         
         
     }
-//    public void setTable() {
-//    	TableColumn column1 = tbl_HH.getColumnModel().getColumn(0);
-//        column1.setPreferredWidth(10);
-//        TableColumn column5 = tbl_HH.getColumnModel().getColumn(2);
-//        column5.setPreferredWidth(200);
-//    	TableColumn column = tbl_HH.getColumnModel().getColumn(6);
-//        column.setCellEditor(new SpinnerEditor());
-//        TableActionEvent event = new TableActionEvent() {
-//			
-//			@Override
-//			public void onDelete(int row) {
-//				if(tbl_HH.isEditing()) {
-//					tbl_HH.getCellEditor().stopCellEditing();
-//				}
-//				DefaultTableModel model = (DefaultTableModel)table.getModel();
-//				model.removeRow(row);
-//				dsDVT.remove(row);
-//				reload();
-//				
-//			}
-//		};
-//        table.getColumnModel().getColumn(10).setCellEditor(new TableActionCellEditor(event));
-//        table.getColumnModel().getColumn(10).setCellRenderer(new ButtonRender());
-//        
-//        model.addTableModelListener(new TableModelListener() {
-//            @Override
-//            public void tableChanged(TableModelEvent e) {//Bắt sự kiện thay đổi số lượng trên jtable
-//                if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == 6) {
-//                	int row = table.getSelectedRow();
-//                	if(row==-1)return; //Trường hợp sl thay đổi khi thêm mới 
-//                	int soLuong = Integer.parseInt(table.getValueAt(row, 6).toString());
-//                   if(soLuong>dsSoLuong.get(row)) {//Kiểm tra số lượng
-//                	   JOptionPane.showMessageDialog(null,"Số lượng trả không hợp lệ!","Cảnh báo", JOptionPane.WARNING_MESSAGE);
-//                	   table.setValueAt(dsSoLuong.get(row), row,6);//Cập nhật số lượng = sl định mức
-//                   }
-//                   reload();
-//                }
-//            }	
-//        });
-//    }
+    public void setTable() {
+    	TableColumn column = tbl_HH.getColumnModel().getColumn(7);
+        column.setCellEditor(new SpinnerEditor());
+        TableActionEvent event = new TableActionEvent() {
+			
+			@Override
+			public void onDelete(int row) {
+				if(tbl_HH.isEditing()) {
+					tbl_HH.getCellEditor().stopCellEditing();
+				}
+				DefaultTableModel model = (DefaultTableModel)tbl_HH.getModel();
+				model.removeRow(row);
+				
+				reload();
+				
+			}
 
+			
+		};
+		tbl_HH.getColumnModel().getColumn(12).setCellEditor(new TableActionCellEditor(event));
+		tbl_HH.getColumnModel().getColumn(12).setCellRenderer(new ButtonRender());
+        
+		model_HH.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {//Bắt sự kiện thay đổi số lượng trên jtable
+                if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == 6) {
+                	int row = tbl_HH.getSelectedRow();
+                	if(row==-1)return; //Trường hợp sl thay đổi khi thêm mới 
+                	
+                   
+                   reload();
+                }
+            }	
+        });
+    }
 
+    private void reload() {
+		// TODO Auto-generated method stub
+		
+	}
     private void addNhapHangTable() {
 		// TODO Auto-generated method stub
     	
@@ -122,6 +131,8 @@ public class TaoPhieuNhapHangPage extends javax.swing.JPanel {
         
         model_HH = new DefaultTableModel(colNames, 0);
         tbl_HH = new JTable(model_HH);
+        FormatJtable.setFontJtable(tbl_HH);
+        FormatJtable.setCellEditableForPNH(tbl_HH);
         JScrollPane js_tableHangHoa = new JScrollPane(tbl_HH);
         
         if (tbl_HH.getColumnModel().getColumnCount() > 0) {
@@ -145,6 +156,12 @@ public class TaoPhieuNhapHangPage extends javax.swing.JPanel {
 //        tbl_HH.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(datePicker));
 //        Object[] emptyRow = {1, null, null, 0,"MV*****" ,"Đang bán"};
 //        model_HH.addRow(emptyRow);
+        
+        /*
+         * add combobox vao table
+         */
+       
+        
         JTableHeader headerTable =  tbl_HH.getTableHeader();
 		headerTable.setPreferredSize(new Dimension(headerTable.getPreferredSize().width, 40));
 		headerTable.setBackground(Color.white);
@@ -153,8 +170,142 @@ public class TaoPhieuNhapHangPage extends javax.swing.JPanel {
 //		setCellEditable();
         jP_tableContent.add(js_tableHangHoa, BorderLayout.CENTER);
         
-//        tbl_DVT.addMouseListener(this);
+        tbl_HH.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				int row = tbl_HH.getSelectedRow();
+				doDuLieuVaoComboBoxDonViTinh(model_HH.getValueAt(row, 1).toString());
+			}
+		});
+      //su kien thay doi data table
+		model_HH.addTableModelListener(new TableModelListener() {
+			
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				// TODO Auto-generated method stub
+				if (e.getType() == TableModelEvent.UPDATE || e.getType() == TableModelEvent.INSERT || e.getType() == TableModelEvent.DELETE) {
+                    int row = e.getFirstRow();
+                    int col = e.getColumn();
+                    if (col == 3) {
+						String soLo = model_HH.getValueAt(row, 3).toString();
+                        String maHH = model_HH.getValueAt(row, 1).toString();
+						// set du lieu cua lo
+						LoHang loHH = loHang_dao.timLoHangTheoMaVaMaHH(soLo, maHH);
+						if (loHH != null) {
+							model_HH.setValueAt(loHH.getNgaySanXuat(), row, 4);
+							model_HH.setValueAt(loHH.getHanSuDung(), row, 5);
+//							model_HH.setValueAt(loHH.getSoLuong(), row, 7);
+
+						}
+                    }
+                    if (col == 7 || col == 8 || col == 10) { // Kiểm tra nếu cột "Số lượng" hoặc "Giá nhập" đã được thay đổi
+                        String soLuongStr = model_HH.getValueAt(row, 7).toString();
+                    	String giaNhapStr = model_HH.getValueAt(row, 8).toString();
+                    	String chietKhauStr = model_HH.getValueAt(row, 10).toString();
+                    	int soLuong = 0;
+                        double giaNhap = 0;
+                        double chietKhau = 0;
+                    	try {
+							int sl = Integer.parseInt(soLuongStr);
+							if (sl < 0) {
+								showMessage("Số lượng phải lớn hơn 0!");
+							}else {
+								soLuong = sl;
+							}
+						} catch (Exception e2) {
+							// TODO: handle exception
+							showMessage("Số lượng phải nhập số!");
+						}
+                        
+                        try {
+							double gn = Double.parseDouble(giaNhapStr);
+							if (gn < 0) {
+								showMessage("Giá nhập phải lớn hơn 0!");
+							}else {
+								giaNhap = gn;
+							}
+						} catch (Exception e2) {
+							// TODO: handle exception
+							showMessage("Giá nhập phải nhập số!");
+						}
+                        
+                        try {
+							double ck = Double.parseDouble(chietKhauStr);
+							if (ck < 0 || ck > 100) {
+								showMessage("Chiết khấu phải từ 0% đến 100%!");
+							}else {
+								chietKhau = ck;
+							}
+						} catch (Exception e2) {
+							// TODO: handle exception
+							showMessage("Chiết khấu phải nhập số!");
+						}
+                    	
+                        // Tính toán giá bán
+                        double giaChietKhau = (((chietKhau*giaNhap)/100)*soLuong);
+                        double giaBan = (soLuong*giaNhap)-giaChietKhau;
+                        // Cập nhật giá bán trong cột "Giá bán"
+                        model_HH.setValueAt(giaBan, row, 11);
+                        
+                        
+                    }
+                    
+                    double tongGiamGia = 0;
+                    double tongTienHang = 0;
+                    double tongThanhTien = 0;
+                    double tienNhap = 0;
+                    double soLuong = 0;
+                    for (int i = 0; i < model_HH.getRowCount(); i++) {
+                        tienNhap = Double.parseDouble(model_HH.getValueAt(i, 8).toString());
+                        soLuong = Double.parseDouble(model_HH.getValueAt(i, 7).toString());
+                        
+                        tongTienHang += tienNhap*soLuong;
+                        tongThanhTien += Double.parseDouble(model_HH.getValueAt(i, 11).toString());
+                        tongGiamGia =  tongTienHang - tongThanhTien;
+                        
+                    }
+                    txt_tongTienNhap.setText(Double.toString(tongTienHang));
+                    txt_tongThanhTien.setText(Double.toString(tongThanhTien));
+                    txt_chietKhau.setText(Double.toString(tongGiamGia));
+                }
+			}
+		});
 	}
+    public void doDuLieuVaoComboBoxDonViTinh(String maHH) {
+    	cb_tenDVT = new JComboBox<>();
+		List<DonViTinh> dsTenDVT = donViTinh_dao.timDVTTheoMaHH(maHH);
+		for (DonViTinh d : dsTenDVT) {
+			cb_tenDVT.addItem(d.getTenDonViTinh());
+		}
+		
+		tbl_HH.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(cb_tenDVT));
+    }
 
 	private void loadPhieuNhapHang() {
 		// TODO Auto-generated method stub
@@ -471,13 +622,6 @@ public class TaoPhieuNhapHangPage extends javax.swing.JPanel {
 			}
 			if (!dataExist) {
 				//"STT", "Mã HH", "Tên HH", "Số lô", "Hạn sử dụng", "DVT", "Số lượng", "Giá nhập", "VAT (%)", "Chiết khấu", "Thành tiền"
-				cb_tenDVT = new JComboBox<>();
-				List<DonViTinh> dsTenDVT = donViTinh_dao.timDVTTheoMaHH(hh.getMaHangHoa());
-				for (DonViTinh d : dsTenDVT) {
-					cb_tenDVT.addItem(d.getTenDonViTinh());
-				}
-				cb_tenDVT.setSelectedItem(tenDVT);
-				tbl_HH.getColumnModel().getColumn(6).setCellEditor(new DefaultCellEditor(cb_tenDVT));
 				model_HH.addRow(new Object[] {rowCount+1,hh.getMaHangHoa(), hh.getTenHangHoa(),"","","",tenDVT, 1,0, hh.getThue(), 0, 0,""});
 				
 //				tbl_HH.getColumnModel().getColumn(4).setCellRenderer(new DatePickerRenderer());
@@ -489,91 +633,11 @@ public class TaoPhieuNhapHangPage extends javax.swing.JPanel {
 			}
 			
 			
-			//su kien thay doi data table
-			model_HH.addTableModelListener(new TableModelListener() {
-				
-				@Override
-				public void tableChanged(TableModelEvent e) {
-					// TODO Auto-generated method stub
-					if (e.getType() == TableModelEvent.UPDATE || e.getType() == TableModelEvent.INSERT || e.getType() == TableModelEvent.DELETE) {
-	                    int row = e.getFirstRow();
-	                    int col = e.getColumn();
-	                    if (col == 7 || col == 8 || col == 10) { // Kiểm tra nếu cột "Số lượng" hoặc "Giá nhập" đã được thay đổi
-	                        String soLuongStr = model_HH.getValueAt(row, 7).toString();
-	                    	String giaNhapStr = model_HH.getValueAt(row, 8).toString();
-	                    	String chietKhauStr = model_HH.getValueAt(row, 10).toString();
-	                    	int soLuong = 0;
-	                        double giaNhap = 0;
-	                        double chietKhau = 0;
-	                    	try {
-								int sl = Integer.parseInt(soLuongStr);
-								if (sl < 0) {
-									showMessage("Số lượng phải lớn hơn 0!");
-								}else {
-									soLuong = sl;
-								}
-							} catch (Exception e2) {
-								// TODO: handle exception
-								showMessage("Số lượng phải nhập số!");
-							}
-	                        
-	                        try {
-								double gn = Double.parseDouble(giaNhapStr);
-								if (gn < 0) {
-									showMessage("Giá nhập phải lớn hơn 0!");
-								}else {
-									giaNhap = gn;
-								}
-							} catch (Exception e2) {
-								// TODO: handle exception
-								showMessage("Giá nhập phải nhập số!");
-							}
-	                        
-	                        try {
-								double ck = Double.parseDouble(chietKhauStr);
-								if (ck < 0 || ck > 100) {
-									showMessage("Chiết khấu phải từ 0% đến 100%!");
-								}else {
-									chietKhau = ck;
-								}
-							} catch (Exception e2) {
-								// TODO: handle exception
-								showMessage("Chiết khấu phải nhập số!");
-							}
-	                    	
-	                        // Tính toán giá bán
-	                        double giaChietKhau = (((chietKhau*giaNhap)/100)*soLuong);
-	                        double giaBan = (soLuong*giaNhap)-giaChietKhau;
-	                        // Cập nhật giá bán trong cột "Giá bán"
-	                        model_HH.setValueAt(giaBan, row, 11);
-	                        
-	                        
-	                    }
-	                    
-	                    double tongGiamGia = 0;
-	                    double tongTienHang = 0;
-	                    double tongThanhTien = 0;
-	                    double tienNhap = 0;
-	                    double soLuong = 0;
-	                    for (int i = 0; i < model_HH.getRowCount(); i++) {
-	                        tienNhap = Double.parseDouble(model_HH.getValueAt(i, 8).toString());
-	                        soLuong = Double.parseDouble(model_HH.getValueAt(i, 7).toString());
-	                        
-	                        tongTienHang += tienNhap*soLuong;
-	                        tongThanhTien += Double.parseDouble(model_HH.getValueAt(i, 11).toString());
-	                        tongGiamGia =  tongTienHang - tongThanhTien;
-	                        
-	                    }
-	                    txt_tongTienNhap.setText(Double.toString(tongTienHang));
-	                    txt_tongThanhTien.setText(Double.toString(tongThanhTien));
-	                    txt_chietKhau.setText(Double.toString(tongGiamGia));
-	                }
-				}
-			});
+			
 		}
     }//GEN-LAST:event_txt_timHangHoaActionPerformed
 
-    private void showMessage(String string) {
+	private void showMessage(String string) {
 		// TODO Auto-generated method stub
 		JOptionPane.showMessageDialog(this, string);
 	}
@@ -608,6 +672,7 @@ public class TaoPhieuNhapHangPage extends javax.swing.JPanel {
     				LoHang lo = new LoHang(soLo, hh, soLuong, ngaySX, hanSD, giaNhap, ncc);
     				loHang_dao.createLoHang(lo);
     			}else {
+    				loHang_dao.updateSoLuong(soLuong, soLo);
     				int soLuongThem = soLuong + loHangTim.getSoLuong();
     				model_HH.setValueAt(soLuongThem, i, 7);
     				
@@ -629,7 +694,7 @@ public class TaoPhieuNhapHangPage extends javax.swing.JPanel {
         	
         	PhieuNhapHang pnh = new PhieuNhapHang("null", tgTao, ghiChu, maHDNCC, ncc, tongGiamGia, tongTienHang, trangThai);
         	System.out.println(pnh.toString());
-        	PhieuNhapHang pnHang = phieuNhapHang_dao.createPNH(pnh, thanhTien);
+        	PhieuNhapHang pnHang = phieuNhapHang_dao.createPNH(pnh);
         	
         	if (pnHang != null) {
         		//tao chi tiet pnh
@@ -643,14 +708,15 @@ public class TaoPhieuNhapHangPage extends javax.swing.JPanel {
         			
         			int soLuong = Integer.parseInt(model_HH.getValueAt(i, 7).toString());
         			double chietKhau =Double.parseDouble(model_HH.getValueAt(i, 10).toString());
-        			double thanhTienCT = Double.parseDouble(model_HH.getValueAt(i, 11).toString());
+        			
         			
         			ChiTietPhieuNhapHang ctPNHang = new ChiTietPhieuNhapHang(pnh, loHH, dvtCT, soLuong, chietKhau);
         			
-        			chiTietPNH_dao.addChiTietPNH(ctPNHang, thanhTienCT);
+        			chiTietPNH_dao.addChiTietPNH(ctPNHang);
         			
         		}
         		showMessage("Thêm thành công!");
+        		AddContent.addContent(new TaoPhieuNhapHangPage());
     		}else {
     			showMessage("Thêm không thành công!");
     		}

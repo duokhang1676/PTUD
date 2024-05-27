@@ -7,6 +7,7 @@ package ui;
 import components.AddContent;
 import components.DatePickerEditor;
 import components.DatePickerRenderer;
+import components.FormatJtable;
 import components.ResizeContent;
 import dao.ChiTietPhieuNhapHangDao;
 import dao.DonViTinhDao;
@@ -78,6 +79,7 @@ public class XemPhieuNhapHangPage extends javax.swing.JPanel {
         
         model_HH = new DefaultTableModel(colNames, 0);
         tbl_HH = new JTable(model_HH);
+        FormatJtable.setFontJtable(tbl_HH);
         JScrollPane js_tableHangHoa = new JScrollPane(tbl_HH);
         
         if (tbl_HH.getColumnModel().getColumnCount() > 0) {

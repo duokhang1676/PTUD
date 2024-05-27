@@ -78,7 +78,7 @@ public class ChiTietPhieuXuatTra {
 	}
 
 	public double tinhThanhTien() {
-		return soLuong * donGia - soLuong * donGia * chietKhau;
+		return soLuong * donGia - soLuong * donGia * chietKhau / 100;
 	}
 
 }

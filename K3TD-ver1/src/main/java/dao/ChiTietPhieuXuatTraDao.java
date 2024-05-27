@@ -15,7 +15,7 @@ import entities.PhieuNhapHang;
 import entities.PhieuXuatTra;
 
 public class ChiTietPhieuXuatTraDao {
-	public boolean addChiTietPNH(ChiTietPhieuXuatTra ct, double thanhTien) {
+	public boolean addChiTietPNH(ChiTietPhieuXuatTra ct) {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection(); 
 		PreparedStatement stmt = null;
@@ -28,7 +28,7 @@ public class ChiTietPhieuXuatTraDao {
 			stmt.setInt(3, ct.getDonViTinh().getMaDonViTinh());
 			stmt.setInt(4, ct.getSoLuong());
 			stmt.setDouble(5, ct.getChietKhau());
-			stmt.setDouble(6, thanhTien);
+			stmt.setDouble(6, ct.tinhThanhTien());
 			
 			stmt.executeUpdate();
 			stmt.close();
@@ -68,12 +68,12 @@ public class ChiTietPhieuXuatTraDao {
 						
 				ChiTietPhieuXuatTra ct = new ChiTietPhieuXuatTra(pxt, lo, dvt, soLuong, thanhTien, chietKhau);
 				dsCT.add(ct);
-				return dsCT;
+				
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return null;
+		return dsCT;
 	}
 }

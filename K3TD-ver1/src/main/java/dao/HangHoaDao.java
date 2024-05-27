@@ -145,7 +145,7 @@ public class HangHoaDao {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return null;s
+		return null;
 	}
 //Đang làm	
 	public HangHoa timHangHoaTheoMaVachVaMaHH(String ma) {
@@ -215,11 +215,6 @@ public class HangHoaDao {
 		}
 		return dsHangHoa;
 	}
-			
-			
-			
-			
-			
 			
 	public HangHoa timHangHoa(String maTenHHoa,  String loaiHHoa, String nhomHHoa, String trangThaiHH) {
 //		List<HangHoa> dsHangHoa = new ArrayList<>();
@@ -420,10 +415,22 @@ public class HangHoaDao {
 		ConnectDB.getInstance();
 	    Connection con = ConnectDB.getConnection(); 
 	    PreparedStatement stmt = null;
-	    String sql = "Update HangHoa set"
-	                + "TenHangHoa = ?, LoaiHang = ?, SoDangKy = ?, MaNhomHang = ?, NuocSanXuat = ?,"
-	                + "HangSanXuat = ?, HoatChatChinh = ?, HamLuong = ?, QuyCachDongGoi = ?, MoTa = ?, Thue = ?, SoLuongDinhMuc = ?, SoLuongCanhBao = ?, TrangThai = ?"
-	                + "where MaThuoc = ?";
+	    String sql = "UPDATE HangHoa SET "
+	            + "TenHangHoa = ?, "
+	            + "LoaiHang = ?, "
+	            + "SoDangKy = ?, "
+	            + "MaNhomHang = ?, "
+	            + "NuocSanXuat = ?, "
+	            + "HangSanXuat = ?, "
+	            + "HoatChatChinh = ?, "
+	            + "HamLuong = ?, "
+	            + "QuyCachDongGoi = ?, "
+	            + "MoTa = ?, "
+	            + "Thue = ?, "
+	            + "SoLuongDinhMuc = ?, "
+	            + "SoLuongCanhBao = ?, "
+	            + "TrangThai = ? "
+	            + "WHERE MaHangHoa = ?";
 	    try {
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, hh.getTenHangHoa());
@@ -444,7 +451,7 @@ public class HangHoaDao {
 	        stmt.setString(15, maHH);
 	        
 	        stmt.executeUpdate();
-	        stmt.close();
+	        
 	        return true;
 	        
 		} catch (Exception e) {
@@ -472,4 +479,6 @@ public class HangHoaDao {
 		}
 		return false;
 	}
+	
+	
 }

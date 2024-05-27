@@ -138,7 +138,7 @@ public class PhieuXuatTraDao {
 		return null;
 	}
 
-	public PhieuXuatTra createPXT(PhieuXuatTra pxt, Double thanhTien) {
+	public PhieuXuatTra createPXT(PhieuXuatTra pxt) {
 		// TODO Auto-generated method stub
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection(); 
@@ -155,7 +155,7 @@ public class PhieuXuatTraDao {
 			stmt.setString(4, pxt.getNhaCungCap().getMaNhaCungCap());
 			stmt.setDouble(5, pxt.getTongGiamGia());
 			stmt.setDouble(6, pxt.getTongTienHang());
-			stmt.setDouble(7, thanhTien);
+			stmt.setDouble(7, pxt.tinhThanhTien());
 			stmt.setString(8, pxt.getTrangThai().toString());
 			
 			ResultSet rs = stmt.executeQuery();

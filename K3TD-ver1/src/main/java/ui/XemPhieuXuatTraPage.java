@@ -5,6 +5,7 @@
 package ui;
 
 import components.AddContent;
+import components.FormatJtable;
 import components.ResizeContent;
 import dao.ChiTietPhieuNhapHangDao;
 import dao.ChiTietPhieuXuatTraDao;
@@ -89,6 +90,7 @@ public class XemPhieuXuatTraPage extends javax.swing.JPanel {
 
 		model_HH = new DefaultTableModel(colNames, 0);
 		tbl_HH = new JTable(model_HH);
+		FormatJtable.setFontJtable(tbl_HH);
 		JScrollPane js_tableHangHoa = new JScrollPane(tbl_HH);
 
 		if (tbl_HH.getColumnModel().getColumnCount() > 0) {

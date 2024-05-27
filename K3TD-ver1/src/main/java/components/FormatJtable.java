@@ -61,6 +61,19 @@ public class FormatJtable {
             tb.getColumnModel().getColumn(i).setCellRenderer(renderer);
         }
 	}
-	
+	public static void setCellEditableForPNH(JTable tb) {
+		for (int i = 0; i < tb.getColumnCount(); i++) {
+			if(i!=3&&i!=4&&i!=5&&i!=6&&i!=7&&i!=8&&i!=10) {
+				tb.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(new JTextField()) {
+					@Override
+					public boolean isCellEditable(EventObject e) {
+						// Trả về false để ngăn chặn chỉnh sửa trực tiếp
+						return false;
+					}
+				});
+			}
+			
+		}
+	}
 	
 }

@@ -13,11 +13,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import components.AddContent;
+import components.FormatJtable;
+import components.PnlHangHoaInfo;
 import components.StatusMenu;
 import dao.DonViTinhDao;
 import dao.HangHoaDao;
+import dao.LoHangDao;
 import dao.NhomHangDao;
 import entities.DonViTinh;
+import entities.LoHang;
 import entities.LoaiHang;
 import entities.NhomHang;
 import entities.TrangThaiDonViTinh;
@@ -42,9 +46,10 @@ import javax.swing.table.TableColumnModel;
  */
 public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
 
-    private NhomHangDao nhomHang_dao;
-    private HangHoaDao hangHoa_dao;
-    private DonViTinhDao donViTinh_dao;
+    private NhomHangDao nhomHang_dao = new NhomHangDao();
+    private HangHoaDao hangHoa_dao = new HangHoaDao();
+    private DonViTinhDao donViTinh_dao = new DonViTinhDao();
+    private LoHangDao loHang_dao = new LoHangDao();
     private DefaultTableModel model_hangHoa;
     private JTable tbl_hangHoa;
 	/**
@@ -65,7 +70,7 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
     	int stt = 1;
     	String loaiHang = null;
     	model_hangHoa.setNumRows(0);
-		hangHoa_dao = new HangHoaDao();
+		
 		List<entities.HangHoa> dsHangHoa = hangHoa_dao.getAllDataHangHoa();
 		for (entities.HangHoa hh : dsHangHoa) {
 			if (hh.getLoaiHang().equals(LoaiHang.DUOC_PHAM)) {
@@ -114,7 +119,7 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
 
 	private void loadDataNhomHang() {
 		// TODO Auto-generated method stub
-    	nhomHang_dao = new NhomHangDao();
+    	
     	
     	List<NhomHang> dsNhomHang = nhomHang_dao.getAllDataNhomHang();
     	dsNhomHang.forEach(nh -> cb_nhomHang.addItem(nh.getTenNhomHang()));
@@ -465,6 +470,7 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
         
         model_hangHoa = new DefaultTableModel(colNames, 0);
         tbl_hangHoa = new JTable(model_hangHoa);
+        FormatJtable.setFontJtable(tbl_hangHoa);
         JScrollPane js_tableHangHoa = new JScrollPane(tbl_hangHoa);
         
         if (tbl_hangHoa.getColumnModel().getColumnCount() > 0) {
@@ -509,14 +515,16 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getClickCount() == 2) {
-			AddContent.addContent(new XemThongTinHangHoaPage());
+			PnlHangHoaInfo.hangHoaInfo = new XemThongTinHangHoaPage();
+			AddContent.addContent(PnlHangHoaInfo.hangHoaInfo);
 	    	
-			donViTinh_dao = new DonViTinhDao();
+		
 	    	int row = tbl_hangHoa.getSelectedRow();
 	    	String maHH = tbl_hangHoa.getValueAt(row, 1).toString();
-	    	
+	    	System.out.println(maHH);
 	    	entities.HangHoa hangHoa = hangHoa_dao.timHangHoaTheoMa(maHH);
 	    	List<DonViTinh> dsDVT = donViTinh_dao.timDVTTheoMaHH(maHH);
+	    	System.out.println(dsDVT);
 	    	
 	    	XemThongTinHangHoaPage.txt_maHangHoa.setText(hangHoa.getMaHangHoa());
 	    	XemThongTinHangHoaPage.txt_tenHangHoa1.setText(hangHoa.getTenHangHoa());
@@ -558,7 +566,7 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
 	    		String maVach = dvt.getMaVach();
 	    		String dangBan = dvt.getTrangThaiDonViTinh().equals(TrangThaiDonViTinh.DANG_BAN)?"Đang bán":"Tạm ngưng";
 	    		
-	    		Object[] emptyRow = {i+1,tenDVT, quyDoi, giaBan,maVach,dangBan};
+	    		Object[] emptyRow = {i+1,tenDVT, dvt.getQuyDoi(), giaBan,maVach,dangBan};
 	    		
 	    		XemThongTinHangHoaPage.model_DVT.addRow(emptyRow);
 	    		
@@ -566,7 +574,6 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
 				i++;
 			}
 	    	
-//	    	System.out.println(dsDVT);
 	    	
 		}
 		

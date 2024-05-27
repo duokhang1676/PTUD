@@ -5,6 +5,8 @@
 package ui;
 
 import components.AddContent;
+import components.FormatJtable;
+import components.PnlPhieuNhapPhieuXuat;
 import components.ResizeContent;
 import dao.ChiTietPhieuNhapHangDao;
 import dao.PhieuNhapHangDao;
@@ -59,7 +61,7 @@ public class NhapHangPage extends javax.swing.JPanel {
 		List<PhieuNhapHang> dsPNH = phieuNH_dao.getAllDataPNH();
 		for (PhieuNhapHang p : dsPNH) {
 			model_phieuNhap.addRow(new Object[] {stt, p.getMaPhieu(), p.getThoiGianTao(), p.getNhaCungCap().getTenNhaCungCap(),
-					10000, p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuNhapHang.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
+					p.tinhThanhTien(), p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuNhapHang.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
 			
 			stt++;
 		}
@@ -70,6 +72,7 @@ public class NhapHangPage extends javax.swing.JPanel {
     	String[] colNames = {"STT","Mã phiếu nhập hàng", "Ngày nhập", "Nhà cung cấp", "Tổng tiền", "Ghi chú", "Trạng thái" };
         model_phieuNhap = new DefaultTableModel(colNames, 0);
         tbl_phieuNhap = new JTable(model_phieuNhap);
+        FormatJtable.setFontJtable(tbl_phieuNhap);
         JScrollPane js_tableHangHoa = new JScrollPane(tbl_phieuNhap);
         
         if (tbl_phieuNhap.getColumnModel().getColumnCount() > 0) {
@@ -126,9 +129,9 @@ public class NhapHangPage extends javax.swing.JPanel {
 					String ma = model_phieuNhap.getValueAt(selectedRow, 1).toString();
 					System.out.println(ma);
 					PhieuNhapHang pnh = phieuNH_dao.getPNHTheoMa(ma);
-					System.out.println(pnh.toString());
+					
 			    	List<ChiTietPhieuNhapHang> dsChiTiet= chiTietPNH_dao.getChiTietPNH(ma);
-			    	System.out.println(dsChiTiet);
+			    	dsChiTiet.forEach(c->System.out.println(c.toString()));
 			    	
 			    	XemPhieuNhapHangPage.txt_maPhieuNhap.setText(pnh.getMaPhieu());
 			    	XemPhieuNhapHangPage.dTP_phieuNhap.setDateTimePermissive(pnh.getThoiGianTao());
@@ -147,7 +150,8 @@ public class NhapHangPage extends javax.swing.JPanel {
 			            
 			            XemPhieuNhapHangPage.model_HH.addRow(new Object[] {stt, ct.getDonViTinh().getHangHoa().getMaHangHoa(),ct.getDonViTinh().getHangHoa().getTenHangHoa() ,ct.getLoHang().getSoLo(), ct.getLoHang().getNgaySanXuat(),
 								ct.getLoHang().getHanSuDung(), ct.getDonViTinh().getTenDonViTinh(), ct.getSoLuong(), ct.getLoHang().getGiaNhap(),ct.getLoHang().getHangHoa().getThue(), ct.getChietKhau(), giaBan});
-					}
+			            stt++;
+			    	}
 			    	
 			    	double tongGiamGia = 0;
 			        double tongTienHang = 0;
@@ -406,7 +410,7 @@ public class NhapHangPage extends javax.swing.JPanel {
 			for (PhieuNhapHang p : dsPNH) {
 				
 	    		model_phieuNhap.addRow(new Object[] {stt, p.getMaPhieu(), p.getThoiGianTao(), p.getNhaCungCap().getTenNhaCungCap(),
-	    				10000, p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuNhapHang.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
+	    				p.tinhThanhTien(), p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuNhapHang.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
 	    		
 	    		stt++;
 			}
@@ -440,7 +444,7 @@ public class NhapHangPage extends javax.swing.JPanel {
 			for (PhieuNhapHang p : dsPNH) {
 				
 	    		model_phieuNhap.addRow(new Object[] {stt, p.getMaPhieu(), p.getThoiGianTao(), p.getNhaCungCap().getTenNhaCungCap(),
-	    				10000, p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuNhapHang.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
+	    				p.tinhThanhTien(), p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuNhapHang.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
 	    		
 	    		stt++;
 			}
@@ -463,7 +467,7 @@ public class NhapHangPage extends javax.swing.JPanel {
 	    	if (p != null) {
 	    		model_phieuNhap.setRowCount(0);
 	    		model_phieuNhap.addRow(new Object[] {1, p.getMaPhieu(), p.getThoiGianTao(), p.getNhaCungCap().getTenNhaCungCap(),
-	    				10000, p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuNhapHang.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
+	    				p.tinhThanhTien(), p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuNhapHang.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
 			}else {
 				showMessage("Không tìm thấy!");
 			}
@@ -479,7 +483,7 @@ public class NhapHangPage extends javax.swing.JPanel {
 
 	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        AddContent.addContent(new TaoPhieuNhapHangPage());
+        AddContent.addContent(PnlPhieuNhapPhieuXuat.taoPhieuNhap);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txt_timKiemTheoMaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_timKiemTheoMaFocusLost

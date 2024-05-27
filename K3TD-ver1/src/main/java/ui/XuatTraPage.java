@@ -5,6 +5,8 @@
 package ui;
 
 import components.AddContent;
+import components.FormatJtable;
+import components.PnlPhieuNhapPhieuXuat;
 import components.ResizeContent;
 import dao.ChiTietPhieuXuatTraDao;
 import dao.PhieuNhapHangDao;
@@ -62,7 +64,7 @@ public class XuatTraPage extends javax.swing.JPanel {
 		List<PhieuXuatTra> dsPXT = phieuXT_dao.getAllDataPXT();
 		for (PhieuXuatTra p : dsPXT) {
 			model_phieuNhap.addRow(new Object[] {stt, p.getMaPhieuXuatTra(), p.getThoiGianTao(), p.getNhaCungCap().getTenNhaCungCap(),
-					10000, p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuXuatTra.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
+					p.tinhThanhTien(), p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuXuatTra.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
 			
 			stt++;
 		}
@@ -72,6 +74,7 @@ public class XuatTraPage extends javax.swing.JPanel {
     	String[] colNames = {"STT","Mã phiếu xuất trả", "Ngày nhập", "Nhà cung cấp", "Tổng tiền", "Ghi chú", "Trạng thái" };
         model_phieuNhap = new DefaultTableModel(colNames, 0);
         tbl_phieuNhap = new JTable(model_phieuNhap);
+        FormatJtable.setFontJtable(tbl_phieuNhap);
         JScrollPane js_tableHangHoa = new JScrollPane(tbl_phieuNhap);
         
         if (tbl_phieuNhap.getColumnModel().getColumnCount() > 0) {
@@ -400,7 +403,7 @@ public class XuatTraPage extends javax.swing.JPanel {
 			for (PhieuXuatTra p : dsPXT) {
 				
 	    		model_phieuNhap.addRow(new Object[] {stt, p.getMaPhieuXuatTra(), p.getThoiGianTao(), p.getNhaCungCap().getTenNhaCungCap(),
-	    				10000, p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuXuatTra.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
+	    				p.tinhThanhTien(), p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuXuatTra.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
 	    		
 	    		stt++;
 			}
@@ -439,7 +442,7 @@ public class XuatTraPage extends javax.swing.JPanel {
 			for (PhieuXuatTra p : dsPXT) {
 				
 	    		model_phieuNhap.addRow(new Object[] {stt, p.getMaPhieuXuatTra(), p.getThoiGianTao(), p.getNhaCungCap().getTenNhaCungCap(),
-	    				10000, p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuXuatTra.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
+	    				p.tinhThanhTien(), p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuXuatTra.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
 	    		
 	    		stt++;
 			}
@@ -462,7 +465,7 @@ public class XuatTraPage extends javax.swing.JPanel {
 	    	if (p != null) {
 	    		model_phieuNhap.setRowCount(0);
 	    		model_phieuNhap.addRow(new Object[] {1, p.getMaPhieuXuatTra(), p.getThoiGianTao(), p.getNhaCungCap().getTenNhaCungCap(),
-	    				10000, p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuXuatTra.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
+	    				p.tinhThanhTien(), p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuXuatTra.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
 			}else {
 				showMessage("Không tìm thấy!");
 			}
@@ -477,7 +480,7 @@ public class XuatTraPage extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        AddContent.addContent(new TaoPhieuXuatTraPage());
+        AddContent.addContent(PnlPhieuNhapPhieuXuat.taoPhieuXuat);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txt_timKiemTheoMaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_timKiemTheoMaFocusGained
