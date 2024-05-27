@@ -19,6 +19,7 @@ ui\TaoPhieuXuatTraPage$1.class
 ui\NhaCungCapPage$3.class
 ui\NhapHangPage$2.class
 ui\BanHangPage$10.class
+ui\ChiTietPhieuTraHangPage$5.class
 ui\NhanVienPage$6.class
 ui\TaoHangHoaPage$3.class
 ui\KhachHangPage.class
@@ -39,6 +40,7 @@ ui\NhanVienPage$9.class
 ui\XuatTraPage.class
 ui\TaiKhoanPage$3.class
 ui\TaoHangHoaPage$13.class
+ui\ChiTietPhieuTraHangPage.class
 ui\TaoHangHoaPage$1.class
 ui\BanHangPage$2.class
 ui\DangNhap$1.class
@@ -116,6 +118,7 @@ ui\HoaDonPage$tuyChon.class
 ui\KhachHangPage$6.class
 ui\ChiTietDonThuocMauPage$2.class
 ui\RootFrame$13.class
+ui\ChiTietPhieuTraHangPage$4.class
 ui\TaoHangHoaPage$17.class
 ui\PhieuTraHangPage$3.class
 dao\DonViTinhDao.class
@@ -159,6 +162,7 @@ ui\ChiTietDonThuocMauPage$4.class
 ui\NhapHangPage$6.class
 ui\TaoPhieuNhapHangPage$8.class
 ui\KhachHangPage$1.class
+ui\ChiTietPhieuTraHangPage$7.class
 ui\KetCaPage$3.class
 ui\ChiTietDonThuocMauPage$5.class
 ui\TaoHangHoaPage$12.class
@@ -167,6 +171,7 @@ ui\TaoHangHoaPage$2.class
 ui\KhachHangPage$3.class
 ui\HoaDonPage$3.class
 ui\TaiKhoanPage$8.class
+ui\ChiTietPhieuTraHangPage$1.class
 dao\NhanVien_DAO.class
 ui\ThongKeNhanVienPage$3.class
 ui\BanHangPage$13.class
@@ -182,6 +187,7 @@ ui\RootFrame$28.class
 ui\KhachHangPage$10.class
 ui\ThongKeHangHoaPage$1.class
 ui\PhieuTraHangPage$tuyChon.class
+ui\ChiTietPhieuTraHangPage$6.class
 ui\ThongKeNhanVienPage$2.class
 ui\NhanVienPage.class
 ui\HoaDonPage$4.class
@@ -204,6 +210,7 @@ ui\NhanVienPage$10.class
 ui\DoiMatKhauPage$4.class
 ui\ThongKeNhanVienPage$1.class
 ui\KhachHangPage$5.class
+ui\ChiTietPhieuTraHangPage$3.class
 ui\NhaCungCapPage$7.class
 ui\HoaDonPage.class
 ui\DoiMatKhauPage$3.class
@@ -211,6 +218,7 @@ ui\HoaDonPage$1.class
 ui\TrangChu$4.class
 ui\PhieuTraHangPage$1.class
 ui\TaiKhoanPage$9.class
+ui\ChiTietPhieuTraHangPage$2.class
 ui\NhaCungCapPage$6.class
 ui\DoiMatKhauPage$2.class
 ui\KhachHangPage$7.class

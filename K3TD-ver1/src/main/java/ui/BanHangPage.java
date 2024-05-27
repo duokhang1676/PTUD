@@ -99,11 +99,11 @@ public class BanHangPage extends javax.swing.JPanel {
         ResizeContent.resizeContent(this);
         setTable();
         FormatJtable.setCellEditableForBH(tbChiTietHoaDon);
-        updateTime();
+        
         phimTat();
         themDonThuocMau();
         inputNumber();
-        
+        updateTime();
         //config();
     }
 
@@ -117,12 +117,12 @@ public class BanHangPage extends javax.swing.JPanel {
     private void initComponents() {
 
         pnlHeader = new javax.swing.JPanel();
-        lblThoiGian = new javax.swing.JLabel();
         cbChonDonThuocMau = new javax.swing.JComboBox<>();
         lbLapHD = new javax.swing.JLabel();
         timMaSP1 = new sampleUi.TimMaSP();
         ckBBanTheoDon = new javax.swing.JCheckBox();
         nhapMaDonThuoc1 = new sampleUi.NhapMaDonThuoc();
+        txtTimer = new javax.swing.JTextField();
         pnlBody = new javax.swing.JPanel();
         pnlLeft = new javax.swing.JPanel();
         lblPhimTat = new javax.swing.JLabel();
@@ -171,12 +171,9 @@ public class BanHangPage extends javax.swing.JPanel {
         pnlHeader.setPreferredSize(new java.awt.Dimension(1920, 50));
         pnlHeader.setPreferredSize(new Dimension(ResizeContent.getWidth(),50));
 
-        lblThoiGian.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        lblThoiGian.setText("Thời gian:");
-        lblThoiGian.setPreferredSize(new Dimension(pnlRight.getPreferredSize().width,20));
-
         cbChonDonThuocMau.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        cbChonDonThuocMau.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn đơn thuốc mẫu" }));
+        cbChonDonThuocMau.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đơn thuốc mẫu" }));
+        cbChonDonThuocMau.setToolTipText("");
         cbChonDonThuocMau.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbChonDonThuocMauActionPerformed(evt);
@@ -212,6 +209,10 @@ public class BanHangPage extends javax.swing.JPanel {
             }
         });
 
+        txtTimer.setEditable(false);
+        txtTimer.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
+        txtTimer.setBorder(null);
+
         javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
         pnlHeader.setLayout(pnlHeaderLayout);
         pnlHeaderLayout.setHorizontalGroup(
@@ -219,17 +220,17 @@ public class BanHangPage extends javax.swing.JPanel {
             .addGroup(pnlHeaderLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(lbLapHD)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(timMaSP1, javax.swing.GroupLayout.PREFERRED_SIZE, 668, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addComponent(timMaSP1, javax.swing.GroupLayout.PREFERRED_SIZE, 631, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(ckBBanTheoDon, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nhapMaDonThuoc1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addComponent(nhapMaDonThuoc1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
                 .addComponent(cbChonDonThuocMau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(lblThoiGian, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addGap(18, 18, 18)
+                .addComponent(txtTimer, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(375, 375, 375))
         );
         pnlHeaderLayout.setVerticalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,17 +240,16 @@ public class BanHangPage extends javax.swing.JPanel {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(lbLapHD, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlHeaderLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ckBBanTheoDon, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(timMaSP1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(11, 11, 11)
+                        .addComponent(timMaSP1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(7, 7, 7))
             .addGroup(pnlHeaderLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblThoiGian, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cbChonDonThuocMau, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(nhapMaDonThuoc1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(6, 6, 6)
+                .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nhapMaDonThuoc1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ckBBanTheoDon, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbChonDonThuocMau)
+                    .addComponent(txtTimer))
                 .addContainerGap())
         );
 
@@ -294,8 +294,6 @@ public class BanHangPage extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tbChiTietHoaDon.setPreferredSize(new java.awt.Dimension(100, 100));
-
         tbChiTietHoaDon.setRequestFocusEnabled(false);
         tbChiTietHoaDon.setRowHeight(40);
         jScrollPane1.setViewportView(tbChiTietHoaDon);
@@ -1148,24 +1146,24 @@ public class BanHangPage extends javax.swing.JPanel {
     
     public void updateTime() {
    	 // Tạo và khởi chạy một luồng để cập nhật thời gian liên tục
-       Thread updateTimeThread = new Thread(() -> {
-           try {
-               while (true) {
-               	LocalDateTime now = LocalDateTime.now();
-                   
-                   // Định dạng thời gian
-                   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
-                   
-                   // Chuyển đổi LocalDateTime thành chuỗi theo định dạng mong muốn
-                   String formattedDateTime = now.format(formatter);
-                   lblThoiGian.setText("Thời gian: "+formattedDateTime); // Cập nhật thời gian
-                   Thread.sleep(1000); // Ngủ 1 giây
-               }
-           } catch (InterruptedException e) {
-               e.printStackTrace();
-           }
-       });
-       updateTimeThread.start(); // Bắt đầu luồng
+    	Thread updateTimeThread = new Thread(() -> {
+            try {
+                while (true) {
+                	LocalDateTime now = LocalDateTime.now();
+                    
+                    // Định dạng thời gian
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
+                    
+                    // Chuyển đổi LocalDateTime thành chuỗi theo định dạng mong muốn
+                    String formattedDateTime = now.format(formatter);
+                    txtTimer.setText(formattedDateTime); // Cập nhật thời gian
+                    Thread.sleep(1000); // Ngủ 1 giây
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        updateTimeThread.start(); // Bắt đầu luồng
 
        
    }
@@ -1349,7 +1347,6 @@ public class BanHangPage extends javax.swing.JPanel {
     private javax.swing.JLabel lblSDT;
     private javax.swing.JLabel lblTenKH;
     private javax.swing.JLabel lblThanhToan;
-    private javax.swing.JLabel lblThoiGian;
     private javax.swing.JLabel lblTienDua;
     private javax.swing.JLabel lblTienGiam;
     private javax.swing.JLabel lblTienThua;
@@ -1376,6 +1373,7 @@ public class BanHangPage extends javax.swing.JPanel {
     private javax.swing.JTextField txtTienGiam;
     private javax.swing.JTextField txtTienThua;
     private javax.swing.JTextField txtTienTra;
+    private javax.swing.JTextField txtTimer;
     private javax.swing.JTextField txtTongTien;
     // End of variables declaration//GEN-END:variables
 }

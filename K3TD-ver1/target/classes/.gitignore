@@ -1,4 +1,7 @@
-/dao/
-/ui/
-/entities/
 /components/
+/dao/
+/db/
+/entities/
+/printer/
+/sampleUi/
+/ui/

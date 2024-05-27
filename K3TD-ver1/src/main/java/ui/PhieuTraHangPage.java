@@ -6,6 +6,8 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.EventObject;
@@ -46,7 +48,7 @@ public class PhieuTraHangPage extends javax.swing.JPanel {
         initComponents();
         config();
         addTableHoaDon();
-        loadDataTablePTH();
+        loadDataTablePTH(false);
     }
 
     private void config() {
@@ -55,23 +57,27 @@ public class PhieuTraHangPage extends javax.swing.JPanel {
 		dpDenNgay.setDate(LocalDate.now());
 	}
 
-	private void loadDataTablePTH() {
+	private void loadDataTablePTH(boolean byMa) {
 		// TODO Auto-generated method stub
 		model.setRowCount(0);
-    	LocalDate tuNgay = LocalDate.of(2024, 1, 1);
-    	LocalDate denNgay = LocalDate.now();
-    	try {
-			dpTuNgay.getDate();
-			dpDenNgay.getDate();
-		} catch (Exception e) {
-			// TODO: handle exception
-			return;
-		}
-    	if(dpTuNgay.getDate()!=null)
-    		tuNgay = dpTuNgay.getDate();
-    	if(dpDenNgay.getDate()!=null)
-    		denNgay = dpDenNgay.getDate();
-    	List<PhieuTraHang> dsPhieuTraHang = new PhieuTraHangDao().getDSPhieuTraHangFromTo(tuNgay, denNgay, cbTrangThai.getSelectedIndex()==0?TrangThaiPhieuTraHang.HOAN_THANH:TrangThaiPhieuTraHang.DA_HUY);
+    	if(byMa) {
+    		dsPhieuTraHang = new PhieuTraHangDao().getPhieuTraHangByMa(txtTimTheoMa.getText());
+    	}else {
+    		LocalDate tuNgay = LocalDate.of(2024, 1, 1);
+        	LocalDate denNgay = LocalDate.now();
+        	try {
+    			dpTuNgay.getDate();
+    			dpDenNgay.getDate();
+    		} catch (Exception e) {
+    			// TODO: handle exception
+    			return;
+    		}
+        	if(dpTuNgay.getDate()!=null)
+        		tuNgay = dpTuNgay.getDate();
+        	if(dpDenNgay.getDate()!=null)
+        		denNgay = dpDenNgay.getDate();
+        	dsPhieuTraHang = new PhieuTraHangDao().getDSPhieuTraHangFromTo(tuNgay, denNgay, cbTrangThai.getSelectedIndex()==0?TrangThaiPhieuTraHang.HOAN_THANH:TrangThaiPhieuTraHang.DA_HUY);
+    	}
     	
     	if(dsPhieuTraHang!=null) {
     		int stt = 1;
@@ -80,8 +86,18 @@ public class PhieuTraHangPage extends javax.swing.JPanel {
     					phieuTraHang.getNhanVien().getMaNhanVien(),phieuTraHang.getHoaDon().getKhachHang().getTenKhachHang(),
     					Formater.dateTimeFormater(phieuTraHang.getThoiGianTao()),phieuTraHang.getTongTien(),phieuTraHang.getGhiChu(),phieuTraHang.getTrangThai()==TrangThaiPhieuTraHang.HOAN_THANH?"Hoàn thành":"Đã hủy"});
     		}
+    		
+    		if(byMa) {
+    			txtTimTheoMa.setText("");
+        		txtTimTheoMa.requestFocus();
+    			}
+    		}else {
+    			if(byMa) {
+    				txtTimTheoMa.selectAll();
+    				txtTimTheoMa.requestFocus();
+    			}
     	}
-    	
+    	txtTongSoHoaDonTra.setText(model.getRowCount()+"");
     	
 	}
 
@@ -113,6 +129,18 @@ public class PhieuTraHangPage extends javax.swing.JPanel {
 		FormatJtable.setFontJtable(table);
         pnlContain.add(js_tableHangHoa, BorderLayout.CENTER);
         
+        table.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		// TODO Auto-generated method stub
+        		super.mouseClicked(e);
+        		if(e.getClickCount()>=2) {
+        			phieuTraHang = dsPhieuTraHang.get(table.getSelectedRow());
+        			AddContent.addContent(new ChiTietPhieuTraHangPage());
+        		}
+        		
+        	}
+		});
         
 	}
     public void setCellEditable() {
@@ -499,25 +527,13 @@ public class PhieuTraHangPage extends javax.swing.JPanel {
     		dpDenNgay.setText("");
     	}
     }//GEN-LAST:event_cbLocTheoThoiGianActionPerformed
-
+    
     private void txtTimTheoMaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimTheoMaActionPerformed
         // TODO add your handling code here:
     	if(txtTimTheoMa.getText().isEmpty())
     		return;
     	else {
-    		PhieuTraHang phieuTraHang = new PhieuTraHangDao().getPhieuTraHangByMa(txtTimTheoMa.getText());
-    		if(phieuTraHang!=null) {
-    			model.setRowCount(0);
-    			model.addRow(new Object[] {1,phieuTraHang.getMaPhieu(),phieuTraHang.getHoaDon().getMaHoaDon(),
-    					phieuTraHang.getNhanVien().getMaNhanVien(),phieuTraHang.getHoaDon().getKhachHang().getTenKhachHang(),
-    					Formater.dateTimeFormater(phieuTraHang.getThoiGianTao()),phieuTraHang.getTongTien(),phieuTraHang.getGhiChu(),phieuTraHang.getTrangThai()==TrangThaiPhieuTraHang.HOAN_THANH?"Hoàn thành":"Đã hủy"});
-    		txtTimTheoMa.setText("");
-    		txtTimTheoMa.requestFocus();
-    		}else {
-    			model.setRowCount(0);
-    			txtTimTheoMa.selectAll();
-    			txtTimTheoMa.requestFocus();
-    		}
+    		loadDataTablePTH(true);
     			
     	}
     }//GEN-LAST:event_txtTimTheoMaActionPerformed
@@ -525,25 +541,14 @@ public class PhieuTraHangPage extends javax.swing.JPanel {
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
         // TODO add your handling code here:
     	if(txtTimTheoMa.getText().isEmpty())
-    		loadDataTablePTH();
+    		loadDataTablePTH(false);
     	else {
-    		PhieuTraHang phieuTraHang = new PhieuTraHangDao().getPhieuTraHangByMa(txtTimTheoMa.getText());
-    		if(phieuTraHang!=null) {
-    			model.setRowCount(0);
-    			model.addRow(new Object[] {1,phieuTraHang.getMaPhieu(),phieuTraHang.getHoaDon().getMaHoaDon(),
-    					phieuTraHang.getNhanVien().getMaNhanVien(),phieuTraHang.getHoaDon().getKhachHang().getTenKhachHang(),
-    					Formater.dateTimeFormater(phieuTraHang.getThoiGianTao()),phieuTraHang.getTongTien(),phieuTraHang.getGhiChu(),phieuTraHang.getTrangThai()==TrangThaiPhieuTraHang.HOAN_THANH?"Hoàn thành":"Đã hủy"});
-    		txtTimTheoMa.setText("");
-    		txtTimTheoMa.requestFocus();
-    		}else {
-    			model.setRowCount(0);
-    			txtTimTheoMa.selectAll();
-    			txtTimTheoMa.requestFocus();
-    		}
+    		loadDataTablePTH(true);
     	}
     }//GEN-LAST:event_btnTimKiemActionPerformed
-
-
+  
+	public static PhieuTraHang phieuTraHang;
+    private List<PhieuTraHang> dsPhieuTraHang;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTaoPhieuTraHang;
     private javax.swing.JButton btnTimKiem;

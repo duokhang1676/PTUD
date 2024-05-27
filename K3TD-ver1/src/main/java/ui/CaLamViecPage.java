@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Insets;
+import java.time.LocalDate;
 
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
@@ -27,9 +28,13 @@ public class CaLamViecPage extends javax.swing.JPanel {
      */
     public CaLamViecPage() {
         initComponents();
-      
+        config();
     }
-    
+    private void config() {
+		// TODO Auto-generated method stub
+    	dpTuNgay.setDate(LocalDate.now());
+		dpDenNgay.setDate(LocalDate.now());
+	}
 
  
 

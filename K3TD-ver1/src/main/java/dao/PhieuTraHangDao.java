@@ -28,7 +28,8 @@ public class PhieuTraHangDao {
 	public PhieuTraHangDao() {
 		// TODO Auto-generated constructor stub
 	}
-	public PhieuTraHang getPhieuTraHangByMa(String ma) {
+	public List<PhieuTraHang> getPhieuTraHangByMa(String ma) {
+		List<PhieuTraHang> dsPhieuTraHang = new ArrayList<>();
 		try {
 			db.ConnectDB.getInstance();
 			Connection con = db.ConnectDB.getConnection();
@@ -53,8 +54,9 @@ public class PhieuTraHangDao {
 				double tongTien = rs.getDouble("tongtien");
 				TrangThaiPhieuTraHang tt = TrangThaiPhieuTraHang.valueOf(rs.getString("trangthai"));
 				PhieuTraHang phieuTraHang = new PhieuTraHang(maPhieu, thoiGianTao, hd, ghiChu, ca, nv, tongTien, tt);
-				return phieuTraHang;
+				dsPhieuTraHang.add(phieuTraHang);
 			}
+			return dsPhieuTraHang;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -62,8 +64,8 @@ public class PhieuTraHangDao {
 		return null;
 	}
 	public List<PhieuTraHang> getDSPhieuTraHangFromTo(LocalDate from, LocalDate to, TrangThaiPhieuTraHang tt) {
+		List<PhieuTraHang> ds = new ArrayList<>();
 		try {
-			List<PhieuTraHang> dsPhieuTraHang = new ArrayList<>();
 			db.ConnectDB.getInstance();
 			Connection con = db.ConnectDB.getConnection();
 			String sql = "Select * from phieutrahang where CAST(ThoiGianTao AS DATE) BETWEEN ? AND ? AND TrangThai = ?";
@@ -86,16 +88,18 @@ public class PhieuTraHangDao {
 				Ca ca = new Ca_DAO().getCaByMaCa(rs.getString("maca"));
 				NhanVien nv = new NhanVien_DAO().getNVbyMa(rs.getString("manhanvien"));
 				double tongTien = rs.getDouble("tongtien");
-				TrangThaiPhieuTraHang trangThai = TrangThaiPhieuTraHang.valueOf(rs.getString("trangthai"));
-				PhieuTraHang phieuTraHang = new PhieuTraHang(maPhieu, thoiGianTao, hd, ghiChu, ca, nv, tongTien, trangThai);
-				dsPhieuTraHang.add(phieuTraHang);
+				
+				PhieuTraHang phieuTraHang = new PhieuTraHang(maPhieu, thoiGianTao, hd, ghiChu, ca, nv, tongTien, tt);
+				ds.add(phieuTraHang);
 			}
+			return ds;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 		return null;
 	}
+
 	public double getTongTienHoaDonTraTrongKhoang(LocalDate from, LocalDate to) {
 		double tongTien = 0;
 		try {
@@ -243,6 +247,24 @@ public class PhieuTraHangDao {
 				stmt.setString(4, null);
 			stmt.setString(5, phieuTraHang.getNhanVien().getMaNhanVien());
 			stmt.setDouble(6, phieuTraHang.getTongTien());
+			stmt.executeUpdate();
+			stmt.close();
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
+	public boolean huyPhieuTraHang(String maPhieu) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection(); 
+		PreparedStatement stmt = null;
+		String sql = "update phieutrahang set trangthai = 'DA_HUY' where maphieutrahang = ?";
+		try {
+			stmt = con.prepareStatement(sql);
+			
+			stmt.setString(1, maPhieu);
 			stmt.executeUpdate();
 			stmt.close();
 			return true;
