@@ -626,7 +626,8 @@ private void refresh() {
 	date_ngayApdung.setDate(LocalDate.now());
 	cbo_trangThai.setSelectedItem("Đang bán");
 	table_model2.setRowCount(0);
-//	table_model2.fireTableDataChanged();
+	table_model2.fireTableDataChanged();
+//	AddContent.addContent(new TaoDonThuocMauPage());
 }
 
 
