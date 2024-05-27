@@ -105,35 +105,35 @@ public class HoaDonDao {
 		return dsHoaDon;
 	}
 	
-	public boolean addHoaDon(HoaDon hd, double tongTien, double tienThua) {
+	public boolean addHoaDon(HoaDon hd) {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection(); 
 		PreparedStatement stmt = null;
-		String sql = "insert into HoaDon (MaHoaDon, ThoiGianLapHoaDon, MaNhanVien, MaKhachHang, TienKhachTra, DiemQuyDoi, TongTien, TienThua, GhiChu, MaCa, TrangThai, ThanhTien) "
-				+ "values (?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into HoaDon (MaHoaDon, MaNhanVien, MaKhachHang, TienKhachTra, DiemQuyDoi, TongTien, TienThua, GhiChu, MaCa, TrangThai, ThanhTien) "
+				+ "values (?,?,?,?,?,?,?,?,?,?,?)";
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
 		try {
 			stmt = con.prepareStatement(sql);
 			
 			stmt.setString(1, hd.getMaHoaDon());
-			stmt.setDate(2, Date.valueOf(hd.getThoiGianLapHoaDon().toLocalDate()));
+//			stmt.setDate(2, Date.valueOf(hd.getThoiGianLapHoaDon().toLocalDate()));
 //			stmt.setString(3, hd.getNhanVien().getMaNhanVien());
-			stmt.setString(3, "NV00003");
+			stmt.setString(2, "NV00001");
 			if (hd.getKhachHang() == null) {
-				stmt.setString(4, null);
+				stmt.setString(3, null);
 			}
 			else {
-				stmt.setString(4, hd.getKhachHang().getMaKhachHang());
+				stmt.setString(3, hd.getKhachHang().getMaKhachHang());
 			}
 			
-			stmt.setDouble(5, hd.getTienKhachTra());
-			stmt.setInt(6, hd.getDiemQuyDoi());
-			stmt.setDouble(7, tongTien);
-			stmt.setDouble(8, tienThua);
-			stmt.setString(9, hd.getGhiChu());
-			stmt.setString(10, hd.getCa().getMaCa());
-			stmt.setString(11, hd.getTrangThaiHoaDon().toString());
-			stmt.setDouble(12, hd.getTongTien());
+			stmt.setDouble(4, hd.getTienKhachTra());
+			stmt.setInt(5, hd.getDiemQuyDoi());
+			stmt.setDouble(6, hd.getTongTien());
+			stmt.setDouble(7, hd.tinhTienThua());
+			stmt.setString(8, hd.getGhiChu());
+			stmt.setString(9, hd.getCa().getMaCa());
+			stmt.setString(10, hd.getTrangThaiHoaDon().toString());
+			stmt.setDouble(11, hd.tinhThanhTien());
 
 			stmt.executeUpdate();
 			stmt.close();

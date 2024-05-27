@@ -3,12 +3,10 @@ package entities;
 public class DonThuoc {
 	private String maDonThuoc;
 	private HoaDon hoaDon;
-	private String linkHinh;
-	public DonThuoc(String maDonThuoc, HoaDon hoaDon, String linkHinh) {
+	public DonThuoc(String maDonThuoc, HoaDon hoaDon) {
 		super();
 		this.maDonThuoc = maDonThuoc;
 		this.hoaDon = hoaDon;
-		this.linkHinh = linkHinh;
 	}
 	public DonThuoc(String maDonThuoc) {
 		super();
@@ -29,15 +27,10 @@ public class DonThuoc {
 	public void setHoaDon(HoaDon hoaDon) {
 		this.hoaDon = hoaDon;
 	}
-	public String getLinkHinh() {
-		return linkHinh;
-	}
-	public void setLinkHinh(String linkHinh) {
-		this.linkHinh = linkHinh;
-	}
+
 	@Override
 	public String toString() {
-		return "DonThuoc [maDonThuoc=" + maDonThuoc + ", hoaDon=" + hoaDon + ", linkHinh=" + linkHinh + "]";
+		return "DonThuoc [maDonThuoc=" + maDonThuoc + ", hoaDon=" + hoaDon + "]";
 	}
 	
 	

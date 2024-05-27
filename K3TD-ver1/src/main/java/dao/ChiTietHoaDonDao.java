@@ -14,11 +14,13 @@ import entities.Ca;
 import entities.ChiTietHoaDon;
 import entities.DonViTinh;
 import entities.HangHoa;
+import entities.HoaDon;
+import entities.LoHang;
 import entities.NhanVien;
 import entities.TrangThaiDonViTinh;
 
 public class ChiTietHoaDonDao {
-	public boolean addChiTietHD(ChiTietHoaDon ct, double thanhTien) {
+	public boolean addChiTietHD(ChiTietHoaDon ct) {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection(); 
 		PreparedStatement stmt = null;
@@ -30,7 +32,7 @@ public class ChiTietHoaDonDao {
 			stmt.setInt(2, ct.getDonViTinh().getMaDonViTinh());
 			stmt.setInt(3, ct.getSoLuong());
 			stmt.setDouble(4, ct.getDonGia());
-			stmt.setDouble(5, thanhTien);
+			stmt.setDouble(5, ct.tinhThanhTien());
 			
 			stmt.executeUpdate();
 			stmt.close();
@@ -83,5 +85,28 @@ public class ChiTietHoaDonDao {
 		}
 	}
 	
+	public boolean themChiTietHoaDon_LoHang(HoaDon hoaDon, DonViTinh dvt, LoHang loHang, int soLuong) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection(); 
+		PreparedStatement stmt = null;
+		String sql = "Insert into ChiTietHoaDon_LoHang(MaHoaDon, MaDonViTinh, SoLo, SoLuong) "
+				+ "values(?,?,?,?)";
+				
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, hoaDon.getMaHoaDon());
+			stmt.setInt(2, dvt.getMaDonViTinh());
+			stmt.setString(3, loHang.getSoLo());
+			stmt.setInt(4, soLuong);
+			
+			stmt.executeUpdate();
+			stmt.close();
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
 
 }
