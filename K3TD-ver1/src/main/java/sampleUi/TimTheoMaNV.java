@@ -19,7 +19,7 @@ import javax.swing.JTextField;
  *
  * @author thuthao
  */
-public class TimTheoMaNhanVien extends JTextField{
+public class TimTheoMaNV extends JTextField{
         private String hintText ="Tìm kiếm theo mã nhân viên";
     /**
      * @return the prefixIcon
@@ -38,7 +38,7 @@ public class TimTheoMaNhanVien extends JTextField{
     private Icon prefixIcon;
     
     
-    public TimTheoMaNhanVien() {
+    public TimTheoMaNV() {
     }
 
     @Override

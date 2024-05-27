@@ -11,8 +11,6 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import components.AddContent;
-import components.StatusMenu;
 import dao.DonViTinhDao;
 import dao.HangHoaDao;
 import dao.NhomHangDao;
@@ -32,6 +30,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+
+import components.AddContent;
+import components.StatusMenu;
 
 /**
  *

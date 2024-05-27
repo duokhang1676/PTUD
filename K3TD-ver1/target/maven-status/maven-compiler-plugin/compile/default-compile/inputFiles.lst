@@ -21,10 +21,10 @@ C:\PTUD\PTUD\K3TD-ver1\src\main\java\entities\NhomHang.java
 C:\PTUD\PTUD\K3TD-ver1\src\main\java\components\GeneratePK.java
 C:\PTUD\PTUD\K3TD-ver1\src\main\java\ui\XuatTraPage.java
 C:\PTUD\PTUD\K3TD-ver1\src\main\java\dao\NhanVien_DAO.java
+C:\PTUD\PTUD\K3TD-ver1\src\main\java\sampleUi\TimMaHoaDon.java
 C:\PTUD\PTUD\K3TD-ver1\src\main\java\ui\PhieuTraHangPage.java
 C:\PTUD\PTUD\K3TD-ver1\src\main\java\ui\TrangChu.java
 C:\PTUD\PTUD\K3TD-ver1\src\main\java\ui\NhanVienPage.java
-C:\PTUD\PTUD\K3TD-ver1\src\main\java\sampleUi\TimTheoMaNhanVien.java
 C:\PTUD\PTUD\K3TD-ver1\src\main\java\entities\TrangThaiHangHoa.java
 C:\PTUD\PTUD\K3TD-ver1\src\main\java\components\AddContent.java
 C:\PTUD\PTUD\K3TD-ver1\src\main\java\dao\HangHoaDao.java
@@ -46,7 +46,9 @@ C:\PTUD\PTUD\K3TD-ver1\src\main\java\sampleUi\TimSDTKhachHang.java
 C:\PTUD\PTUD\K3TD-ver1\src\main\java\entities\PhieuTraHang.java
 C:\PTUD\PTUD\K3TD-ver1\src\main\java\ui\ChiTietDonThuocMauPage.java
 C:\PTUD\PTUD\K3TD-ver1\src\main\java\entities\PhieuNhapHang.java
+C:\PTUD\PTUD\K3TD-ver1\src\main\java\sampleUi\TimTheoMaNV.java
 C:\PTUD\PTUD\K3TD-ver1\src\main\java\entities\NhaCungCap.java
+C:\PTUD\PTUD\K3TD-ver1\src\main\java\dao\DonThuoc_DAO.java
 C:\PTUD\PTUD\K3TD-ver1\src\main\java\sampleUi\TimTheoHangHoa.java
 C:\PTUD\PTUD\K3TD-ver1\src\main\java\sampleUi\paginationStyle\PaginationItemRender.java
 C:\PTUD\PTUD\K3TD-ver1\src\main\java\ui\NhapHangPage.java

@@ -6,9 +6,12 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,6 +20,7 @@ import javax.swing.JTextField;
 
 import components.AddContent;
 import components.ColorSample;
+import components.PnlBanHang;
 import components.StatusMenu;
 
 /**
@@ -47,7 +51,7 @@ public class RootFrame extends javax.swing.JFrame {
 //        jPanelHeader.setPreferredSize(new Dimension(1400,60));
 //        jPanelMenu.setPreferredSize(new Dimension((int)screenSize.getWidth(),70));
 //        
-        System.out.println(screenSize);
+//        System.out.println(screenSize);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -127,6 +131,9 @@ public class RootFrame extends javax.swing.JFrame {
         lblTienIch.setText("Tiện ích");
         lblTienIch.setAlignmentY(0.0F);
         lblTienIch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblTienIchMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblTienIchMouseEntered(evt);
             }
@@ -755,7 +762,7 @@ public class RootFrame extends javax.swing.JFrame {
     }                                           
 
     private void btnBanHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBanHangActionPerformed
-    	AddContent.addContent(new BanHangPage());
+    	AddContent.addContent(PnlBanHang.bh1);
     }//GEN-LAST:event_btnBanHangActionPerformed
    
     private void hideAllDropMenu(){
@@ -999,7 +1006,23 @@ public class RootFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         AddContent.addContent(new KetCaPage());
     }//GEN-LAST:event_btnKetCaActionPerformed
-    
+
+    private void lblTienIchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTienIchMouseClicked
+        // TODO add your handling code here:
+    	openHtmlFile();
+    }//GEN-LAST:event_lblTienIchMouseClicked
+    private void openHtmlFile() {
+        try {
+            File htmlFile = new File("utilities_html/html/index.html");
+            if (htmlFile.exists()) {
+                Desktop.getDesktop().browse(htmlFile.toURI());
+            } else {
+                System.out.println("File not found!");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void setFontAll(Font font){
         lblTienIch.setFont(font);
         lblUser.setFont(font);

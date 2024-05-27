@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Insets;
+import java.time.LocalDate;
 
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
@@ -27,9 +28,13 @@ public class CaLamViecPage extends javax.swing.JPanel {
      */
     public CaLamViecPage() {
         initComponents();
-      
+        config();
     }
-    
+    private void config() {
+		// TODO Auto-generated method stub
+    	dpTuNgay.setDate(LocalDate.now());
+		dpDenNgay.setDate(LocalDate.now());
+	}
 
  
 
@@ -54,17 +59,17 @@ public class CaLamViecPage extends javax.swing.JPanel {
         lblTuNgay = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         lblDenNgay = new javax.swing.JLabel();
-        dbDenNgay = new com.github.lgooddatepicker.components.DatePicker();
+        dpDenNgay = new com.github.lgooddatepicker.components.DatePicker();
         jPanel6 = new javax.swing.JPanel();
         lblTuKhoa = new javax.swing.JLabel();
-        timTheoMaNV = new sampleUi.TimTheoMaNhanVien();
+        timTheoMaNV = new sampleUi.TimTheoMaNV();
         jPanel7 = new javax.swing.JPanel();
         lblTrangThai = new javax.swing.JLabel();
         cbTrangThai = new javax.swing.JComboBox<>();
         jPanel10 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
-        lblTrangThai1 = new javax.swing.JLabel();
-        cbTrangThai1 = new javax.swing.JComboBox<>();
+        lblTenCa = new javax.swing.JLabel();
+        cbTenCa = new javax.swing.JComboBox<>();
         jPanel9 = new javax.swing.JPanel();
         btnTimKiem = new javax.swing.JButton();
 
@@ -106,11 +111,11 @@ public class CaLamViecPage extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(145, 100));
 
-        lblLocTheoThoiGian.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblLocTheoThoiGian.setText("Lọc theo thời gian");
+        lblLocTheoThoiGian.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
-        cbLocTheoThoiGian.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         cbLocTheoThoiGian.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hôm nay", "Hôm qua", "7 ngày trước", "Tháng này", "Tháng trước", "Năm này", "Năm trước", "Tất cả" }));
+        cbLocTheoThoiGian.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         cbLocTheoThoiGian.setPreferredSize(new java.awt.Dimension(115, 25));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -139,8 +144,8 @@ public class CaLamViecPage extends javax.swing.JPanel {
 
         dpTuNgay.setPreferredSize(new java.awt.Dimension(143, 25));
 
-        lblTuNgay.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblTuNgay.setText("Từ ngày");
+        lblTuNgay.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -167,10 +172,10 @@ public class CaLamViecPage extends javax.swing.JPanel {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setPreferredSize(new java.awt.Dimension(195, 100));
 
-        lblDenNgay.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblDenNgay.setText("Đến ngày");
+        lblDenNgay.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
-        dbDenNgay.setPreferredSize(new java.awt.Dimension(143, 25));
+        dpDenNgay.setPreferredSize(new java.awt.Dimension(143, 25));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -179,7 +184,7 @@ public class CaLamViecPage extends javax.swing.JPanel {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblDenNgay)
-                    .addComponent(dbDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dpDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 9, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -188,7 +193,7 @@ public class CaLamViecPage extends javax.swing.JPanel {
                 .addContainerGap(24, Short.MAX_VALUE)
                 .addComponent(lblDenNgay)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dbDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dpDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
 
@@ -197,8 +202,8 @@ public class CaLamViecPage extends javax.swing.JPanel {
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setPreferredSize(new java.awt.Dimension(255, 100));
 
-        lblTuKhoa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblTuKhoa.setText("Từ khoá tìm kiếm");
+        lblTuKhoa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
         timTheoMaNV.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
 
@@ -226,11 +231,11 @@ public class CaLamViecPage extends javax.swing.JPanel {
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblTrangThai.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         lblTrangThai.setText("Trạng thái");
+        lblTrangThai.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
-        cbTrangThai.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         cbTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hoàn thành", "Chưa hoàn thành" }));
+        cbTrangThai.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         cbTrangThai.setPreferredSize(new java.awt.Dimension(64, 23));
         cbTrangThai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -264,15 +269,15 @@ public class CaLamViecPage extends javax.swing.JPanel {
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblTrangThai1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        lblTrangThai1.setText("Tên ca");
+        lblTenCa.setText("Tên ca");
+        lblTenCa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
-        cbTrangThai1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        cbTrangThai1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Ca sáng", "Ca chiều" }));
-        cbTrangThai1.setPreferredSize(new java.awt.Dimension(64, 23));
-        cbTrangThai1.addActionListener(new java.awt.event.ActionListener() {
+        cbTenCa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Ca sáng", "Ca chiều" }));
+        cbTenCa.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        cbTenCa.setPreferredSize(new java.awt.Dimension(64, 23));
+        cbTenCa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbTrangThai1ActionPerformed(evt);
+                cbTenCaActionPerformed(evt);
             }
         });
 
@@ -283,16 +288,16 @@ public class CaLamViecPage extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTrangThai1)
-                    .addComponent(cbTrangThai1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblTenCa)
+                    .addComponent(cbTenCa, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(lblTrangThai1)
+                .addComponent(lblTenCa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbTrangThai1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbTenCa, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -321,9 +326,9 @@ public class CaLamViecPage extends javax.swing.JPanel {
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnTimKiem.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         btnTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-find-24.png"))); // NOI18N
         btnTimKiem.setText("Tìm kiếm");
+        btnTimKiem.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -352,17 +357,17 @@ public class CaLamViecPage extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbTrangThaiActionPerformed
 
-    private void cbTrangThai1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTrangThai1ActionPerformed
+    private void cbTenCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTenCaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbTrangThai1ActionPerformed
+    }//GEN-LAST:event_cbTenCaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTimKiem;
     private javax.swing.JComboBox<String> cbLocTheoThoiGian;
+    private javax.swing.JComboBox<String> cbTenCa;
     private javax.swing.JComboBox<String> cbTrangThai;
-    private javax.swing.JComboBox<String> cbTrangThai1;
-    private com.github.lgooddatepicker.components.DatePicker dbDenNgay;
+    private com.github.lgooddatepicker.components.DatePicker dpDenNgay;
     private com.github.lgooddatepicker.components.DatePicker dpTuNgay;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -375,8 +380,8 @@ public class CaLamViecPage extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDenNgay;
     private javax.swing.JLabel lblLocTheoThoiGian;
+    private javax.swing.JLabel lblTenCa;
     private javax.swing.JLabel lblTrangThai;
-    private javax.swing.JLabel lblTrangThai1;
     private javax.swing.JLabel lblTuKhoa;
     private javax.swing.JLabel lblTuNgay;
     private javax.swing.JPanel pnlBody;
@@ -385,6 +390,6 @@ public class CaLamViecPage extends javax.swing.JPanel {
     /*
     private sampleUi.TimTheoTuKhoa timTheoMaNV;
     */
-    private sampleUi.TimTheoMaNhanVien timTheoMaNV;
+    private sampleUi.TimTheoMaNV timTheoMaNV;
     // End of variables declaration//GEN-END:variables
 }

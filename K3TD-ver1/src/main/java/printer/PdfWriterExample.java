@@ -89,6 +89,12 @@ public class PdfWriterExample {
                 p15.add(Formater.decimalFormat(kh.getDiemThuong())+" Điểm");
                 document.add(p15);
             }
+            else {
+            	Paragraph p14 = new Paragraph("KH:",fontContent);
+                p14.add(Chunk.TABBING);
+                p14.add("Vãng lai");
+                document.add(p14);
+			}
             
             
             

@@ -9,9 +9,38 @@ import java.util.List;
 
 import db.ConnectDB;
 import entities.ChiTietHoaDon;
+import entities.ChiTietPhieuTraHang;
 import entities.DonViTinh;
+import entities.LoHang;
+import entities.PhieuTraHang;
 
 public class ChiTietPhieuTraHangDao {
+	public boolean addPhieuTraHang(ChiTietPhieuTraHang chiTietPhieuTraHang) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection(); 
+		PreparedStatement stmt = null;
+		String sql = "insert into ChiTietPhieuTraHang (maphieutrahang, soluongtra, dongia, madonvitinh, lydotra, solo,thanhtien)"
+				+ "values (?,?,?,?,?,?,?)";
+		try {
+			stmt = con.prepareStatement(sql);
+			
+			stmt.setString(1, chiTietPhieuTraHang.getPhieuTraHang().getMaPhieu());
+			stmt.setInt(2, chiTietPhieuTraHang.getSoLuongTra());
+			stmt.setDouble(3, chiTietPhieuTraHang.getDonGia());
+			stmt.setInt(4, chiTietPhieuTraHang.getDonViTinh().getMaDonViTinh());
+			stmt.setString(5, chiTietPhieuTraHang.getLyDoTra());
+			stmt.setString(6, chiTietPhieuTraHang.getLoHang().getSoLo());
+			stmt.setDouble(7, chiTietPhieuTraHang.tinhThanhTien());
+			
+			stmt.executeUpdate();
+			stmt.close();
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
 	public List<ChiTietHoaDon> getDSDonViTinh(LocalDate from, LocalDate to){
 		List<ChiTietHoaDon> dsDVT = new ArrayList<>();
 		ConnectDB.getInstance();
@@ -47,6 +76,33 @@ public class ChiTietPhieuTraHangDao {
 				dsDVT.add(cthd);
 			}
 			return dsDVT;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+	}
+	public List<ChiTietPhieuTraHang> getDSCTTHbyMaPhieuTH(String maPhieuTraHang){
+		List<ChiTietPhieuTraHang> dsCTPTH = new ArrayList<>();
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		try {
+			String sql = "select * from chitietphieutrahang where maphieutrahang = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, maPhieuTraHang);
+			
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				int soLuongTra = rs.getInt("soluongtra");
+				double donGia = rs.getDouble("dongia");
+				DonViTinh dvt = new DonViTinhDao().timDVTTheoMa(rs.getInt("madonvitinh"));
+				String lyDoTra = rs.getString("lydotra");
+				LoHang loHang = new LoHangDao().getLoHangBySoLo(rs.getString("solo"));
+				ChiTietPhieuTraHang chiTietPhieuTraHang = new ChiTietPhieuTraHang(null, soLuongTra, donGia, dvt, lyDoTra, loHang);
+				dsCTPTH.add(chiTietPhieuTraHang);
+			}
+			return dsCTPTH;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

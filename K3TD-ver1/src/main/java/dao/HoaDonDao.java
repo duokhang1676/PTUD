@@ -111,27 +111,32 @@ public class HoaDonDao {
 		PreparedStatement stmt = null;
 		String sql = "insert into HoaDon (MaHoaDon, MaNhanVien, MaKhachHang, TienKhachTra, DiemQuyDoi, TongTien, TienThua, GhiChu, MaCa, TrangThai, ThanhTien) "
 				+ "values (?,?,?,?,?,?,?,?,?,?,?)";
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//		String sql = "insert into HoaDon (MaHoaDon, ThoiGianLapHoaDon, MaNhanVien, MaKhachHang, TienKhachTra, DiemQuyDoi, TongTien, TienThua, GhiChu, MaCa, TrangThai, ThanhTien) "
+//				+ "values (?,?,?,?,?,?,?,?,?,?,?,?)";
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		try {
 			stmt = con.prepareStatement(sql);
 			
 			stmt.setString(1, hd.getMaHoaDon());
-//			stmt.setDate(2, Date.valueOf(hd.getThoiGianLapHoaDon().toLocalDate()));
-//			stmt.setString(3, hd.getNhanVien().getMaNhanVien());
-			stmt.setString(2, "NV00001");
+			stmt.setString(2, hd.getNhanVien().getMaNhanVien());
 			if (hd.getKhachHang() == null) {
 				stmt.setString(3, null);
 			}
 			else {
 				stmt.setString(3, hd.getKhachHang().getMaKhachHang());
 			}
-			
 			stmt.setDouble(4, hd.getTienKhachTra());
 			stmt.setInt(5, hd.getDiemQuyDoi());
 			stmt.setDouble(6, hd.getTongTien());
 			stmt.setDouble(7, hd.tinhTienThua());
 			stmt.setString(8, hd.getGhiChu());
-			stmt.setString(9, hd.getCa().getMaCa());
+			if (hd.getCa() == null) {
+				stmt.setString(9, null);
+			}
+			else {
+				stmt.setString(9, hd.getCa().getMaCa());
+			}
 			stmt.setString(10, hd.getTrangThaiHoaDon().toString());
 			stmt.setDouble(11, hd.tinhThanhTien());
 
@@ -232,26 +237,27 @@ public class HoaDonDao {
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, ma);
 			ResultSet rs = stmt.executeQuery();
-			rs.next();
-			String maHD = rs.getString("MaHoaDon");
-			LocalDate tg = rs.getDate("ThoiGianLapHoaDon").toLocalDate();
-			LocalDateTime thoiGianLap = tg.atStartOfDay();
-			NhanVien nv = new NhanVien_DAO().getNVbyMa(rs.getString("MaNhanVien"));
-			
-			KhachHang kh = null;
-			if(rs.getString("MaKhachHang")!=null)
-				kh = new KhachHang_DAO().getKHbyMa(rs.getString("MaKhachHang"));
-			double tienKhachTra = rs.getDouble("TienKhachTra");
-			int diemQuyDoi = rs.getInt("DiemQuyDoi");
-			double tongTien = rs.getDouble("TongTien");
-			double tienThua = rs.getDouble("TienThua");
-			String ghiChu = rs.getString("GhiChu");
-			Ca ca = new Ca(rs.getString("MaCa"));
-			String trangThaiStr = rs.getString("TrangThai");
-			TrangThaiHoaDon trangThai = TrangThaiHoaDon.valueOf(trangThaiStr);
+			while(rs.next()) {
+				String maHD = rs.getString("MaHoaDon");
+				LocalDate tg = rs.getDate("ThoiGianLapHoaDon").toLocalDate();
+				LocalDateTime thoiGianLap = tg.atStartOfDay();
+				NhanVien nv = new NhanVien_DAO().getNVbyMa(rs.getString("MaNhanVien"));
 				
-			HoaDon hd = new HoaDon(maHD, thoiGianLap, nv, kh, tienKhachTra, diemQuyDoi, ghiChu, ca, trangThai, tongTien);
-			return hd;
+				KhachHang kh = null;
+				if(rs.getString("MaKhachHang")!=null)
+					kh = new KhachHang_DAO().getKHbyMa(rs.getString("MaKhachHang"));
+				double tienKhachTra = rs.getDouble("TienKhachTra");
+				int diemQuyDoi = rs.getInt("DiemQuyDoi");
+				double tongTien = rs.getDouble("TongTien");
+				double tienThua = rs.getDouble("TienThua");
+				String ghiChu = rs.getString("GhiChu");
+				Ca ca = new Ca(rs.getString("MaCa"));
+				String trangThaiStr = rs.getString("TrangThai");
+				TrangThaiHoaDon trangThai = TrangThaiHoaDon.valueOf(trangThaiStr);
+					
+				HoaDon hd = new HoaDon(maHD, thoiGianLap, nv, kh, tienKhachTra, diemQuyDoi, ghiChu, ca, trangThai, tongTien);
+				return hd;
+			}
 		
 		} catch (Exception e) {
 			// TODO: handle exception

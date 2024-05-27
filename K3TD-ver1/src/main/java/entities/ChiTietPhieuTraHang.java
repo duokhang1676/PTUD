@@ -6,6 +6,18 @@ public class ChiTietPhieuTraHang {
 	private double donGia;
 	private DonViTinh donViTinh;
 	private String lyDoTra;
+	private LoHang loHang;
+	
+	public ChiTietPhieuTraHang(PhieuTraHang phieuTraHang, int soLuongTra, double donGia, DonViTinh donViTinh,
+			String lyDoTra, LoHang loHang) {
+		super();
+		this.phieuTraHang = phieuTraHang;
+		this.soLuongTra = soLuongTra;
+		this.donGia = donGia;
+		this.donViTinh = donViTinh;
+		this.lyDoTra = lyDoTra;
+		this.loHang = loHang;
+	}
 	public ChiTietPhieuTraHang(PhieuTraHang phieuTraHang, int soLuongTra, double donGia,
 			DonViTinh donViTinh, String lyDoTra) {
 		super();
@@ -47,6 +59,13 @@ public class ChiTietPhieuTraHang {
 	}
 	public void setLyDoTra(String lyDoTra) {
 		this.lyDoTra = lyDoTra;
+	}
+	
+	public LoHang getLoHang() {
+		return loHang;
+	}
+	public void setLoHang(LoHang loHang) {
+		this.loHang = loHang;
 	}
 	@Override
 	public String toString() {
