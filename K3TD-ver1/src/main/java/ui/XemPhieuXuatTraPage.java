@@ -90,6 +90,7 @@ public class XemPhieuXuatTraPage extends javax.swing.JPanel {
 
 		model_HH = new DefaultTableModel(colNames, 0);
 		tbl_HH = new JTable(model_HH);
+		FormatJtable.setCellEditableForPhieuNhapXuat(tbl_HH);
 		FormatJtable.setFontJtable(tbl_HH);
 		JScrollPane js_tableHangHoa = new JScrollPane(tbl_HH);
 

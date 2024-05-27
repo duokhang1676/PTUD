@@ -329,12 +329,18 @@ public class DangNhap extends javax.swing.JFrame {
             return;
             if(LoginInfo.nhanVien.getChucVu().equals(ChucVuNhanVien.NHAN_VIEN)) {
             	java.util.List<Ca> dsCa  = new Ca_DAO().getCaByNV(LoginInfo.nhanVien.getMaNhanVien(), false, "Tất cả");
-            	if(dsCa.size()==0) {
-        			Ca ca = new Ca_DAO().taoCa(LoginInfo.nhanVien);
-        			LoginInfo.ca = ca;
-            	}else {
-            		LoginInfo.ca = dsCa.get(0);
-            	}
+            	try {
+                    if(dsCa.size()==0) {
+                        Ca ca = new Ca_DAO().taoCa(LoginInfo.nhanVien);
+                        LoginInfo.ca = ca;
+                    }else {
+                        LoginInfo.ca = dsCa.get(0);
+                    }
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    Ca ca = new Ca_DAO().taoCa(LoginInfo.nhanVien);
+                    LoginInfo.ca = ca;
+                }
     		}
             this.setVisible(false);
             RootFrame rf =  new RootFrame();

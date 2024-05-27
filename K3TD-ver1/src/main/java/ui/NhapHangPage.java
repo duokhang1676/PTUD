@@ -59,6 +59,7 @@ public class NhapHangPage extends javax.swing.JPanel {
     private void loadDataPNH() {
 		// TODO Auto-generated method stub
 		int stt = 1;
+		int count = 0;
 		
 		model_phieuNhap.setRowCount(0);
 		List<PhieuNhapHang> dsPNH = phieuNH_dao.getAllDataPNH();
@@ -67,7 +68,9 @@ public class NhapHangPage extends javax.swing.JPanel {
 					p.tinhThanhTien(), p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuNhapHang.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
 			
 			stt++;
+			count++;
 		}
+		jL_soLuong.setText("("+String.valueOf(count)+")");
 	}
 
 	private void addTablePhieuNH() {
@@ -214,7 +217,8 @@ public class NhapHangPage extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        jL_danhSach = new javax.swing.JLabel();
+        jL_soLuong = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -377,9 +381,10 @@ public class NhapHangPage extends javax.swing.JPanel {
         jPanel4.setBackground(new java.awt.Color(193, 219, 208));
         jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jLabel5.setText("Danh sách phiếu nhập hàng");
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
-        jPanel4.add(jLabel5);
+        jL_danhSach.setText("Danh sách phiếu nhập hàng");
+        jL_danhSach.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        jPanel4.add(jL_danhSach);
+        jPanel4.add(jL_soLuong);
 
         jPanel1.add(jPanel4, java.awt.BorderLayout.NORTH);
 
@@ -408,14 +413,20 @@ public class NhapHangPage extends javax.swing.JPanel {
 			showMessage("Nhập thông tin cần tìm!");
 		}else {
 			List<PhieuNhapHang> dsPNH = phieuNH_dao.getPNHTheoTenNCCVaTheoNgay(ma, dateFrom, dateTo);
-			int stt = 1;
-			model_phieuNhap.setRowCount(0);
-			for (PhieuNhapHang p : dsPNH) {
-				
-	    		model_phieuNhap.addRow(new Object[] {stt, p.getMaPhieu(), p.getThoiGianTao(), p.getNhaCungCap().getTenNhaCungCap(),
-	    				p.tinhThanhTien(), p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuNhapHang.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
-	    		
-	    		stt++;
+			System.out.println(dsPNH);
+			if (dsPNH.isEmpty()) {
+				int stt = 1;
+				model_phieuNhap.setRowCount(0);
+				for (PhieuNhapHang p : dsPNH) {
+					
+		    		model_phieuNhap.addRow(new Object[] {stt, p.getMaPhieu(), p.getThoiGianTao(), p.getNhaCungCap().getTenNhaCungCap(),
+		    				p.tinhThanhTien(), p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuNhapHang.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
+		    		
+		    		stt++;
+				}
+			}else {
+				showMessage("Không tìm thấy!");
+				loadDataPNH();
 			}
 		}
     }//GEN-LAST:event_btn_timKiemActionPerformed
@@ -426,7 +437,7 @@ public class NhapHangPage extends javax.swing.JPanel {
     	LocalDate dateFrom = dp_dateFrom.getDate();
     	LocalDate dateTo = dp_dateTo.getDate();
     	
-    	System.out.println(dateFrom);
+    	
     	if (dateFrom == null && dateTo == null) {
         	dateFrom = LocalDate.now();
         	dateTo = LocalDate.now();
@@ -442,14 +453,20 @@ public class NhapHangPage extends javax.swing.JPanel {
 			showMessage("Nhập thông tin cần tìm!");
 		}else {
 			List<PhieuNhapHang> dsPNH = phieuNH_dao.getPNHTheoTenNCCVaTheoNgay(ma, dateFrom, dateTo);
-			int stt = 1;
-			model_phieuNhap.setRowCount(0);
-			for (PhieuNhapHang p : dsPNH) {
-				
-	    		model_phieuNhap.addRow(new Object[] {stt, p.getMaPhieu(), p.getThoiGianTao(), p.getNhaCungCap().getTenNhaCungCap(),
-	    				p.tinhThanhTien(), p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuNhapHang.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
-	    		
-	    		stt++;
+			
+			if (dsPNH.size() != 0) {
+				int stt = 1;
+				model_phieuNhap.setRowCount(0);
+				for (PhieuNhapHang p : dsPNH) {
+					
+		    		model_phieuNhap.addRow(new Object[] {stt, p.getMaPhieu(), p.getThoiGianTao(), p.getNhaCungCap().getTenNhaCungCap(),
+		    				p.tinhThanhTien(), p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuNhapHang.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
+		    		
+		    		stt++;
+				}
+			}else {
+				showMessage("Không tìm thấy!");
+				loadDataPNH();
 			}
 		}
     	
@@ -473,6 +490,7 @@ public class NhapHangPage extends javax.swing.JPanel {
 	    				p.tinhThanhTien(), p.getGhiChu(), p.getTrangThai().equals(TrangThaiPhieuNhapHang.HOAN_THANH)?"Hoàn thành":"Đã hủy"});
 			}else {
 				showMessage("Không tìm thấy!");
+				loadDataPNH();
 			}
 		}
     	
@@ -491,7 +509,7 @@ public class NhapHangPage extends javax.swing.JPanel {
 
     private void txt_timKiemTheoMaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_timKiemTheoMaFocusLost
         // TODO add your handling code here:
-    	txt_timKiemTheoMa.setText("Tìm kiếm theo mã phiếu");
+//    	txt_timKiemTheoMa.setText("Tìm kiếm theo mã phiếu");
     	txt_timKiemTheoMa.setForeground(new Color(204,204,204));
     }//GEN-LAST:event_txt_timKiemTheoMaFocusLost
 
@@ -509,7 +527,7 @@ public class NhapHangPage extends javax.swing.JPanel {
 
     private void txt_timKiemTheoNCCFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_timKiemTheoNCCFocusLost
         // TODO add your handling code here:
-    	txt_timKiemTheoNCC.setText("Tìm kiếm theo nhà cung cấp");
+//    	txt_timKiemTheoNCC.setText("Tìm kiếm theo nhà cung cấp");
     	txt_timKiemTheoNCC.setForeground(new Color(204,204,204));
     }//GEN-LAST:event_txt_timKiemTheoNCCFocusLost
 
@@ -557,10 +575,11 @@ public class NhapHangPage extends javax.swing.JPanel {
     private com.github.lgooddatepicker.components.DatePicker dp_dateFrom;
     private com.github.lgooddatepicker.components.DatePicker dp_dateTo;
     private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jL_danhSach;
+    private javax.swing.JLabel jL_soLuong;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;

@@ -21,6 +21,7 @@ import dao.HangHoaDao;
 import dao.LoHangDao;
 import dao.NhomHangDao;
 import entities.DonViTinh;
+import entities.HangHoa;
 import entities.LoHang;
 import entities.LoaiHang;
 import entities.NhomHang;
@@ -167,6 +168,11 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
         });
 
         cb_loaiHang.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
+        cb_loaiHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cb_loaiHangActionPerformed(evt);
+            }
+        });
 
         cb_nhomHang.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         cb_nhomHang.addActionListener(new java.awt.event.ActionListener() {
@@ -331,7 +337,7 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
 //			if (dsHangHoas.isEmpty()) {
 //				showMessage("K thay");
 //			}
-			entities.HangHoa hh = hangHoa_dao.timHangHoa(maTen, loaiHang, nhomHang, trangThaiHH);
+			entities.HangHoa hh = hangHoa_dao.timHangHoaTheoMaTheoTen(maTen);
 			
 			if (hh == null) {
 				showMessage("Không tìm thấy!");
@@ -392,10 +398,51 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
 
 	private void cb_trangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_trangThaiActionPerformed
         // TODO add your handling code here:
+		String ttStr = cb_trangThai.getSelectedItem().toString();
+		TrangThaiHangHoa tt;
+		if (ttStr.equals("Đang bán")) {
+			tt = TrangThaiHangHoa.DANG_BAN;
+		}else {
+			tt = TrangThaiHangHoa.NGUNG_BAN;
+		}
+		List<HangHoa> dsHH = hangHoa_dao.locHangHoaTheoTT(tt.toString());
+		int stt = 1;
+		model_hangHoa.setNumRows(0);
+		for (HangHoa hh : dsHH) {
+			String loaiHang;
+			if (hh.getLoaiHang().equals(LoaiHang.DUOC_PHAM)) {
+				loaiHang = "Dược phẩm";
+			}else if (hh.getLoaiHang().equals(LoaiHang.VAT_TU_YTE)) {
+				loaiHang = "Vật tư y tế";
+			}else {
+				loaiHang = "Khác";
+			}
+			model_hangHoa.addRow(new Object[] {stt, hh.getMaHangHoa(), hh.getTenHangHoa(),
+					loaiHang, hh.getQuyCachDongGoi(), hh.getSoLuongDinhMuc(), 0, hh.getTrangThaiHangHoa().equals(TrangThaiHangHoa.DANG_BAN)?"Đang bán":"Ngừng bán"});
+			stt++;
+		}
     }//GEN-LAST:event_cb_trangThaiActionPerformed
 
     private void cb_nhomHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_nhomHangActionPerformed
         // TODO add your handling code here:
+    	String nhStr = cb_nhomHang.getSelectedItem().toString();
+    	NhomHang nh = nhomHang_dao.getNhomHangTheoTen(nhStr);
+    	List<HangHoa> dsHH = hangHoa_dao.locHangHoaTheoNhomHang(nh.getMaNhomHang());
+    	int stt = 1;
+		model_hangHoa.setNumRows(0);
+		for (HangHoa hh : dsHH) {
+			String loaiHang;
+			if (hh.getLoaiHang().equals(LoaiHang.DUOC_PHAM)) {
+				loaiHang = "Dược phẩm";
+			}else if (hh.getLoaiHang().equals(LoaiHang.VAT_TU_YTE)) {
+				loaiHang = "Vật tư y tế";
+			}else {
+				loaiHang = "Khác";
+			}
+			model_hangHoa.addRow(new Object[] {stt, hh.getMaHangHoa(), hh.getTenHangHoa(),
+					loaiHang, hh.getQuyCachDongGoi(), hh.getSoLuongDinhMuc(), 0, hh.getTrangThaiHangHoa().equals(TrangThaiHangHoa.DANG_BAN)?"Đang bán":"Ngừng bán"});
+			stt++;
+		}
     }//GEN-LAST:event_cb_nhomHangActionPerformed
 
     private void btn_themHHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themHHActionPerformed
@@ -414,6 +461,35 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
 //    	txt_timKiem.setText("Tìm kiếm theo mã hàng, tên hàng");
     	txt_timKiem.setForeground(new Color(204,204,204));
     }//GEN-LAST:event_txt_timKiemFocusLost
+
+    private void cb_loaiHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cb_loaiHangActionPerformed
+        // TODO add your handling code here:
+    	String lhStr = cb_loaiHang.getSelectedItem().toString();
+    	LoaiHang lh;
+    	if (lhStr.equals("Dược phẩm")) {
+    		lh = LoaiHang.DUOC_PHAM;
+		}else if (lhStr.equals("Khác")) {
+			lh = LoaiHang.KHAC;
+		}else {
+			lh = LoaiHang.VAT_TU_YTE;
+		}
+    	List<HangHoa> dsHH = hangHoa_dao.locHangHoaTheoLoaiHang(lh.toString());
+    	int stt = 1;
+		model_hangHoa.setNumRows(0);
+		for (HangHoa hh : dsHH) {
+			String loaiHang;
+			if (hh.getLoaiHang().equals(LoaiHang.DUOC_PHAM)) {
+				loaiHang = "Dược phẩm";
+			}else if (hh.getLoaiHang().equals(LoaiHang.VAT_TU_YTE)) {
+				loaiHang = "Vật tư y tế";
+			}else {
+				loaiHang = "Khác";
+			}
+			model_hangHoa.addRow(new Object[] {stt, hh.getMaHangHoa(), hh.getTenHangHoa(),
+					loaiHang, hh.getQuyCachDongGoi(), hh.getSoLuongDinhMuc(), 0, hh.getTrangThaiHangHoa().equals(TrangThaiHangHoa.DANG_BAN)?"Đang bán":"Ngừng bán"});
+			stt++;
+		}
+    }//GEN-LAST:event_cb_loaiHangActionPerformed
 
     /**
      * @param args the command line arguments

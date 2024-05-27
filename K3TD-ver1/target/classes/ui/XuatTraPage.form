@@ -283,6 +283,8 @@
                 </Property>
               </Properties>
             </Component>
+            <Component class="javax.swing.JLabel" name="jL_soLuong">
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>

@@ -252,22 +252,17 @@ public class TaoHangHoaPage extends javax.swing.JPanel {
 					if (col == 4) {
 						String maVach = model_DVT.getValueAt(row, 4).toString().toString();
 						System.out.println(maVach);
-						if (maVach.matches("^MV[0-9]{5}")) {
-//							DonViTinh dvt = donViTinh_dao.timDVTTheoMaVach(maVach);
 
-//							if (dvt == null) {
-							for (int i = 0; i < tbl_DVT.getRowCount()-1; i++) {
-								System.out.println(model_DVT.getValueAt(i, 4).toString());
-								if (model_DVT.getValueAt(i, 4).toString().equals(maVach)) {
-									showMessage("Mã vạch " + maVach + " đã tồn tại!");
-								}
+						for (int i = 0; i < tbl_DVT.getRowCount()-1; i++) {
+							System.out.println(model_DVT.getValueAt(i, 4).toString());
+							if (model_DVT.getValueAt(i, 4).toString().equals(maVach)) {
+								showMessage("Mã vạch " + maVach + " đã tồn tại!");
 							}
+						}
 //							}else {
 //								showMessage("Mã vạch "+maVach+" đã tồn tại!");
 //							}
-						} else {
-							showMessage("Mã vạch phải theo định dạng: MV*****, với * là một số từ 0 đến 9!");
-						}
+
 					}
 				}
 			}
@@ -883,11 +878,11 @@ public class TaoHangHoaPage extends javax.swing.JPanel {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < tbl_DVT.getRowCount(); i++) {
 			int quyDoi = Integer.parseInt(model_DVT.getValueAt(i, 2).toString());
-			if (quyDoi != 1) {
-				return false;
+			if (quyDoi == 1) {
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	private boolean validData() {
 		// TODO Auto-generated method stub
