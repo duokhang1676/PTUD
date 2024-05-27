@@ -74,6 +74,26 @@ public class FormatJtable {
             tb.getColumnModel().getColumn(i).setCellRenderer(renderer);
         }
 	}
+	public static void setFontJtable14(JTable tb) {
+		JTableHeader tableHeader = tb.getTableHeader();
+    	tableHeader.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		TableCellRenderer renderer = new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                
+                // Thiết lập font cho mỗi ô
+                component.setFont(new Font("Times New Roman", Font.PLAIN, 14)); // Thay đổi font theo yêu cầu
+                
+                return component;
+            }
+        };
+        
+        // Áp dụng renderer cho từng cột trong JTable
+        for (int i = 0; i < tb.getColumnCount(); i++) {
+            tb.getColumnModel().getColumn(i).setCellRenderer(renderer);
+        }
+	}
 	
 	
 }

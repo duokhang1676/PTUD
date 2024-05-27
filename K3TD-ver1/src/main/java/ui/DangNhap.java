@@ -202,6 +202,7 @@ public class DangNhap extends javax.swing.JFrame {
         jL_taiKhoan.setText("Tài khoản: ");
         jP_loginArea.add(jL_taiKhoan, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, -1));
 
+        txt_taiKhoan.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         txt_taiKhoan.setToolTipText("Mã nhân viên");
         txt_taiKhoan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,6 +241,7 @@ public class DangNhap extends javax.swing.JFrame {
         jLabel2.setText("* By Nhom_02 PhatTrienUngDung DHKHMT17CTT");
         jP_loginArea.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 340, -1, -1));
 
+        txtMatKhau.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         txtMatKhau.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtMatKhauActionPerformed(evt);
@@ -326,10 +328,13 @@ public class DangNhap extends javax.swing.JFrame {
     	if(!KiemTraDangNhap())
             return;
             if(LoginInfo.nhanVien.getChucVu().equals(ChucVuNhanVien.NHAN_VIEN)) {
-    			String tenCa = "";
-    			tenCa = LocalDateTime.now().getHour()<12?"Ca sáng":"Ca chiều";
-    			Ca ca = new Ca_DAO().taoCa(LoginInfo.nhanVien, tenCa);
-    			LoginInfo.ca = ca;
+            	java.util.List<Ca> dsCa  = new Ca_DAO().getCaByNV(LoginInfo.nhanVien.getMaNhanVien(), false, "Tất cả");
+            	if(dsCa.size()==0) {
+        			Ca ca = new Ca_DAO().taoCa(LoginInfo.nhanVien);
+        			LoginInfo.ca = ca;
+            	}else {
+            		LoginInfo.ca = dsCa.get(0);
+            	}
     		}
             this.setVisible(false);
             RootFrame rf =  new RootFrame();

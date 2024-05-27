@@ -4,18 +4,34 @@
  */
 package ui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import components.AddContent;
+import components.FormatJtable;
+import components.Formater;
+import dao.Ca_DAO;
+import dao.PhieuTraHangDao;
+import entities.Ca;
 import entities.PhieuTraHang;
+import entities.TrangThaiPhieuTraHang;
 
 /**
  *
@@ -24,7 +40,7 @@ import entities.PhieuTraHang;
 public class CaLamViecPage extends javax.swing.JPanel {
 
     /**
-     * Creates new form TaoPhieuTraHangPage
+     * Creates new forkm TaoPhieuTraHangPage
      */
     public CaLamViecPage() {
         initComponents();
@@ -32,12 +48,82 @@ public class CaLamViecPage extends javax.swing.JPanel {
     }
     private void config() {
 		// TODO Auto-generated method stub
-    	dpTuNgay.setDate(LocalDate.now());
+    	
+        dpTuNgay.setDate(LocalDate.now());
 		dpDenNgay.setDate(LocalDate.now());
+		addTable();
+		loadData(false);
 	}
 
- 
+    private void addTable() {
+		// TODO Auto-generated method stub
+    	String[] colNames = {"STT", "Tên ca", "Mã nhân viên",  "Tên nhân viên","Thời gian vào ca", "Thời gian kết ca", "Tổng tiền","Tổng tiền thực tế","Tiền chênh lệch","Ghi chú","Trạng thái"};
+        model = new DefaultTableModel(colNames, 0);
+        table = new JTable(model);
+        table.getColumnModel().getColumn(0).setPreferredWidth(1);
+        table.getColumnModel().getColumn(1).setPreferredWidth(20);
+        table.getColumnModel().getColumn(2).setPreferredWidth(25);
+        table.getColumnModel().getColumn(9).setPreferredWidth(30);
+        table.getColumnModel().getColumn(10).setPreferredWidth(30);
+        JScrollPane js_tableHangHoa = new JScrollPane(table);
+        
+        
+        FormatJtable.setFontJtable14(table);
+		FormatJtable.setCellEditable(table);
+		table.setRowHeight(35);
+		
+		FormatJtable.setFontJtable(table);
+        pnlBody.add(js_tableHangHoa, BorderLayout.CENTER);
+        
+        
+        
+	}
 
+	private void loadData(boolean byMa) {
+//		// TODO Auto-generated method stub
+		model.setRowCount(0);
+		if(dsCa!=null)
+			dsCa.clear();
+    	if(byMa) {
+    		dsCa = new Ca_DAO().getCaByNV(timTheoMaNV.getText(), cbTrangThai.getSelectedIndex()==0?true:false,cbTenCa.getSelectedItem().toString());
+    	
+    	}else {
+    		LocalDate tuNgay = LocalDate.of(2024, 1, 1);
+        	LocalDate denNgay = LocalDate.now();
+        	try {
+    			dpTuNgay.getDate();
+    			dpDenNgay.getDate();
+    		} catch (Exception e) {
+    			// TODO: handle exception
+    			return;
+    		}
+        	if(dpTuNgay.getDate()!=null)
+        		tuNgay = dpTuNgay.getDate();
+        	if(dpDenNgay.getDate()!=null)
+        		denNgay = dpDenNgay.getDate();
+        	dsCa = new Ca_DAO().getCaByTime(tuNgay, denNgay, cbTrangThai.getSelectedIndex()==0?true:false, cbTenCa.getSelectedItem().toString());
+    	}
+    	
+    	if(dsCa!=null) {
+    		int stt = 1;
+    		for (Ca ca : dsCa) {
+    			if(ca.getThoiGianKetCa()==null)
+    				model.addRow(new Object[] {stt++,ca.getTenCa(),ca.getNhanVien().getMaNhanVien(),ca.getNhanVien().getTenNhanVien(),Formater.dateTimeFormater(ca.getThoiGianVaoCa()),"Chưa kết ca",Formater.decimalFormat(ca.getTongTien()),Formater.decimalFormat(ca.getTongTienThucTe()),Formater.decimalFormat(ca.tinhTienChenhLech()),ca.getGhiChu(),ca.isTrangThai()?"Hoàn thành":"Chưa hoàn thành"});
+    			else
+    				model.addRow(new Object[] {stt++,ca.getTenCa(),ca.getNhanVien().getMaNhanVien(),ca.getNhanVien().getTenNhanVien(),Formater.dateTimeFormater(ca.getThoiGianVaoCa()),Formater.dateTimeFormater(ca.getThoiGianKetCa()),Formater.decimalFormat(ca.getTongTien()),Formater.decimalFormat(ca.getTongTienThucTe()),Formater.decimalFormat(ca.tinhTienChenhLech()),ca.getGhiChu(),ca.isTrangThai()?"Hoàn thành":"Chưa hoàn thành"});
+    		}
+    		
+    		if(byMa) {
+    			timTheoMaNV.selectAll();
+        		timTheoMaNV.requestFocus();
+    			}
+    		}else {
+    			if(byMa) {
+    				timTheoMaNV.selectAll();
+    				timTheoMaNV.requestFocus();
+    			}
+    	}
+	}
 	/**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -117,6 +203,11 @@ public class CaLamViecPage extends javax.swing.JPanel {
         cbLocTheoThoiGian.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hôm nay", "Hôm qua", "7 ngày trước", "Tháng này", "Tháng trước", "Năm này", "Năm trước", "Tất cả" }));
         cbLocTheoThoiGian.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         cbLocTheoThoiGian.setPreferredSize(new java.awt.Dimension(115, 25));
+        cbLocTheoThoiGian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbLocTheoThoiGianActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -206,6 +297,11 @@ public class CaLamViecPage extends javax.swing.JPanel {
         lblTuKhoa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
         timTheoMaNV.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
+        timTheoMaNV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                timTheoMaNVActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -251,7 +347,8 @@ public class CaLamViecPage extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTrangThai)
-                    .addComponent(cbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cbTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -329,6 +426,11 @@ public class CaLamViecPage extends javax.swing.JPanel {
         btnTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-find-24.png"))); // NOI18N
         btnTimKiem.setText("Tìm kiếm");
         btnTimKiem.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -361,7 +463,66 @@ public class CaLamViecPage extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbTenCaActionPerformed
 
+    private void cbLocTheoThoiGianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbLocTheoThoiGianActionPerformed
+        // TODO add your handling code here:
+    	int i = cbLocTheoThoiGian.getSelectedIndex();
+    	LocalDate now = LocalDate.now();
+    	// Lấy ngày đầu tháng
+        LocalDate firstDayOfMonth = now.with(TemporalAdjusters.firstDayOfMonth());
+        // Lấy ngày bắt đầu của tháng trước
+        LocalDate firstDayOfLastMonth = now.minusMonths(1).with(TemporalAdjusters.firstDayOfMonth());
+        // Lấy ngày kết thúc của tháng trước
+        LocalDate lastDayOfLastMonth = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
+     // Lấy ngày bắt đầu của năm trước
+        LocalDate firstDayOfLastYear = now.minusYears(1).with(TemporalAdjusters.firstDayOfYear());
+        // Lấy ngày kết thúc của năm trước
+        LocalDate lastDayOfLastYear = now.minusYears(1).with(TemporalAdjusters.lastDayOfYear());
+     // Lấy ngày bắt đầu của năm nay
+        LocalDate firstDayOfYear = now.with(TemporalAdjusters.firstDayOfYear());
+        
+    	if(i==0) {
+    		dpTuNgay.setDate(now);
+    		dpDenNgay.setDate(now);
+    	}else if(i==1) {
+    		dpTuNgay.setDate(now.minusDays(1));
+    		dpDenNgay.setDate(now.minusDays(1));
+    	}else if(i==2) {
+    		dpTuNgay.setDate(now.minusDays(7));
+    		dpDenNgay.setDate(now);
+    	}else if(i==3) {
+    		dpTuNgay.setDate(firstDayOfMonth);
+    		dpDenNgay.setDate(now);
+    	}else if(i==4) {
+    		dpTuNgay.setDate(firstDayOfLastMonth);
+    		dpDenNgay.setDate(lastDayOfLastMonth);
+    	}else if(i==5) {
+    		dpTuNgay.setDate(firstDayOfYear);
+    		dpDenNgay.setDate(now);
+    	}else if(i==6) {
+    		dpTuNgay.setDate(firstDayOfLastYear);
+    		dpDenNgay.setDate(lastDayOfLastYear);
+    	}else {
+    		dpTuNgay.setText("");
+    		dpDenNgay.setText("");
+    	}
+    }//GEN-LAST:event_cbLocTheoThoiGianActionPerformed
 
+    private void timTheoMaNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timTheoMaNVActionPerformed
+        // TODO add your handling code here:
+    	if(timTheoMaNV.getText().isEmpty())
+    		return;
+    	loadData(true);
+    }//GEN-LAST:event_timTheoMaNVActionPerformed
+
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        // TODO add your handling code here:
+    	if(timTheoMaNV.getText().isEmpty())
+    		loadData(false);
+    	else 
+    		loadData(true);
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+    private List<Ca> dsCa;
+    private DefaultTableModel model;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTimKiem;
     private javax.swing.JComboBox<String> cbLocTheoThoiGian;

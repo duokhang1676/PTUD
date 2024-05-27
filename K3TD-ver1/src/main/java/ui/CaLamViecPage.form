@@ -207,6 +207,9 @@
                       <Dimension value="[115, 25]"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbLocTheoThoiGianActionPerformed"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>
@@ -366,9 +369,12 @@
                       <Font name="Times New Roman" size="14" style="2"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="timTheoMaNVActionPerformed"/>
+                  </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new sampleUi.TimTheoMaNhanVien()"/>
-                    <AuxValue name="JavaCodeGenerator_DeclarationPost" type="java.lang.String" value="*/&#xa;private sampleUi.TimTheoMaNhanVien timTheoMaNV;"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new sampleUi.TimTheoMaNV()"/>
+                    <AuxValue name="JavaCodeGenerator_DeclarationPost" type="java.lang.String" value="*/&#xa;private sampleUi.TimTheoMaNV timTheoMaNV;"/>
                     <AuxValue name="JavaCodeGenerator_DeclarationPre" type="java.lang.String" value="/*"/>
                   </AuxValues>
                 </Component>
@@ -387,9 +393,10 @@
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lblTrangThai" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="cbTrangThai" alignment="0" min="-2" pref="123" max="-2" attributes="0"/>
+                              <Component id="lblTrangThai" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbTrangThai" min="-2" pref="140" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -576,6 +583,9 @@
                       <Font name="Times New Roman" size="18" style="1"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTimKiemActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

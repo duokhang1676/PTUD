@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,6 +28,41 @@ public class HoaDonDao {
 	public HoaDonDao() {
 		// TODO Auto-generated constructor stub
 	}
+	public List<HoaDon> getHoaDonByCa(Ca ca) {
+		List<HoaDon> dsHoaDon = new ArrayList<>();
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		try {
+			String sql = "select * from HoaDon where maca = ?";
+			PreparedStatement stmt=  null;
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, ca.getMaCa());
+			ResultSet rs = stmt.executeQuery();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+			while (rs.next()) {
+				String maHD = rs.getString("MaHoaDon");
+                Timestamp tgTaoTimestamp = rs.getTimestamp("thoigianlaphoadon");
+                // Chuyển đổi Timestamp sang LocalDateTime
+                LocalDateTime thoiGianTao = tgTaoTimestamp.toLocalDateTime();
+				KhachHang kh = new KhachHang_DAO().getKHbyMa(rs.getString("makhachhang"));
+				double tienKhachTra = rs.getDouble("TienKhachTra");
+				int diemQuyDoi = rs.getInt("DiemQuyDoi");
+				double tongTien = rs.getDouble("TongTien");
+				double tienThua = rs.getDouble("TienThua");
+				String ghiChu = rs.getString("GhiChu");
+				String trangThaiStr = rs.getString("TrangThai");
+				TrangThaiHoaDon trangThai = TrangThaiHoaDon.valueOf(trangThaiStr);
+				HoaDon hd = new HoaDon(maHD, thoiGianTao, ca.getNhanVien(), kh, tienKhachTra, diemQuyDoi, ghiChu, ca, trangThai, tongTien);
+				
+				dsHoaDon.add(hd);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsHoaDon;
+	} 
 	public double getTongTienHoaDonTrongKhoang(LocalDate from, LocalDate to) {
 		double tongTien = 0;
 		try {
