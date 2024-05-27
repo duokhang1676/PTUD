@@ -1129,6 +1129,7 @@ public class BanHangPage extends javax.swing.JPanel {
 
     private void cbChonDonThuocMauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbChonDonThuocMauActionPerformed
         // TODO add your handling code here:
+    	//cbChonDonThuocMau.setSelectedIndex(0);
     	themDonThuocMauVaoChiTietHD(cbChonDonThuocMau.getSelectedIndex());
     }//GEN-LAST:event_cbChonDonThuocMauActionPerformed
     
@@ -1140,8 +1141,6 @@ public class BanHangPage extends javax.swing.JPanel {
 			if(dsCTDTM.get(i).getDonViTinh().getHangHoa()!=null && dsCTDTM.get(i).getDonViTinh().getTrangThaiDonViTinh().equals(TrangThaiDonViTinh.DANG_BAN)) { //Tìm thấy hàng hóa
 	    		if(dsCTDTM.get(i).getDonViTinh().getHangHoa().getSoLuongDinhMuc()==0) {//Kiểm tra số lượng
 	    			JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
-//	    			timMaSP1.setText("");
-//	    			timMaSP1.requestFocus();
 	    			return;
 	    		}	
 //	    		int soLuong = 1;

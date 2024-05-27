@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -79,10 +80,11 @@ public class HoaDonDao {
 			String sql = "select * from HoaDon join KhachHang on HoaDon.MaKhachHang = KhachHang.MaKhachHang join NhanVien on HoaDon.MaNhanVien = NhanVien.MaNhanVien";
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
 			while (rs.next()) {
 				String maHD = rs.getString("MaHoaDon");
-				LocalDateTime thoiGianLap = LocalDateTime.parse(rs.getString("ThoiGianLapHoaDon"), formatter);
+				Timestamp tgTimestamp = rs.getTimestamp("ThoiGianLapHoaDon");
+                // Chuyển đổi Timestamp sang LocalDateTime
+                LocalDateTime thoiGianLap = tgTimestamp.toLocalDateTime();
 				NhanVien nv = new NhanVien(rs.getString("MaNhanVien"), rs.getString("TenNhanVien"));
 				KhachHang kh = new KhachHang(rs.getString("MaKhachHang"), rs.getString("TenKhachHang"));
 				double tienKhachTra = rs.getDouble("TienKhachTra");
@@ -95,7 +97,7 @@ public class HoaDonDao {
 				TrangThaiHoaDon trangThai = TrangThaiHoaDon.valueOf(trangThaiStr);
 				
 				
-				HoaDon hd = new HoaDon(maHD, thoiGianLap, nv, kh, tienKhachTra, diemQuyDoi, ghiChu, ca, trangThai, 0);
+				HoaDon hd = new HoaDon(maHD, thoiGianLap, nv, kh, tienKhachTra, diemQuyDoi, ghiChu, ca, trangThai, tongTien);
 				dsHoaDon.add(hd);
 			}
 		} catch (Exception e) {
