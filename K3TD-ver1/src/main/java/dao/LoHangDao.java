@@ -79,6 +79,113 @@ public class LoHangDao {
 		}
 		return dsLoHang;
 	}
+	public LoHang timLoHangTheoMa(String ma) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		
+		try {
+			String sql = "Select * from LoHang where SoLo = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, ma);
+			ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+            	String soLo = rs.getString("SoLo");
+				HangHoa hangHoa = new HangHoaDao().timHangHoaTheoMa(rs.getString("MaHangHoa"));
+				int soLuong = rs.getInt("SoLuong");
+				LocalDate hanSuDung = rs.getDate("HanSuDung").toLocalDate();
+				LocalDate ngaySX = rs.getDate("NgaySanXuat").toLocalDate();
+				double giaNhap = rs.getDouble("GiaNhap");
+				NhaCungCap ncc = new NhaCungCap_DAO().timNhaCCTheoTen(rs.getString("MaNhaCungCap"));
+				
+				LoHang loHang = new LoHang(soLo, hangHoa, soLuong, ngaySX, hanSuDung, giaNhap, ncc);
+				return loHang;
+            }
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+	
+	public LoHang timLoHangTheoMaVaMaHH(String maLo,String maHH) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		
+		try {
+			String sql = "Select * from LoHang where SoLo = ? and MaHangHoa = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, maLo);
+			stmt.setString(2, maHH);
+			ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+            	String soLo = rs.getString("SoLo");
+				HangHoa hangHoa = new HangHoaDao().timHangHoaTheoMa(rs.getString("MaHangHoa"));
+				int soLuong = rs.getInt("SoLuong");
+				LocalDate hanSuDung = rs.getDate("HanSuDung").toLocalDate();
+				LocalDate ngaySX = rs.getDate("NgaySanXuat").toLocalDate();
+				double giaNhap = rs.getDouble("GiaNhap");
+				NhaCungCap ncc = new NhaCungCap_DAO().timNhaCCTheoTen(rs.getString("MaNhaCungCap"));
+				
+				LoHang loHang = new LoHang(soLo, hangHoa, soLuong, ngaySX, hanSuDung, giaNhap, ncc);
+				return loHang;
+            }
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
+	public boolean createLoHang(LoHang lo) {
+		// TODO Auto-generated method stub
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		try {
+			String sql = "insert into LoHang values(?,?,?,?,?,?,?)";
+			stmt = con.prepareStatement(sql);
+			
+			stmt.setString(1, lo.getSoLo());
+			stmt.setString(2, lo.getHangHoa().getMaHangHoa());
+			stmt.setInt(3, lo.getSoLuong());
+			stmt.setDate(4, Date.valueOf(lo.getNgaySanXuat()));
+			stmt.setDate(5, Date.valueOf(lo.getHanSuDung()));
+			stmt.setDouble(6, lo.getGiaNhap());
+			stmt.setString(7, lo.getNhaCungCap().getMaNhaCungCap());
+			
+			stmt.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return false;
+	}
+	public List<LoHang> getTop5LoTheoNgaySX(String mahh) {
+		List<LoHang> dsLH = new ArrayList<>();
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		try {
+			String sql = "select * from LoHang where MaHangHoa = ? order by NgaySanXuat DESC";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, mahh);
+			ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+            	String soLo = rs.getString("SoLo");
+				HangHoa hangHoa = new HangHoaDao().timHangHoaTheoMa(rs.getString("MaHangHoa"));
+				int soLuong = rs.getInt("SoLuong");
+				LocalDate hanSuDung = rs.getDate("HanSuDung").toLocalDate();
+				LocalDate ngaySX = rs.getDate("NgaySanXuat").toLocalDate();
+				double giaNhap = rs.getDouble("GiaNhap");
+				NhaCungCap ncc = new NhaCungCap_DAO().timNhaCCTheoTen(rs.getString("MaNhaCungCap"));
+				
+				LoHang loHang = new LoHang(soLo, hangHoa, soLuong, ngaySX, hanSuDung, giaNhap, ncc);
+				dsLH.add(loHang);
+            }
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
+	}
 	public LoHang getLoHangBySoLo(String soLo){
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
@@ -105,5 +212,54 @@ public class LoHangDao {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public boolean updateSoLuong(int soLuong, String soLo) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		try {
+			String sql = "update LoHang set SoLuong = SoLuong + ? where SoLo = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, soLuong);
+			stmt.setString(2, soLo);
+			
+			stmt.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return false;
+	}
+	
+	public List<LoHang> getLoHangTheoMaHH(String ma) {
+		List<LoHang> dsLoHang = new ArrayList<>();
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		
+		try {
+			String sql = "select * from LoHang where MaHangHoa = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, ma);
+			ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+            	String soLo = rs.getString("SoLo");
+				HangHoa hangHoa = new HangHoaDao().timHangHoaTheoMa(rs.getString("MaHangHoa"));
+				int soLuong = rs.getInt("SoLuong");
+				LocalDate hanSuDung = rs.getDate("HanSuDung").toLocalDate();
+				LocalDate ngaySX = rs.getDate("NgaySanXuat").toLocalDate();
+				double giaNhap = rs.getDouble("GiaNhap");
+				NhaCungCap ncc = new NhaCungCap_DAO().timNhaCCTheoTen(rs.getString("MaNhaCungCap"));
+				
+				LoHang loHang = new LoHang(soLo, hangHoa, soLuong, ngaySX, hanSuDung, giaNhap, ncc);
+				dsLoHang.add(loHang);
+            }
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsLoHang;
+		
 	}
 }

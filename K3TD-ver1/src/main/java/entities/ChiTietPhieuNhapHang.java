@@ -55,7 +55,7 @@ public class ChiTietPhieuNhapHang {
 				+ ", chietKhau=" + chietKhau + "]";
 	}
 	public double tinhThanhTien() {
-		return soLuong*loHang.getGiaNhap()-soLuong*loHang.getGiaNhap()*chietKhau;
+		return soLuong*loHang.getGiaNhap()-soLuong*loHang.getGiaNhap()*chietKhau/100;
 	}
 	
 }
