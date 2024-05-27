@@ -6,16 +6,24 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.time.LocalDate;
 import java.util.List;
 
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
 
 import components.*;
+import dao.DonThuocMauDao;
+import dao.DonThuocMau_DAO;
+import dao.DonViTinhDao;
 import dao.NhaCungCap_DAO;
 import entities.*;
 /**
@@ -25,9 +33,10 @@ import entities.*;
 public class ChiTietDonThuocMauPage extends javax.swing.JPanel {
 
  private static javax.swing.table.DefaultTableModel table_model;   
-    private DefaultTableModel table_model2;
-
-	
+    protected static DefaultTableModel table_model2;
+    private DonViTinhDao dvt_DAO;
+    protected JTable table_chitietDonThuocMau;
+	private DonThuocMauDao dtm_DAO;
 	/**
      * Creates new form DonThuocMau_httk
      */
@@ -36,7 +45,7 @@ public class ChiTietDonThuocMauPage extends javax.swing.JPanel {
         initComponents();
         ResizeContent.resizeContent(this);
         
-        
+        setTable();
     }
 	/**
      * This method is called from within the constructor to initialize the form.
@@ -68,14 +77,9 @@ public class ChiTietDonThuocMauPage extends javax.swing.JPanel {
         cbo_trangThai = new javax.swing.JComboBox<>();
         pnlCenter = new javax.swing.JPanel();
         pnlNorth = new javax.swing.JPanel();
-        cbo_TrangThai = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
-        btn_Tim = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        txt_tim = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table_Jtable = new javax.swing.JTable();
 
         setPreferredSize(new java.awt.Dimension(1920, 840));
         setLayout(new java.awt.BorderLayout());
@@ -161,6 +165,7 @@ public class ChiTietDonThuocMauPage extends javax.swing.JPanel {
         txt_ghiChu.setRows(5);
         jScrollPane2.setViewportView(txt_ghiChu);
 
+        date_ngayApdung.setEnabled(false);
         date_ngayApdung.setPreferredSize(new java.awt.Dimension(143, 35));
 
         jLabel1.setText("Trạng thái");
@@ -261,58 +266,15 @@ public class ChiTietDonThuocMauPage extends javax.swing.JPanel {
         pnlNorth.setBackground(new java.awt.Color(255, 255, 255));
         pnlNorth.setPreferredSize(new java.awt.Dimension(1450, 100));
 
-        cbo_TrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đang hoạt động", "Ngừng hoạt động", "Tất cả" }));
-        cbo_TrangThai.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        cbo_TrangThai.setPreferredSize(new java.awt.Dimension(163, 35));
-
-        jLabel5.setText("Trạng thái");
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-
-        btn_Tim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-search-16.png"))); // NOI18N
-        btn_Tim.setText("Tìm");
-        btn_Tim.setPreferredSize(new java.awt.Dimension(72, 35));
-        btn_Tim.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_TimActionPerformed(evt);
-            }
-        });
-
-        jLabel3.setText("Tìm kiếm theo từ khóa (F4)");
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-
-        txt_tim.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-
         javax.swing.GroupLayout pnlNorthLayout = new javax.swing.GroupLayout(pnlNorth);
         pnlNorth.setLayout(pnlNorthLayout);
         pnlNorthLayout.setHorizontalGroup(
             pnlNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlNorthLayout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addGroup(pnlNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbo_TrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addGroup(pnlNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlNorthLayout.createSequentialGroup()
-                        .addComponent(txt_tim, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_Tim, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(683, Short.MAX_VALUE))
+            .addGap(0, 1448, Short.MAX_VALUE)
         );
         pnlNorthLayout.setVerticalGroup(
             pnlNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlNorthLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnlNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_tim, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addComponent(btn_Tim, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbo_TrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28))
+            .addGap(0, 100, Short.MAX_VALUE)
         );
 
         pnlCenter.add(pnlNorth, java.awt.BorderLayout.PAGE_START);
@@ -320,8 +282,13 @@ public class ChiTietDonThuocMauPage extends javax.swing.JPanel {
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Danh sách dữ liệu"));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jTable1.setModel(table_model2);
-        jScrollPane1.setViewportView(jTable1);
+        table_Jtable.setModel(table_model2);
+        table_Jtable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table_JtableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(table_Jtable);
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -332,17 +299,12 @@ public class ChiTietDonThuocMauPage extends javax.swing.JPanel {
 
     private void btn_LuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LuuActionPerformed
         // TODO add your handling code here:
-    	
+    	updateDonThuocMau();
     }//GEN-LAST:event_btn_LuuActionPerformed
 
     private void txt_TenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_TenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_TenActionPerformed
-
-    private void btn_TimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_btn_TimActionPerformed
 
     private void btn_DongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DongActionPerformed
         // TODO add your handling code here:
@@ -358,12 +320,14 @@ public class ChiTietDonThuocMauPage extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    private void table_JtableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_JtableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_table_JtableMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Dong;
     private javax.swing.JButton btn_Luu;
-    private javax.swing.JButton btn_Tim;
-    private javax.swing.JComboBox<String> cbo_TrangThai;
     protected static javax.swing.JComboBox<String> cbo_trangThai;
     protected static com.github.lgooddatepicker.components.DatePicker date_ngayApdung;
     private javax.swing.JLabel jLabel1;
@@ -371,24 +335,21 @@ public class ChiTietDonThuocMauPage extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlFooter;
     private javax.swing.JPanel pnlForm;
     private javax.swing.JPanel pnlHeader;
     private javax.swing.JPanel pnlNorth;
     private javax.swing.JPanel pnl_left;
+    protected static javax.swing.JTable table_Jtable;
     public static javax.swing.JTextField txt_Ma;
     protected static javax.swing.JTextField txt_Ten;
     protected static javax.swing.JTextArea txt_ghiChu;
-    private javax.swing.JTextField txt_tim;
     // End of variables declaration//GEN-END:variables
     public static void main(String[] args) {
   	  JFrame rs = new JFrame();
@@ -396,8 +357,83 @@ public class ChiTietDonThuocMauPage extends javax.swing.JPanel {
   	  rs.setVisible(true);
   }
     private DefaultTableModel table_Model(){
-        String[] colNames = {"Mã hàng hoá ","Tên hàng hoá","Liều dùng","Số lượng" , "Đơn vị tính"};
+        String[] colNames = {"STT","Mã hàng hoá ","Tên hàng hoá","Liều dùng","Số lượng" , "Đơn vị tính","Huỷ"};
         table_model2 = new DefaultTableModel(colNames, 0);
+//        table_chitietDonThuocMau = new JTable(table_model2);
+//        cb_DonViTinh = new JComboBox<>();
+//        dvt_DAO = new DonViTinhDao();
+  
         return  table_model2;
     }
+    
+
+//    tbl_DVT.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(cb_tenDVT));
+    
+    
+    private void setTable() {
+    	TableColumn column = table_Jtable.getColumnModel().getColumn(4);
+    	dvt_DAO = new DonViTinhDao();
+    	dtm_DAO = new DonThuocMauDao();
+        column.setCellEditor(new SpinnerEditor());
+        TableActionEvent event = new TableActionEvent() {
+    		@Override
+    		public void onDelete(int row) {
+    			if(table_Jtable.isEditing()) {
+    				table_Jtable.getCellEditor().stopCellEditing();
+    			}
+    			DefaultTableModel model = (DefaultTableModel)table_Jtable.getModel();
+    			int tb= JOptionPane.showConfirmDialog(null, "Bạn có chắc muốn xoá không","Cảnh báo",JOptionPane.YES_NO_OPTION);
+    			if (tb == JOptionPane.YES_OPTION) {
+//    				System.out.println(table_Jtable.getValueAt(row, 1).toString());
+//    				System.out.println(table_Jtable.getValueAt(row, 2).toString());
+    				DonViTinh dvt = dvt_DAO.layDVTTheoTenVaMaHangHoa(table_Jtable.getValueAt(row, 1).toString(), table_Jtable.getValueAt(row, 5).toString());
+    				System.out.println(dvt);
+//    				System.out.println(txt_Ma.getText());
+    				if (dtm_DAO.xoaChiTietDonThuocMau(txt_Ma.getText(), dvt.getMaDonViTinh())) {						
+    					model.removeRow(row);
+    					JOptionPane.showMessageDialog(null, "Bạn đã xoá thành công");
+					}	
+    				else {
+    					JOptionPane.showMessageDialog(null, "Xoá thất bại, Có thể do mã nguồn sai");
+    				}
+				}
+    			reload();
+    		}	
+    	};
+    	table_Jtable.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditor(event));
+    	table_Jtable.getColumnModel().getColumn(6).setCellRenderer(  new ButtonRender());
+        
+    	table_model2.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {//Bắt sự kiện thay đổi số lượng trên jtable
+                if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == 6) {
+                	int row = table_Jtable.getSelectedRow();
+                	if(row==-1)return; //Trường hợp sl thay đổi khi thêm mới 
+                   reload();
+                }
+            }	
+        });
+    }
+    private void reload() {
+
+    }  
+    private DonThuocMau revert_DonThuocMau () {
+    	String ma  =txt_Ma.getText();
+    	String ten = txt_Ten.getText();
+    	LocalDate ngayapdung = date_ngayApdung.getDate();
+    	String ghichu = txt_ghiChu.getText();
+    	TrangThaiDonThuocMau tt = cbo_trangThai.getSelectedItem().equals("Đang bán") ? TrangThaiDonThuocMau.DANG_BAN : TrangThaiDonThuocMau.TAM_DUNG;
+    	return new DonThuocMau(ma, ten, ngayapdung, ghichu, tt);
+    }
+    private void updateDonThuocMau() {
+    	DonThuocMau dtm_Pattern = revert_DonThuocMau();
+    	dtm_DAO = new DonThuocMauDao();
+    	if (dtm_DAO.updateDonThuocMau(dtm_Pattern)) {
+			JOptionPane.showMessageDialog(null, "Cập nhật thành công");
+		}
+    	else {
+    		JOptionPane.showMessageDialog(null, "Cập nhật thất bại");
+    	}
+    }
+    
 }

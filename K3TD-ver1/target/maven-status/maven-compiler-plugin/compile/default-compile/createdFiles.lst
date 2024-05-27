@@ -1,6 +1,12 @@
 ui\TaoHangHoaPage$11.class
 dao\PhieuXuatTraDao.class
+<<<<<<< HEAD
 ui\TaoPhieuNhapHangPage$7.class
+=======
+ui\TaoPhieuTraHangPage$1.class
+ui\TaoPhieuNhapHangPage$7.class
+ui\DoiMatKhauPage$5.class
+>>>>>>> f23766573109ed8ea4a75470ef3bbc778bbd2c47
 ui\CaLamViecPage$3.class
 ui\RootFrame$33.class
 ui\TaoPhieuXuatTraPage$6.class
@@ -11,15 +17,21 @@ ui\BanHangPage$4.class
 ui\XuatTraPage$3.class
 ui\TaiKhoanPage$5.class
 ui\TaoHangHoaPage$16.class
+ui\TaoPhieuTraHangPage$6.class
 ui\ChiTietDonThuocMauPage$1.class
-ui\ChiTietDonThuocMauPage.class
 ui\HangHoaPage$6.class
+<<<<<<< HEAD
 ui\KetCaPage$7.class
+=======
+>>>>>>> f23766573109ed8ea4a75470ef3bbc778bbd2c47
 ui\TaoPhieuXuatTraPage$1.class
 ui\NhaCungCapPage$3.class
 ui\NhapHangPage$2.class
 ui\BanHangPage$10.class
+<<<<<<< HEAD
 ui\ChiTietPhieuTraHangPage$5.class
+=======
+>>>>>>> f23766573109ed8ea4a75470ef3bbc778bbd2c47
 ui\NhanVienPage$6.class
 ui\TaoHangHoaPage$3.class
 ui\KhachHangPage.class
@@ -32,6 +44,10 @@ ui\TaoPhieuXuatTraPage.class
 ui\KhachHangPage$2.class
 ui\NhapHangPage$4.class
 ui\ChiTietDonThuocMauPage$3.class
+<<<<<<< HEAD
+=======
+ui\TaoPhieuTraHangPage$3.class
+>>>>>>> f23766573109ed8ea4a75470ef3bbc778bbd2c47
 ui\RootFrame$27.class
 ui\BanHangPage$12.class
 ui\ThongKeKhachHangPage.class
@@ -40,7 +56,10 @@ ui\NhanVienPage$9.class
 ui\XuatTraPage.class
 ui\TaiKhoanPage$3.class
 ui\TaoHangHoaPage$13.class
+<<<<<<< HEAD
 ui\ChiTietPhieuTraHangPage.class
+=======
+>>>>>>> f23766573109ed8ea4a75470ef3bbc778bbd2c47
 ui\TaoHangHoaPage$1.class
 ui\BanHangPage$2.class
 ui\DangNhap$1.class
@@ -48,6 +67,10 @@ ui\RootFrame$30.class
 ui\RootFrame$25.class
 ui\TaoPhieuXuatTraPage$4.class
 ui\HangHoaPage$4.class
+<<<<<<< HEAD
+=======
+ui\TaoPhieuTraHangPage$4.class
+>>>>>>> f23766573109ed8ea4a75470ef3bbc778bbd2c47
 ui\ThongKeNhanVienPage.class
 ui\TaoHangHoaPage$14.class
 ui\RootFrame$7.class
@@ -69,6 +92,10 @@ ui\XuatTraPage$6.class
 ui\TaoPhieuNhapHangPage$5.class
 ui\RootFrame$11.class
 ui\CaLamViecPage.class
+<<<<<<< HEAD
+=======
+ui\TaoPhieuTraHangPage$5.class
+>>>>>>> f23766573109ed8ea4a75470ef3bbc778bbd2c47
 printer\PrintExample.class
 ui\TaoPhieuNhapHangPage$4.class
 ui\RootFrame$22.class
@@ -83,7 +110,6 @@ ui\RootFrame$17.class
 ui\BanHangPage$6.class
 ui\TaoHangHoaPage$15.class
 ui\BanHangPage.class
-ui\DonThuocMauPage.class
 ui\RootFrame$3.class
 ui\NhapHangPage$1.class
 ui\TaoPhieuNhapHangPage$3.class
@@ -94,7 +120,10 @@ ui\RootFrame$6.class
 ui\ThongKeKhachHangPage$1.class
 ui\RootFrame$12.class
 dao\KhachHang_DAO.class
+<<<<<<< HEAD
 ui\KetCaPage$8.class
+=======
+>>>>>>> f23766573109ed8ea4a75470ef3bbc778bbd2c47
 ui\RootFrame$15.class
 ui\CaLamViecPage$2.class
 ui\NhanVienPage$1.class
@@ -102,12 +131,20 @@ ui\BanHangPage$8.class
 ui\NhanVienPage$2.class
 ui\CaLamViecPage$1.class
 ui\ThongKeKhachHangPage$3.class
+<<<<<<< HEAD
+=======
+ui\TaoPhieuTraHangPage$9.class
+>>>>>>> f23766573109ed8ea4a75470ef3bbc778bbd2c47
 ui\TaoHangHoaPage$8.class
 ui\TaoPhieuNhapHangPage$2.class
 ui\RootFrame$4.class
 ui\TaoHangHoaPage$9.class
 ui\BanHangPage$9.class
 ui\NhanVienPage$3.class
+<<<<<<< HEAD
+=======
+ui\TaoPhieuTraHangPage$8.class
+>>>>>>> f23766573109ed8ea4a75470ef3bbc778bbd2c47
 ui\ThongKeKhachHangPage$2.class
 ui\RootFrame$14.class
 ui\ThongKeHangHoaPage.class
@@ -119,7 +156,11 @@ ui\HoaDonPage$tuyChon.class
 ui\KhachHangPage$6.class
 ui\ChiTietDonThuocMauPage$2.class
 ui\RootFrame$13.class
+<<<<<<< HEAD
 ui\ChiTietPhieuTraHangPage$4.class
+=======
+ui\TaoPhieuTraHangPage$7.class
+>>>>>>> f23766573109ed8ea4a75470ef3bbc778bbd2c47
 ui\TaoHangHoaPage$17.class
 ui\PhieuTraHangPage$3.class
 dao\DonViTinhDao.class
@@ -140,7 +181,10 @@ ui\BanHangPage$5.class
 components\PnlBanHang.class
 ui\RootFrame$9.class
 ui\TrangChu$7.class
+<<<<<<< HEAD
 ui\KetCaPage$6.class
+=======
+>>>>>>> f23766573109ed8ea4a75470ef3bbc778bbd2c47
 ui\RootFrame$34.class
 ui\TaiKhoanPage$1.class
 ui\TaoPhieuXuatTraPage$2.class
@@ -163,20 +207,33 @@ ui\KetCaPage$4.class
 ui\ChiTietDonThuocMauPage$4.class
 ui\NhapHangPage$6.class
 ui\TaoPhieuNhapHangPage$8.class
+<<<<<<< HEAD
 ui\KhachHangPage$1.class
 ui\KetCaPage$3.class
 ui\ChiTietDonThuocMauPage$5.class
+=======
+ui\TaoPhieuTraHangPage$2.class
+ui\KhachHangPage$1.class
+ui\KetCaPage$3.class
+>>>>>>> f23766573109ed8ea4a75470ef3bbc778bbd2c47
 ui\TaoHangHoaPage$12.class
 ui\XuatTraPage$2.class
 ui\TaoHangHoaPage$2.class
 ui\KhachHangPage$3.class
 ui\HoaDonPage$3.class
 ui\TaiKhoanPage$8.class
+<<<<<<< HEAD
 ui\ChiTietPhieuTraHangPage$1.class
+=======
+>>>>>>> f23766573109ed8ea4a75470ef3bbc778bbd2c47
 dao\NhanVien_DAO.class
 ui\ThongKeNhanVienPage$3.class
 ui\BanHangPage$13.class
 ui\TrangChu$5.class
+<<<<<<< HEAD
+=======
+sampleUi\TimTheoMaNhanVien.class
+>>>>>>> f23766573109ed8ea4a75470ef3bbc778bbd2c47
 components\ResizeContent.class
 ui\TaoPhieuXuatTraPage$3.class
 ui\NhaCungCapPage.class
@@ -191,6 +248,10 @@ ui\PhieuTraHangPage$tuyChon.class
 ui\ThongKeNhanVienPage$2.class
 ui\NhanVienPage.class
 ui\HoaDonPage$4.class
+<<<<<<< HEAD
+=======
+ui\TaoPhieuTraHangPage$10.class
+>>>>>>> f23766573109ed8ea4a75470ef3bbc778bbd2c47
 ui\KhachHangPage$4.class
 ui\KhachHangPage$9.class
 ui\DangNhap$3.class
@@ -198,7 +259,11 @@ ui\ThongKeHangHoaPage$2.class
 ui\RootFrame$29.class
 ui\HangHoaPage$7.class
 ui\TaiKhoanPage$7.class
+<<<<<<< HEAD
 ui\DonThuocMauPage$3.class
+=======
+ui\TaoPhieuTraHangPage$11.class
+>>>>>>> f23766573109ed8ea4a75470ef3bbc778bbd2c47
 ui\TrangChu$6.class
 ui\DoiMatKhauPage$1.class
 ui\DangNhap$4.class
@@ -207,16 +272,28 @@ ui\NhaCungCapPage$5.class
 ui\NhaCungCapPage$8.class
 ui\HangHoaPage.class
 ui\NhanVienPage$10.class
+<<<<<<< HEAD
 ui\ThongKeNhanVienPage$1.class
 ui\KhachHangPage$5.class
 ui\ChiTietPhieuTraHangPage$3.class
 ui\NhaCungCapPage$7.class
 ui\HoaDonPage.class
+=======
+ui\DoiMatKhauPage$4.class
+ui\ThongKeNhanVienPage$1.class
+ui\KhachHangPage$5.class
+ui\NhaCungCapPage$7.class
+ui\HoaDonPage.class
+ui\DoiMatKhauPage$3.class
+>>>>>>> f23766573109ed8ea4a75470ef3bbc778bbd2c47
 ui\HoaDonPage$1.class
 ui\TrangChu$4.class
 ui\PhieuTraHangPage$1.class
 ui\TaiKhoanPage$9.class
+<<<<<<< HEAD
 ui\ChiTietPhieuTraHangPage$2.class
+=======
+>>>>>>> f23766573109ed8ea4a75470ef3bbc778bbd2c47
 ui\NhaCungCapPage$6.class
 ui\DoiMatKhauPage$2.class
 ui\KhachHangPage$7.class

@@ -20,6 +20,7 @@ import components.ResizeContent;
 import dao.NhanVien_DAO;
 import db.ConnectDB;
 import entities.ChucVuNhanVien;
+import entities.NhanVien;
 import entities.TrangThaiNhanVien;
 
 /**
@@ -538,6 +539,7 @@ public class NhanVienPage extends javax.swing.JPanel {
     private void btn_LuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LuuActionPerformed
         // TODO add your handling code here:
         luu();
+        loadDataNV();
     }//GEN-LAST:event_btn_LuuActionPerformed
 
     private void txtTenNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenNhanVienActionPerformed
@@ -634,14 +636,15 @@ public class NhanVienPage extends javax.swing.JPanel {
     	String ma = txt_maNhanVien.getText();
     	String ten = txtTenNhanVien.getText();
     	LocalDate ngaySinh = datengaySinh.getDate();
-    	boolean gioiTinh = btn_Group_gioiTinh.getSelection().getActionCommand().equals("Nam") ? true : false ;
+    	boolean gioiTinh = ratiobtn_Nam.isSelected() ==true ? true : false;
     	String soDienThoai = txtSoDienThoai.getText();
     	String matKhau = "123456";
     	LocalDate ngayTao = dateNgayTao.getDate();
     	String ghiChu = txtarea_GhiChu.getText();
     	ChucVuNhanVien cvNhanVien = cbo_ChucVu.getSelectedItem().toString().equals("Nhân viên") ? ChucVuNhanVien.NHAN_VIEN : ChucVuNhanVien.QUAN_LY;
     	TrangThaiNhanVien ttNhanVien = cbo_TrangThai.getSelectedItem().toString().equals("Đang hoạt động") ? TrangThaiNhanVien.DANG_HOAT_DONG : TrangThaiNhanVien.NGUNG_HOAT_DONG;
-    	return new entities.NhanVien("NV0001", ten, ngaySinh, gioiTinh, soDienThoai, matKhau, ngayTao, ghiChu, cvNhanVien, ttNhanVien);
+    	NhanVien nv2 = new entities.NhanVien("NV0001", ten, ngaySinh, gioiTinh, soDienThoai, matKhau, ngayTao, ghiChu, cvNhanVien, ttNhanVien);
+    	return nv2;
     }
     private void luu() {
     	entities.NhanVien nv1 = revert_NhanVien();
