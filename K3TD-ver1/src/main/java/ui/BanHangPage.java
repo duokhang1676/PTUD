@@ -119,6 +119,7 @@ public class BanHangPage extends javax.swing.JPanel {
         phimTat();
         inputNumber();
         updateTime();
+        //Do du lieu don thuoc mau vao combobox
         themDonThuocMau();
         //config();
     }
@@ -1129,13 +1130,12 @@ public class BanHangPage extends javax.swing.JPanel {
 
     private void cbChonDonThuocMauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbChonDonThuocMauActionPerformed
         // TODO add your handling code here:
-    	//cbChonDonThuocMau.setSelectedIndex(0);
     	themDonThuocMauVaoChiTietHD(cbChonDonThuocMau.getSelectedIndex());
     }//GEN-LAST:event_cbChonDonThuocMauActionPerformed
     
-    private void themDonThuocMauVaoChiTietHD(int viTri) {
+    private void themDonThuocMauVaoChiTietHD(int vt) {
     	List<DonThuocMau> dsDTM = donThuocMauDao.getDonThuocMau();
-		DonThuocMau dtm = dsDTM.get(viTri);
+		DonThuocMau dtm = dsDTM.get(vt);
 		List<ChiTietDonThuocMau> dsCTDTM = chiTietDTMDAO.layChiTietDTMTheoMaDTM(dtm);
 		for (int i = 0; i < dsCTDTM.size(); i++) {
 			if(dsCTDTM.get(i).getDonViTinh().getHangHoa()!=null && dsCTDTM.get(i).getDonViTinh().getTrangThaiDonViTinh().equals(TrangThaiDonViTinh.DANG_BAN)) { //Tìm thấy hàng hóa
@@ -1160,7 +1160,6 @@ public class BanHangPage extends javax.swing.JPanel {
 //
 //	        	}
 	        	//Thêm mới
-	        	//List<DonViTinh> dsDVT = doDuLieuVaoComboBoxDonViTinh(hangHoa);
 	        	dsHH.add(dsCTDTM.get(i).getDonViTinh().getHangHoa());//Thêm vào dsHH
 	        	double giaBan = dsCTDTM.get(i).getDonViTinh().getGiaBan();
 	        	double thanhTien = dsCTDTM.get(i).getSoLuong() * giaBan;
