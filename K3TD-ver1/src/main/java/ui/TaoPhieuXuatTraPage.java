@@ -236,6 +236,18 @@ public class TaoPhieuXuatTraPage extends javax.swing.JPanel {
 										showMessage("Lô hàng không tồn tại!");
 									}
 								}
+								
+								if (col == 7) {
+									String soLo = model_HH.getValueAt(row, 3).toString();
+			                        String maHH = model_HH.getValueAt(row, 1).toString();
+			                        int soLuong = Integer.parseInt(model_HH.getValueAt(row, 7).toString());
+			                        
+									// set du lieu cua lo
+									LoHang loHH = loHang_dao.timLoHangTheoMaVaMaHH(soLo, maHH);
+									if (soLuong > loHH.getSoLuong()) {
+										model_HH.setValueAt(loHH.getSoLuong(), row, 7);
+									}
+								}
 								if (col == 3 || col == 7 || col == 8 || col == 10) { // Kiểm tra nếu cột"So lo" "Số lượng" hoặc
 																						// "Giá nhập" đã được thay đổi
 									String soLuongStr = model_HH.getValueAt(row, 7).toString();
@@ -737,7 +749,8 @@ public class TaoPhieuXuatTraPage extends javax.swing.JPanel {
 	    			LoHang loTim = loHang_dao.timLoHangTheoMaVaMaHH(soLo, maHH);
 	    			if (loTim != null) {
 	    				int soLuongGiam = loTim.getSoLuong() - soLuong;
-						loHang_dao.updateSoLuong(soLuong, soLo);
+	    				System.out.println(soLuongGiam);
+						loHang_dao.updateSoLuongGiam(soLuongGiam, soLo);
 					}
 	    			
 	    		}

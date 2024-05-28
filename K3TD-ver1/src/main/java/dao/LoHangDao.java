@@ -277,6 +277,25 @@ public class LoHangDao {
 		
 	}
 	
+	public boolean updateSoLuongGiam(int soLuong, String soLo) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		try {
+			String sql = "update LoHang set SoLuong = SoLuong - ? where SoLo = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setInt(1, soLuong);
+			stmt.setString(2, soLo);
+			
+			stmt.executeUpdate();
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return false;
+		}
+		
+	}
+	
 	public List<LoHang> getLoHangTheoMaHH(String ma) {
 		List<LoHang> dsLoHang = new ArrayList<>();
 		ConnectDB.getInstance();
