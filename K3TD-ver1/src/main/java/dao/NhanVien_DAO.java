@@ -86,7 +86,6 @@ public class NhanVien_DAO {
         try {
             stmt = con.prepareStatement("insert into NhanVien(TenNhanVien,NgaySinh,GioiTinh,SoDienThoai,MatKhau,NgayTao,GhiChu,ChucVu,TrangThai) values(?,?,?,?,?,?,?,?,?)");
             
-//            stmt.setString(1,nv.getMaNhanVien());
             stmt.setString(1, nv.getTenNhanVien());
             stmt.setDate(2,java.sql.Date.valueOf(nv.getNgaySinh()));
             stmt.setBoolean(3, nv.isGioiTinh());

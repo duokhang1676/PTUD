@@ -4,9 +4,6 @@
  */
 package ui;
 
-import components.AddContent;
-import components.FormatJtable;
-import components.ResizeContent;
 import dao.ChiTietPhieuNhapHangDao;
 import dao.ChiTietPhieuXuatTraDao;
 import dao.DonViTinhDao;
@@ -42,6 +39,10 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+
+import components.AddContent;
+import components.FormatJtable;
+import components.ResizeContent;
 
 /**
  *

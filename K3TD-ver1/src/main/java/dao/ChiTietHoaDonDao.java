@@ -61,7 +61,7 @@ public class ChiTietHoaDonDao {
 					+ "JOIN \r\n"
 					+ "    ChiTietHoaDon ct ON hd.MaHoaDon = ct.MaHoaDon\r\n"
 					+ "WHERE \r\n"
-					+ "    hd.ThoiGianLapHoaDon BETWEEN ? AND ? and hd.TrangThai = 'HOAN_THANH'\r\n"
+					+ "    CAST(hd.ThoiGianLapHoaDon AS DATE) BETWEEN ? AND ? and hd.TrangThai = 'HOAN_THANH'\r\n"
 					+ "Group by\r\n"
 					+ "	ct.MaDonViTinh\r\n"
 					+ "order by\r\n"

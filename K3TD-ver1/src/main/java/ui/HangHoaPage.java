@@ -12,10 +12,6 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import components.AddContent;
-import components.FormatJtable;
-import components.PnlHangHoaInfo;
-import components.StatusMenu;
 import dao.DonViTinhDao;
 import dao.HangHoaDao;
 import dao.LoHangDao;
@@ -42,6 +38,8 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import components.AddContent;
+import components.FormatJtable;
+import components.PnlHangHoaInfo;
 import components.StatusMenu;
 
 /**

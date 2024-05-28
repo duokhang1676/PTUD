@@ -56,7 +56,7 @@ public class ThongKeKhachHangPage extends javax.swing.JPanel {
     	cbLocTheoThoiGian.setSelectedIndex(3);
     	dpTuNgay.setDate(LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()));
 		dpDenNgay.setDate(LocalDate.now());
-    	String[] headerTB = "STT,Mã khách hàng,Tên khách hàng,Số lượng mua,Tổng tiền,Số lượng trả,Tổng tiền trả,Doanh thu".split(",");
+    	String[] headerTB = "STT,Mã khách hàng,Tên khách hàng,Hóa đơn mua,Tổng tiền,Hóa đơn trả,Tổng tiền trả,Doanh thu".split(",");
     	tableModel = new DefaultTableModel(headerTB,0);
     	table.setModel(tableModel);
     	FormatJtable.setCellEditable(table);
@@ -103,8 +103,7 @@ public class ThongKeKhachHangPage extends javax.swing.JPanel {
 			if(dsKHT.size()!=0) {
 				for (HoaDon hoadon : dsKHT) {
 					if(hd.getKhachHang()==null)
-						break;
-					else if(hd.getKhachHang().getMaKhachHang().equals(hoadon.getKhachHang().getMaKhachHang())) {
+						if((hd.getKhachHang()==null?"":hd.getKhachHang().getMaKhachHang()).equals(hoadon.getKhachHang()==null?"":hoadon.getKhachHang().getMaKhachHang())) {
 						tableModel.setValueAt(Formater.decimalFormat(hoadon.getDiemQuyDoi()), stt-2, 5);
 						tableModel.setValueAt(Formater.decimalFormat(hoadon.getTongTien()), stt-2, 6);
 						dsKHT.remove(hoadon);

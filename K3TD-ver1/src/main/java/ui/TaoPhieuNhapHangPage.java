@@ -4,16 +4,6 @@
  */
 package ui;
 
-import components.AddContent;
-import components.ButtonRender;
-import components.ComboboxCellEditor;
-import components.DatePickerEditor;
-import components.DatePickerRenderer;
-import components.FormatJtable;
-import components.ResizeContent;
-import components.SpinnerEditor;
-import components.TableActionCellEditor;
-import components.TableActionEvent;
 import dao.ChiTietPhieuNhapHangDao;
 import dao.DonViTinhDao;
 import dao.HangHoaDao;
@@ -54,7 +44,16 @@ import javax.swing.table.TableColumn;
 
 import com.github.lgooddatepicker.components.DatePicker;
 
+import components.AddContent;
+import components.ButtonRender;
+import components.ComboboxCellEditor;
+import components.DatePickerEditor;
+import components.DatePickerRenderer;
+import components.FormatJtable;
 import components.ResizeContent;
+import components.SpinnerEditor;
+import components.TableActionCellEditor;
+import components.TableActionEvent;
 
 /**
  *
@@ -674,9 +673,9 @@ public class TaoPhieuNhapHangPage extends javax.swing.JPanel {
     				LoHang lo = new LoHang(soLo, hh, soLuong, ngaySX, hanSD, giaNhap, ncc);
     				loHang_dao.createLoHang(lo);
     			}else {
-    				loHang_dao.updateSoLuong(soLuong, soLo);
-    				int soLuongThem = soLuong + loHangTim.getSoLuong();
-    				model_HH.setValueAt(soLuongThem, i, 7);
+    				loHang_dao.updateSoLuong(soLuong+loHangTim.getSoLuong(), soLo);
+ 
+    	
     				
     			}
         	}

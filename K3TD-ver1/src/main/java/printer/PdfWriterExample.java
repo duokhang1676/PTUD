@@ -25,7 +25,7 @@ public class PdfWriterExample {
 		try {
             // Tạo một đối tượng Document
             Document document = new Document();
-
+            
             document.setMargins(5, document.topMargin(), document.rightMargin(), document.bottomMargin());
 
             
@@ -105,17 +105,19 @@ public class PdfWriterExample {
             p2.add("Giá bán");
             p2.add(Chunk.TABBING);
             p2.add(Chunk.TABBING);
+            p2.add(Chunk.TABBING);
             p2.add("T.Tiền");
             document.add(p2);
             
             Paragraph p21;
             Paragraph p22;
             for(int i=0;i<tb.getRowCount();i++) {
-            	p21 = new Paragraph(tb.getValueAt(i, 0)+"",fontContent);
+            	p21 = new Paragraph(tb.getValueAt(i, 0).toString()+" - "+tb.getValueAt(i, 1).toString(),fontContent);
                 document.add(p21);
                 p22 = new Paragraph("   "+tb.getValueAt(i, 2),fontContent);
                 p22.add(Chunk.TABBING);
-                p22.add(tb.getValueAt(i, 3)+"");
+                p22.add(Formater.decimalFormat(Double.parseDouble(tb.getValueAt(i, 3).toString().replaceAll(",", ""))));
+                p22.add(Chunk.TABBING);
                 p22.add(Chunk.TABBING);
                 p22.add(Chunk.TABBING);
                 p22.add(tb.getValueAt(i, 4)+"");

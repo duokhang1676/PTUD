@@ -203,7 +203,7 @@ public class LoHangDao {
 		PreparedStatement stmt = null;
 		List<LoHang> dsLoHang = new ArrayList<>();
 		try {
-			String sql = "select * from LoHang where MaHangHoa = ?";
+			String sql = "select * from LoHang where MaHangHoa = ?  order by hansudung";
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, hangHoa.getMaHangHoa());
 			ResultSet rs = stmt.executeQuery();

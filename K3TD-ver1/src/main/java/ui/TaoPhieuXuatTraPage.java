@@ -4,13 +4,6 @@
  */
 package ui;
 
-import components.AddContent;
-import components.ButtonRender;
-import components.FormatJtable;
-import components.ResizeContent;
-import components.SpinnerEditor;
-import components.TableActionCellEditor;
-import components.TableActionEvent;
 import dao.ChiTietPhieuNhapHangDao;
 import dao.ChiTietPhieuXuatTraDao;
 import dao.DonViTinhDao;
@@ -54,7 +47,13 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
+import components.AddContent;
+import components.ButtonRender;
+import components.FormatJtable;
 import components.ResizeContent;
+import components.SpinnerEditor;
+import components.TableActionCellEditor;
+import components.TableActionEvent;
 
 /**
  *
@@ -735,6 +734,11 @@ public class TaoPhieuXuatTraPage extends javax.swing.JPanel {
 	    			ChiTietPhieuXuatTra ctPNHang = new ChiTietPhieuXuatTra(pxt, loHH, dvtCT, soLuong, donGia , chietKhau);
 	    			
 	    			chiTietPXT_dao.addChiTietPNH(ctPNHang);
+	    			LoHang loTim = loHang_dao.timLoHangTheoMaVaMaHH(soLo, maHH);
+	    			if (loTim != null) {
+	    				int soLuongGiam = loTim.getSoLuong() - soLuong;
+						loHang_dao.updateSoLuong(soLuong, soLo);
+					}
 	    			
 	    		}
 	    		showMessage("Thêm thành công!");

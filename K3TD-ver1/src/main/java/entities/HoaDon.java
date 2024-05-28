@@ -97,7 +97,7 @@ public class HoaDon {
 		return Formater.roundToNearest500(tongTien-diemQuyDoi);
 	}
 	public double tinhTienThua() {
-		return tienKhachTra-tinhThanhTien();
+		return tienKhachTra-tinhThanhTien()>=0?tienKhachTra-tinhThanhTien():0;
 	}
 	@Override
 	public String toString() {

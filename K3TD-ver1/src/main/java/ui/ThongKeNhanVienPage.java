@@ -52,7 +52,7 @@ public class ThongKeNhanVienPage extends javax.swing.JPanel {
     	cbLocTheoThoiGian.setSelectedIndex(3);
     	dpTuNgay.setDate(LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()));
 		dpDenNgay.setDate(LocalDate.now());
-    	String[] headerTB = "STT,Mã nhân viên,Tên nhân viên,Số lượng mua,Tổng tiền,Số lượng trả,Tổng tiền trả,Doanh thu".split(",");
+    	String[] headerTB = "STT,Mã nhân viên,Tên nhân viên,Hóa đơn bán,Tổng tiền,Hóa đơn trả,Tổng tiền trả,Doanh thu".split(",");
     	tableModel = new DefaultTableModel(headerTB,0);
     	table.setModel(tableModel);
     	FormatJtable.setCellEditable(table);

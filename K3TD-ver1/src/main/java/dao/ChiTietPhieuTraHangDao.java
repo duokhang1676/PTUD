@@ -56,7 +56,7 @@ public class ChiTietPhieuTraHangDao {
 					+ "JOIN \r\n"
 					+ "    ChiTietPhieuTraHang ct ON hd.MaPhieuTraHang = ct.MaPhieuTraHang\r\n"
 					+ "WHERE \r\n"
-					+ "    hd.ThoiGianTao BETWEEN ? AND ? and hd.TrangThai = 'HOAN_THANH'\r\n"
+					+ "    CAST(hd.ThoiGianTao AS DATE) BETWEEN ? AND ? and hd.TrangThai = 'HOAN_THANH'\r\n"
 					+ "Group by\r\n"
 					+ "	ct.MaDonViTinh\r\n"
 					+ "order by\r\n"

@@ -94,7 +94,13 @@ public class DonViTinhDao {
 			stmt.setString(2, ma);
 			ResultSet rs = stmt.executeQuery();
 			rs.next();
-			int maDVT = rs.getInt("MaDonViTinh");	
+			int maDVT = 0;
+			try {
+				maDVT = rs.getInt("MaDonViTinh");	
+			} catch (Exception e) {
+				// TODO: handle exception
+				return null;
+			}
 			String tenDVT = rs.getString("TenDonViTinh");
 			String maHH = rs.getString("MaHangHoa");
 			HangHoa hh = new HangHoaDao().timHangHoaTheoMa(maHH);

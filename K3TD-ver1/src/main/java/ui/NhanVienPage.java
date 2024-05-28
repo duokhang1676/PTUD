@@ -16,6 +16,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import components.HashPasswordSHA256;
 import components.ResizeContent;
 import dao.NhanVien_DAO;
 import db.ConnectDB;
@@ -636,9 +637,9 @@ public class NhanVienPage extends javax.swing.JPanel {
     	String ma = txt_maNhanVien.getText();
     	String ten = txtTenNhanVien.getText();
     	LocalDate ngaySinh = datengaySinh.getDate();
-    	boolean gioiTinh = ratiobtn_Nam.isSelected() ==true ? true : false;
+    	boolean gioiTinh = ratiobtn_Nam.isSelected() ? true : false;
     	String soDienThoai = txtSoDienThoai.getText();
-    	String matKhau = "123456";
+    	String matKhau = HashPasswordSHA256.hashPassword("0000");
     	LocalDate ngayTao = dateNgayTao.getDate();
     	String ghiChu = txtarea_GhiChu.getText();
     	ChucVuNhanVien cvNhanVien = cbo_ChucVu.getSelectedItem().toString().equals("Nhân viên") ? ChucVuNhanVien.NHAN_VIEN : ChucVuNhanVien.QUAN_LY;

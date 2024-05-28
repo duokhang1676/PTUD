@@ -9,10 +9,12 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -35,6 +37,8 @@ public class RootFrame extends javax.swing.JFrame {
     public RootFrame() {
     	setTitle("Phầm mềm quản lý quầy thuốc tây K3TD");
         initComponents();
+        Image img = new ImageIcon(getClass().getResource("/icon/logo.png")).getImage();
+        setIconImage(img);
         pnlContent.add(new TrangChu());
         AddContent.setContent(pnlContent);
         resizeFrameToScreenScale();

@@ -158,7 +158,7 @@ public class HoaDonDao {
 			stmt.setString(1, hd.getMaHoaDon());
 			stmt.setString(2, hd.getNhanVien().getMaNhanVien());
 			if (hd.getKhachHang() == null) {
-				stmt.setString(3, null);
+				stmt.setString(3, "KH00000");
 			}
 			else {
 				stmt.setString(3, hd.getKhachHang().getMaKhachHang());
@@ -200,7 +200,7 @@ public class HoaDonDao {
 					+ "FROM \r\n"
 					+ "    HoaDon hd\r\n"
 					+ "WHERE \r\n"
-					+ "    hd.ThoiGianLapHoaDon BETWEEN ? AND ? and hd.TrangThai = 'HOAN_THANH' \r\n"
+					+ "    CAST(hd.ThoiGianLapHoaDon AS DATE) BETWEEN ? AND ? and hd.TrangThai = 'HOAN_THANH' \r\n"
 					+ "Group by\r\n"
 					+ "	hd.MaKhachHang\r\n"
 					+ "order by\r\n"
@@ -239,7 +239,7 @@ public class HoaDonDao {
 					+ "FROM \r\n"
 					+ "    HoaDon hd\r\n"
 					+ "WHERE \r\n"
-					+ "    hd.ThoiGianLapHoaDon BETWEEN ? AND ? and hd.TrangThai = 'HOAN_THANH' \r\n"
+					+ "    CAST(hd.ThoiGianLapHoaDon AS DATE) BETWEEN ? AND ? and hd.TrangThai = 'HOAN_THANH' \r\n"
 					+ "group by\r\n"
 					+ "	hd.MaNhanVien\r\n"
 					+ "order by\r\n"
