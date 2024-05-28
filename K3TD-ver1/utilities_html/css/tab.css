@@ -59,3 +59,41 @@ header{
 .tab-content{
     padding: 20px 0px;
 }
+.tab-content-item h2{
+    color: #527871;
+}
+#Sys-rec{
+    font-weight: bold;
+    font-size: 20px;
+}
+#Hard-ware{
+    font-weight: bold;
+    color: #527871;
+    font-size: 15px;
+}
+#Soft-ware{
+    font-weight: bold;
+    color: #527871;
+    font-size: 15px;
+}
+#empl{
+    font-weight: bold;
+    color: #527871;
+    font-size: 15px;
+}
+#manager{
+    font-weight: bold;
+    color: #527871;
+    font-size: 15px;
+}
+footer{
+    margin: 0px auto;
+    text-align: center;
+    background-color: #527871;
+    padding: 35px 0px;
+    /*display: block;*/
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    /*justify-content: space-between;*/
+}

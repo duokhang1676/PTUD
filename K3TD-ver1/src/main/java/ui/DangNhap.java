@@ -146,8 +146,7 @@ public class DangNhap extends javax.swing.JFrame {
         Image img = new ImageIcon(getClass().getResource("/icon/logo.png")).getImage();
         setIconImage(img);
         setLocationRelativeTo(null);
-        txt_taiKhoan.setText("NV00001");
-        txtMatKhau.setText("0000");
+       
         connectionDB(false);//parameter true dung clound db false dung local db
        
     }
