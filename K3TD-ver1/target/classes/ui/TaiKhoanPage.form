@@ -60,7 +60,11 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Component id="pnlAvatar" min="-2" max="-2" attributes="0"/>
+<<<<<<< HEAD
                   <EmptySpace type="separate" max="-2" attributes="0"/>
+=======
+                  <EmptySpace max="-2" attributes="0"/>
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
                   <Component id="pnlHoTen1" min="-2" pref="67" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
@@ -75,7 +79,11 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="pnlSdt" min="-2" pref="67" max="-2" attributes="0"/>
+<<<<<<< HEAD
                   <EmptySpace max="-2" attributes="0"/>
+=======
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
                   <Component id="pnlButton" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -107,7 +115,11 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jl_userIcon" min="-2" max="-2" attributes="0"/>
+<<<<<<< HEAD
                       <EmptySpace pref="32" max="32767" attributes="0"/>
+=======
+                      <EmptySpace pref="44" max="32767" attributes="0"/>
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
                   </Group>
               </Group>
             </DimensionLayout>
@@ -167,11 +179,14 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtHoTen">
+<<<<<<< HEAD
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="16" style="0"/>
                 </Property>
               </Properties>
+=======
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtHoTenActionPerformed"/>
               </Events>
@@ -204,9 +219,15 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblGioiTinh" min="-2" pref="250" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
+<<<<<<< HEAD
                               <Component id="btnNam" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                               <Component id="btnNu" min="-2" max="-2" attributes="0"/>
+=======
+                              <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                              <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
@@ -222,8 +243,13 @@
                               <Component id="lblGioiTinh" max="32767" attributes="0"/>
                               <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
+<<<<<<< HEAD
                                   <Component id="btnNam" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnNu" alignment="3" min="-2" max="-2" attributes="0"/>
+=======
+                                  <Component id="jRadioButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jRadioButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -250,15 +276,22 @@
             <Component class="javax.swing.JTextField" name="txtChucVu">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
+<<<<<<< HEAD
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="16" style="0"/>
                 </Property>
+=======
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtChucVuActionPerformed"/>
               </Events>
             </Component>
+<<<<<<< HEAD
             <Component class="javax.swing.JRadioButton" name="btnNu">
+=======
+            <Component class="javax.swing.JRadioButton" name="jRadioButton1">
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
               <Properties>
                 <Property name="text" type="java.lang.String" value="N&#x1eef;"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -266,7 +299,11 @@
                 </Property>
               </Properties>
               <Events>
+<<<<<<< HEAD
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNuActionPerformed"/>
+=======
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton1ActionPerformed"/>
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblGioiTinh">
@@ -277,7 +314,11 @@
                 </Property>
               </Properties>
             </Component>
+<<<<<<< HEAD
             <Component class="javax.swing.JRadioButton" name="btnNam">
+=======
+            <Component class="javax.swing.JRadioButton" name="jRadioButton2">
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
               <Properties>
                 <Property name="text" type="java.lang.String" value="Nam"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -285,7 +326,11 @@
                 </Property>
               </Properties>
               <Events>
+<<<<<<< HEAD
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNamActionPerformed"/>
+=======
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButton2ActionPerformed"/>
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
               </Events>
             </Component>
           </SubComponents>
@@ -307,11 +352,19 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="lblNgaySinh" max="32767" attributes="0"/>
+<<<<<<< HEAD
                           <Component id="dpNgaySinh" pref="250" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="78" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="dpNgayTaoTK" alignment="1" min="-2" pref="250" max="-2" attributes="0"/>
+=======
+                          <Component id="datePicker1" pref="250" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="78" max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="datePicker2" alignment="1" min="-2" pref="250" max="-2" attributes="0"/>
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
                           <Component id="lblNgaySinh1" alignment="1" min="-2" pref="250" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -326,12 +379,20 @@
                           <Group type="102" attributes="0">
                               <Component id="lblNgaySinh" pref="26" max="32767" attributes="0"/>
                               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+<<<<<<< HEAD
                               <Component id="dpNgaySinh" min="-2" pref="30" max="-2" attributes="0"/>
+=======
+                              <Component id="datePicker1" min="-2" pref="30" max="-2" attributes="0"/>
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="lblNgaySinh1" pref="26" max="32767" attributes="0"/>
                               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+<<<<<<< HEAD
                               <Component id="dpNgayTaoTK" min="-2" pref="30" max="-2" attributes="0"/>
+=======
+                              <Component id="datePicker2" min="-2" pref="30" max="-2" attributes="0"/>
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
                           </Group>
                       </Group>
                   </Group>
@@ -347,7 +408,11 @@
                 </Property>
               </Properties>
             </Component>
+<<<<<<< HEAD
             <Component class="com.github.lgooddatepicker.components.DatePicker" name="dpNgaySinh">
+=======
+            <Component class="com.github.lgooddatepicker.components.DatePicker" name="datePicker1">
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
             </Component>
             <Component class="javax.swing.JLabel" name="lblNgaySinh1">
               <Properties>
@@ -357,7 +422,11 @@
                 </Property>
               </Properties>
             </Component>
+<<<<<<< HEAD
             <Component class="com.github.lgooddatepicker.components.DatePicker" name="dpNgayTaoTK">
+=======
+            <Component class="com.github.lgooddatepicker.components.DatePicker" name="datePicker2">
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
             </Component>
           </SubComponents>
         </Container>
@@ -429,11 +498,14 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtSdt">
+<<<<<<< HEAD
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Times New Roman" size="16" style="0"/>
                 </Property>
               </Properties>
+=======
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSdtActionPerformed"/>
               </Events>
@@ -460,7 +532,11 @@
                           <Group type="102" attributes="0">
                               <Component id="bntDoiMK" min="-2" pref="250" max="-2" attributes="0"/>
                               <EmptySpace pref="78" max="32767" attributes="0"/>
+<<<<<<< HEAD
                               <Component id="btnLuu" min="-2" pref="250" max="-2" attributes="0"/>
+=======
+                              <Component id="btnKetCa1" min="-2" pref="250" max="-2" attributes="0"/>
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -473,11 +549,18 @@
                       <EmptySpace pref="12" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="bntDoiMK" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+<<<<<<< HEAD
                           <Component id="btnLuu" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Component id="btnDangXuat" min="-2" pref="35" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+=======
+                          <Component id="btnKetCa1" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnDangXuat" min="-2" pref="35" max="-2" attributes="0"/>
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
                   </Group>
               </Group>
             </DimensionLayout>
@@ -508,7 +591,11 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bntDoiMKActionPerformed"/>
               </Events>
             </Component>
+<<<<<<< HEAD
             <Component class="javax.swing.JButton" name="btnLuu">
+=======
+            <Component class="javax.swing.JButton" name="btnKetCa1">
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
               <Properties>
                 <Property name="text" type="java.lang.String" value="L&#x1b0;u"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -516,7 +603,11 @@
                 </Property>
               </Properties>
               <Events>
+<<<<<<< HEAD
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLuuActionPerformed"/>
+=======
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnKetCa1ActionPerformed"/>
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
               </Events>
             </Component>
           </SubComponents>
@@ -538,7 +629,11 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblHoTen1" alignment="0" pref="578" max="32767" attributes="0"/>
+<<<<<<< HEAD
                           <Component id="txtMaNV" alignment="0" max="32767" attributes="0"/>
+=======
+                          <Component id="txtHoTen1" alignment="0" max="32767" attributes="0"/>
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -550,7 +645,11 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblHoTen1" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+<<<<<<< HEAD
                       <Component id="txtMaNV" min="-2" pref="30" max="-2" attributes="0"/>
+=======
+                      <Component id="txtHoTen1" min="-2" pref="30" max="-2" attributes="0"/>
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
                       <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -565,6 +664,7 @@
                 </Property>
               </Properties>
             </Component>
+<<<<<<< HEAD
             <Component class="javax.swing.JTextField" name="txtMaNV">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
@@ -574,6 +674,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtMaNVActionPerformed"/>
+=======
+            <Component class="javax.swing.JTextField" name="txtHoTen1">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtHoTen1ActionPerformed"/>
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
               </Events>
             </Component>
           </SubComponents>

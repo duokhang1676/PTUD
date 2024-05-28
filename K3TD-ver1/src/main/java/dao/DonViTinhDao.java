@@ -57,7 +57,9 @@ public class DonViTinhDao {
 				int maDVT = rs.getInt("MaDonViTinh");	
 				String tenDVT = rs.getString("TenDonViTinh");
 				String maHH = rs.getString("MaHangHoa");
-				HangHoa hh = hangHoa_Dao.timHangHoaTheoMa(maHH);
+
+				HangHoa hh = new HangHoaDao().timHangHoaTheoMa(maHH);
+
 				int quyDoi = rs.getInt("QuyDoi");
 				Double giaBan = rs.getDouble("GiaBan");
 				String maVach = rs.getString("MaVach");

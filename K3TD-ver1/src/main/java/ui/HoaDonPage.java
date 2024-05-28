@@ -36,9 +36,8 @@ public class HoaDonPage extends javax.swing.JPanel {
      */
     public HoaDonPage() {
         initComponents();
-       
         addTableHoaDon();
-       // loadDataTableHD();
+        loadDataTableHD();
     }
 
     private void loadDataTableHD() {
@@ -59,7 +58,7 @@ public class HoaDonPage extends javax.swing.JPanel {
 
 	private void addTableHoaDon() {
 		// TODO Auto-generated method stub
-String[] colNames = {"STT","Mã hóa đơn", "Khách hàng", "Nhân viên bán hàng",  "Thời gian bán hàng","Tổng tiền", "Trạng thái", "Ghi chú"};
+		String[] colNames = {"STT","Mã hóa đơn", "Khách hàng", "Nhân viên bán hàng",  "Thời gian bán hàng","Tổng tiền", "Trạng thái", "Ghi chú"};
         
         model_hoaDon = new DefaultTableModel(colNames, 0);
         tbl_hoaDon = new JTable(model_hoaDon);

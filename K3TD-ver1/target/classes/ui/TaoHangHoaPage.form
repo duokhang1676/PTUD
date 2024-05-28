@@ -55,7 +55,11 @@
                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+<<<<<<< HEAD
                               <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+=======
+                              <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
                                   <Group type="102" alignment="1" attributes="0">
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
@@ -133,9 +137,17 @@
                                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
+<<<<<<< HEAD
                                   <Component id="txt_thuocMau" alignment="0" pref="1521" max="32767" attributes="0"/>
                                   <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel7" alignment="0" max="32767" attributes="0"/>
+=======
+                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="jTextField5" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jLabel7" alignment="0" min="-2" pref="1521" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
                               </Group>
                           </Group>
                       </Group>
@@ -154,7 +166,11 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
+<<<<<<< HEAD
                   <Component id="txt_thuocMau" min="-2" pref="40" max="-2" attributes="0"/>
+=======
+                  <Component id="jTextField5" min="-2" pref="40" max="-2" attributes="0"/>
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel57" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -461,10 +477,14 @@
             <Property name="text" type="java.lang.String" value="Sao ch&#xe9;p th&#xf4;ng tin thu&#x1ed1;c"/>
           </Properties>
         </Component>
+<<<<<<< HEAD
         <Component class="javax.swing.JTextField" name="txt_thuocMau">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_thuocMauActionPerformed"/>
           </Events>
+=======
+        <Component class="javax.swing.JTextField" name="jTextField5">
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
@@ -555,11 +575,15 @@
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="txt_soLuongDinhMuc1">
+<<<<<<< HEAD
           <Properties>
             <Property name="text" type="java.lang.String" value="0"/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="txt_soLuongDinhMuc1.setEditable(false);"/>
+=======
+          <AuxValues>
+>>>>>>> 5bd4b62f219530ba51614b70eea3e550fde8af02
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="12"/>
           </AuxValues>
         </Component>

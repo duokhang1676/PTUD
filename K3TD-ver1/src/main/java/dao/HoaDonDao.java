@@ -115,10 +115,11 @@ public class HoaDonDao {
 			String sql = "select * from HoaDon join KhachHang on HoaDon.MaKhachHang = KhachHang.MaKhachHang join NhanVien on HoaDon.MaNhanVien = NhanVien.MaNhanVien";
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
 			while (rs.next()) {
 				String maHD = rs.getString("MaHoaDon");
-				LocalDateTime thoiGianLap = LocalDateTime.parse(rs.getString("ThoiGianLapHoaDon"), formatter);
+				Timestamp tgTimestamp = rs.getTimestamp("ThoiGianLapHoaDon");
+                // Chuyển đổi Timestamp sang LocalDateTime
+                LocalDateTime thoiGianLap = tgTimestamp.toLocalDateTime();
 				NhanVien nv = new NhanVien(rs.getString("MaNhanVien"), rs.getString("TenNhanVien"));
 				KhachHang kh = new KhachHang(rs.getString("MaKhachHang"), rs.getString("TenKhachHang"));
 				double tienKhachTra = rs.getDouble("TienKhachTra");
@@ -131,7 +132,7 @@ public class HoaDonDao {
 				TrangThaiHoaDon trangThai = TrangThaiHoaDon.valueOf(trangThaiStr);
 				
 				
-				HoaDon hd = new HoaDon(maHD, thoiGianLap, nv, kh, tienKhachTra, diemQuyDoi, ghiChu, ca, trangThai, 0);
+				HoaDon hd = new HoaDon(maHD, thoiGianLap, nv, kh, tienKhachTra, diemQuyDoi, ghiChu, ca, trangThai, tongTien);
 				dsHoaDon.add(hd);
 			}
 		} catch (Exception e) {
@@ -141,29 +142,40 @@ public class HoaDonDao {
 		return dsHoaDon;
 	}
 	
-	public boolean addHoaDon(HoaDon hd, double tongTien, double tienThua) {
+	public boolean addHoaDon(HoaDon hd) {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection(); 
 		PreparedStatement stmt = null;
-		String sql = "insert into HoaDon (MaHoaDon, ThoiGianLapHoaDon, MaNhanVien, MaKhachHang, TienKhachTra, DiemQuyDoi, TongTien, TienThua, GhiChu, MaCa, TrangThai, ThanhTien) "
-				+ "values (?,?,?,?,?,?,?,?,?,?,?,?)";
+		String sql = "insert into HoaDon (MaHoaDon, MaNhanVien, MaKhachHang, TienKhachTra, DiemQuyDoi, TongTien, TienThua, GhiChu, MaCa, TrangThai, ThanhTien) "
+				+ "values (?,?,?,?,?,?,?,?,?,?,?)";
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//		String sql = "insert into HoaDon (MaHoaDon, ThoiGianLapHoaDon, MaNhanVien, MaKhachHang, TienKhachTra, DiemQuyDoi, TongTien, TienThua, GhiChu, MaCa, TrangThai, ThanhTien) "
+//				+ "values (?,?,?,?,?,?,?,?,?,?,?,?)";
+//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		try {
 			stmt = con.prepareStatement(sql);
 			
 			stmt.setString(1, hd.getMaHoaDon());
-			stmt.setDate(2, Date.valueOf(hd.getThoiGianLapHoaDon().toLocalDate()));
-//			stmt.setString(3, hd.getNhanVien().getMaNhanVien());
-			stmt.setString(3, "NV00003");
-			stmt.setString(4, hd.getKhachHang().getMaKhachHang());
-			stmt.setDouble(5, hd.getTienKhachTra());
-			stmt.setInt(6, hd.getDiemQuyDoi());
-			stmt.setDouble(7, tongTien);
-			stmt.setDouble(8, tienThua);
-			stmt.setString(9, hd.getGhiChu());
-			stmt.setString(10, hd.getCa().getMaCa());
-			stmt.setString(11, hd.getTrangThaiHoaDon().toString());
-			stmt.setDouble(12, hd.getTongTien());
+			stmt.setString(2, hd.getNhanVien().getMaNhanVien());
+			if (hd.getKhachHang() == null) {
+				stmt.setString(3, null);
+			}
+			else {
+				stmt.setString(3, hd.getKhachHang().getMaKhachHang());
+			}
+			stmt.setDouble(4, hd.getTienKhachTra());
+			stmt.setInt(5, hd.getDiemQuyDoi());
+			stmt.setDouble(6, hd.getTongTien());
+			stmt.setDouble(7, hd.tinhTienThua());
+			stmt.setString(8, hd.getGhiChu());
+			if (hd.getCa() == null) {
+				stmt.setString(9, null);
+			}
+			else {
+				stmt.setString(9, hd.getCa().getMaCa());
+			}
+			stmt.setString(10, hd.getTrangThaiHoaDon().toString());
+			stmt.setDouble(11, hd.tinhThanhTien());
 
 			stmt.executeUpdate();
 			stmt.close();
