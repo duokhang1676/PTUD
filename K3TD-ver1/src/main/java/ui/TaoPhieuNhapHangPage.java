@@ -671,10 +671,16 @@ public class TaoPhieuNhapHangPage extends javax.swing.JPanel {
     			LoHang loHangTim = loHang_dao.timLoHangTheoMa(soLo);
     			if (loHangTim == null) {
     				LoHang lo = new LoHang(soLo, hh, soLuong, ngaySX, hanSD, giaNhap, ncc);
+    				HangHoa hHoa = hangHoa_dao.timHangHoaTheoMa(maHH);
+    				hHoa.setSoLuongDinhMuc(soLuong);
+    				hangHoa_dao.capNhatSoLuongHangHoa(hHoa);
+    				
     				loHang_dao.createLoHang(lo);
     			}else {
     				loHang_dao.updateSoLuong(soLuong+loHangTim.getSoLuong(), soLo);
- 
+    				HangHoa hHoa = hangHoa_dao.timHangHoaTheoMa(maHH);
+    				hHoa.setSoLuongDinhMuc(soLuong+loHangTim.getSoLuong());
+    				hangHoa_dao.capNhatSoLuongHangHoa(hHoa);
     	
     				
     			}
