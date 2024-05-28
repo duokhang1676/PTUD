@@ -883,11 +883,11 @@ public class TaoHangHoaPage extends javax.swing.JPanel {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < tbl_DVT.getRowCount(); i++) {
 			int quyDoi = Integer.parseInt(model_DVT.getValueAt(i, 2).toString());
-			if (quyDoi != 1) {
-				return false;
+			if (quyDoi == 1) {
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	private boolean validData() {
 		// TODO Auto-generated method stub

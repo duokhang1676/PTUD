@@ -38,7 +38,13 @@ public class NhanVien_DAO {
             while (rs.next()){
                 String ma = rs.getString("MaNhanVien");
                 String ten  = rs.getString("TenNhanVien");
-                LocalDate ngaySinh = rs.getDate("NgaySinh").toLocalDate();
+                
+                LocalDate ngaySinh = null;
+                try {
+                	ngaySinh = rs.getDate("NgaySinh").toLocalDate();
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
                 boolean gioitinh = rs.getBoolean("GioiTinh");
                 String sdt = rs.getString("SoDienThoai");
                 String matKhau = rs.getString("MatKhau");
