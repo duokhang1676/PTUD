@@ -27,7 +27,7 @@ public class LoHangDao {
 		Connection con = ConnectDB.getConnection();
 		try {
 			String sql = "select * from LoHang\r\n"
-					+ "where HanSuDung < ?";
+					+ "where HanSuDung < ? and soluong > 0";
 			PreparedStatement stmt = null;
 			stmt = con.prepareStatement(sql);
 			stmt.setDate(1, Date.valueOf(hsd));
@@ -57,7 +57,7 @@ public class LoHangDao {
 		Connection con = ConnectDB.getConnection();
 		try {
 			String sql = "select * from LoHang\r\n"
-					+ "where HanSuDung < ? AND HanSuDung > GETDATE()";
+					+ "where HanSuDung < ? AND HanSuDung > GETDATE() and soluong > 0";
 			PreparedStatement stmt = null;
 			stmt = con.prepareStatement(sql);
 			stmt.setDate(1, Date.valueOf(hsd));
@@ -307,7 +307,24 @@ public class LoHangDao {
 			return null;
 		}
 	}
-	
+	public boolean capNhatSoLuongLoTheoMa(int ketQua, LoHang lo) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection(); 
+		PreparedStatement stmt = null;			
+		try {
+				String sql = "update LoHang set SoLuong = ? where SoLo = ?";
+				stmt = con.prepareStatement(sql);
+				stmt.setInt(1, ketQua);
+				stmt.setString(2, lo.getSoLo());
+				stmt.executeUpdate();
+				stmt.close();
+				return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return false;
+		}
+	}
 	public boolean capNhatSoLuongLoTheoMaHHVaSoLo(int ketQua,HangHoa hangHoa, LoHang lo) {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection(); 

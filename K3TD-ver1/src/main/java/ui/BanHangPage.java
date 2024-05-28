@@ -58,11 +58,13 @@ import java.util.Random;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -92,6 +94,7 @@ import components.GeneratePK;
 import components.LoginInfo;
 import components.NumberFilter;
 import components.NumericDocumentFilter;
+import components.PnlBanHang;
 import components.ResizeContent;
 import components.SpinnerEditor;
 import components.TableActionCellEditor;
@@ -134,6 +137,14 @@ public class BanHangPage extends javax.swing.JPanel {
 
     private void config() {
 		// TODO Auto-generated method stub
+    	setBorderHD(pnl1);
+		pnl2.setVisible(false);
+		pnl3.setVisible(false);
+		pnl4.setVisible(false);
+		pnl5.setVisible(false);
+
+		lblSpace.setPreferredSize(new Dimension(lblSpace.getWidth()-60+155*5,lblSpace.getHeight()));
+    	
     	txtDiemQuyDoi.setEditable(false);
     	cbChonDonThuocMau.setPreferredSize(new Dimension(180,cbChonDonThuocMau.getHeight()));
     	Font fontB = new Font("Arial", Font.BOLD, 14);
@@ -177,10 +188,23 @@ public class BanHangPage extends javax.swing.JPanel {
         lblPhimTat = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbChiTietHoaDon = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        lblHoaDon = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        header = new javax.swing.JPanel();
+        pnl1 = new javax.swing.JPanel();
+        lbl1 = new javax.swing.JLabel();
+        btn1 = new javax.swing.JButton();
+        pnl2 = new javax.swing.JPanel();
+        btn2 = new javax.swing.JButton();
+        lbl2 = new javax.swing.JLabel();
+        pnl3 = new javax.swing.JPanel();
+        btn3 = new javax.swing.JButton();
+        lbl3 = new javax.swing.JLabel();
+        pnl4 = new javax.swing.JPanel();
+        btn4 = new javax.swing.JButton();
+        lbl4 = new javax.swing.JLabel();
+        pnl5 = new javax.swing.JPanel();
+        btn5 = new javax.swing.JButton();
+        lbl5 = new javax.swing.JLabel();
+        lblSpace = new javax.swing.JLabel();
         btnThemHoaDon = new javax.swing.JButton();
         pnlRight = new javax.swing.JPanel();
         pnlKhachHang = new javax.swing.JPanel();
@@ -348,35 +372,217 @@ public class BanHangPage extends javax.swing.JPanel {
 
         pnlLeft.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        header.setBackground(new java.awt.Color(255, 255, 255));
+        header.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jPanel2.setBackground(new java.awt.Color(193, 219, 208));
+        pnl1.setBackground(new java.awt.Color(193, 219, 208));
+        pnl1.setPreferredSize(new java.awt.Dimension(150, 30));
 
-        lblHoaDon.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        lblHoaDon.setForeground(new java.awt.Color(255, 0, 0));
-        lblHoaDon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblHoaDon.setText("Hoá đơn 1");
+        lbl1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        lbl1.setForeground(new java.awt.Color(255, 0, 0));
+        lbl1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl1.setText("Hoá đơn 1");
+        lbl1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl1MouseClicked(evt);
+            }
+        });
 
-        jButton1.setBackground(new java.awt.Color(193, 219, 208));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-close-24.png"))); // NOI18N
-        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btn1.setBackground(new java.awt.Color(193, 219, 208));
+        btn1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-close-24.png"))); // NOI18N
+        btn1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn1ActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(lblHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+        javax.swing.GroupLayout pnl1Layout = new javax.swing.GroupLayout(pnl1);
+        pnl1.setLayout(pnl1Layout);
+        pnl1Layout.setHorizontalGroup(
+            pnl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(lbl1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn1, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        pnl1Layout.setVerticalGroup(
+            pnl1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btn1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(lbl1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        header.add(pnl1);
+
+        pnl2.setBackground(new java.awt.Color(193, 219, 208));
+        pnl2.setPreferredSize(new java.awt.Dimension(150, 30));
+
+        btn2.setBackground(new java.awt.Color(193, 219, 208));
+        btn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-close-24.png"))); // NOI18N
+        btn2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn2ActionPerformed(evt);
+            }
+        });
+
+        lbl2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        lbl2.setForeground(new java.awt.Color(255, 0, 0));
+        lbl2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl2.setText("Hoá đơn 2");
+        lbl2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl2MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnl2Layout = new javax.swing.GroupLayout(pnl2);
+        pnl2.setLayout(pnl2Layout);
+        pnl2Layout.setHorizontalGroup(
+            pnl2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl2Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(lbl2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn2, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        pnl2Layout.setVerticalGroup(
+            pnl2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btn2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lbl2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        header.add(pnl2);
+
+        pnl3.setBackground(new java.awt.Color(193, 219, 208));
+        pnl3.setPreferredSize(new java.awt.Dimension(150, 30));
+
+        btn3.setBackground(new java.awt.Color(193, 219, 208));
+        btn3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-close-24.png"))); // NOI18N
+        btn3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn3ActionPerformed(evt);
+            }
+        });
+
+        lbl3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        lbl3.setForeground(new java.awt.Color(255, 0, 0));
+        lbl3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl3.setText("Hoá đơn 3");
+        lbl3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl3MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnl3Layout = new javax.swing.GroupLayout(pnl3);
+        pnl3.setLayout(pnl3Layout);
+        pnl3Layout.setHorizontalGroup(
+            pnl3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl3Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(lbl3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn3, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        pnl3Layout.setVerticalGroup(
+            pnl3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btn3, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(lbl3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        header.add(pnl3);
+
+        pnl4.setBackground(new java.awt.Color(193, 219, 208));
+        pnl4.setPreferredSize(new java.awt.Dimension(150, 30));
+
+        btn4.setBackground(new java.awt.Color(193, 219, 208));
+        btn4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-close-24.png"))); // NOI18N
+        btn4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btn4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn4ActionPerformed(evt);
+            }
+        });
+
+        lbl4.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        lbl4.setForeground(new java.awt.Color(255, 0, 0));
+        lbl4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl4.setText("Hoá đơn 4");
+        lbl4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl4MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnl4Layout = new javax.swing.GroupLayout(pnl4);
+        pnl4.setLayout(pnl4Layout);
+        pnl4Layout.setHorizontalGroup(
+            pnl4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl4Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(lbl4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn4, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        pnl4Layout.setVerticalGroup(
+            pnl4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btn4, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+            .addComponent(lbl4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        header.add(pnl4);
+
+        pnl5.setBackground(new java.awt.Color(193, 219, 208));
+        pnl5.setPreferredSize(new java.awt.Dimension(150, 30));
+
+        btn5.setBackground(new java.awt.Color(193, 219, 208));
+        btn5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-close-24.png"))); // NOI18N
+        btn5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        btn5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn5ActionPerformed(evt);
+            }
+        });
+
+        lbl5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        lbl5.setForeground(new java.awt.Color(255, 0, 0));
+        lbl5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbl5.setText("Hoá đơn 5");
+        lbl5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lbl5MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnl5Layout = new javax.swing.GroupLayout(pnl5);
+        pnl5.setLayout(pnl5Layout);
+        pnl5Layout.setHorizontalGroup(
+            pnl5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnl5Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(lbl5, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn5, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        pnl5Layout.setVerticalGroup(
+            pnl5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btn5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lbl5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        header.add(pnl5);
+
+        lblSpace.setText("jLabel2");
+        lblSpace.setPreferredSize(new java.awt.Dimension(100, 20));
+        header.add(lblSpace);
 
         btnThemHoaDon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/image 15.png"))); // NOI18N
         btnThemHoaDon.addActionListener(new java.awt.event.ActionListener() {
@@ -384,23 +590,9 @@ public class BanHangPage extends javax.swing.JPanel {
                 btnThemHoaDonActionPerformed(evt);
             }
         });
+        header.add(btnThemHoaDon);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnThemHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnThemHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        pnlLeft.add(jPanel1, java.awt.BorderLayout.NORTH);
+        pnlLeft.add(header, java.awt.BorderLayout.NORTH);
 
         pnlBody.add(pnlLeft, java.awt.BorderLayout.CENTER);
 
@@ -688,10 +880,6 @@ public class BanHangPage extends javax.swing.JPanel {
         add(pnlBody, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnThemHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemHoaDonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnThemHoaDonActionPerformed
-
     private void btnThemKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKhachHangActionPerformed
         // TODO add your handling code here:
         KhachHangPage khachHang = new KhachHangPage();
@@ -820,7 +1008,8 @@ public class BanHangPage extends javax.swing.JPanel {
     	}
     	drop();
     	JOptionPane.showMessageDialog(null, "Tạo hóa đơn thành công!");
-		PrintExample.printContent();
+    	//khangneae
+		//PrintExample.printContent();
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
 	private boolean kiemTraVaThemDonThuoc(HoaDon hd) {
@@ -1157,6 +1346,166 @@ public class BanHangPage extends javax.swing.JPanel {
     	
     	themDonThuocMauVaoChiTietHD(cbChonDonThuocMau.getSelectedIndex()-1);
     }//GEN-LAST:event_cbChonDonThuocMauActionPerformed
+
+    private void moveBHPage(BanHangPage bh,int num) {//Hàm copy header
+    	bh.pnl1.setVisible(pnl1.isVisible());
+    	bh.pnl2.setVisible(pnl2.isVisible());
+    	bh.pnl3.setVisible(pnl3.isVisible());
+    	bh.pnl4.setVisible(pnl4.isVisible());
+    	bh.pnl5.setVisible(pnl5.isVisible());
+    	
+    	bh.hdCount = hdCount;
+    	bh.lblSpace.setPreferredSize(lblSpace.getPreferredSize());
+    	bh.timMaSP1.requestFocus();
+    	if(num==1)
+    		bh.setBorderHD(bh.pnl1);
+    	else if(num==2)
+    		bh.setBorderHD(bh.pnl2);
+    	else if(num==3)
+    		bh.setBorderHD(bh.pnl3);
+    	else if(num==4)
+    		bh.setBorderHD(bh.pnl4);
+    	else if(num==5)
+    		bh.setBorderHD(bh.pnl5);
+    	
+    	PnlBanHang.current = num;
+    	AddContent.addContent(bh);
+    }
+    private void dropBorder() {
+    	pnl1.setBorder(null);
+    	pnl2.setBorder(null);
+    	pnl3.setBorder(null);
+    	pnl4.setBorder(null);
+    	pnl5.setBorder(null);
+    	
+    }
+    private void setBorderHD(JPanel pnl) {
+    	dropBorder();
+    	pnl.setBorder(BorderFactory.createLineBorder(Color.BLUE,2));
+    	
+    }
+    private void lbl1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl1MouseClicked
+        // TODO add your handling code here:111
+        if(pnl1.getBorder()==null)
+        moveBHPage(PnlBanHang.bh1,1);
+    }//GEN-LAST:event_lbl1MouseClicked
+    
+    private void removeHDPage(JPanel pnl, int num) {
+    	if(hdCount==1)return;
+    	if(num==1)
+    		PnlBanHang.bh1.drop();
+    	else if(num==2)
+    		PnlBanHang.bh2.drop();
+    	else if(num==3)
+    		PnlBanHang.bh3.drop();
+    	else if(num==4)
+    		PnlBanHang.bh4.drop();
+    	else if(num==5)
+    		PnlBanHang.bh5.drop();
+    	
+    	pnl.setVisible(false);
+    	lblSpace.setPreferredSize(new Dimension(lblSpace.getWidth()+155,lblSpace.getHeight()));
+    	hdCount--;
+    	if(pnl.getBorder()!=null) {
+    		if(pnl1.isVisible()) {
+    			setBorderHD(pnl1);
+    			moveBHPage(PnlBanHang.bh1, 1);
+    			return;
+    		}else if(pnl2.isVisible()) {
+    			setBorderHD(pnl2);
+    			moveBHPage(PnlBanHang.bh2, 2);
+    			return;
+    		}else if(pnl3.isVisible()) {
+    			setBorderHD(pnl3);
+    			moveBHPage(PnlBanHang.bh3, 3);
+    			return;
+    		}else if(pnl4.isVisible()) {
+    			setBorderHD(pnl4);
+    			moveBHPage(PnlBanHang.bh4, 4);
+    			return;
+    		}else if(pnl5.isVisible()) {
+    			setBorderHD(pnl5);
+    			moveBHPage(PnlBanHang.bh5, 5);
+    			return;
+    		}
+    	}
+    		
+    }
+    
+    private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
+        // TODO add your handling code here:
+        removeHDPage(pnl1,1);
+    }//GEN-LAST:event_btn1ActionPerformed
+
+    private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
+        // TODO add your handling code here:
+        removeHDPage(pnl2,2);
+    }//GEN-LAST:event_btn2ActionPerformed
+
+    private void lbl2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl2MouseClicked
+        // TODO add your handling code here:
+        if(pnl2.getBorder()==null)
+        moveBHPage(PnlBanHang.bh2,2);
+    }//GEN-LAST:event_lbl2MouseClicked
+
+    private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
+        // TODO add your handling code here:
+        removeHDPage(pnl3,3);
+    }//GEN-LAST:event_btn3ActionPerformed
+
+    private void lbl3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl3MouseClicked
+        // TODO add your handling code here:
+        if(pnl3.getBorder()==null)
+        moveBHPage(PnlBanHang.bh3,3);
+    }//GEN-LAST:event_lbl3MouseClicked
+
+    private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
+        // TODO add your handling code here:
+        removeHDPage(pnl4,4);
+    }//GEN-LAST:event_btn4ActionPerformed
+
+    private void lbl4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl4MouseClicked
+        // TODO add your handling code here:
+        if(pnl4.getBorder()==null)
+        moveBHPage(PnlBanHang.bh4,4);
+    }//GEN-LAST:event_lbl4MouseClicked
+
+    private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
+        // TODO add your handling code here:111
+        removeHDPage(pnl5,5);
+
+    }//GEN-LAST:event_btn5ActionPerformed
+
+    private void lbl5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbl5MouseClicked
+        // TODO add your handling code here:
+        if(pnl5.getBorder()==null)
+        moveBHPage(PnlBanHang.bh5,5);
+    }//GEN-LAST:event_lbl5MouseClicked
+    private boolean themHDPage(boolean temp, JPanel pnl) {
+    	if(!(pnl.isVisible()||temp)) {
+			pnl.setVisible(true);
+			temp = true;
+			lblSpace.setPreferredSize(new Dimension(lblSpace.getWidth()-155,lblSpace.getHeight()));
+			hdCount++;
+			return temp;
+		}
+    	return temp;
+    }
+    private void btnThemHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemHoaDonActionPerformed
+        // TODO add your handling code here:111
+        boolean temp = false;
+        temp = themHDPage(temp, pnl1);
+        if(temp)return;
+        temp =themHDPage(temp, pnl2);
+        if(temp)return;
+        temp =themHDPage(temp, pnl3);
+        if(temp)return;
+        temp =themHDPage(temp, pnl4);
+        if(temp)return;
+        temp =themHDPage(temp, pnl5);
+        
+
+    }//GEN-LAST:event_btnThemHoaDonActionPerformed
     
     private void themDonThuocMauVaoChiTietHD(int vt) {
     	List<DonThuocMau> dsDTM = donThuocMauDao.getDonThuocMau();
@@ -1468,7 +1817,7 @@ public class BanHangPage extends javax.swing.JPanel {
     
     
     
-    //private int hdCount = 1;
+    private int hdCount = 1;
     String headerString[] = "Tên sản phẩm;Đơn vị tính;Số lượng;Giá bán;Thành tiền; ".split(";");
     private DefaultTableModel tableModel = new DefaultTableModel(headerString,0);
     private List<HangHoa> dsHH = new ArrayList<>();
@@ -1487,24 +1836,32 @@ public class BanHangPage extends javax.swing.JPanel {
     private NhanVien nhanVien = LoginInfo.nhanVien;
     private Ca ca = LoginInfo.ca;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn1;
+    private javax.swing.JButton btn2;
+    private javax.swing.JButton btn3;
+    private javax.swing.JButton btn4;
+    private javax.swing.JButton btn5;
     private javax.swing.JButton btnLuuTam;
     private javax.swing.JButton btnThanhToan;
     private javax.swing.JButton btnThemHoaDon;
     private javax.swing.JButton btnThemKhachHang;
     private javax.swing.JComboBox<String> cbChonDonThuocMau;
     private javax.swing.JCheckBox ckBBanTheoDon;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel header;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbLapHD;
+    private javax.swing.JLabel lbl1;
+    private javax.swing.JLabel lbl2;
+    private javax.swing.JLabel lbl3;
+    private javax.swing.JLabel lbl4;
+    private javax.swing.JLabel lbl5;
     private javax.swing.JLabel lblDiemQuyDoi;
     private javax.swing.JLabel lblDiemThuong;
     private javax.swing.JLabel lblGhiChu;
-    private javax.swing.JLabel lblHoaDon;
     private javax.swing.JLabel lblKhachHang;
     private javax.swing.JLabel lblPhimTat;
     private javax.swing.JLabel lblSDT;
+    private javax.swing.JLabel lblSpace;
     private javax.swing.JLabel lblTenKH;
     private javax.swing.JLabel lblThanhToan;
     private javax.swing.JLabel lblTienDua;
@@ -1513,6 +1870,11 @@ public class BanHangPage extends javax.swing.JPanel {
     private javax.swing.JLabel lblTienTra;
     private javax.swing.JLabel lblTongTien;
     private sampleUi.NhapMaDonThuoc nhapMaDonThuoc1;
+    private javax.swing.JPanel pnl1;
+    private javax.swing.JPanel pnl2;
+    private javax.swing.JPanel pnl3;
+    private javax.swing.JPanel pnl4;
+    private javax.swing.JPanel pnl5;
     private javax.swing.JPanel pnlBody;
     private javax.swing.JPanel pnlHeader;
     private javax.swing.JPanel pnlKhachHang;

@@ -168,7 +168,7 @@ public class PhieuTraHangDao {
 					+ "Group by\r\n"
 					+ "	h.MaKhachHang\r\n"
 					+ "order by\r\n"
-					+ "	SoLuong desc,ThanhTien Desc";
+					+ "	ThanhTien desc,SoLuong Desc";
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, from.toString());
 			stmt.setString(2, to.toString());
@@ -208,7 +208,7 @@ public class PhieuTraHangDao {
 					+ "Group by\r\n"
 					+ "	hd.MaNhanVien\r\n"
 					+ "order by\r\n"
-					+ "	SoLuong desc,ThanhTien Desc";
+					+ "	ThanhTien desc,SoLuong Desc";
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, from.toString());
 			stmt.setString(2, to.toString());

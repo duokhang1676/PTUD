@@ -28,6 +28,67 @@ public class HoaDonDao {
 	public HoaDonDao() {
 		// TODO Auto-generated constructor stub
 	}
+	public boolean updateHoaDon(HoaDon hd) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection(); 
+		PreparedStatement stmt = null;
+		String sql = "update HoaDon set tienkhachtra = ?, tienthua = ?, trangthai = ? where mahoadon = ?";
+		try {
+			stmt = con.prepareStatement(sql);
+			
+			stmt.setDouble(1, hd.getTienKhachTra());
+			stmt.setDouble(2, hd.tinhTienThua());
+			stmt.setString(3, hd.getTrangThaiHoaDon().toString());
+			stmt.setString(4, hd.getMaHoaDon());
+
+			stmt.executeUpdate();
+			stmt.close();
+			return true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
+	public List<HoaDon> getHoaDonFromTo(LocalDate from, LocalDate to, TrangThaiHoaDon tt) {
+		List<HoaDon> dsHoaDon = new ArrayList<>();
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		try {
+			String sql = "select * from HoaDon WHERE CAST(ThoiGianLapHoaDon AS DATE) BETWEEN ? AND ? AND TrangThai = ?";
+			PreparedStatement stmt=  null;
+			stmt = con.prepareStatement(sql);
+			stmt.setDate(1, Date.valueOf(from));
+			stmt.setDate(2, Date.valueOf(to));
+			stmt.setString(3, tt.toString());
+			ResultSet rs = stmt.executeQuery();
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+			while (rs.next()) {
+				String maHD = rs.getString("MaHoaDon");
+                Timestamp tgTaoTimestamp = rs.getTimestamp("thoigianlaphoadon");
+                // Chuyển đổi Timestamp sang LocalDateTime
+                LocalDateTime thoiGianTao = tgTaoTimestamp.toLocalDateTime();
+				KhachHang kh = new KhachHang_DAO().getKHbyMa(rs.getString("makhachhang"));
+				Ca ca = new Ca_DAO().getCaByMaCa(rs.getString("maca"));
+				NhanVien nv = new NhanVien_DAO().getNVbyMa(rs.getString("manhanvien"));
+				double tienKhachTra = rs.getDouble("TienKhachTra");
+				int diemQuyDoi = rs.getInt("DiemQuyDoi");
+				double tongTien = rs.getDouble("TongTien");
+				double tienThua = rs.getDouble("TienThua");
+				String ghiChu = rs.getString("GhiChu");
+				String trangThaiStr = rs.getString("TrangThai");
+				TrangThaiHoaDon trangThai = TrangThaiHoaDon.valueOf(trangThaiStr);
+				HoaDon hd = new HoaDon(maHD, thoiGianTao, nv, kh, tienKhachTra, diemQuyDoi, ghiChu, ca, trangThai, tongTien);
+				
+				dsHoaDon.add(hd);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsHoaDon;
+	} 
 	public List<HoaDon> getHoaDonByCa(Ca ca) {
 		List<HoaDon> dsHoaDon = new ArrayList<>();
 		ConnectDB.getInstance();
@@ -204,7 +265,7 @@ public class HoaDonDao {
 					+ "Group by\r\n"
 					+ "	hd.MaKhachHang\r\n"
 					+ "order by\r\n"
-					+ "	SoLuong desc,ThanhTien Desc";
+					+ "	ThanhTien desc,SoLuong Desc";
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, from.toString());
 			stmt.setString(2, to.toString());
@@ -243,7 +304,7 @@ public class HoaDonDao {
 					+ "group by\r\n"
 					+ "	hd.MaNhanVien\r\n"
 					+ "order by\r\n"
-					+ "	SoLuong desc,ThanhTien Desc";
+					+ "	ThanhTien desc,SoLuong Desc";
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, from.toString());
 			stmt.setString(2, to.toString());

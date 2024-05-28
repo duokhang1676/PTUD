@@ -28,6 +28,31 @@ public class NhanVien_DAO {
     public NhanVien_DAO(){
         dsNhanVien = new ArrayList<NhanVien>();
     }
+    public boolean updateNhanVien (NhanVien nv){
+        Connection con = ConnectDB.getInstance().getConnection();
+        PreparedStatement stmt = null;
+        int n = 0;
+        try {
+            stmt = con.prepareStatement("update nhanvien set TenNhanVien = ?,NgaySinh = ?,GioiTinh = ?,SoDienThoai = ?,MatKhau = ?,NgayTao = ?,GhiChu =?,ChucVu=?,TrangThai=?");
+            
+            stmt.setString(1, nv.getTenNhanVien());
+            if(nv.getNgaySinh()==null)
+            	stmt.setDate(2,null);
+            else
+            	stmt.setDate(2,java.sql.Date.valueOf(nv.getNgaySinh()));
+            stmt.setBoolean(3, nv.isGioiTinh());
+            stmt.setString(4, nv.getSoDienThoai());
+            stmt.setString(5, nv.getMatKhau());
+            stmt.setDate(6, java.sql.Date.valueOf(nv.getNgayTao()));
+            stmt.setString(7, nv.getGhiChu());
+            stmt.setString(8, nv.getChucVu().toString());
+            stmt.setString(9,nv.getTrangThaiNhanVien().toString());
+            n = stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return n >0;
+    }
     public ArrayList<NhanVien> docTuBang(){
         try {
             Connection con = ConnectDB.getInstance().getConnection();

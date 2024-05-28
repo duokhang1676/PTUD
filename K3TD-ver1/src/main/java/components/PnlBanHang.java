@@ -12,7 +12,6 @@ public class PnlBanHang {
 	public static BanHangPage bh3 = new BanHangPage();
 	public static BanHangPage bh4 = new BanHangPage();
 	public static BanHangPage bh5 = new BanHangPage();
-	public static BanHangPage bh6 = new BanHangPage();
 	public static int current = 1;
 	public static TaoPhieuTraHangPage th = new TaoPhieuTraHangPage();
 }

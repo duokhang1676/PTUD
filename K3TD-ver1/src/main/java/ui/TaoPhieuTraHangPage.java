@@ -11,7 +11,11 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JList.DropLocation;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
@@ -34,7 +38,9 @@ import components.TableActionEvent;
 import dao.Ca_DAO;
 import dao.ChiTietHoaDonDao;
 import dao.ChiTietPhieuTraHangDao;
+import dao.HangHoaDao;
 import dao.HoaDonDao;
+import dao.LoHangDao;
 import dao.PhieuTraHangDao;
 import entities.Ca;
 import entities.ChiTietHoaDon;
@@ -48,6 +54,7 @@ import entities.PhieuTraHang;
 import entities.TrangThaiPhieuTraHang;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 /**
@@ -63,8 +70,24 @@ public class TaoPhieuTraHangPage extends javax.swing.JPanel {
         initComponents();
         config();
         updateTime();
+        phimTat();
     }
+    private void phimTat() {
+    	// Tạo một Action và gán chức năng khi nhấn phím 
+    	
+        Action action2 = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+          	  txtTimHD.requestFocus();
+          	  txtTimHD.setText("");
+            }
+        };
+     // Gắn hành động với phím tắt 
 
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0), "performF4Action");
+        this.getActionMap().put("performF4Action", action2);
+		
+	}
     private void config() {
 		// TODO Auto-generated method stub
 //		pnlHeader.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông tin phiếu trả hàng"));
@@ -75,8 +98,9 @@ public class TaoPhieuTraHangPage extends javax.swing.JPanel {
         table.setModel(model);
         FormatJtable.setFontJtable(table);
         table.setRowHeight(35);
-        FormatJtable.setCellEditableForTH(table);
+        FormatJtable.setCellEditable(table);
         setTable();
+
 	}
     public void updateTime() {
    	 // Tạo và khởi chạy một luồng để cập nhật thời gian liên tục
@@ -539,6 +563,16 @@ public class TaoPhieuTraHangPage extends javax.swing.JPanel {
 						LoHang loHang = new LoHang(model.getValueAt(i, 3).toString());
 						ChiTietPhieuTraHang chiTietPhieuTraHang = new ChiTietPhieuTraHang(phieuTraHang, soLuongTra, donGia, dvt, lyDoTra, loHang);
 						new ChiTietPhieuTraHangDao().addPhieuTraHang(chiTietPhieuTraHang);
+						
+						LoHang lo = new LoHangDao().getLoHangBySoLo(model.getValueAt(i, 3).toString());
+						int soLuongCapNhat = lo.getSoLuong();
+						soLuongCapNhat += soLuongTra*dvt.getQuyDoi();
+						
+						new LoHangDao().capNhatSoLuongLoTheoMa(soLuongCapNhat, lo);
+						int soLuongHH = dvt.getHangHoa().getSoLuongDinhMuc();
+						soLuongHH = soLuongHH + dvt.getQuyDoi()*soLuongTra;
+						dvt.getHangHoa().setSoLuongDinhMuc(soLuongHH);
+						new HangHoaDao().capNhatSoLuongHangHoa(dvt.getHangHoa());
 					}
 					JOptionPane.showMessageDialog(null, "Tạo thành công phiếu trả hàng");
 					drop();

@@ -65,7 +65,8 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
         ResizeContent.resizeContent(this);
         jPanel1.add(jscp_donThuocMau(),BorderLayout.CENTER);
         setTable();
-        
+        setCellEditable(jtable_DonThuocMau);
+        FormatJtable.setFontJtable(jtable_DonThuocMau);
     }
 
 
@@ -83,8 +84,6 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
 
         pnlCenter = new javax.swing.JPanel();
         pnlNorth = new javax.swing.JPanel();
-        cbo_TrangThai = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
         btn_Tim = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txt_tim = new javax.swing.JTextField();
@@ -118,13 +117,6 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
         pnlNorth.setBackground(new java.awt.Color(255, 255, 255));
         pnlNorth.setPreferredSize(new java.awt.Dimension(1450, 100));
 
-        cbo_TrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đang bán", "Tạm dừng" }));
-        cbo_TrangThai.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-        cbo_TrangThai.setPreferredSize(new java.awt.Dimension(163, 35));
-
-        jLabel5.setText("Trạng thái");
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-
         btn_Tim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-search-16.png"))); // NOI18N
         btn_Tim.setText("Tìm");
         btn_Tim.setPreferredSize(new java.awt.Dimension(72, 35));
@@ -134,10 +126,15 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
             }
         });
 
-        jLabel3.setText("Tìm kiếm theo từ khóa (F4)");
+        jLabel3.setText("Tìm kiếm theo mã");
         jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
         txt_tim.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        txt_tim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_timActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlNorthLayout = new javax.swing.GroupLayout(pnlNorth);
         pnlNorth.setLayout(pnlNorthLayout);
@@ -146,29 +143,22 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
             .addGroup(pnlNorthLayout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addGroup(pnlNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cbo_TrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addGroup(pnlNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlNorthLayout.createSequentialGroup()
-                        .addComponent(txt_tim, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_tim, javax.swing.GroupLayout.PREFERRED_SIZE, 644, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btn_Tim, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(683, Short.MAX_VALUE))
+                .addContainerGap(622, Short.MAX_VALUE))
         );
         pnlNorthLayout.setVerticalGroup(
             pnlNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNorthLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnlNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE)
+                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_tim, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addComponent(btn_Tim, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbo_TrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_Tim, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28))
         );
 
@@ -283,30 +273,28 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
                         .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txt_Ma, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txt_Ten, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlFormLayout.createSequentialGroup()
-                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(pnlFormLayout.createSequentialGroup()
-                                    .addComponent(btn_Luu, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(27, 27, 27)
-                                    .addComponent(btn_Dong, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(pnlFormLayout.createSequentialGroup()
-                                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(277, 277, 277)))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlFormLayout.createSequentialGroup()
-                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37)
-                                .addComponent(jLabel1))
-                            .addGroup(pnlFormLayout.createSequentialGroup()
-                                .addComponent(date_ngayApdung, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(cbo_trangThai, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(btn_Luu, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(41, 41, 41)
+                                .addComponent(btn_Dong, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(pnlFormLayout.createSequentialGroup()
+                                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(37, 37, 37)
+                                    .addComponent(jLabel1))
+                                .addGroup(pnlFormLayout.createSequentialGroup()
+                                    .addComponent(date_ngayApdung, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(29, 29, 29)
+                                    .addComponent(cbo_trangThai, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         pnlFormLayout.setVerticalGroup(
@@ -339,13 +327,13 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(186, 186, 186)
+                        .addGap(52, 52, 52)
                         .addGroup(pnlFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btn_Dong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btn_Luu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(51, 51, 51)
+                .addGap(78, 78, 78)
                 .addComponent(pnlFooter, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         pnlHeader.add(pnlForm);
@@ -374,7 +362,7 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
 
     private void btn_DongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_DongActionPerformed
         // TODO add your handling code here:
-        pnl_left.setVisible(false);
+    	AddContent.addContent(new DonThuocMauPage());
 
     }//GEN-LAST:event_btn_DongActionPerformed
 
@@ -383,12 +371,18 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
     	luu();
     }//GEN-LAST:event_btn_LuuActionPerformed
 
+    private void txt_timActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_timActionPerformed
+        // TODO add your handling code here:
+    	loadData();
+    	txt_tim.setText("");
+    	txt_tim.requestFocus();
+    }//GEN-LAST:event_txt_timActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Dong;
     private javax.swing.JButton btn_Luu;
     private javax.swing.JButton btn_Tim;
-    private javax.swing.JComboBox<String> cbo_TrangThai;
     protected static javax.swing.JComboBox<String> cbo_trangThai;
     protected static com.github.lgooddatepicker.components.DatePicker date_ngayApdung;
     private javax.swing.JLabel jLabel1;
@@ -398,7 +392,6 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -413,7 +406,7 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
     protected static javax.swing.JTextArea txt_ghiChu;
     private javax.swing.JTextField txt_tim;
     // End of variables declaration//GEN-END:variables
-	private JComboBox cb_dvt;
+	//private JComboBox cb_dvt;
 	private DonViTinhDao dvt_DAO;
     
    
@@ -450,9 +443,10 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
         
         return pnl_Scroll;
     }
-    public void setCellEditable() {
-		for (int i = 0; i < jtable_DonThuocMau.getColumnCount(); i++) {
-			jtable_DonThuocMau.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(new JTextField()) {
+    public static void setCellEditable(JTable tb) {
+		for (int i = 0; i < tb.getColumnCount(); i++) {
+			if(i!=4&&i!=5&&i!=6) {
+				tb.getColumnModel().getColumn(i).setCellEditor(new DefaultCellEditor(new JTextField()) {
 					@Override
 					public boolean isCellEditable(EventObject e) {
 						// Trả về false để ngăn chặn chỉnh sửa trực tiếp
@@ -460,6 +454,8 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
 					}
 				});
 			}
+			
+		}
 	}
     
     
@@ -476,8 +472,8 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
 			GiaTriKhacNhau.add(donViTinh.getTenDonViTinh());
 		}
     	DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>(GiaTriKhacNhau.toArray(new String [0]));
-    	cb_dvt = new JComboBox<>(model);
-        jtable_DonThuocMau.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(cb_dvt));
+    	//cb_dvt = new JComboBox<>(model);
+       // jtable_DonThuocMau.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(cb_dvt));
     	if (hanghoa != null ) {
         	n++;
         	table_model2.addRow(new Object [] {
@@ -510,8 +506,8 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
     	
 //    	String ma =	dtm_DAO.getmaDonThuocMauGanDayNhat();
 //    	System.out.println(ma);
-    	 	
-    	if (dtm_DAO.CreateDonThuocMau(dtm4)) {
+    	 DonThuocMau dtm = dtm_DAO.CreateDonThuocMau(dtm4);
+    	if (dtm!=null) {
         	DonThuocMau dtmGanDay = dtm_DAO.getDonThuocMauGanDayNhat();
 //        	System.out.println(dtmGanDay);     	
         	int r = jtable_DonThuocMau.getRowCount();
@@ -530,7 +526,7 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
         		String lieuDung = jtable_DonThuocMau.getValueAt(i, 5) == null ? "Chưa xác định" : jtable_DonThuocMau.getValueAt(i, 5).toString()  ;
 //        		System.out.println(lieuDung);
 //        		System.out.println(new ChiTietDonThuocMau(dtmGanDay, lieuDung, soLuong, dvt));
-        		listChiTietDonThuocMau.add(new ChiTietDonThuocMau(dtmGanDay, lieuDung, soLuong, dvt));
+        		listChiTietDonThuocMau.add(new ChiTietDonThuocMau(dtm, lieuDung, soLuong, dvt));
         	}
         	for (ChiTietDonThuocMau chiTietDonThuocMau : listChiTietDonThuocMau) {
     			dtm_DAO.createChiTietDonThuocMau(chiTietDonThuocMau);
@@ -547,11 +543,7 @@ public class TaoDonThuocMauPage extends javax.swing.JPanel implements MouseListe
     
     
     
-  public static void main(String[] args) {
-	  JFrame rs = new JFrame();
-	  rs.add(new TaoDonThuocMauPage());
-	  rs.setVisible(true);
-}
+ 
 
 
 @Override
@@ -623,7 +615,6 @@ private void refresh() {
 	txt_ghiChu.setText("");
 	txt_Ten.setText("");
 	date_ngayApdung.setDate(LocalDate.now());
-	cbo_trangThai.setSelectedItem("Đang bán");
 	table_model2.setRowCount(0);
 	table_model2.fireTableDataChanged();
 //	AddContent.addContent(new TaoDonThuocMauPage());

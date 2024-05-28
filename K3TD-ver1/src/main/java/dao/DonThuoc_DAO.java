@@ -36,7 +36,28 @@ public class DonThuoc_DAO {
 		}
 		return false;
 	}
-	
+	public DonThuoc layDonThuocTheoMaHD(String maHD) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		try {
+			String sql = "select * from DonThuoc where mahoadon = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, maHD);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				String maDonThuoc = rs.getString(1);
+				String maHoaDon = rs.getString(2);
+				//HoaDon hd = new HoaDonDao().getHDbyMa(maHoaDon);
+				DonThuoc donThuoc = new DonThuoc(maDonThuoc, null);
+				return donThuoc;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return null;
+	}
 	public DonThuoc layDonThuocTheoMa(String maDT) {
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();

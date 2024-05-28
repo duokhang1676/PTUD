@@ -23,10 +23,12 @@ import javax.swing.table.TableColumnModel;
 import components.ColorSample;
 import components.FormatJtable;
 import components.Formater;
+import components.LoginInfo;
 import dao.HangHoaDao;
 import dao.HoaDonDao;
 import dao.LoHangDao;
 import dao.PhieuTraHangDao;
+import entities.ChucVuNhanVien;
 import entities.HangHoa;
 import entities.LoHang;
 import entities.PhieuTraHang;
@@ -47,7 +49,12 @@ public class TrangChu extends javax.swing.JPanel {
     	hangHoaDao = new HangHoaDao();
         initComponents();
         loadData();
-        
+        if(LoginInfo.nhanVien.getChucVu()==ChucVuNhanVien.NHAN_VIEN) {
+        	jL_doanhSo.setText("Doanh số của nhân viên");
+        	jLabel2.setText("Số hóa đơn của nhân viên");
+        	jLabel3.setText("Báo cáo ca hiện tại");
+        }
+        	
     }
 
     /**
@@ -482,7 +489,7 @@ public class TrangChu extends javax.swing.JPanel {
         LocalDate firstDayOfLastMonth = today.minusMonths(1).with(TemporalAdjusters.firstDayOfMonth());
         // Lấy ngày kết thúc của tháng trước
         LocalDate lastDayOfLastMonth = today.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
- 
+ /////////
     	jL_doanhThuThangTruoc.setText("  "+Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoang(firstDayOfLastMonth, lastDayOfLastMonth)-
     			phieuTraHangDao.getTongTienHoaDonTraTrongKhoang(firstDayOfLastMonth, lastDayOfLastMonth)));
     	jL_doanhThuThangNay.setText("  "+Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoang(firstDayOfMonth, today)-
@@ -492,7 +499,7 @@ public class TrangChu extends javax.swing.JPanel {
     	jL_doanhThuThuDuoc.setText("  "+Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoang(today, today)-
     			phieuTraHangDao.getTongTienHoaDonTraTrongKhoang(today, today)));
     	jL_soHoaDonNgay.setText("  "+hoaDonDao.getSoLuongHoaDonTrongKhoang(today, today)+"");
-    	
+    	//////////////////////
     	Font selected_font = new Font("Times new roman", Font.BOLD, 18);
         Font unSelected_font = new Font("Times new roman",0, 18);
         btn_hangSapHet.setFont(selected_font);

@@ -58,7 +58,7 @@ public class PdfWriterExample {
             Paragraph p12 = new Paragraph("Ngày:",fontContent);
             p12.add(Chunk.TABBING);
 
-            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime now = hd.getThoiGianLapHoaDon();
             
             // Định dạng thời gian
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");

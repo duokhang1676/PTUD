@@ -73,22 +73,24 @@ public class DonThuocMauDao {
         }
         return donthuocmau;
     }
-    public boolean CreateDonThuocMau(DonThuocMau dtm){
-        PreparedStatement stmt = null;
-        int n = 0;
+    public DonThuocMau CreateDonThuocMau(DonThuocMau dtm){
+        PreparedStatement stmt = null;      
         Connection con = ConnectDB.getInstance().getConnection();
         try {
             String sql = "INSERT INTO DonThuocMau(TenDonThuocMau,NgayBatDauApDung,GhiChu,TrangThai) VALUES (?,?,?,?)";
-            stmt =con.prepareStatement(sql);
+            stmt = con.prepareStatement(sql);
             stmt.setString(1, dtm.getTenDonThuocMau());
             stmt.setDate(2, Date.valueOf(dtm.getNgayBatDauApDung()));
             stmt.setString(3, dtm.getGhiChu());
             stmt.setString(4, dtm.getTrangThaiDonThuocMau().toString());
-             n = stmt.executeUpdate();
+            ResultSet rs = stmt.executeQuery();
+    		while (rs.next()) {
+    			dtm.setMaDonThuocMau(rs.getString("madonthuocmau"));
+    		}
         } catch (Exception e) {
             e.printStackTrace();
         }
-            return n > 0;
+            return dtm;
     }
     public List<ChiTietDonThuocMau> getChiTietDonThuocMau(String maDonThuocMau){
     	List<ChiTietDonThuocMau> dsChiTietDonThuocMau = new ArrayList<>();

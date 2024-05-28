@@ -65,7 +65,7 @@ public class ChiTietHoaDonDao {
 					+ "Group by\r\n"
 					+ "	ct.MaDonViTinh\r\n"
 					+ "order by\r\n"
-					+ "	SoLuong DESC,ThanhTien DESC";
+					+ "	ThanhTien DESC,SoLuong DESC";
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, from.toString());
 			stmt.setString(2, to.toString());

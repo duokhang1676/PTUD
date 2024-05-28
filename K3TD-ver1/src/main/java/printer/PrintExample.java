@@ -43,7 +43,7 @@ public class PrintExample {
 	                @Override
 	                public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
 	                    Graphics2D g2d = (Graphics2D) graphics;
-	                    g2d.translate(185, 0); // Dịch chuyển nội dung sang phải 100px
+	                    g2d.translate(190, 0); // Dịch chuyển nội dung sang phải 100px
 	                    return printable.print(g2d, pageFormat, pageIndex);
 	                }
 	            };

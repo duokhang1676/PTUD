@@ -6,21 +6,41 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.EventObject;
 import java.util.List;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
-
+import components.AddContent;
+import components.Formater;
+import components.ResizeContent;
 import dao.HoaDonDao;
+import entities.HoaDon;
 import entities.TrangThaiHoaDon;
+
 
 /**
  *
@@ -30,35 +50,157 @@ public class HoaDonPage extends javax.swing.JPanel {
 
     private DefaultTableModel model_hoaDon;
 	private JTable tbl_hoaDon;
-	private HoaDonDao hoaDon_dao;
+	
+
 	/**
      * Creates new form NewJPanel
      */
     public HoaDonPage() {
         initComponents();
+        ResizeContent.resizeContent(this);
         addTableHoaDon();
-        loadDataTableHD();
+        dpTuNgay.setDate(LocalDate.now());
+		dbDenNgay.setDate(LocalDate.now());
+        getFromTo();
+        if(dsHD==null)
+        	txtTongSoHoaDon.setText("0");
+        else 
+        	txtTongSoHoaDon.setText(dsHD.size()+"");
+        phimTat();
+        showCTHD();
     }
 
-    private void loadDataTableHD() {
+    
+    private void showCTHD() {
 		// TODO Auto-generated method stub
-    	int stt = 1;
-    	int count = 0;
-		hoaDon_dao = new HoaDonDao();
-		List<entities.HoaDon> dsHoaDon = hoaDon_dao.getAllHoaDon();
-		model_hoaDon.setNumRows(0);
-		for (entities.HoaDon hd : dsHoaDon) {
-			model_hoaDon.addRow(new Object[] {stt, hd.getMaHoaDon(), hd.getKhachHang().getTenKhachHang(), hd.getNhanVien().getTenNhanVien(),
-					hd.getThoiGianLapHoaDon(), 1000, hd.getTrangThaiHoaDon().equals(TrangThaiHoaDon.HOAN_THANH)?"Hoàn thành":"Đã hủy", hd.getGhiChu()});
-			
-			stt++;
-		}
-		txtTongSoHoaDon.setText("("+String.valueOf(count)+")");
+    	tbl_hoaDon.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		// TODO Auto-generated method stub
+        		if(e.getClickCount()>=2) {
+        			int row = tbl_hoaDon.getSelectedRow();
+        			entities.HoaDon hd = dsHD.get(row);
+        			hoaDon = hd;
+        			ChiTietHoaDonPage cthd = new ChiTietHoaDonPage();
+        			cthd.khachHang = dsHD.get(row).getKhachHang();
+        			cthd.nhanVien = dsHD.get(row).getNhanVien();
+        			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
+        			cthd.lblThoiGian.setText("Thời gian tạo: "+cthd.hoaDon.getThoiGianLapHoaDon().format(formatter));
+        			cthd.txtMaHD.setText(hd.getMaHoaDon());
+        			TrangThaiHoaDon tt = hd.getTrangThaiHoaDon();
+        			if(tt == TrangThaiHoaDon.HOAN_THANH)
+        				cthd.txtTrangThai.setText("Hoàn thành");
+        			else if(tt == TrangThaiHoaDon.THEM_TAM)
+        				cthd.txtTrangThai.setText("Thêm tạm");
+        			else
+        				cthd.txtTrangThai.setText("Đã hủy");
+        			
+        			if(hd.getNhanVien()!=null)
+        				cthd.txtNV.setText(hd.getNhanVien().getTenNhanVien()+" - "+hd.getNhanVien().getMaNhanVien());
+        			if(hd.getKhachHang()!=null) {
+        				cthd.txtTenKH.setText(hd.getKhachHang().getTenKhachHang()+" - "+hd.getKhachHang().getMaKhachHang());
+        				cthd.txtSDTKH.setText(hd.getKhachHang().getSoDienThoai());
+        			}else 
+        				cthd.txtTenKH.setText("Vãng lai");
+        			cthd.txtTongTien.setText(Formater.decimalFormat(hd.getTongTien()));
+        			cthd.txtDiemQuyDoi.setText(Formater.decimalFormat(hd.getDiemQuyDoi()));
+        			cthd.txtTienGiam.setText(Formater.decimalFormat(hd.getDiemQuyDoi()));
+        			cthd.txtTienTra.setText(Formater.decimalFormat(hd.tinhThanhTien()));
+        			cthd.txtTienDua.setText(Formater.decimalFormat(hd.getTienKhachTra()));
+        			cthd.txtTienThua.setText(Formater.decimalFormat(hd.tinhTienThua()));
+        			cthd.txtGhiChu.setText(hd.getGhiChu());
+        			if(tt == TrangThaiHoaDon.HOAN_THANH) {
+        				
+        				cthd.txtTienDua.setEditable(false);
+        				cthd.txtGhiChu.setEditable(false);
+        			}else if(tt==TrangThaiHoaDon.THEM_TAM) {
+        				cthd.btnThanhToan.setText("Thanh toán và in hóa đơn");
+        			}else {
+        				cthd.btnThanhToan.setVisible(false);
+        				cthd.btnHuyHD.setVisible(false);
+        			}
+        			cthd.loadCTHD();
+        			
+        			
+        			
+        			AddContent.addContent(cthd);
+        		}
+        	}
+		});
 	}
+
+
+	private void addToTable() {
+    	model_hoaDon.setRowCount(0);
+    	int stt = 1;
+    	 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
+		for (entities.HoaDon hd : dsHD) {
+			String time = hd.getThoiGianLapHoaDon().format(formatter);
+			model_hoaDon.addRow(new Object[] {stt++,hd.getMaHoaDon(),hd.getKhachHang()==null?"Vãng lai":hd.getKhachHang().getTenKhachHang(),hd.getNhanVien()==null?"":hd.getNhanVien().getTenNhanVien(),time,Formater.decimalFormat(hd.tinhThanhTien()),hd.getTrangThaiHoaDon(),hd.getGhiChu()});
+		}
+		txtTongSoHoaDon.setText(dsHD.size()+"");
+    }
+    private void phimTat() {
+    	// Tạo một Action và gán chức năng khi nhấn phím 
+    
+        Action action = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	timTheoTuKhoa1.requestFocus();
+            	timTheoTuKhoa1.selectAll();
+            }
+        };
+        
+     // Gắn hành động với phím tắt 
+        this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F4, 0), "performF4Action");
+        this.getActionMap().put("performF4Action", action);
+    }
+    private void getHDbyMa() {
+		HoaDon hd = new HoaDonDao().getHDbyMa(timTheoTuKhoa1.getText());
+			if(hd!=null) {
+				if(dsHD!=null)dsHD.clear();
+				dsHD.add(hd);
+				addToTable();
+				timTheoTuKhoa1.requestFocus();
+				timTheoTuKhoa1.selectAll();
+			}else {
+				JOptionPane.showMessageDialog(null, "Không tìm thấy hóa đơn");
+				timTheoTuKhoa1.requestFocus();
+				timTheoTuKhoa1.selectAll();
+			}
+				
+		
+    }
+    private void getFromTo() {
+    	if(dsHD!=null)dsHD.clear();
+    	int ttInt = cbTrangThai.getSelectedIndex();
+		TrangThaiHoaDon tt = TrangThaiHoaDon.HOAN_THANH;
+		if(ttInt == 1)tt = TrangThaiHoaDon.THEM_TAM;
+		else if(ttInt == 2)tt = TrangThaiHoaDon.DA_HUY;
+		
+		dsHD = new HoaDonDao().getHoaDonFromTo(dpTuNgay.getDate()==null?LocalDate.of(2024, 1, 1):dpTuNgay.getDate(),dbDenNgay.getDate()==null?LocalDate.now():dbDenNgay.getDate(), tt);
+		if(dsHD!=null) {
+			addToTable();
+		}
+    }
+	private void getAll() {
+		// TODO Auto-generated method stub
+		if(dsHD!=null)dsHD.clear();
+		int ttInt = cbTrangThai.getSelectedIndex();
+		TrangThaiHoaDon tt = TrangThaiHoaDon.HOAN_THANH;
+		if(ttInt == 1)tt = TrangThaiHoaDon.THEM_TAM;
+		else if(ttInt == 2)tt = TrangThaiHoaDon.DA_HUY;
+		dsHD = new HoaDonDao().getHoaDonFromTo(LocalDate.of(2024, 1, 1), LocalDate.now(), tt);
+		if(dsHD!=null) {
+			addToTable();
+		}
+	}
+
+
 
 	private void addTableHoaDon() {
 		// TODO Auto-generated method stub
-		String[] colNames = {"STT","Mã hóa đơn", "Khách hàng", "Nhân viên bán hàng",  "Thời gian bán hàng","Tổng tiền", "Trạng thái", "Ghi chú"};
+String[] colNames = {"STT","Mã hóa đơn", "Khách hàng", "Nhân viên bán hàng",  "Thời gian bán hàng","Tổng tiền", "Trạng thái", "Ghi chú"};
         
         model_hoaDon = new DefaultTableModel(colNames, 0);
         tbl_hoaDon = new JTable(model_hoaDon);
@@ -114,29 +256,19 @@ public class HoaDonPage extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         lblDenNgay = new javax.swing.JLabel();
         dbDenNgay = new com.github.lgooddatepicker.components.DatePicker();
-        jPanel5 = new javax.swing.JPanel();
-        lblTimTheoHangHoa = new javax.swing.JLabel();
-        timTheoHangHoa1 = new sampleUi.TimTheoHangHoa();
         jPanel6 = new javax.swing.JPanel();
         lblTuKhoa = new javax.swing.JLabel();
         timTheoTuKhoa1 = new sampleUi.TimTheoTuKhoa();
         jPanel7 = new javax.swing.JPanel();
         lblTrangThai = new javax.swing.JLabel();
         cbTrangThai = new javax.swing.JComboBox<>();
-        jPanel8 = new javax.swing.JPanel();
-        lblComboBoxHoaDon = new javax.swing.JLabel();
-        cbHoaDon = new javax.swing.JComboBox<>();
         jPanel9 = new javax.swing.JPanel();
         btnTimKiem = new javax.swing.JButton();
         pnlCenter = new javax.swing.JPanel();
         pnlContain = new javax.swing.JPanel();
-        pnlPage = new javax.swing.JPanel();
-        pagination1 = new sampleUi.paginationStyle.Pagination();
         pnlContainHeader = new javax.swing.JPanel();
         lblTongHoaDon = new javax.swing.JLabel();
         txtTongSoHoaDon = new javax.swing.JTextField();
-        lblChonSoHDHienThi = new javax.swing.JLabel();
-        cbChonHoaDonHienThi = new javax.swing.JComboBox<>();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -152,6 +284,11 @@ public class HoaDonPage extends javax.swing.JPanel {
         cbLocTheoThoiGian.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hôm nay", "Hôm qua", "7 ngày trước", "Tháng này", "Tháng trước", "Năm này", "Năm trước", "Tất cả" }));
         cbLocTheoThoiGian.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
         cbLocTheoThoiGian.setPreferredSize(new java.awt.Dimension(115, 25));
+        cbLocTheoThoiGian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbLocTheoThoiGianActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -234,50 +371,30 @@ public class HoaDonPage extends javax.swing.JPanel {
 
         pnlHeader.add(jPanel4);
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel5.setPreferredSize(new java.awt.Dimension(210, 100));
-
-        lblTimTheoHangHoa.setText("Tìm kiếm theo hàng hoá");
-        lblTimTheoHangHoa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-
-        timTheoHangHoa1.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(timTheoHangHoa1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(lblTimTheoHangHoa)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
-                .addComponent(lblTimTheoHangHoa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(timTheoHangHoa1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
-        );
-
-        pnlHeader.add(jPanel5);
-
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel6.setPreferredSize(new java.awt.Dimension(255, 100));
+        jPanel6.setPreferredSize(new java.awt.Dimension(400, 100));
 
         lblTuKhoa.setText("Từ khoá tìm kiếm");
         lblTuKhoa.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
 
         timTheoTuKhoa1.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
+        timTheoTuKhoa1.setPreferredSize(new java.awt.Dimension(350, 23));
+        timTheoTuKhoa1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                timTheoTuKhoa1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(timTheoTuKhoa1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTuKhoa))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(lblTuKhoa)
+                    .addComponent(timTheoTuKhoa1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -327,48 +444,16 @@ public class HoaDonPage extends javax.swing.JPanel {
 
         pnlHeader.add(jPanel7);
 
-        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel8.setPreferredSize(new java.awt.Dimension(149, 100));
-
-        lblComboBoxHoaDon.setText("Hoá đơn");
-        lblComboBoxHoaDon.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
-
-        cbHoaDon.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "Theo đơn", "Không theo đơn", " " }));
-        cbHoaDon.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        cbHoaDon.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbHoaDonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblComboBoxHoaDon)
-                    .addComponent(cbHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(lblComboBoxHoaDon)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
-        );
-
-        pnlHeader.add(jPanel8);
-
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
 
         btnTimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/icons8-find-24.png"))); // NOI18N
         btnTimKiem.setText("Tìm kiếm");
         btnTimKiem.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
@@ -398,28 +483,6 @@ public class HoaDonPage extends javax.swing.JPanel {
         pnlContain.setPreferredSize(new java.awt.Dimension(1920, 651));
         pnlContain.setLayout(new java.awt.BorderLayout());
 
-        pnlPage.setBackground(new java.awt.Color(193, 219, 208));
-        pnlPage.setPreferredSize(new java.awt.Dimension(1920, 60));
-
-        javax.swing.GroupLayout pnlPageLayout = new javax.swing.GroupLayout(pnlPage);
-        pnlPage.setLayout(pnlPageLayout);
-        pnlPageLayout.setHorizontalGroup(
-            pnlPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlPageLayout.createSequentialGroup()
-                .addContainerGap(1281, Short.MAX_VALUE)
-                .addComponent(pagination1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1282, Short.MAX_VALUE))
-        );
-        pnlPageLayout.setVerticalGroup(
-            pnlPageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlPageLayout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
-                .addComponent(pagination1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
-
-        pnlContain.add(pnlPage, java.awt.BorderLayout.SOUTH);
-
         pnlContainHeader.setBackground(new java.awt.Color(255, 255, 255));
         pnlContainHeader.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 15, 5));
 
@@ -432,19 +495,6 @@ public class HoaDonPage extends javax.swing.JPanel {
         txtTongSoHoaDon.setEnabled(false);
         txtTongSoHoaDon.setPreferredSize(new java.awt.Dimension(100, 23));
         pnlContainHeader.add(txtTongSoHoaDon);
-
-        lblChonSoHDHienThi.setText("Chọn số hoá đơn hiển thị:");
-        lblChonSoHDHienThi.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        pnlContainHeader.add(lblChonSoHDHienThi);
-
-        cbChonHoaDonHienThi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "5", "10", "20", "50", "100" }));
-        cbChonHoaDonHienThi.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        cbChonHoaDonHienThi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbChonHoaDonHienThiActionPerformed(evt);
-            }
-        });
-        pnlContainHeader.add(cbChonHoaDonHienThi);
 
         pnlContain.add(pnlContainHeader, java.awt.BorderLayout.PAGE_START);
 
@@ -478,19 +528,78 @@ public class HoaDonPage extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbTrangThaiActionPerformed
 
-    private void cbHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbHoaDonActionPerformed
+    private void timTheoTuKhoa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timTheoTuKhoa1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbHoaDonActionPerformed
+    	if(!timTheoTuKhoa1.getText().equalsIgnoreCase(""))
+    		getHDbyMa();
+    }//GEN-LAST:event_timTheoTuKhoa1ActionPerformed
 
-    private void cbChonHoaDonHienThiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbChonHoaDonHienThiActionPerformed
+    private void cbLocTheoThoiGianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbLocTheoThoiGianActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbChonHoaDonHienThiActionPerformed
+    	int i = cbLocTheoThoiGian.getSelectedIndex();
+    	LocalDate now = LocalDate.now();
+    	// Lấy ngày đầu tháng
+        LocalDate firstDayOfMonth = now.with(TemporalAdjusters.firstDayOfMonth());
+        // Lấy ngày bắt đầu của tháng trước
+        LocalDate firstDayOfLastMonth = now.minusMonths(1).with(TemporalAdjusters.firstDayOfMonth());
+        // Lấy ngày kết thúc của tháng trước
+        LocalDate lastDayOfLastMonth = now.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
+     // Lấy ngày bắt đầu của năm trước
+        LocalDate firstDayOfLastYear = now.minusYears(1).with(TemporalAdjusters.firstDayOfYear());
+        // Lấy ngày kết thúc của năm trước
+        LocalDate lastDayOfLastYear = now.minusYears(1).with(TemporalAdjusters.lastDayOfYear());
+     // Lấy ngày bắt đầu của năm nay
+        LocalDate firstDayOfYear = now.with(TemporalAdjusters.firstDayOfYear());
+        
+    	if(i==0) {
+    		dpTuNgay.setDate(now);
+    		dbDenNgay.setDate(now);
+    	}else if(i==1) {
+    		dpTuNgay.setDate(now.minusDays(1));
+    		dbDenNgay.setDate(now.minusDays(1));
+    	}else if(i==2) {
+    		dpTuNgay.setDate(now.minusDays(7));
+    		dbDenNgay.setDate(now);
+    	}else if(i==3) {
+    		dpTuNgay.setDate(firstDayOfMonth);
+    		dbDenNgay.setDate(now);
+    	}else if(i==4) {
+    		dpTuNgay.setDate(firstDayOfLastMonth);
+    		dbDenNgay.setDate(lastDayOfLastMonth);
+    	}else if(i==5) {
+    		dpTuNgay.setDate(firstDayOfYear);
+    		dbDenNgay.setDate(now);
+    	}else if(i==6) {
+    		dpTuNgay.setDate(firstDayOfLastYear);
+    		dbDenNgay.setDate(lastDayOfLastYear);
+    	}else {
+    		dpTuNgay.setText("");
+    		dbDenNgay.setText("");
+    	}
+    		
+    	
+    }//GEN-LAST:event_cbLocTheoThoiGianActionPerformed
 
-
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        // TODO add your handling code here:
+    	if(!timTheoTuKhoa1.getText().equalsIgnoreCase("")) {
+    		getHDbyMa();
+    	}else {
+    		try {
+				dpTuNgay.getDate();
+				dbDenNgay.getDate();
+				getFromTo();
+			} catch (Exception e) {
+				// TODO: handle exception
+				getAll();
+			}
+    	}
+    }//GEN-LAST:event_btnTimKiemActionPerformed
+    
+    public static HoaDon hoaDon;
+    private List<entities.HoaDon> dsHD = null;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTimKiem;
-    private javax.swing.JComboBox<String> cbChonHoaDonHienThi;
-    private javax.swing.JComboBox<String> cbHoaDon;
     private javax.swing.JComboBox<String> cbLocTheoThoiGian;
     private javax.swing.JComboBox<String> cbTrangThai;
     private com.github.lgooddatepicker.components.DatePicker dbDenNgay;
@@ -498,27 +607,19 @@ public class HoaDonPage extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JLabel lblChonSoHDHienThi;
-    private javax.swing.JLabel lblComboBoxHoaDon;
     private javax.swing.JLabel lblDenNgay;
     private javax.swing.JLabel lblLocTheoThoiGian;
-    private javax.swing.JLabel lblTimTheoHangHoa;
     private javax.swing.JLabel lblTongHoaDon;
     private javax.swing.JLabel lblTrangThai;
     private javax.swing.JLabel lblTuKhoa;
     private javax.swing.JLabel lblTuNgay;
-    private sampleUi.paginationStyle.Pagination pagination1;
     private javax.swing.JPanel pnlCenter;
     private javax.swing.JPanel pnlContain;
     private javax.swing.JPanel pnlContainHeader;
     private javax.swing.JPanel pnlHeader;
-    private javax.swing.JPanel pnlPage;
-    private sampleUi.TimTheoHangHoa timTheoHangHoa1;
     private sampleUi.TimTheoTuKhoa timTheoTuKhoa1;
     private javax.swing.JTextField txtTongSoHoaDon;
     // End of variables declaration//GEN-END:variables

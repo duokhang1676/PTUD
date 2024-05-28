@@ -417,13 +417,12 @@ public class DangNhap extends javax.swing.JFrame {
 				return false;
 			}
 				
-		}else {
+		}
 			jlbThongBao.setText("Tài khoản không tồn tại!");
 			txt_taiKhoan.requestFocus();
 			return false;
 		}
-		
-	}
+	
 
 	/**
      * @param args the command line arguments
