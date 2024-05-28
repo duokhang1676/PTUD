@@ -166,12 +166,12 @@ public class PhieuNhapHangDao {
 				dsPNH.add(pnh);
 				
 			}
-			
+			return dsPNH;
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return dsPNH;
+		return null;
 	}
 	public boolean updateTrangThaiPNH(String ma,TrangThaiPhieuNhapHang trangThaiMoi) {
 		ConnectDB.getInstance();
