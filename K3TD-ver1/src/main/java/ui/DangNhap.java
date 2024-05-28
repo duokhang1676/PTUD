@@ -341,6 +341,7 @@ public class DangNhap extends javax.swing.JFrame {
                     Ca ca = new Ca_DAO().taoCa(LoginInfo.nhanVien);
                     LoginInfo.ca = ca;
                 }
+            	
     		}
             this.setVisible(false);
             RootFrame rf =  new RootFrame();
