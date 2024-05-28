@@ -17,6 +17,7 @@ import javax.swing.text.DocumentFilter.FilterBypass;
 import components.AddContent;
 import components.LoginInfo;
 import components.ResizeContent;
+import dao.NhanVien_DAO;
 import entities.ChucVuNhanVien;
 import entities.NhanVien;
 
@@ -510,7 +511,7 @@ public class TaiKhoanPage extends javax.swing.JPanel {
 				// TODO: handle exception
 				nv.setNgaySinh(null);
 			}
-    		//update
+    		new NhanVien_DAO().updateNhanVien(nv);
     		
     		//
     		JOptionPane.showMessageDialog(null, "Cập nhật thông tin thành công!");

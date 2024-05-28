@@ -6,7 +6,12 @@ package dao;
 
 import db.ConnectDB;
 import java.util.ArrayList;
+
+import entities.HangHoa;
+import entities.LoaiHang;
 import entities.NhaCungCap;
+import entities.NhomHang;
+import entities.TrangThaiHangHoa;
 import entities.TrangThaiNCC;
 import java.sql.Connection;
 import java.sql.Date;
@@ -162,6 +167,7 @@ public class NhaCungCap_DAO {
 		}
     	return dsNhaCungCap4;
     }
+
      
     public NhaCungCap timNhaCCTheoTen(String tenNCC) {
     	ConnectDB.getInstance();
@@ -191,6 +197,35 @@ public class NhaCungCap_DAO {
 		}
         return null;
     }
+
+    
+    public NhaCungCap timNhaCCTheoMaNCC(String maNCC) {
+    	ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		try {
+			String sql = "select * from NhaCungCap where MaNhaCungCap = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, maNCC);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				String maNcc = rs.getString(1);
+				String tenNCC = rs.getString(2);
+				String sdt = rs.getString(3);
+				String diaChi = rs.getString(4);
+				String email = rs.getString(5);
+				String ghiChu = rs.getString(6);
+				TrangThaiNCC trangthai = rs.getString(7).equals("DANG_HOAT_DONG") ? TrangThaiNCC.DANG_HOAT_DONG : TrangThaiNCC.NGUNG_HOAT_DONG;
+				NhaCungCap nhaCC = new NhaCungCap(maNcc, tenNCC, sdt, diaChi, email, ghiChu, trangthai);
+				return nhaCC;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return null;
+	}
+
       public NhaCungCap getNCCByMa(String maNCC){
           try {
               Connection con = ConnectDB.getInstance().getConnection();

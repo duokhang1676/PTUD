@@ -25,7 +25,7 @@ public class PdfWriterExample {
 		try {
             // Tạo một đối tượng Document
             Document document = new Document();
-
+            
             document.setMargins(5, document.topMargin(), document.rightMargin(), document.bottomMargin());
 
             
@@ -58,8 +58,7 @@ public class PdfWriterExample {
             Paragraph p12 = new Paragraph("Ngày:",fontContent);
             p12.add(Chunk.TABBING);
 
-            //Cần chỉnh lại chỗ này
-            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime now = hd.getThoiGianLapHoaDon();
             
             // Định dạng thời gian
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm:ss");
@@ -89,6 +88,12 @@ public class PdfWriterExample {
                 p15.add(Formater.decimalFormat(kh.getDiemThuong())+" Điểm");
                 document.add(p15);
             }
+            else {
+            	Paragraph p14 = new Paragraph("KH:",fontContent);
+                p14.add(Chunk.TABBING);
+                p14.add("Vãng lai");
+                document.add(p14);
+			}
             
             
             
@@ -100,17 +105,19 @@ public class PdfWriterExample {
             p2.add("Giá bán");
             p2.add(Chunk.TABBING);
             p2.add(Chunk.TABBING);
+            p2.add(Chunk.TABBING);
             p2.add("T.Tiền");
             document.add(p2);
             
             Paragraph p21;
             Paragraph p22;
             for(int i=0;i<tb.getRowCount();i++) {
-            	p21 = new Paragraph(tb.getValueAt(i, 0)+"",fontContent);
+            	p21 = new Paragraph(tb.getValueAt(i, 0).toString()+" - "+tb.getValueAt(i, 1).toString(),fontContent);
                 document.add(p21);
                 p22 = new Paragraph("   "+tb.getValueAt(i, 2),fontContent);
                 p22.add(Chunk.TABBING);
-                p22.add(tb.getValueAt(i, 3)+"");
+                p22.add(Formater.decimalFormat(Double.parseDouble(tb.getValueAt(i, 3).toString().replaceAll(",", ""))));
+                p22.add(Chunk.TABBING);
                 p22.add(Chunk.TABBING);
                 p22.add(Chunk.TABBING);
                 p22.add(tb.getValueAt(i, 4)+"");

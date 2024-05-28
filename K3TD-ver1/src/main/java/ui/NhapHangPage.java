@@ -4,10 +4,6 @@
  */
 package ui;
 
-import components.AddContent;
-import components.FormatJtable;
-import components.PnlPhieuNhapPhieuXuat;
-import components.ResizeContent;
 import dao.ChiTietPhieuNhapHangDao;
 import dao.PhieuNhapHangDao;
 import entities.ChiTietPhieuNhapHang;
@@ -34,6 +30,8 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
 import components.AddContent;
+import components.FormatJtable;
+import components.PnlPhieuNhapPhieuXuat;
 import components.ResizeContent;
 
 /**
@@ -504,6 +502,7 @@ public class NhapHangPage extends javax.swing.JPanel {
 
 	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+		PnlPhieuNhapPhieuXuat.taoPhieuNhap = new TaoPhieuNhapHangPage();
         AddContent.addContent(PnlPhieuNhapPhieuXuat.taoPhieuNhap);
     }//GEN-LAST:event_jButton2ActionPerformed
 

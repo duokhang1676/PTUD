@@ -4,8 +4,16 @@
  */
 package ui;
 
+import java.util.regex.Pattern;
+
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+
 import components.AddContent;
+import components.HashPasswordSHA256;
+import components.LoginInfo;
 import components.ResizeContent;
+import dao.NhanVien_DAO;
 
 /**
  *
@@ -19,6 +27,7 @@ public class DoiMatKhauPage extends javax.swing.JPanel {
     public DoiMatKhauPage() {
         initComponents();
         //ResizeContent.resizeContent(this);
+        lblThongBao.setHorizontalAlignment(SwingConstants.CENTER);
     }
 
     /**
@@ -273,6 +282,24 @@ public class DoiMatKhauPage extends javax.swing.JPanel {
 
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
         // TODO add your handling code here:
+    	if(!HashPasswordSHA256.hashPassword(passCu.getText()).equals(LoginInfo.nhanVien.getMatKhau())) {
+    		lblThongBao.setText("Mật khẩu cũ không chính xác!");
+    		return;
+    	}if(!Pattern.compile("\\w{4,}").matcher(passMoi.getText()).find()) {
+    		lblThongBao.setText("Mật khẩu mới phải có độ dài từ 4 ký tự!");
+    		return;
+    	}
+    	if(!passMoi.getText().equals(passMoiAgain.getText())) {
+    		lblThongBao.setText("Nhập lại mật khẩu không đúng!");
+    		return;
+    	}
+    	lblThongBao.setText("");
+    	LoginInfo.nhanVien.setMatKhau(HashPasswordSHA256.hashPassword(passMoi.getText()));
+    	new NhanVien_DAO().updateNhanVien(LoginInfo.nhanVien);
+    	JOptionPane.showMessageDialog(null, "Đổi mật khẩu thành công!");
+    	passCu.setText("");
+    	passMoi.setText("");
+    	passMoiAgain.setText("");
     }//GEN-LAST:event_btnXacNhanActionPerformed
 
     private void btnTroVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTroVeActionPerformed

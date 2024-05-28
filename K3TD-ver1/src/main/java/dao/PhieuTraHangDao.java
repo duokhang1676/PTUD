@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -82,7 +83,8 @@ public class PhieuTraHangDao {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
                 
                 // Chuyển chuỗi thành đối tượng LocalDateTime
-                LocalDateTime thoiGianTao = LocalDateTime.parse(tgString, formatter);
+                Timestamp thoiGian = rs.getTimestamp("thoigiantao");
+                LocalDateTime thoiGianTao = thoiGian.toLocalDateTime();
 				HoaDon hd = new HoaDonDao().getHDbyMa(rs.getString("mahoadon"));
 				String ghiChu = rs.getString("ghichu");
 				Ca ca = new Ca_DAO().getCaByMaCa(rs.getString("maca"));
@@ -162,11 +164,11 @@ public class PhieuTraHangDao {
 					+ "Join \r\n"
 					+ "	 HoaDon h ON hd.MaHoaDon = h.MaHoaDon\r\n"
 					+ "WHERE \r\n"
-					+ "    hd.ThoiGianTao BETWEEN ? AND ? and hd.TrangThai = 'HOAN_THANH' \r\n"
+					+ "    CAST(hd.ThoiGianTao AS DATE) BETWEEN ? AND ? and hd.TrangThai = 'HOAN_THANH' \r\n"
 					+ "Group by\r\n"
 					+ "	h.MaKhachHang\r\n"
 					+ "order by\r\n"
-					+ "	SoLuong desc,ThanhTien Desc";
+					+ "	ThanhTien desc,SoLuong Desc";
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, from.toString());
 			stmt.setString(2, to.toString());
@@ -195,19 +197,18 @@ public class PhieuTraHangDao {
 		PreparedStatement stmt = null;
 		try {
 			String sql = "SELECT \r\n"
-					+ "	c.MaNhanVien,\r\n"
-					+ "	count(hd.MaHoaDon) as SoLuong,\r\n"
+					+ "	hd.MaNhanVien,\r\n"
+					+ "	count(hd.MaPhieuTraHang) as SoLuong,\r\n"
 					+ "	sum(hd.TongTien) as ThanhTien \r\n"
 					+ "FROM \r\n"
 					+ "    PhieuTraHang hd\r\n"
-					+ "Join \r\n"
-					+ "	 Ca c ON hd.MaCa = hd.MaCa\r\n"
+				
 					+ "WHERE \r\n"
-					+ "    hd.ThoiGianTao BETWEEN ? AND ? and hd.TrangThai = 'HOAN_THANH' \r\n"
+					+ "    CAST(hd.ThoiGianTao AS DATE) BETWEEN ? AND ? and hd.TrangThai = 'HOAN_THANH' \r\n"
 					+ "Group by\r\n"
-					+ "	c.MaNhanVien\r\n"
+					+ "	hd.MaNhanVien\r\n"
 					+ "order by\r\n"
-					+ "	SoLuong desc,ThanhTien Desc";
+					+ "	ThanhTien desc,SoLuong Desc";
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, from.toString());
 			stmt.setString(2, to.toString());

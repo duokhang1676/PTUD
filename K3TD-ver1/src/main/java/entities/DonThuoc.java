@@ -3,7 +3,7 @@ package entities;
 public class DonThuoc {
 	private String maDonThuoc;
 	private HoaDon hoaDon;
-	
+
 	public DonThuoc(String maDonThuoc, HoaDon hoaDon) {
 		super();
 		this.maDonThuoc = maDonThuoc;
@@ -28,11 +28,10 @@ public class DonThuoc {
 	public void setHoaDon(HoaDon hoaDon) {
 		this.hoaDon = hoaDon;
 	}
-	
+
+
 	@Override
 	public String toString() {
-		return "DonThuoc [maDonThuoc=" + maDonThuoc + ", hoaDon=" + hoaDon  + "]";
+		return "DonThuoc [maDonThuoc=" + maDonThuoc + ", hoaDon=" + hoaDon + "]";
 	}
-	
-	
 }

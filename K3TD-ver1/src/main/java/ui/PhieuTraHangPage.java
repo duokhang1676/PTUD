@@ -83,7 +83,7 @@ public class PhieuTraHangPage extends javax.swing.JPanel {
     		int stt = 1;
     		for (PhieuTraHang phieuTraHang : dsPhieuTraHang) {
     			model.addRow(new Object[] {stt++,phieuTraHang.getMaPhieu(),phieuTraHang.getHoaDon().getMaHoaDon(),
-    					phieuTraHang.getNhanVien().getMaNhanVien(),phieuTraHang.getHoaDon().getKhachHang().getTenKhachHang(),
+    					phieuTraHang.getNhanVien().getMaNhanVien(),phieuTraHang.getHoaDon().getKhachHang()==null?"":phieuTraHang.getHoaDon().getKhachHang().getTenKhachHang(),
     					Formater.dateTimeFormater(phieuTraHang.getThoiGianTao()),phieuTraHang.getTongTien(),phieuTraHang.getGhiChu(),phieuTraHang.getTrangThai()==TrangThaiPhieuTraHang.HOAN_THANH?"Hoàn thành":"Đã hủy"});
     		}
     		

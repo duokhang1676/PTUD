@@ -1,4 +1,13 @@
+/components/
+/icon/
 /ui/
 /dao/
+<<<<<<< HEAD
 /components/
 /META-INF/
+=======
+/db/
+/entities/
+/printer/
+/sampleUi/
+>>>>>>> a9dd8a877a627064338927d3f137f9609ee5fd02

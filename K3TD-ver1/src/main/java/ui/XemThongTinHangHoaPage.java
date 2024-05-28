@@ -4,8 +4,6 @@
  */
 package ui;
 
-import components.AddContent;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
+import components.AddContent;
 import components.ButtonColumnUtil;
 import components.ButtonRender;
 import components.FormatJtable;

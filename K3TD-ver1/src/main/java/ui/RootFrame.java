@@ -9,10 +9,12 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,8 +22,10 @@ import javax.swing.JTextField;
 
 import components.AddContent;
 import components.ColorSample;
+import components.LoginInfo;
 import components.PnlBanHang;
 import components.StatusMenu;
+import entities.ChucVuNhanVien;
 
 /**
  *
@@ -35,10 +39,22 @@ public class RootFrame extends javax.swing.JFrame {
     public RootFrame() {
     	setTitle("Phầm mềm quản lý quầy thuốc tây K3TD");
         initComponents();
+        Image img = new ImageIcon(getClass().getResource("/icon/logo.png")).getImage();
+        setIconImage(img);
         pnlContent.add(new TrangChu());
         AddContent.setContent(pnlContent);
         resizeFrameToScreenScale();
         setFontAll(new Font(lblUser.getName(), Font.PLAIN, 14));
+        lblUser.setText(LoginInfo.nhanVien.getTenNhanVien());
+        if(LoginInfo.nhanVien.getChucVu()==ChucVuNhanVien.NHAN_VIEN) {
+        	btnNhapHang.setVisible(false);
+        	btnXuatTra.setVisible(false);
+        	btnNhaCungCap.setVisible(false);
+        	btnCaLamViec.setVisible(false);
+        	btnThongKe.setVisible(false);
+        }else {
+        	btnKetCa.setVisible(false);
+        }
     }
  // Hàm này sẽ điều chỉnh kích thước frame sao cho phù hợp với tỷ lệ scale của màn hình
     private void resizeFrameToScreenScale() {
@@ -794,7 +810,10 @@ public class RootFrame extends javax.swing.JFrame {
         if(!StatusMenu.temp4){
             hideAllDropMenu();
             Drop4.setLocation(btnQLHangHoa.getLocation());
-            Drop4.setSize(200, 180);
+            if(temp)
+            	Drop4.setSize(200, 180);
+            else
+            	Drop4.setSize(200, 90);
             StatusMenu.temp4=!StatusMenu.temp4;
         }else{
            hideAllDropMenu();
@@ -806,7 +825,10 @@ public class RootFrame extends javax.swing.JFrame {
         if(!StatusMenu.temp5){
             hideAllDropMenu();
             Drop5.setLocation(btnDoiTac.getLocation());
-            Drop5.setSize(150, 90);
+            if(temp)
+            	Drop5.setSize(150, 90);
+            else
+            	Drop5.setSize(150, 45);
             StatusMenu.temp5=!StatusMenu.temp5;
         }else{
             hideAllDropMenu();
@@ -818,7 +840,10 @@ public class RootFrame extends javax.swing.JFrame {
         if(!StatusMenu.temp6){
             hideAllDropMenu();
             Drop6.setLocation(btnNhanSu.getLocation());
-            Drop6.setSize(150, 90);
+            if(temp)
+            	Drop6.setSize(150, 90);
+            else
+            	Drop6.setSize(150,45);
             StatusMenu.temp6=!StatusMenu.temp6;
         }else{
             hideAllDropMenu();
@@ -1084,7 +1109,7 @@ public class RootFrame extends javax.swing.JFrame {
             }
         });
     }
-
+    private boolean temp = LoginInfo.nhanVien.getChucVu()==ChucVuNhanVien.QUAN_LY;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Drop3;
     private javax.swing.JPanel Drop4;

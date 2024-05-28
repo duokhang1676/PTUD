@@ -4,10 +4,6 @@
  */
 package ui;
 
-import components.AddContent;
-import components.FormatJtable;
-import components.PnlPhieuNhapPhieuXuat;
-import components.ResizeContent;
 import dao.ChiTietPhieuXuatTraDao;
 import dao.PhieuNhapHangDao;
 import dao.PhieuXuatTraDao;
@@ -37,6 +33,8 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 
 import components.AddContent;
+import components.FormatJtable;
+import components.PnlPhieuNhapPhieuXuat;
 import components.ResizeContent;
 
 /**
@@ -498,6 +496,7 @@ public class XuatTraPage extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+    	PnlPhieuNhapPhieuXuat.taoPhieuXuat = new TaoPhieuXuatTraPage();
         AddContent.addContent(PnlPhieuNhapPhieuXuat.taoPhieuXuat);
     }//GEN-LAST:event_jButton2ActionPerformed
 

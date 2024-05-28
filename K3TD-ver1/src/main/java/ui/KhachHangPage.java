@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -513,6 +514,7 @@ public class KhachHangPage extends javax.swing.JPanel {
     private void btn_LuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LuuActionPerformed
         // TODO add your handling code here:
         luu();
+        kh_DAO.loadDataNV(model_KH);
     }//GEN-LAST:event_btn_LuuActionPerformed
 
     private void txtTenKhachhangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenKhachhangActionPerformed
@@ -604,32 +606,21 @@ public class KhachHangPage extends javax.swing.JPanel {
 	private entities.KhachHang kH;
     
     private void revert_KhachHang() {
-    	String ma = txt_maKhachHang.getText();
+//    	String ma = txt_maKhachHang.getText();
     	String ten = txtTenKhachhang.getText();
     	LocalDate ngaySinh = dateNgaySinh.getDate();
-    	boolean gioiTinh = btn_Group_GioiTinh.getSelection().toString().equals("Nam") ? true : false ;
+    	boolean gioiTinh = btn_Nam.isSelected() ==true ? true : false;
     	String soDienThoai = txtSoDienThoai.getText(); 
     	int diemThuong = txtDiemThuong.getText().trim().isEmpty() ? 0: Integer.parseInt(txtDiemThuong.getText());
     	LocalDate ngayTao = dateNgayTao.getDate();
     	String ghiChu = txt_GhiChu.getText();
     	TrangThaiKhachHang trangThai = cbo_TrangThai.getSelectedItem().toString().equals("Đang hoạt động") ? TrangThaiKhachHang.DANG_HOAT_DONG : TrangThaiKhachHang.NGUNG_HOAT_DONG; 
-    	kH = new entities.KhachHang(ma, ten, ngaySinh, gioiTinh, soDienThoai, diemThuong, ngayTao, ghiChu, trangThai);
+    	kH = new entities.KhachHang("KH", ten, ngaySinh, gioiTinh, soDienThoai, diemThuong, ngayTao, ghiChu, trangThai);
     }
     private void luu() {
     	revert_KhachHang();
-    	int n = 0;
-    	if (kh_DAO.create(kH)) {
-			model_KH.addRow(new Object [] {
-					n + "",
-					txt_maKhachHang.getText(),
-					txtTenKhachhang.getText(),
-					txtDiemThuong.getText().trim().isEmpty() ? 0: txtDiemThuong.getText(),
-					txtSoDienThoai.getText(),
-					txt_GhiChu.getText(),
-					cbo_TrangThai.getSelectedItem().toString(),
-					
-			});
-		}
+    	kh_DAO.create(kH);
+    	JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công");
     }
     private void timTheoTuKhoa_trangThai() {
     	KhachHang_DAO ds = new KhachHang_DAO();

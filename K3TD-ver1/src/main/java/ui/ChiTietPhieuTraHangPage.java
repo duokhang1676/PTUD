@@ -78,8 +78,8 @@ public class ChiTietPhieuTraHangPage extends javax.swing.JPanel {
         phieuTraHang = PhieuTraHangPage.phieuTraHang;
         txtMaHD.setText(phieuTraHang.getHoaDon().getMaHoaDon());
         txtNhanVien.setText(phieuTraHang.getNhanVien().getTenNhanVien());
-        txtTenKH.setText(phieuTraHang.getHoaDon().getKhachHang().getTenKhachHang());
-        txtSDT.setText(phieuTraHang.getHoaDon().getKhachHang().getSoDienThoai());
+        txtTenKH.setText(phieuTraHang.getHoaDon().getKhachHang()==null?"":phieuTraHang.getHoaDon().getKhachHang().getTenKhachHang());
+        txtSDT.setText(phieuTraHang.getHoaDon().getKhachHang()==null?"":phieuTraHang.getHoaDon().getKhachHang().getSoDienThoai());
         dpNgayLap.setDate(phieuTraHang.getThoiGianTao().toLocalDate());
         txtGioLap.setText(phieuTraHang.getThoiGianTao().getHour()+":"+phieuTraHang.getThoiGianTao().getMinute()+":"+phieuTraHang.getThoiGianTao().getSecond());
         txtTongTien.setText(Formater.decimalFormat(phieuTraHang.getTongTien()));

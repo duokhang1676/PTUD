@@ -52,9 +52,11 @@ public class ThongKeNhanVienPage extends javax.swing.JPanel {
     	cbLocTheoThoiGian.setSelectedIndex(3);
     	dpTuNgay.setDate(LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()));
 		dpDenNgay.setDate(LocalDate.now());
-    	String[] headerTB = "STT,Mã nhân viên,Tên nhân viên,Số lượng mua,Tổng tiền,Số lượng trả,Tổng tiền trả,Doanh thu".split(",");
+    	String[] headerTB = "STT,Mã nhân viên,Tên nhân viên,Hóa đơn bán,Tổng tiền,Hóa đơn trả,Tổng tiền trả,Doanh thu".split(",");
     	tableModel = new DefaultTableModel(headerTB,0);
     	table.setModel(tableModel);
+    	table.setRowHeight(35);
+    	table.getColumnModel().getColumn(0).setPreferredWidth(10);
     	FormatJtable.setCellEditable(table);
     	FormatJtable.setFontJtable(table);
     	pieChartPanel = new ChartPanel(null);
@@ -112,6 +114,11 @@ public class ThongKeNhanVienPage extends javax.swing.JPanel {
         JFreeChart barChart = createBarChart(barDataset);
         pieChartPanel.setChart(pieChart);
         barChartPanel.setChart(barChart);
+        double tongTien = 0;
+        for(int i=0;i<table.getRowCount();i++) {
+        	tongTien+=Double.parseDouble(table.getValueAt(i, 6).toString().replaceAll(",", ""));
+        }
+        txtTongDoanhThu.setText(Formater.decimalFormat(tongTien));
 	}
     private DefaultPieDataset createPieDataset() {
         DefaultPieDataset dataset = new DefaultPieDataset();
@@ -185,6 +192,8 @@ public class ThongKeNhanVienPage extends javax.swing.JPanel {
         lblDenNgay = new javax.swing.JLabel();
         dpDenNgay = new com.github.lgooddatepicker.components.DatePicker();
         btnTimKiem = new javax.swing.JButton();
+        txtTongDoanhThu = new javax.swing.JTextField();
+        lblDenNgay1 = new javax.swing.JLabel();
         pnlRight = new javax.swing.JPanel();
 
         setPreferredSize(new java.awt.Dimension(1920, 920));
@@ -250,6 +259,12 @@ public class ThongKeNhanVienPage extends javax.swing.JPanel {
             }
         });
 
+        txtTongDoanhThu.setText("0");
+        txtTongDoanhThu.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
+
+        lblDenNgay1.setText("Tổng doanh thu");
+        lblDenNgay1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+
         javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
         pnlHeader.setLayout(pnlHeaderLayout);
         pnlHeaderLayout.setHorizontalGroup(
@@ -269,12 +284,18 @@ public class ThongKeNhanVienPage extends javax.swing.JPanel {
                     .addComponent(lblTuNgay))
                 .addGap(18, 18, 18)
                 .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlHeaderLayout.createSequentialGroup()
                         .addComponent(dpDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnTimKiem)))
-                .addContainerGap(741, Short.MAX_VALUE))
+                        .addComponent(btnTimKiem))
+                    .addComponent(lblDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(142, 142, 142)
+                .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlHeaderLayout.createSequentialGroup()
+                        .addComponent(txtTongDoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(lblDenNgay1, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE))
+                .addContainerGap())
         );
         pnlHeaderLayout.setVerticalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -283,13 +304,15 @@ public class ThongKeNhanVienPage extends javax.swing.JPanel {
                 .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLocTheoThoiGian)
                     .addComponent(lblTuNgay)
-                    .addComponent(lblDenNgay))
+                    .addComponent(lblDenNgay)
+                    .addComponent(lblDenNgay1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbLocTheoThoiGian, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dpTuNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dpDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTimKiem))
+                    .addComponent(btnTimKiem)
+                    .addComponent(txtTongDoanhThu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -360,11 +383,13 @@ public class ThongKeNhanVienPage extends javax.swing.JPanel {
     private com.github.lgooddatepicker.components.DatePicker dpDenNgay;
     private com.github.lgooddatepicker.components.DatePicker dpTuNgay;
     private javax.swing.JLabel lblDenNgay;
+    private javax.swing.JLabel lblDenNgay1;
     private javax.swing.JLabel lblLocTheoThoiGian;
     private javax.swing.JLabel lblTuNgay;
     private javax.swing.JPanel pnlHeader;
     private javax.swing.JPanel pnlRight;
     private javax.swing.JScrollPane scrollPane;
     private javax.swing.JTable table;
+    private javax.swing.JTextField txtTongDoanhThu;
     // End of variables declaration//GEN-END:variables
 }
