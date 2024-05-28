@@ -31,6 +31,7 @@ import dao.PhieuTraHangDao;
 import entities.ChucVuNhanVien;
 import entities.HangHoa;
 import entities.LoHang;
+import entities.NhanVien;
 import entities.PhieuTraHang;
 
 /**
@@ -489,16 +490,34 @@ public class TrangChu extends javax.swing.JPanel {
         LocalDate firstDayOfLastMonth = today.minusMonths(1).with(TemporalAdjusters.firstDayOfMonth());
         // Lấy ngày kết thúc của tháng trước
         LocalDate lastDayOfLastMonth = today.minusMonths(1).with(TemporalAdjusters.lastDayOfMonth());
- /////////
-    	jL_doanhThuThangTruoc.setText("  "+Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoang(firstDayOfLastMonth, lastDayOfLastMonth)-
-    			phieuTraHangDao.getTongTienHoaDonTraTrongKhoang(firstDayOfLastMonth, lastDayOfLastMonth)));
-    	jL_doanhThuThangNay.setText("  "+Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoang(firstDayOfMonth, today)-
-    			phieuTraHangDao.getTongTienHoaDonTraTrongKhoang(firstDayOfMonth, today)));
-    	jL_hoaDonThangTruoc.setText("  "+hoaDonDao.getSoLuongHoaDonTrongKhoang(firstDayOfLastMonth, lastDayOfLastMonth)+"");
-    	jL_hoaDonThangNay.setText("  "+hoaDonDao.getSoLuongHoaDonTrongKhoang(firstDayOfMonth, today)+"");
-    	jL_doanhThuThuDuoc.setText("  "+Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoang(today, today)-
-    			phieuTraHangDao.getTongTienHoaDonTraTrongKhoang(today, today)));
-    	jL_soHoaDonNgay.setText("  "+hoaDonDao.getSoLuongHoaDonTrongKhoang(today, today)+"");
+        ///////////
+        NhanVien nv = LoginInfo.nhanVien;
+        if(nv.getChucVu()==ChucVuNhanVien.NHAN_VIEN) {
+        	jL_doanhThuThangTruoc.setText("  "+Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoangForNV(firstDayOfLastMonth, lastDayOfLastMonth, nv.getMaNhanVien())-
+        			phieuTraHangDao.getTongTienHoaDonTraTrongKhoangForNV(firstDayOfLastMonth, lastDayOfLastMonth,nv.getMaNhanVien())));
+        	jL_doanhThuThangNay.setText("  "+Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoangForNV(firstDayOfMonth, today, nv.getMaNhanVien())-
+        			phieuTraHangDao.getTongTienHoaDonTraTrongKhoangForNV(firstDayOfMonth, today,nv.getMaNhanVien())));
+        	jL_hoaDonThangTruoc.setText("  "+hoaDonDao.getSoLuongHoaDonTrongKhoangForNV(firstDayOfLastMonth, lastDayOfLastMonth,nv.getMaNhanVien())+"");
+        	jL_hoaDonThangNay.setText("  "+hoaDonDao.getSoLuongHoaDonTrongKhoangForNV(firstDayOfMonth, today,nv.getMaNhanVien())+"");
+        	jL_doanhThuThuDuoc.setText("  "+Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoangForCa(today, today,LoginInfo.ca.getMaCa())-
+        			phieuTraHangDao.getTongTienHoaDonTraTrongKhoangForCa(today, today, LoginInfo.ca.getMaCa())));
+        	jL_soHoaDonNgay.setText("  "+hoaDonDao.getSoLuongHoaDonTrongKhoangForCa(today, today, LoginInfo.ca.getMaCa())+"");
+        	
+        }else {
+        	jL_doanhThuThangTruoc.setText("  "+Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoang(firstDayOfLastMonth, lastDayOfLastMonth)-
+        			phieuTraHangDao.getTongTienHoaDonTraTrongKhoang(firstDayOfLastMonth, lastDayOfLastMonth)));
+        	jL_doanhThuThangNay.setText("  "+Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoang(firstDayOfMonth, today)-
+        			phieuTraHangDao.getTongTienHoaDonTraTrongKhoang(firstDayOfMonth, today)));
+        	jL_hoaDonThangTruoc.setText("  "+hoaDonDao.getSoLuongHoaDonTrongKhoang(firstDayOfLastMonth, lastDayOfLastMonth)+"");
+        	jL_hoaDonThangNay.setText("  "+hoaDonDao.getSoLuongHoaDonTrongKhoang(firstDayOfMonth, today)+"");
+        	jL_doanhThuThuDuoc.setText("  "+Formater.decimalFormat(hoaDonDao.getTongTienHoaDonTrongKhoang(today, today)-
+        			phieuTraHangDao.getTongTienHoaDonTraTrongKhoang(today, today)));
+        	jL_soHoaDonNgay.setText("  "+hoaDonDao.getSoLuongHoaDonTrongKhoang(today, today)+"");
+        }
+        
+        
+        
+    	
     	//////////////////////
     	Font selected_font = new Font("Times new roman", Font.BOLD, 18);
         Font unSelected_font = new Font("Times new roman",0, 18);

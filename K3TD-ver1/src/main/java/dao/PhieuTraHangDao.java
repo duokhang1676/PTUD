@@ -101,7 +101,55 @@ public class PhieuTraHangDao {
 		}
 		return null;
 	}
-
+	public double getTongTienHoaDonTraTrongKhoangForCa(LocalDate from, LocalDate to, String ma) {
+		double tongTien = 0;
+		try {
+			db.ConnectDB.getInstance();
+			Connection con = db.ConnectDB.getConnection();
+			String sql = "SELECT SUM(ThanhTien) AS TongTienCacHoaDonTra\r\n"
+					+ "FROM PhieuTraHang\r\n"
+					+ "WHERE CAST(ThoiGianTao AS DATE) BETWEEN ? AND ? AND TrangThai = 'HOAN_THANH' and maca = ?\r\n"
+					+ "";
+			PreparedStatement stmt = null;
+			stmt = con.prepareStatement(sql);
+			stmt.setDate(1, Date.valueOf(from));
+			stmt.setDate(2, Date.valueOf(to));
+			stmt.setString(3, ma);
+			
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			
+			tongTien = rs.getDouble("TongTienCacHoaDonTra");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return tongTien;
+	}
+	public double getTongTienHoaDonTraTrongKhoangForNV(LocalDate from, LocalDate to, String ma) {
+		double tongTien = 0;
+		try {
+			db.ConnectDB.getInstance();
+			Connection con = db.ConnectDB.getConnection();
+			String sql = "SELECT SUM(ThanhTien) AS TongTienCacHoaDonTra\r\n"
+					+ "FROM PhieuTraHang\r\n"
+					+ "WHERE CAST(ThoiGianTao AS DATE) BETWEEN ? AND ? AND TrangThai = 'HOAN_THANH' and manhanvien = ?\r\n"
+					+ "";
+			PreparedStatement stmt = null;
+			stmt = con.prepareStatement(sql);
+			stmt.setDate(1, Date.valueOf(from));
+			stmt.setDate(2, Date.valueOf(to));
+			stmt.setString(3, ma);
+			
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			
+			tongTien = rs.getDouble("TongTienCacHoaDonTra");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return tongTien;
+	}
+	
 	public double getTongTienHoaDonTraTrongKhoang(LocalDate from, LocalDate to) {
 		double tongTien = 0;
 		try {

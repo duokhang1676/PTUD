@@ -124,6 +124,52 @@ public class HoaDonDao {
 		}
 		return dsHoaDon;
 	} 
+	public double getTongTienHoaDonTrongKhoangForCa(LocalDate from, LocalDate to, String ma) {
+		double tongTien = 0;
+		try {
+			db.ConnectDB.getInstance();
+			Connection con = db.ConnectDB.getConnection();
+			String sql = "SELECT SUM(TongTien) AS TongTienCacHoaDon\r\n"
+					+ "FROM HoaDon\r\n"
+					+ "WHERE CAST(ThoiGianLapHoaDon AS DATE) BETWEEN ? AND ? AND TrangThai = 'HOAN_THANH' and maca = ?";
+			PreparedStatement stmt = null;
+			stmt = con.prepareStatement(sql);
+			stmt.setDate(1, Date.valueOf(from));
+			stmt.setDate(2, Date.valueOf(to));
+			stmt.setString(3, ma);
+			
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			
+			tongTien = rs.getDouble("TongTienCacHoaDon");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return tongTien;
+	}
+	public double getTongTienHoaDonTrongKhoangForNV(LocalDate from, LocalDate to, String maNV) {
+		double tongTien = 0;
+		try {
+			db.ConnectDB.getInstance();
+			Connection con = db.ConnectDB.getConnection();
+			String sql = "SELECT SUM(TongTien) AS TongTienCacHoaDon\r\n"
+					+ "FROM HoaDon\r\n"
+					+ "WHERE CAST(ThoiGianLapHoaDon AS DATE) BETWEEN ? AND ? AND TrangThai = 'HOAN_THANH' and manhanvien = ?";
+			PreparedStatement stmt = null;
+			stmt = con.prepareStatement(sql);
+			stmt.setDate(1, Date.valueOf(from));
+			stmt.setDate(2, Date.valueOf(to));
+			stmt.setString(3, maNV);
+			
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			
+			tongTien = rs.getDouble("TongTienCacHoaDon");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return tongTien;
+	}
 	public double getTongTienHoaDonTrongKhoang(LocalDate from, LocalDate to) {
 		double tongTien = 0;
 		try {
@@ -145,6 +191,74 @@ public class HoaDonDao {
 			// TODO: handle exception
 		}
 		return tongTien;
+	}
+	public int getSoLuongHoaDonTrongKhoangByNV(LocalDate from, LocalDate to, String maNV) {
+		int soLuong = 0;
+		try {
+			db.ConnectDB.getInstance();
+			Connection con = db.ConnectDB.getConnection();
+			String sql = "select count(MaHoaDon) as SoLuongHoaDon\r\n"
+					+ "from HoaDon\r\n"
+					+ "where CAST(ThoiGianLapHoaDon AS DATE) BETWEEN ? AND ? AND TrangThai = 'HOAN_THANH' and manhanvien = ?";
+			PreparedStatement stmt = null;
+			stmt = con.prepareStatement(sql);
+			stmt.setDate(1, Date.valueOf(from));
+			stmt.setDate(2, Date.valueOf(to));
+		
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			
+			soLuong = rs.getInt("SoLuongHoaDon");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return soLuong;
+	}
+	public int getSoLuongHoaDonTrongKhoangForCa(LocalDate from, LocalDate to,String ma) {
+		int soLuong = 0;
+		try {
+			db.ConnectDB.getInstance();
+			Connection con = db.ConnectDB.getConnection();
+			String sql = "select count(MaHoaDon) as SoLuongHoaDon\r\n"
+					+ "from HoaDon\r\n"
+					+ "where CAST(ThoiGianLapHoaDon AS DATE) BETWEEN ? AND ? AND TrangThai = 'HOAN_THANH' and maca = ?";
+			PreparedStatement stmt = null;
+			stmt = con.prepareStatement(sql);
+			stmt.setDate(1, Date.valueOf(from));
+			stmt.setDate(2, Date.valueOf(to));
+			stmt.setString(3, ma);
+		
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			
+			soLuong = rs.getInt("SoLuongHoaDon");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return soLuong;
+	}
+	public int getSoLuongHoaDonTrongKhoangForNV(LocalDate from, LocalDate to,String ma) {
+		int soLuong = 0;
+		try {
+			db.ConnectDB.getInstance();
+			Connection con = db.ConnectDB.getConnection();
+			String sql = "select count(MaHoaDon) as SoLuongHoaDon\r\n"
+					+ "from HoaDon\r\n"
+					+ "where CAST(ThoiGianLapHoaDon AS DATE) BETWEEN ? AND ? AND TrangThai = 'HOAN_THANH' and manhanvien = ?";
+			PreparedStatement stmt = null;
+			stmt = con.prepareStatement(sql);
+			stmt.setDate(1, Date.valueOf(from));
+			stmt.setDate(2, Date.valueOf(to));
+			stmt.setString(3, ma);
+		
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			
+			soLuong = rs.getInt("SoLuongHoaDon");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return soLuong;
 	}
 	public int getSoLuongHoaDonTrongKhoang(LocalDate from, LocalDate to) {
 		int soLuong = 0;
