@@ -49,6 +49,7 @@ public class ThongKeNhanVienPage extends javax.swing.JPanel {
 
     private void config() {
 		// TODO Auto-generated method stub
+    	txtTongDoanhThu.setEditable(false);
     	cbLocTheoThoiGian.setSelectedIndex(3);
     	dpTuNgay.setDate(LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()));
 		dpDenNgay.setDate(LocalDate.now());
@@ -116,7 +117,7 @@ public class ThongKeNhanVienPage extends javax.swing.JPanel {
         barChartPanel.setChart(barChart);
         double tongTien = 0;
         for(int i=0;i<table.getRowCount();i++) {
-        	tongTien+=Double.parseDouble(table.getValueAt(i, 6).toString().replaceAll(",", ""));
+        	tongTien+=Double.parseDouble(table.getValueAt(i, 7).toString().replaceAll(",", ""));
         }
         txtTongDoanhThu.setText(Formater.decimalFormat(tongTien));
 	}

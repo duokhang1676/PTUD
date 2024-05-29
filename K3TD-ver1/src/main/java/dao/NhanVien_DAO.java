@@ -33,7 +33,7 @@ public class NhanVien_DAO {
         PreparedStatement stmt = null;
         int n = 0;
         try {
-            stmt = con.prepareStatement("update nhanvien set TenNhanVien = ?,NgaySinh = ?,GioiTinh = ?,SoDienThoai = ?,MatKhau = ?,NgayTao = ?,GhiChu =?,ChucVu=?,TrangThai=?");
+            stmt = con.prepareStatement("update nhanvien set TenNhanVien = ?,NgaySinh = ?,GioiTinh = ?,SoDienThoai = ?,MatKhau = ?,NgayTao = ?,GhiChu =?,ChucVu=?,TrangThai=? WHERE MANHANVIEN = ?");
             
             stmt.setString(1, nv.getTenNhanVien());
             if(nv.getNgaySinh()==null)
@@ -47,6 +47,7 @@ public class NhanVien_DAO {
             stmt.setString(7, nv.getGhiChu());
             stmt.setString(8, nv.getChucVu().toString());
             stmt.setString(9,nv.getTrangThaiNhanVien().toString());
+            stmt.setString(10, nv.getMaNhanVien());
             n = stmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

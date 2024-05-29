@@ -22,6 +22,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
+import components.AddContent;
 import components.ResizeContent;
 import dao.KhachHang_DAO;
 import dao.NhanVien_DAO;
@@ -515,6 +516,7 @@ public class KhachHangPage extends javax.swing.JPanel {
         // TODO add your handling code here:
         luu();
         kh_DAO.loadDataNV(model_KH);
+        AddContent.addContent(new KhachHangPage());
     }//GEN-LAST:event_btn_LuuActionPerformed
 
     private void txtTenKhachhangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenKhachhangActionPerformed

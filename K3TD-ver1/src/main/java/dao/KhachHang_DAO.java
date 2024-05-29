@@ -263,9 +263,7 @@ public class KhachHang_DAO {
     public void loadDataNV(DefaultTableModel table_model) {
   		// TODO Auto-generated method stub
       	int n = 0;
-          String sql = "SELECT dbo.KhachHang.MaKhachHang,dbo.KhachHang.TenKhachHang,KhachHang.SoDienThoai,KhachHang.GhiChu,KhachHang.TrangThai,Sum(HoaDon.ThanhTien) AS tongtien FROM KhachHang JOIN HoaDon ON KhachHang.MaKhachHang = HoaDon.MaKhachHang\r\n"
-          		+ "Group by KhachHang.MaKhachHang, dbo.KhachHang.TenKhachHang, KhachHang.SoDienThoai,KhachHang.GhiChu,KhachHang.TrangThai\r\n"
-          		+ "  ";
+          String sql = "select * from khachhang";
           table_model.setRowCount(0);
               try {
               Connection conn = ConnectDB.getInstance().getConnection();
@@ -286,7 +284,7 @@ public class KhachHang_DAO {
                       String sodienThoai = rs.getString("SoDienThoai"); 
                       String ghichu = rs.getString("GhiChu");
                       String trangthai = rs.getString("TrangThai");
-                      double TongTien = rs.getDouble("tongtien");
+                      double TongTien = 0;
                       table_model.addRow(new Object[]{
                           n1,
                           ma,

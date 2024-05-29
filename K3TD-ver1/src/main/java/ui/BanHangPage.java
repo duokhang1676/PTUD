@@ -1009,7 +1009,7 @@ public class BanHangPage extends javax.swing.JPanel {
     	drop();
     	JOptionPane.showMessageDialog(null, "Tạo hóa đơn thành công!");
     	//khangneae
-		//PrintExample.printContent();
+		PrintExample.printContent();
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
 	private boolean kiemTraVaThemDonThuoc(HoaDon hd) {

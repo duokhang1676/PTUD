@@ -53,6 +53,7 @@ public class ThongKeKhachHangPage extends javax.swing.JPanel {
 
     private void config() {
 		// TODO Auto-generated method stub
+    	txtTongDoanhThu.setEditable(false);
     	cbLocTheoThoiGian.setSelectedIndex(3);
     	dpTuNgay.setDate(LocalDate.now().with(TemporalAdjusters.firstDayOfMonth()));
 		dpDenNgay.setDate(LocalDate.now());
