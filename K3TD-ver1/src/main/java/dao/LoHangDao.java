@@ -303,7 +303,7 @@ public class LoHangDao {
 		PreparedStatement stmt = null;
 		
 		try {
-			String sql = "select * from LoHang where MaHangHoa = ?";
+			String sql = "select * from LoHang where MaHangHoa = ? order by HanSuDung desc";
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, ma);
 			ResultSet rs = stmt.executeQuery();

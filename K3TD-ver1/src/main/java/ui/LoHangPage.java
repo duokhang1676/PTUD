@@ -62,6 +62,7 @@ public class LoHangPage extends javax.swing.JPanel {
 		int stt = 1;
 		
 		List<LoHang> dsLoHang = loHang_dao.getLoHangTheoMaHH(XemThongTinHangHoaPage.txt_maHangHoa.getText());
+		
 		for (LoHang l : dsLoHang) {
 			//"STT","Số lô", "Mã hàng hóa", "Số lượng",  "Ngày sản xuất","Hạn sử dụng","Giá nhập", "Mã nhà cung cấp"
 			model_NCC.addRow(new Object[] {stt, l.getSoLo(), l.getHangHoa().getMaHangHoa(), l.getSoLuong(),

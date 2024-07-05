@@ -56,6 +56,7 @@ import entities.TrangThaiPhieuTraHang;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.net.MulticastSocket;
 
 /**
  *
@@ -565,14 +566,17 @@ public class TaoPhieuTraHangPage extends javax.swing.JPanel {
 						new ChiTietPhieuTraHangDao().addPhieuTraHang(chiTietPhieuTraHang);
 						
 						LoHang lo = new LoHangDao().getLoHangBySoLo(model.getValueAt(i, 3).toString());
-						int soLuongCapNhat = lo.getSoLuong();
-						soLuongCapNhat += soLuongTra*dvt.getQuyDoi();
-						
+						int soLuongCapNhat = lo.getSoLuong() + soLuongTra*dvt.getQuyDoi();
 						new LoHangDao().capNhatSoLuongLoTheoMa(soLuongCapNhat, lo);
-						int soLuongHH = dvt.getHangHoa().getSoLuongDinhMuc();
-						soLuongHH = soLuongHH + dvt.getQuyDoi()*soLuongTra;
+						
+						
+						int soLuongHH = new HangHoaDao().timHangHoaTheoMa(dvt.getHangHoa().getMaHangHoa()).getSoLuongDinhMuc();
+						
+						soLuongHH += dvt.getQuyDoi()*soLuongTra;
+						
 						dvt.getHangHoa().setSoLuongDinhMuc(soLuongHH);
 						new HangHoaDao().capNhatSoLuongHangHoa(dvt.getHangHoa());
+						
 					}
 					JOptionPane.showMessageDialog(null, "Tạo thành công phiếu trả hàng");
 					drop();

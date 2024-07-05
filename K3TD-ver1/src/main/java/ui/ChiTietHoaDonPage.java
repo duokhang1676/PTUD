@@ -18,11 +18,15 @@ import components.TableActionCellEditor;
 import components.TableActionEvent;
 import dao.ChiTietHoaDonDao;
 import dao.DonThuoc_DAO;
+import dao.HangHoaDao;
 import dao.HoaDonDao;
+import dao.LoHangDao;
 import entities.ChiTietHoaDon;
 import entities.DonThuoc;
+import entities.DonViTinh;
 import entities.HangHoa;
 import entities.HoaDon;
+import entities.LoHang;
 import entities.NhanVien;
 import entities.TrangThaiHoaDon;
 import printer.PdfWriterExample;
@@ -46,6 +50,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 
 import javax.swing.AbstractAction;
@@ -91,6 +96,7 @@ public class ChiTietHoaDonPage extends javax.swing.JPanel {
         ResizeContent.resizeContent(this);
         setTable();
         FormatJtable.setCellEditableForBH(tbChiTietHoaDon);
+        FormatJtable.setFontJtable(tbChiTietHoaDon);
         phimTat();
         inputNumber();
         txtDiemQuyDoi.setEditable(false);
@@ -743,11 +749,37 @@ public class ChiTietHoaDonPage extends javax.swing.JPanel {
 
     private void btnHuyHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyHDActionPerformed
         // TODO add your handling code here:
+    	List<ChiTietHoaDon> dsCTHD = new ChiTietHoaDonDao().getDSCTHDbyMaHD(hoaDon.getMaHoaDon());
+		if(dsCTHD.size()!=0) {
+			for (ChiTietHoaDon cthd : dsCTHD) {
+				Map<LoHang,Integer> dsLoHang = cthd.getDanhSachLoHang();
+				DonViTinh dvt = cthd.getDonViTinh();
+				HangHoa hh = dvt.getHangHoa();
+				for(LoHang key: dsLoHang.keySet()) {
+					int soLuongTra = dsLoHang.get(key);
+					
+					LoHang lo = new LoHangDao().getLoHangBySoLo(key.getSoLo().toString());
+					int soLuongCapNhat = lo.getSoLuong() + soLuongTra*dvt.getQuyDoi();
+					new LoHangDao().capNhatSoLuongLoTheoMa(soLuongCapNhat, lo);
+					
+					int soLuongHH = new HangHoaDao().timHangHoaTheoMa(dvt.getHangHoa().getMaHangHoa()).getSoLuongDinhMuc();
+					
+					soLuongHH += dvt.getQuyDoi()*soLuongTra;
+					
+					dvt.getHangHoa().setSoLuongDinhMuc(soLuongHH);
+					new HangHoaDao().capNhatSoLuongHangHoa(dvt.getHangHoa());
+				}
+			}
+		}
+		
+		
+    	
         hoaDon.setTrangThaiHoaDon(TrangThaiHoaDon.DA_HUY);
         new HoaDonDao().updateHoaDon(hoaDon);
         txtTrangThai.setText("Đã Hủy");
         JOptionPane.showMessageDialog(null, "Đã hủy hóa đơn");
         btnHuyHD.setVisible(false);
+        btnThanhToan.setVisible(false);
         
 
     }//GEN-LAST:event_btnHuyHDActionPerformed

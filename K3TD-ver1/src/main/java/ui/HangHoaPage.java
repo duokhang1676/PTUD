@@ -318,7 +318,7 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
     private void btn_timKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timKiemActionPerformed
         // TODO add your handling code here:
     	String maTen = txt_timKiem.getText().trim();
-    	System.out.println(maTen);
+    	
     	String trangThaiHH = cb_trangThai.getSelectedItem().toString().trim();
     	String loaiHang = cb_loaiHang.getSelectedItem().toString().trim();
     	String nhomHang = cb_nhomHang.getSelectedItem().toString().trim();
@@ -345,7 +345,7 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
 				return;
 			}
 			
-			System.out.println(hh.toString());
+			
 			model_hangHoa.setNumRows(0);
 			model_hangHoa.addRow(new Object[] {1, hh.getMaHangHoa(), hh.getTenHangHoa(),
 					loaiHang, hh.getQuyCachDongGoi(), hh.getSoLuongDinhMuc(), 0, hh.getTrangThaiHangHoa().equals(TrangThaiHangHoa.DANG_BAN)?"Đang bán":"Ngừng bán"});
@@ -357,7 +357,7 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
     private void txt_timKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_timKiemActionPerformed
         // TODO add your handling code here:
     	String maTen = txt_timKiem.getText().trim();
-    	System.out.println(maTen);
+    	
     	String trangThaiHH = cb_trangThai.getSelectedItem().toString().trim();
     	String loaiHang = cb_loaiHang.getSelectedItem().toString().trim();
     	String nhomHang = cb_nhomHang.getSelectedItem().toString().trim();
@@ -384,7 +384,7 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
 				return;
 			}
 			
-			System.out.println(hh.toString());
+			
 			model_hangHoa.setNumRows(0);
 			model_hangHoa.addRow(new Object[] {1, hh.getMaHangHoa(), hh.getTenHangHoa(),
 					loaiHang, hh.getQuyCachDongGoi(), hh.getSoLuongDinhMuc(), 0, hh.getTrangThaiHangHoa().equals(TrangThaiHangHoa.DANG_BAN)?"Đang bán":"Ngừng bán"});
@@ -598,10 +598,10 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
 		
 	    	int row = tbl_hangHoa.getSelectedRow();
 	    	String maHH = tbl_hangHoa.getValueAt(row, 1).toString();
-	    	System.out.println(maHH);
+	    	
 	    	entities.HangHoa hangHoa = hangHoa_dao.timHangHoaTheoMa(maHH);
 	    	List<DonViTinh> dsDVT = donViTinh_dao.timDVTTheoMaHH(maHH);
-	    	System.out.println(dsDVT);
+	    	
 	    	
 	    	XemThongTinHangHoaPage.txt_maHangHoa.setText(hangHoa.getMaHangHoa());
 	    	XemThongTinHangHoaPage.txt_tenHangHoa1.setText(hangHoa.getTenHangHoa());
@@ -647,7 +647,7 @@ public class HangHoaPage extends javax.swing.JPanel implements MouseListener{
 	    		
 	    		XemThongTinHangHoaPage.model_DVT.addRow(emptyRow);
 	    		
-	    		System.out.println(i);
+	    		
 				i++;
 			}
 	    	

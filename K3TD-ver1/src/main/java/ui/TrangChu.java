@@ -115,6 +115,7 @@ public class TrangChu extends javax.swing.JPanel {
 
         jP_doanhSo.setBackground(new java.awt.Color(255, 255, 255));
         jP_doanhSo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(211, 224, 228)));
+        jP_doanhSo.setMinimumSize(new java.awt.Dimension(142, 112));
         jP_doanhSo.setPreferredSize(new java.awt.Dimension((int) screenSize.getWidth()/5, 170));
         jP_doanhSo.setLayout(new java.awt.BorderLayout());
 
@@ -152,8 +153,8 @@ public class TrangChu extends javax.swing.JPanel {
 
         jL_doanhThuThangTruoc.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jL_doanhThuThangTruoc.setText("0.0");
-        jL_doanhThuThangTruoc.setPreferredSize(new java.awt.Dimension(150, 20));
-        jP_doanhSoContent.add(jL_doanhThuThangTruoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 60, -1));
+        jL_doanhThuThangTruoc.setPreferredSize(new java.awt.Dimension(200, 20));
+        jP_doanhSoContent.add(jL_doanhThuThangTruoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, 160, -1));
 
         jL_thangNay.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jL_thangNay.setText("Tháng này: ");
@@ -161,6 +162,7 @@ public class TrangChu extends javax.swing.JPanel {
 
         jL_doanhThuThangNay.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jL_doanhThuThangNay.setText("0.0");
+        jL_doanhThuThangNay.setPreferredSize(new java.awt.Dimension(200, 20));
         jP_doanhSoContent.add(jL_doanhThuThangNay, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, -1, -1));
 
         jP_doanhSo.add(jP_doanhSoContent, java.awt.BorderLayout.CENTER);
@@ -207,6 +209,7 @@ public class TrangChu extends javax.swing.JPanel {
 
         jL_hoaDonThangTruoc.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jL_hoaDonThangTruoc.setText("0.0");
+        jL_hoaDonThangTruoc.setPreferredSize(new java.awt.Dimension(200, 20));
         jP_doanhSoContent1.add(jL_hoaDonThangTruoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, -1, -1));
 
         jL_thangNay1.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
@@ -215,6 +218,7 @@ public class TrangChu extends javax.swing.JPanel {
 
         jL_hoaDonThangNay.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jL_hoaDonThangNay.setText("0.0");
+        jL_hoaDonThangNay.setPreferredSize(new java.awt.Dimension(200, 20));
         jP_doanhSoContent1.add(jL_hoaDonThangNay, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, -1, -1));
 
         jP_hoaDonContent.add(jP_doanhSoContent1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -263,6 +267,7 @@ public class TrangChu extends javax.swing.JPanel {
 
         jL_doanhThuThuDuoc.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jL_doanhThuThuDuoc.setText("0.0");
+        jL_doanhThuThuDuoc.setPreferredSize(new java.awt.Dimension(200, 20));
         jP_doanhSoContent2.add(jL_doanhThuThuDuoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, -1, -1));
 
         jL_soHoaDon.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
@@ -271,6 +276,7 @@ public class TrangChu extends javax.swing.JPanel {
 
         jL_soHoaDonNgay.setFont(new java.awt.Font("Times New Roman", 1, 16)); // NOI18N
         jL_soHoaDonNgay.setText("0.0");
+        jL_soHoaDonNgay.setPreferredSize(new java.awt.Dimension(200, 20));
         jP_doanhSoContent2.add(jL_soHoaDonNgay, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 40, -1, -1));
 
         jP_doanhSoNgayContent.add(jP_doanhSoContent2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -560,7 +566,7 @@ public class TrangChu extends javax.swing.JPanel {
     }
     private int addDsHangSapHetHan() {
     	LocalDate today = LocalDate.now();
-    	LocalDate hsd = LocalDate.of(today.getYear(), today.getMonthValue()+6, today.getDayOfMonth());
+    	LocalDate hsd = today.plusMonths(6);
     	List<LoHang> dsLoHangHetHan = loHangDao.getDSLoSapHetHSD(hsd);
         int stt = 1;
         loHangModel.setNumRows(0);

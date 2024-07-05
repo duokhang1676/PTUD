@@ -187,10 +187,10 @@ public class XemThongTinHangHoaPage extends javax.swing.JPanel {
 
 					if (col == 4) {
 						String maVach = model_DVT.getValueAt(row, 4).toString();
-						System.out.println(maVach);
+						
 
 						for (int i = 0; i < tbl_DVT.getRowCount()-1; i++) {
-							System.out.println(model_DVT.getValueAt(i, 4).toString());
+							
 							if (model_DVT.getValueAt(i, 4).toString().equals(maVach)) {
 								showMessage("Mã vạch " + maVach + " đã tồn tại!");
 							}
@@ -694,7 +694,7 @@ public class XemThongTinHangHoaPage extends javax.swing.JPanel {
 
 			List<NhomHang> dsNhom = nhomHang_dao.getAllDataNhomHang();
 			NhomHang nhomHang = dsNhom.get(cb_nhomHangHoa.getSelectedIndex());
-			System.out.println(nhomHang.toString());
+			
 
 			String nuocSX = txt_nuocSX.getText();
 			String hangSX = txt_hangSanXuat.getText();
@@ -727,16 +727,16 @@ public class XemThongTinHangHoaPage extends javax.swing.JPanel {
 
 			HangHoa hh = new HangHoa("", tenHH, lh, soDK, nhomHang, nuocSX, hangSX, hoatChat, hamLuong, quyCachDG, moTa,
 					thue, soLuongDM, soLuongCB, trangThai);
-			System.out.println(hh.toString());
+			
 //	    	hangHoa_dao.themHangHoa(hh);
 			boolean hhoa = hangHoa_dao.updateHangHoa(hh, maHH);
 
 			for (int i = 0; i < tbl_DVT.getRowCount(); i++) {
 				
 				String tenDVT = (String) model_DVT.getValueAt(i, 1);
-				System.out.println(tenDVT);
+				
 				int quyDoi = Integer.parseInt(model_DVT.getValueAt(i, 2).toString());
-				System.out.println(quyDoi);
+				
 				double giaBan = Double.valueOf((String) model_DVT.getValueAt(i, 3));
 				TrangThaiDonViTinh trangThaiDVT = TrangThaiDonViTinh.DANG_BAN;
 				String maVach = (String) model_DVT.getValueAt(i, 4);
@@ -755,7 +755,7 @@ public class XemThongTinHangHoaPage extends javax.swing.JPanel {
 //					donViTinh_dao.updateDVT(dvt,maHH,tenDVT );
 //				}
 				donViTinh_dao.updateDVT(dvt,maHH,tenDVT );
-				System.out.println(model_DVT.getValueAt(i, 1));
+				
 			}
 			showMessage("Sửa thành công!");
 

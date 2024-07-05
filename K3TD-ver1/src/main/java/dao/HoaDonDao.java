@@ -477,4 +477,46 @@ public class HoaDonDao {
 		}
 		return null;
 	}
+	public List<HoaDon> getHDbyKH(String txt) {
+		List<HoaDon> dsHoaDon = new ArrayList<>();
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		try {
+			String sql = "select hd.* from HoaDon hd left join KhachHang kh on hd.MaKhachHang = kh.MaKhachHang\r\n"
+					+ "where SoDienThoai = ? or kh.MaKhachHang = ? or MaHoaDon = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, txt);
+			stmt.setString(2, txt);
+			stmt.setString(3, txt);
+		
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				String maHD = rs.getString("MaHoaDon");
+				LocalDate tg = rs.getDate("ThoiGianLapHoaDon").toLocalDate();
+				LocalDateTime thoiGianLap = tg.atStartOfDay();
+				NhanVien nv = new NhanVien_DAO().getNVbyMa(rs.getString("MaNhanVien"));
+				
+				KhachHang kh = null;
+				if(rs.getString("MaKhachHang")!=null)
+					kh = new KhachHang_DAO().getKHbyMa(rs.getString("MaKhachHang"));
+				double tienKhachTra = rs.getDouble("TienKhachTra");
+				int diemQuyDoi = rs.getInt("DiemQuyDoi");
+				double tongTien = rs.getDouble("TongTien");
+				double tienThua = rs.getDouble("TienThua");
+				String ghiChu = rs.getString("GhiChu");
+				Ca ca = new Ca(rs.getString("MaCa"));
+				String trangThaiStr = rs.getString("TrangThai");
+				TrangThaiHoaDon trangThai = TrangThaiHoaDon.valueOf(trangThaiStr);
+					
+				HoaDon hd = new HoaDon(maHD, thoiGianLap, nv, kh, tienKhachTra, diemQuyDoi, ghiChu, ca, trangThai, tongTien);
+				dsHoaDon.add(hd);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+		return dsHoaDon;
+	}
 }

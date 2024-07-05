@@ -35,6 +35,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import components.AddContent;
+import components.FormatJtable;
 import components.Formater;
 import components.ResizeContent;
 import dao.HoaDonDao;
@@ -59,6 +60,8 @@ public class HoaDonPage extends javax.swing.JPanel {
         initComponents();
         ResizeContent.resizeContent(this);
         addTableHoaDon();
+        FormatJtable.setFontJtable(tbl_hoaDon);
+        tbl_hoaDon.getColumnModel().getColumn(0).setPreferredWidth(5);
         dpTuNgay.setDate(LocalDate.now());
 		dbDenNgay.setDate(LocalDate.now());
         getFromTo();
@@ -156,10 +159,10 @@ public class HoaDonPage extends javax.swing.JPanel {
         this.getActionMap().put("performF4Action", action);
     }
     private void getHDbyMa() {
-		HoaDon hd = new HoaDonDao().getHDbyMa(timTheoTuKhoa1.getText());
-			if(hd!=null) {
+		List<HoaDon> ds = new HoaDonDao().getHDbyKH(timTheoTuKhoa1.getText());
+			if(ds!=null) {
 				if(dsHD!=null)dsHD.clear();
-				dsHD.add(hd);
+				dsHD = ds;
 				addToTable();
 				timTheoTuKhoa1.requestFocus();
 				timTheoTuKhoa1.selectAll();

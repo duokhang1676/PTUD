@@ -149,6 +149,8 @@ public class DangNhap extends javax.swing.JFrame {
        
         connectionDB(false);//parameter true dung clound db false dung local db
        
+        txt_taiKhoan.setText("NV00001");
+    	txtMatKhau.setText("0000");
     }
 
  
@@ -329,6 +331,7 @@ public class DangNhap extends javax.swing.JFrame {
         dangNhap();
     }//GEN-LAST:event_btn_dangNhapActionPerformed
     private void dangNhap() {
+    	
     	if(!KiemTraDangNhap())
             return;
             if(LoginInfo.nhanVien.getChucVu().equals(ChucVuNhanVien.NHAN_VIEN)) {
