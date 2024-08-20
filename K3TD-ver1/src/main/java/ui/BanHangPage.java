@@ -1291,48 +1291,53 @@ public class BanHangPage extends javax.swing.JPanel {
     	try {
     		hangHoa = hangHoaDao.timHangHoaTheoMaVachVaMaHH(timMaSP1.getText());
     		donVi = donViTinhDao.layDVTTheoMa(timMaSP1.getText());
-
 		} catch (Exception e) {
 			// TODO: handle exception
 			return;
 		}
+    
     	if(hangHoa!=null && donVi.getTrangThaiDonViTinh().equals(TrangThaiDonViTinh.DANG_BAN)) { //Tìm thấy hàng hóa
+    		
     		if(hangHoa.getSoLuongDinhMuc()==0) {//Kiểm tra số lượng
     			JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
     			timMaSP1.setText("");
     			timMaSP1.requestFocus();
     			return;
-    		}else if(donVi.getQuyDoi()!=1) {//Kiểm tra số lượng
-    			List<LoHang> dsLo = loHangDAO.getLoHangTheoMaHH(hangHoa.getMaHangHoa());
-    			boolean temp = false;
-    			for (LoHang loHang : dsLo) {
-					if(loHang.getSoLuong()>=donVi.getQuyDoi())
-						temp = true;
-				}
-    			if(!temp) {
-    				JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
-    				timMaSP1.setText("");
-    				timMaSP1.requestFocus();
-    				return;
-    			}
     		}
-    		int soLuong = 1;
+    		
+    		int soLuongTong = 0;
+    		//flag1
+    		//Tính tổng số lượng của sản phẩm đang được tìm kiếm trong giỏ
+    		for(int i=0;i<tableModel.getRowCount();i++) {
+    			if(tableModel.getValueAt(i, 0).toString().equals(hangHoa.getTenHangHoa())) {
+    					DonViTinh dvt = donViTinhDao.layDVTTheoTenVaMaHangHoa(dsHH.get(i).getMaHangHoa(),tableModel.getValueAt(i, 1).toString());
+    					soLuongTong += Integer.parseInt(tableModel.getValueAt(i, 2).toString())*dvt.getQuyDoi();	
+    					//So luong tong la tong so luong cua cac dvt chung 1 hang hoa co trong gio
+    			}		
+    		}
+    		soLuongTong += donVi.getQuyDoi();
+    		if(soLuongTong>hangHoa.getSoLuongDinhMuc()) {
+				JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
+				timMaSP1.setText("");
+    			timMaSP1.requestFocus();
+				return;
+			}
+    		int soLuong = 0;
         	for(int i=0;i<tableModel.getRowCount();i++) {//Kiểm tra hh đã có trong table chưa
         		if(tableModel.getValueAt(i, 0).toString().equals(hangHoa.getTenHangHoa()) && (donVi.getTenDonViTinh().equals(tableModel.getValueAt(i, 1).toString()))) {//HH đã có trong table
         			soLuong = ((int)tableModel.getValueAt(i, 2))+1;//Tăng số lượng lên 1
-        			if(donVi.getQuyDoi()==1) {//Kiểm tra số lượng DM
-        				if(soLuong>hangHoa.getSoLuongDinhMuc()) {
-        				JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
-        				soLuong = hangHoa.getSoLuongDinhMuc();}
-        			}else {
+        			if(donVi.getQuyDoi()!=1) {//Quy đổi khác 1
         				List<LoHang> dsLo = loHangDAO.getLoHangTheoMaHH(hangHoa.getMaHangHoa());
         				int soLuongLo = 0;
         				for (LoHang loHang : dsLo) {
 							soLuongLo += loHang.getSoLuong()/donVi.getQuyDoi();
 						}
+        				
         				if(soLuong>soLuongLo) {//Kiểm tra số lượng DM
         					JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
-        					soLuong = soLuongLo;
+        					timMaSP1.setText("");
+                			timMaSP1.requestFocus();
+        					return;
         				}
         			}
         			tableModel.setValueAt(soLuong, i, 2);//cập nhật sl
@@ -1344,24 +1349,37 @@ public class BanHangPage extends javax.swing.JPanel {
 
         	}
         	//Thêm mới
+        	if(donVi.getQuyDoi()!=1) {//Quy đổi khác 1
+    			List<LoHang> dsLo = loHangDAO.getLoHangTheoMaHH(hangHoa.getMaHangHoa());
+    			boolean temp = false;
+    			for (LoHang loHang : dsLo) {
+					if(loHang.getSoLuong()>=donVi.getQuyDoi())
+						temp = true;
+				}
+    			if(!temp) {//Nếu các lô hàng có số lượng không đủ
+    				JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
+    				timMaSP1.setText("");
+    				timMaSP1.requestFocus();
+    				return;
+    			}
+        	}
         	dsHH.add(hangHoa);//Thêm vào dsHH
         	double giaBan = donVi.getGiaBan();
-        	double thanhTien = soLuong * giaBan;
+        	double thanhTien = giaBan;
         	String dsDVT = "";
         	
         	for (DonViTinh dvt : donViTinhDao.timDVTTheoMaHH(hangHoa.getMaHangHoa())) {
 				dsDVT+=dvt.getTenDonViTinh()+";";
 			}
-        	tableModel.addRow(new Object[] {hangHoa.getTenHangHoa(), donVi.getTenDonViTinh(),soLuong,Formater.decimalFormat(giaBan),Formater.decimalFormat(thanhTien),null, dsDVT.split(";")});
+        	tableModel.addRow(new Object[] {hangHoa.getTenHangHoa(), donVi.getTenDonViTinh(),1,Formater.decimalFormat(giaBan),Formater.decimalFormat(thanhTien),null, dsDVT.split(";")});
         	
         	reload();
-    	}
-    	else//Không tìm thấy HH
+        	
+    	}else//Không tìm thấy HH
     		JOptionPane.showMessageDialog(this, "Không tìm thấy sản phẩm tương ứng!");
+    	
     	timMaSP1.setText("");
-		timMaSP1.requestFocus();
-    	
-    	
+    	timMaSP1.requestFocus();
     }//GEN-LAST:event_timMaSP1ActionPerformed
 
     private void timSDTKhachHang1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timSDTKhachHang1ActionPerformed
@@ -1811,68 +1829,89 @@ public class BanHangPage extends javax.swing.JPanel {
         tableModel.addTableModelListener(new TableModelListener() {
             @Override
             public void tableChanged(TableModelEvent e) {//Bắt sự kiện thay đổi số lượng và đơn vị tính trên jtable
-                try {
-                	if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == 2) {
-                    	int row = tbChiTietHoaDon.getSelectedRow();
-                    	if(row==-1)return; //Trường hợp sl thay đổi khi thêm mới 
-                    	int soLuong = Integer.parseInt(tbChiTietHoaDon.getValueAt(row, 2).toString());
-                		DonViTinh donViTinh = donViTinhDao.layDVTTheoTenVaMaHangHoa(dsHH.get(row).getMaHangHoa(), tbChiTietHoaDon.getValueAt(row, 1).toString());    		
-                		int soLuongSauQuyDoi = soLuong*donViTinh.getQuyDoi();
-                		
-                       if(soLuongSauQuyDoi>dsHH.get(row).getSoLuongDinhMuc()) {//Kiểm tra số lượng
-                    	   JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
-                    	   //Cập nhật số lượng = sl định mức
-                    	   int soLuongToiDa = dsHH.get(row).getSoLuongDinhMuc()/donViTinh.getQuyDoi();
-                    	   
-                    	   if(soLuongToiDa==0) {
-               				String[] array = (String[])tbChiTietHoaDon.getValueAt(row, 6);
-               				tbChiTietHoaDon.setValueAt(array[0], row,1);
-               				return;
-               			}else
-                    		   tbChiTietHoaDon.setValueAt(soLuongToiDa, row,2);
-                    	   
-                       }
-                       reload();
+            	try {
+            		if (isTableUpdating) {
+                        return; // Bỏ qua xử lý nếu bảng đang được cập nhật
+                    }
+                //flag2
+                	int row = tbChiTietHoaDon.getSelectedRow();
+                	if(row==-1)return; //Trường hợp sl thay đổi khi thêm mới  
+                	int soLuongTong = 0;
+                	int soLuong = Integer.parseInt(tbChiTietHoaDon.getValueAt(row, 2).toString());
+                	
+                	DonViTinh donViTinh = donViTinhDao.layDVTTheoTenVaMaHangHoa(dsHH.get(row).getMaHangHoa(), tbChiTietHoaDon.getValueAt(row, 1).toString()); 
+                	
+                	double giaBann = donViTinh.getGiaBan();
+                	//Tính tổng số lượng của sản phẩm đang được tìm kiếm trong giỏ
+                	for(int i=0;i<tableModel.getRowCount();i++) {
+                		if(tableModel.getValueAt(i, 0).toString().equals(tbChiTietHoaDon.getValueAt(row, 0))) {
+                				DonViTinh dvt = donViTinhDao.layDVTTheoTenVaMaHangHoa(dsHH.get(i).getMaHangHoa(),tableModel.getValueAt(i, 1).toString());
+                				if(i!=row)
+                					soLuongTong += Integer.parseInt(tableModel.getValueAt(i, 2).toString())*dvt.getQuyDoi();	
+                		}		
                 	}
-                	else if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == 1) {
-                    		int row = tbChiTietHoaDon.getSelectedRow();
-                        	if(row==-1)return; //Trường hợp sl thay đổi khi thêm mới 
-                        	int soLuong = Integer.parseInt(tbChiTietHoaDon.getValueAt(row, 2).toString());
-                        	DonViTinh donViTinh = null;
-                        	try {
-                    			donViTinh = donViTinhDao.layDVTTheoTenVaMaHangHoa(dsHH.get(row).getMaHangHoa(), tbChiTietHoaDon.getValueAt(row, 1).toString());    	
-							} catch (Exception e2) {
-								// TODO: handle exception
-								return;
-							}		
-                    		int soLuongSauQuyDoi = soLuong*donViTinh.getQuyDoi();
-                    		
-                    		if(soLuongSauQuyDoi>dsHH.get(row).getSoLuongDinhMuc()) {//Kiểm tra số lượng
-                    			JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
-                    			//Cập nhật số lượng = sl định mức
-                    			int soLuongToiDa = dsHH.get(row).getSoLuongDinhMuc()/donViTinh.getQuyDoi();
-                    			if(soLuongToiDa==0) {
-                    				String[] array = (String[])tbChiTietHoaDon.getValueAt(row, 6);
-                    			tbChiTietHoaDon.setValueAt(array[0], row,1);
-                    			return;
-                    			}else
-                         		   tbChiTietHoaDon.setValueAt(soLuongToiDa, row,2);
+                	
+                	if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == 1) {// Trường hợp thay đổi đơn vị tính
+                		soLuong = 1;
+                		if(soLuongTong+soLuong*donViTinh.getQuyDoi()>dsHH.get(row).getSoLuongDinhMuc()) {
+                    		JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                    		String[] array = (String[])tbChiTietHoaDon.getValueAt(row, 6);
+                    		for(int i = 0;i<array.length;i++) {//Truong hop ten don vi tinh khong doi 
+                    			DonViTinh dv = donViTinhDao.layDVTTheoTenVaMaHangHoa(dsHH.get(row).getMaHangHoa(), array[i].toString()); 
+                    			if(soLuongTong+dv.getQuyDoi()<=dsHH.get(row).getSoLuongDinhMuc()) {
+                    				giaBann = dv.getGiaBan();
+                    				isTableUpdating = true; // Đánh dấu đang cập nhật bảng
+                    				tbChiTietHoaDon.setValueAt(array[i], row,1);      
+                    				
+                    				tbChiTietHoaDon.setValueAt(Formater.decimalFormat(giaBann), row, 3);
+                    				isTableUpdating = false;
+                    				return;
+                    			}
                     		}
-        					double giaBan = donViTinh.getGiaBan();
-        					tbChiTietHoaDon.setValueAt(Formater.decimalFormat(giaBan), row, 3);
-        					reload();
-                	}
+                    		return;
+                    	}
+                		
+                	}else if(donViTinh.getQuyDoi()==1	) {
+                		if(soLuongTong+soLuong*donViTinh.getQuyDoi()>dsHH.get(row).getSoLuongDinhMuc()) {
+                			JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                          	  //Cập nhật số lượng = sl định mức - slTong 
+                 			tbChiTietHoaDon.setValueAt(dsHH.get(row).getSoLuongDinhMuc()-soLuongTong, row,2);
+                		}
+                		}else if(donViTinh.getQuyDoi()!=1){
+                			List<LoHang> dsLo = loHangDAO.getLoHangTheoMaHH(dsHH.get(row).getMaHangHoa());
+                			int soLuongLo = 0;
+                			int soLuongKhaDung = (dsHH.get(row).getSoLuongDinhMuc()-soLuongTong)/donViTinh.getQuyDoi();
+                			for (LoHang loHang : dsLo) {
+        						soLuongLo += loHang.getSoLuong()/donViTinh.getQuyDoi();
+        					}
+                			//flag3 so luong trong lo se bi tru khi co hang o gio, thay doi dvt sl = 1,...
+                			if((soLuong/donViTinh.getQuyDoi())>soLuongLo)
+                			if(soLuongLo<soLuongKhaDung) {
+                				JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
+                				soLuong = soLuongLo;
+                				}
+                			else soLuong = soLuongKhaDung;
+                			isTableUpdating = true;
+                			tbChiTietHoaDon.setValueAt(soLuong, row,2);
+                			isTableUpdating = false;
+                			}
+                		//
+                	isTableUpdating = true;
+                	tbChiTietHoaDon.setValueAt(Formater.decimalFormat(giaBann), row, 3);
+    				reload();
+    				isTableUpdating = false;
+    				return;
+                	
 				} catch (Exception e2) {
 					// TODO: handle exception
 					return;
 				}
-
-				}
+            }
         });
     }
     
     
-
+    private boolean isTableUpdating = false;
     private int hdCount = 1;
     String headerString[] = "Tên sản phẩm;Đơn vị tính;Số lượng;Giá bán;Thành tiền; ; ".split(";");
     private DefaultTableModel tableModel = new DefaultTableModel(headerString,0);
