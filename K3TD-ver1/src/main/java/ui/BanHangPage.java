@@ -1349,11 +1349,25 @@ public class BanHangPage extends javax.swing.JPanel {
 
         	}
         	//Thêm mới
+        	soLuongTong -= donVi.getQuyDoi();
+        	
         	if(donVi.getQuyDoi()!=1) {//Quy đổi khác 1
     			List<LoHang> dsLo = loHangDAO.getLoHangTheoMaHH(hangHoa.getMaHangHoa());
     			boolean temp = false;
     			for (LoHang loHang : dsLo) {
-					if(loHang.getSoLuong()>=donVi.getQuyDoi())
+    				// Dong nay tru so luong dang co trong gio hang vao lo
+    				int soLuongLo = loHang.getSoLuong();
+    				if(soLuongTong!=0) {
+    					if(soLuongLo>=soLuongTong) {
+    					soLuongLo -= soLuongTong;
+    					soLuongTong = 0;
+    					}else {
+    					soLuongTong -= soLuongLo;
+    					soLuongLo = 0;
+    					}
+    				}
+    				//
+					if(soLuongLo>=donVi.getQuyDoi())
 						temp = true;
 				}
     			if(!temp) {//Nếu các lô hàng có số lượng không đủ
@@ -1853,7 +1867,25 @@ public class BanHangPage extends javax.swing.JPanel {
                 	
                 	if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == 1) {// Trường hợp thay đổi đơn vị tính
                 		soLuong = 1;
-                		if(soLuongTong+soLuong*donViTinh.getQuyDoi()>dsHH.get(row).getSoLuongDinhMuc()) {
+                		List<LoHang> dsLo = loHangDAO.getLoHangTheoMaHH(dsHH.get(row).getMaHangHoa());
+            			boolean temp = false;
+            			for (LoHang loHang : dsLo) {
+            				// Dong nay tru so luong dang co trong gio hang vao lo
+            				int soLuongLo = loHang.getSoLuong();
+            				if(soLuongTong!=0) {
+            					if(soLuongLo>=soLuongTong) {
+            					soLuongLo -= soLuongTong;
+            					soLuongTong = 0;
+            					}else {
+            					soLuongTong -= soLuongLo;
+            					soLuongLo = 0;
+            					}
+            				}
+            				//
+        					if(soLuongLo>=donViTinh.getQuyDoi())
+        						temp = true;
+        				}
+                		if(!temp) {
                     		JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
                     		String[] array = (String[])tbChiTietHoaDon.getValueAt(row, 6);
                     		for(int i = 0;i<array.length;i++) {//Truong hop ten don vi tinh khong doi 
@@ -1871,30 +1903,33 @@ public class BanHangPage extends javax.swing.JPanel {
                     		return;
                     	}
                 		
-                	}else if(donViTinh.getQuyDoi()==1	) {
-                		if(soLuongTong+soLuong*donViTinh.getQuyDoi()>dsHH.get(row).getSoLuongDinhMuc()) {
-                			JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
-                          	  //Cập nhật số lượng = sl định mức - slTong 
-                 			tbChiTietHoaDon.setValueAt(dsHH.get(row).getSoLuongDinhMuc()-soLuongTong, row,2);
+                	}else { // Truong hop thay doi so luong 
+            			List<LoHang> dsLo = loHangDAO.getLoHangTheoMaHH(dsHH.get(row).getMaHangHoa());
+            			int tongSoLuongLo = 0;
+            			for (LoHang loHang : dsLo) {
+            				int soLuongLo = loHang.getSoLuong();
+            				
+            				if(soLuongTong!=0) {//Tru di so luong tong co trong gio hang vao so luong lo
+            					if(soLuongLo>=soLuongTong) {
+            					soLuongLo -= soLuongTong;
+            					soLuongTong = 0;
+            					}else {
+            					soLuongTong -= soLuongLo;
+            					soLuongLo = 0;
+            					}
+            				}
+            				
+    						tongSoLuongLo += soLuongLo/donViTinh.getQuyDoi();
+    					}
+            			//flag3 so luong trong lo se bi tru khi co hang o gio, thay doi dvt sl = 1,...
+            			if(tongSoLuongLo<soLuong) {
+            				JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
+            				soLuong = tongSoLuongLo;
+            				}
                 		}
-                		}else if(donViTinh.getQuyDoi()!=1){
-                			List<LoHang> dsLo = loHangDAO.getLoHangTheoMaHH(dsHH.get(row).getMaHangHoa());
-                			int soLuongLo = 0;
-                			int soLuongKhaDung = (dsHH.get(row).getSoLuongDinhMuc()-soLuongTong)/donViTinh.getQuyDoi();
-                			for (LoHang loHang : dsLo) {
-        						soLuongLo += loHang.getSoLuong()/donViTinh.getQuyDoi();
-        					}
-                			//flag3 so luong trong lo se bi tru khi co hang o gio, thay doi dvt sl = 1,...
-                			if((soLuong/donViTinh.getQuyDoi())>soLuongLo)
-                			if(soLuongLo<soLuongKhaDung) {
-                				JOptionPane.showMessageDialog(null,"Hàng hóa không đủ số lượng","Cảnh báo", JOptionPane.WARNING_MESSAGE);
-                				soLuong = soLuongLo;
-                				}
-                			else soLuong = soLuongKhaDung;
-                			isTableUpdating = true;
-                			tbChiTietHoaDon.setValueAt(soLuong, row,2);
-                			isTableUpdating = false;
-                			}
+                	isTableUpdating = true;
+                	tbChiTietHoaDon.setValueAt(soLuong, row,2);
+        			isTableUpdating = false;
                 		//
                 	isTableUpdating = true;
                 	tbChiTietHoaDon.setValueAt(Formater.decimalFormat(giaBann), row, 3);
